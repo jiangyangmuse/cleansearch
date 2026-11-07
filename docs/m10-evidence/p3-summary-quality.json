@@ -1,0 +1,77 @@
+[
+  {
+    "topic": "asyncio 事件循环 原理",
+    "results": 13,
+    "engines": [
+      "brave",
+      "yahoo",
+      "serper"
+    ],
+    "first_ms": 13094,
+    "total_ms": 28201,
+    "tokens": 223,
+    "cites": 10,
+    "error": null,
+    "partial": false
+  },
+  {
+    "topic": "Rust 所有权 借用",
+    "results": 15,
+    "engines": [
+      "brave",
+      "yahoo",
+      "serper"
+    ],
+    "first_ms": 7715,
+    "total_ms": 19242,
+    "tokens": 170,
+    "cites": 10,
+    "error": null,
+    "partial": false
+  },
+  {
+    "topic": "HTTP/2 多路复用",
+    "results": 15,
+    "engines": [
+      "google cse",
+      "yahoo",
+      "serper"
+    ],
+    "first_ms": 7243,
+    "total_ms": 19187,
+    "tokens": 177,
+    "cites": 10,
+    "error": null,
+    "partial": false
+  },
+  {
+    "topic": "量子计算 入门",
+    "results": 16,
+    "engines": [
+      "brave",
+      "yahoo",
+      "serper"
+    ],
+    "first_ms": 7221,
+    "total_ms": 16200,
+    "tokens": 133,
+    "cites": 10,
+    "error": null,
+    "partial": false
+  },
+  {
+    "topic": "分布式 一致性",
+    "results": 10,
+    "engines": [
+      "google cse",
+      "yahoo",
+      "serper"
+    ],
+    "first_ms": 6767,
+    "total_ms": 17849,
+    "tokens": 166,
+    "cites": 10,
+    "error": null,
+    "partial": false
+  }
+]

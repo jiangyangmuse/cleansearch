@@ -1,0 +1,797 @@
+{
+  "rows": [
+    {
+      "q": "数分 知识点",
+      "aliases": [
+        "数据分析",
+        "数学分析"
+      ],
+      "candidates": 15,
+      "has_expansion": true,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 2,
+        "rewritten": "数分 知识点 数据分析 数学分析"
+      }
+    },
+    {
+      "q": "高数 极限",
+      "aliases": [
+        "高等数学",
+        "微积分"
+      ],
+      "candidates": 15,
+      "has_expansion": true,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "rewritten": "高数 极限 高等数学 微积分"
+      }
+    },
+    {
+      "q": "机器学习 入门",
+      "aliases": [],
+      "candidates": 15,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 3
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 3
+      },
+      "rewrite": null
+    },
+    {
+      "q": "深度学习 框架",
+      "aliases": [],
+      "candidates": 11,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 2
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 2
+      },
+      "rewrite": null
+    },
+    {
+      "q": "NLP 分词",
+      "aliases": [
+        "natural language processing",
+        "自然语言处理"
+      ],
+      "candidates": 15,
+      "has_expansion": true,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1,
+        "rewritten": "NLP 分词 natural language processing 自然语言处理"
+      }
+    },
+    {
+      "q": "JS 事件循环",
+      "aliases": [
+        "javascript"
+      ],
+      "candidates": 16,
+      "has_expansion": true,
+      "baseline": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1
+      },
+      "rewrite": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1,
+        "rewritten": "JS 事件循环 javascript"
+      }
+    },
+    {
+      "q": "TS 类型 体操",
+      "aliases": [
+        "typescript"
+      ],
+      "candidates": 14,
+      "has_expansion": true,
+      "baseline": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 2
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 3
+      },
+      "rewrite": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 3,
+        "rewritten": "TS 类型 体操 typescript"
+      }
+    },
+    {
+      "q": "py asyncio",
+      "aliases": [
+        "python"
+      ],
+      "candidates": 11,
+      "has_expansion": true,
+      "baseline": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1
+      },
+      "rewrite": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1,
+        "rewritten": "py asyncio python"
+      }
+    },
+    {
+      "q": "k8s 调度",
+      "aliases": [
+        "kubernetes"
+      ],
+      "candidates": 13,
+      "has_expansion": true,
+      "baseline": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 9
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 4
+      },
+      "rewrite": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 8,
+        "rewritten": "k8s 调度 kubernetes"
+      }
+    },
+    {
+      "q": "DB 索引 原理",
+      "aliases": [
+        "database",
+        "数据库"
+      ],
+      "candidates": 14,
+      "has_expansion": true,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "rewritten": "DB 索引 原理 database 数据库"
+      }
+    },
+    {
+      "q": "LLM 提示词",
+      "aliases": [
+        "large language model",
+        "大语言模型",
+        "大模型"
+      ],
+      "candidates": 14,
+      "has_expansion": true,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1,
+        "rewritten": "LLM 提示词 large language model 大语言模型"
+      }
+    },
+    {
+      "q": "RAG 检索增强",
+      "aliases": [
+        "retrieval augmented generation",
+        "检索增强"
+      ],
+      "candidates": 10,
+      "has_expansion": true,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1,
+        "rewritten": "RAG 检索增强 retrieval augmented generation 检索增强"
+      }
+    },
+    {
+      "q": "HTTP 缓存",
+      "aliases": [],
+      "candidates": 11,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1
+      },
+      "rewrite": null
+    },
+    {
+      "q": "SQL 注入",
+      "aliases": [
+        "structured query language",
+        "数据库查询"
+      ],
+      "candidates": 15,
+      "has_expansion": true,
+      "baseline": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1
+      },
+      "rewrite": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "rewritten": "SQL 注入 structured query language 数据库查询"
+      }
+    },
+    {
+      "q": "微服务 架构",
+      "aliases": [],
+      "candidates": 11,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1
+      },
+      "rewrite": null
+    },
+    {
+      "q": "Rust 所有权",
+      "aliases": [],
+      "candidates": 10,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "Git rebase",
+      "aliases": [],
+      "candidates": 10,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 2
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 2
+      },
+      "rewrite": null
+    },
+    {
+      "q": "数分 期望 方差",
+      "aliases": [
+        "数据分析",
+        "数学分析"
+      ],
+      "candidates": 8,
+      "has_expansion": true,
+      "baseline": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 2
+      },
+      "rewrite": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 5,
+        "rewritten": "数分 期望 方差 数据分析 数学分析"
+      }
+    },
+    {
+      "q": "缓存 穿透 雪崩",
+      "aliases": [],
+      "candidates": 11,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "分布式 一致性",
+      "aliases": [],
+      "candidates": 10,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "消息队列 选型",
+      "aliases": [],
+      "candidates": 14,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "容器 网络 原理",
+      "aliases": [],
+      "candidates": 15,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "CI CD 流水线",
+      "aliases": [],
+      "candidates": 16,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "单元测试 覆盖率",
+      "aliases": [],
+      "candidates": 15,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "JWT 鉴权",
+      "aliases": [],
+      "candidates": 13,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "OAuth2 授权码",
+      "aliases": [],
+      "candidates": 15,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "XSS 防御",
+      "aliases": [],
+      "candidates": 15,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "跨域 CORS",
+      "aliases": [],
+      "candidates": 15,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1
+      },
+      "rewrite": null
+    },
+    {
+      "q": "Linux 内存 管理",
+      "aliases": [],
+      "candidates": 14,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "文件系统 ext4",
+      "aliases": [],
+      "candidates": 14,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1
+      },
+      "rewrite": null
+    },
+    {
+      "q": "TCP 拥塞控制",
+      "aliases": [],
+      "candidates": 12,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1
+      },
+      "rewrite": null
+    },
+    {
+      "q": "HTTP/2 多路复用",
+      "aliases": [],
+      "candidates": 15,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 2
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 2
+      },
+      "rewrite": null
+    },
+    {
+      "q": "加密 对称 非对称",
+      "aliases": [],
+      "candidates": 10,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1
+      },
+      "rewrite": null
+    },
+    {
+      "q": "正则 表达式 入门",
+      "aliases": [],
+      "candidates": 15,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 10
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 10
+      },
+      "rewrite": null
+    },
+    {
+      "q": "Python 装饰器",
+      "aliases": [],
+      "candidates": 13,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "Go 并发 模型",
+      "aliases": [],
+      "candidates": 13,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "React 状态管理",
+      "aliases": [],
+      "candidates": 13,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "ranking": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null
+      },
+      "rewrite": null
+    },
+    {
+      "q": "CSS Grid 布局",
+      "aliases": [],
+      "candidates": 15,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1
+      },
+      "rewrite": null
+    },
+    {
+      "q": "浏览器 渲染 流程",
+      "aliases": [],
+      "candidates": 17,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 2
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 2
+      },
+      "rewrite": null
+    },
+    {
+      "q": "数据库 事务 隔离级别",
+      "aliases": [],
+      "candidates": 12,
+      "has_expansion": false,
+      "baseline": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1
+      },
+      "ranking": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1
+      },
+      "rewrite": null
+    }
+  ],
+  "summary": {
+    "baseline": {
+      "cases": 12,
+      "hit10": 6,
+      "strong": 0,
+      "mean_first_rank": 2.5
+    },
+    "ranking": {
+      "cases": 12,
+      "hit10": 6,
+      "strong": 1,
+      "mean_first_rank": 2
+    },
+    "rewrite": {
+      "cases": 12,
+      "hit10": 9,
+      "strong": 1,
+      "mean_first_rank": 2.56
+    }
+  }
+}

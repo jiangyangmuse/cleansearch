@@ -47,10 +47,12 @@ const check = (name, ok, detail) => log.push({ name, ok: !!ok, detail });
 async function main() {
   fs.mkdirSync(OUT, { recursive: true });
   const profile = fs.mkdtempSync(path.join(os.tmpdir(), "cs-ext-profile-"));
-  const channel = process.env.CS_BROWSER_CHANNEL || undefined;
+  const executablePath = process.env.CS_CHROME_PATH || undefined;
+  const channel = executablePath ? undefined : process.env.CS_BROWSER_CHANNEL || undefined;
   const context = await chromium.launchPersistentContext(profile, {
     headless: false,
     channel,
+    executablePath,
     viewport: { width: 1280, height: 900 },
     args: ["--disable-extensions-except=" + EXT, "--load-extension=" + EXT, "--no-first-run"],
   });

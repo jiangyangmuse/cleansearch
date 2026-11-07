@@ -1,5 +1,5 @@
 {
-  "说明": "P2 评估集：query + 期望命中的域名（含常见中文来源，任一命中即算）。用于衡量扩展对排序/召回的影响，不是严格地面真值。",
+  "说明": "P2 评估集：40 条标注查询 + 期望域名（含常见中文来源，任一命中即算）。用于衡量扩展对排序/召回的影响，不是严格地面真值。",
   "cases": [
     {
       "q": "数分 知识点",
@@ -279,6 +279,182 @@
         "jianshu.com",
         "51cto.com",
         "runoob.com"
+      ]
+    },
+    {
+      "q": "缓存 穿透 雪崩",
+      "expect_domains": [
+        "zh.wikipedia.org",
+        "aws.amazon.com",
+        "cloudflare.com"
+      ]
+    },
+    {
+      "q": "分布式 一致性",
+      "expect_domains": [
+        "zh.wikipedia.org",
+        "martinfowler.com",
+        "aws.amazon.com"
+      ]
+    },
+    {
+      "q": "消息队列 选型",
+      "expect_domains": [
+        "kafka.apache.org",
+        "rabbitmq.com",
+        "zh.wikipedia.org"
+      ]
+    },
+    {
+      "q": "容器 网络 原理",
+      "expect_domains": [
+        "kubernetes.io",
+        "zh.wikipedia.org",
+        "docker.com"
+      ]
+    },
+    {
+      "q": "CI CD 流水线",
+      "expect_domains": [
+        "docs.github.com",
+        "gitlab.com",
+        "zh.wikipedia.org"
+      ]
+    },
+    {
+      "q": "单元测试 覆盖率",
+      "expect_domains": [
+        "martinfowler.com",
+        "zh.wikipedia.org",
+        "pytest.org"
+      ]
+    },
+    {
+      "q": "JWT 鉴权",
+      "expect_domains": [
+        "jwt.io",
+        "developer.mozilla.org",
+        "owasp.org"
+      ]
+    },
+    {
+      "q": "OAuth2 授权码",
+      "expect_domains": [
+        "oauth.net",
+        "developer.mozilla.org",
+        "zh.wikipedia.org"
+      ]
+    },
+    {
+      "q": "XSS 防御",
+      "expect_domains": [
+        "owasp.org",
+        "developer.mozilla.org",
+        "zh.wikipedia.org"
+      ]
+    },
+    {
+      "q": "跨域 CORS",
+      "expect_domains": [
+        "developer.mozilla.org",
+        "web.dev",
+        "zh.wikipedia.org"
+      ]
+    },
+    {
+      "q": "Linux 内存 管理",
+      "expect_domains": [
+        "kernel.org",
+        "zh.wikipedia.org",
+        "man7.org"
+      ]
+    },
+    {
+      "q": "文件系统 ext4",
+      "expect_domains": [
+        "kernel.org",
+        "zh.wikipedia.org",
+        "man7.org"
+      ]
+    },
+    {
+      "q": "TCP 拥塞控制",
+      "expect_domains": [
+        "zh.wikipedia.org",
+        "ietf.org",
+        "cloudflare.com"
+      ]
+    },
+    {
+      "q": "HTTP/2 多路复用",
+      "expect_domains": [
+        "developer.mozilla.org",
+        "web.dev",
+        "zh.wikipedia.org"
+      ]
+    },
+    {
+      "q": "加密 对称 非对称",
+      "expect_domains": [
+        "zh.wikipedia.org",
+        "owasp.org",
+        "csrc.nist.gov"
+      ]
+    },
+    {
+      "q": "正则 表达式 入门",
+      "expect_domains": [
+        "developer.mozilla.org",
+        "zh.wikipedia.org",
+        "regex101.com"
+      ]
+    },
+    {
+      "q": "Python 装饰器",
+      "expect_domains": [
+        "docs.python.org",
+        "realpython.com",
+        "zh.wikipedia.org"
+      ]
+    },
+    {
+      "q": "Go 并发 模型",
+      "expect_domains": [
+        "go.dev",
+        "zh.wikipedia.org",
+        "blog.golang.org"
+      ]
+    },
+    {
+      "q": "React 状态管理",
+      "expect_domains": [
+        "react.dev",
+        "zh.wikipedia.org",
+        "redux.js.org"
+      ]
+    },
+    {
+      "q": "CSS Grid 布局",
+      "expect_domains": [
+        "developer.mozilla.org",
+        "web.dev",
+        "zh.wikipedia.org"
+      ]
+    },
+    {
+      "q": "浏览器 渲染 流程",
+      "expect_domains": [
+        "developer.mozilla.org",
+        "web.dev",
+        "zh.wikipedia.org"
+      ]
+    },
+    {
+      "q": "数据库 事务 隔离级别",
+      "expect_domains": [
+        "postgresql.org",
+        "zh.wikipedia.org",
+        "mysql.com"
       ]
     }
   ]

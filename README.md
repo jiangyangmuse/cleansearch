@@ -511,6 +511,76 @@ act -j verify -P ubuntu-24.04=ghcr.io/catthehacker/ubuntu:act-latest --container
 python scripts/eval-rdap.py --db-path data/rdap-calibration-review.db --json-out reports/assets/rdap-review/calibration.json
 ```
 
+
+## 远端、Chrome 与 Android 验收（2026-11-08 第二轮）
+
+### 远端 CI（本地 bare 仓库 + act 跑干净 clone）
+
+没有 GitHub 凭据，先把远端补成可用的本地 bare 仓库，再在**干净 clone** 里跑 CI——证明工作流跑的是已提交代码，不依赖工作区残留。
+
+```powershell
+git init --bare D:\agent\llq-remote.git
+git remote add origin D:\agent\llq-remote.git
+git push -u origin main
+git clone D:\agent\llq-remote.git D:\agent\build\llq-ci-clone
+cd D:\agent\build\llq-ci-clone
+act -j verify -P ubuntu-24.04=ghcr.io/catthehacker/ubuntu:act-latest --container-architecture linux/amd64
+```
+
+干净 clone 里没有 `.env`、`node_modules`、`apps/web/dist`，CI 仍然：
+
+```
+✅ Install（pip + npm ci）
+✅ API tests   305 passed
+✅ Build web
+✅ Smoke       15 checks
+🏁  Job succeeded
+```
+
+> 换 GitHub 只需 `git remote set-url origin git@github.com:<you>/<repo>.git` 后推送，工作流无需改动。
+
+### Chrome 验收（Chrome for Testing 157）
+
+正式版 Chrome 156 已移除 `--load-extension`（只能手动加载），但 **Chrome for Testing** 保留该开关：
+
+```powershell
+npx --yes @puppeteer/browsers install chrome@stable --path D:\agent\build\cft
+$env:CS_CHROME_PATH='D:\agent\build\cft\chrome\win64-157.0.8103.38\chrome-win64\chrome.exe'
+node scripts/verify-extension.cjs http://127.0.0.1:8000
+```
+
+结果：**12 项 ALL PASS**（popup 收藏、后台保存、PWA 清单、安装性、无 JS 错误）。
+
+### Android（浏览器层面，非真机）
+
+本机没有 Android SDK 与设备，只做了 Android 配置下的验证（`scripts/verify-android.cjs`，Pixel 7 档案）：
+
+| 项 | 结果 |
+| --- | --- |
+| manifest share_target | `action=/bookmarks method=GET`，title/text/url 齐全 |
+| 分享链接预填 | `?url=&text=&title=` → 表单已填 |
+| 触屏保存 | `tap` 提交后书签出现在接口里 |
+| PWA 安装性 | CDP `getInstallabilityErrors` 返回 `[]` |
+| JS 错误 | 无 |
+
+未验：真机安装、系统分享面板拉起、离线启动、深色模式系统联动。
+
+### RDAP 校准（30 个正常域名）
+
+```
+解析成功 26/30，查不到 4（kubernetes.io / huggingface.co / fly.io / notion.so —— ccTLD 或 RDAP 缺失）
+<30 天：0 个      <365 天：0 个
+最年轻：chatgpt.com 1437 天；中位 7008 天；最大 11548 天
+冷查询中位 3152 ms（最大 6142），缓存命中 0 ms
+```
+
+结论：30 天阈值在正常域名上**零误报**，可以保留；代价是可疑结果首次查询多 3–6 秒（已有 30 天缓存兜底）。
+
+### 检索与总结样本扩大
+
+- 标注查询 18 → **40 条**，重跑 `scripts/eval-expansion.py`：扩展命中的 12 条里，Top10 命中 baseline 6/12 → rank 6/12 → **rewrite 9/12**。
+- 总结：5 个主题 `mode=fast` 全部成功，首字中位 **7.24s**（最大 13.1s）、总耗时中位 **19.2s**、170 段、每题 10 条引用、0 个 partial。
+
 ### 本机跑真实 SearXNG（无 Docker 时）
 
 ```powershell
