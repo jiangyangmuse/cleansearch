@@ -1,0 +1,27 @@
+# SearXNG 最小配置：开 JSON、关 limiter，供本机 FastAPI 聚合调用。
+use_default_settings: true
+
+general:
+  instance_name: "cleansearch"
+
+server:
+  limiter: false            # 本机单用户，不限流；暴露公网前必须改回
+  image_proxy: true
+  secret_key: "CHANGE_ME_RANDOM_64_CHARS"
+
+search:
+  safe_search: 1
+  formats: [html, json]     # json 必须显式开启，否则 /api/search 报 UPSTREAM_BAD_RESPONSE
+  autocomplete: ""
+
+ui:
+  static_use_hash: true
+
+# 2026-11-07 实测：这几个 general 引擎默认 disabled，启用后才有独立来源
+engines:
+  - name: bing
+    disabled: false
+  - name: yahoo
+    disabled: false
+  - name: sogou
+    disabled: false

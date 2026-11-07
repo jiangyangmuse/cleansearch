@@ -1,0 +1,138 @@
+[
+  {
+    "round": 1,
+    "q": "日本 首都",
+    "ok": true,
+    "ms": 3303,
+    "total": 10,
+    "upstream_total": 20,
+    "cached": false,
+    "engines": [
+      "google cse"
+    ],
+    "unresponsive": [
+      "brave(Suspended: too many requests)",
+      "duckduckgo(CAPTCHA)",
+      "wikidata(timeout)"
+    ]
+  },
+  {
+    "round": 1,
+    "q": "Python documentation",
+    "ok": true,
+    "ms": 1003,
+    "total": 13,
+    "upstream_total": 20,
+    "cached": false,
+    "engines": [
+      "google cse"
+    ],
+    "unresponsive": [
+      "brave(Suspended: too many requests)",
+      "duckduckgo(CAPTCHA)",
+      "wikidata(Suspended: timeout)"
+    ]
+  },
+  {
+    "round": 1,
+    "q": "HTTP",
+    "ok": true,
+    "ms": 717,
+    "total": 11,
+    "upstream_total": 20,
+    "cached": false,
+    "engines": [
+      "google cse"
+    ],
+    "unresponsive": [
+      "brave(Suspended: too many requests)",
+      "duckduckgo(CAPTCHA)",
+      "wikidata(Suspended: timeout)"
+    ]
+  },
+  {
+    "round": 1,
+    "q": "asyncio event loop 原理",
+    "ok": true,
+    "ms": 1056,
+    "total": 15,
+    "upstream_total": 20,
+    "cached": false,
+    "engines": [
+      "google cse"
+    ],
+    "unresponsive": [
+      "brave(Suspended: too many requests)",
+      "duckduckgo(CAPTCHA)",
+      "wikidata(Suspended: timeout)"
+    ]
+  },
+  {
+    "round": 2,
+    "q": "日本 首都",
+    "ok": true,
+    "ms": 768,
+    "total": 10,
+    "upstream_total": 20,
+    "cached": false,
+    "engines": [
+      "google cse"
+    ],
+    "unresponsive": [
+      "brave(Suspended: too many requests)",
+      "duckduckgo(CAPTCHA)",
+      "wikidata(Suspended: timeout)"
+    ]
+  },
+  {
+    "round": 2,
+    "q": "Python documentation",
+    "ok": true,
+    "ms": 684,
+    "total": 13,
+    "upstream_total": 20,
+    "cached": false,
+    "engines": [
+      "google cse"
+    ],
+    "unresponsive": [
+      "brave(Suspended: too many requests)",
+      "duckduckgo(CAPTCHA)",
+      "wikidata(Suspended: timeout)"
+    ]
+  },
+  {
+    "round": 2,
+    "q": "HTTP",
+    "ok": true,
+    "ms": 869,
+    "total": 11,
+    "upstream_total": 20,
+    "cached": false,
+    "engines": [
+      "google cse"
+    ],
+    "unresponsive": [
+      "brave(Suspended: too many requests)",
+      "duckduckgo(CAPTCHA)",
+      "wikidata(Suspended: timeout)"
+    ]
+  },
+  {
+    "round": 2,
+    "q": "asyncio event loop 原理",
+    "ok": true,
+    "ms": 3197,
+    "total": 15,
+    "upstream_total": 20,
+    "cached": false,
+    "engines": [
+      "google cse"
+    ],
+    "unresponsive": [
+      "brave(Suspended: too many requests)",
+      "duckduckgo(CAPTCHA)",
+      "wikidata(timeout)"
+    ]
+  }
+]

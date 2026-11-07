@@ -1,0 +1,6 @@
+# 本地黑名单样本（M1）
+# 一行一个域名或完整 URL；# 开头是注释。
+# 生产环境把 BLOCKLIST_PATH 指向真实的 URLhaus / OpenPhish 导出文件。
+evil-phish.test
+malware-top.xyz
+https://tracker.example.test/scam

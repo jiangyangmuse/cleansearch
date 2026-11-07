@@ -1,0 +1,455 @@
+{
+  "说明": "M1 查询解析回归集：45 条常用 / 易误触发查询。新增用例请追加，不要改已有期望值。",
+  "cases": [
+    {
+      "id": "01",
+      "raw": "数分知识点 g",
+      "expect": {
+        "q": "数分知识点",
+        "engine": "google",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "02",
+      "raw": "python fastapi b",
+      "expect": {
+        "q": "python fastapi",
+        "engine": "bing",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "03",
+      "raw": "隐私搜索 d",
+      "expect": {
+        "q": "隐私搜索",
+        "engine": "duckduckgo",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "04",
+      "raw": "隐私搜索 ddg",
+      "expect": {
+        "q": "隐私搜索",
+        "engine": "duckduckgo",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "05",
+      "raw": "独立索引 br",
+      "expect": {
+        "q": "独立索引",
+        "engine": "brave",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "06",
+      "raw": "教程 yt",
+      "expect": {
+        "q": "教程",
+        "engine": "youtube",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "07",
+      "raw": "开源项目 gh",
+      "expect": {
+        "q": "开源项目",
+        "engine": "github",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "08",
+      "raw": "大模型 ar",
+      "expect": {
+        "q": "大模型",
+        "engine": "arxiv",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "09",
+      "raw": "文献综述 sc",
+      "expect": {
+        "q": "文献综述",
+        "engine": "scholar",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "10",
+      "raw": "量子力学 w",
+      "expect": {
+        "q": "量子力学",
+        "engine": "wikipedia",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "11",
+      "raw": "数分知识点 G",
+      "expect": {
+        "q": "数分知识点",
+        "engine": "google",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "12",
+      "raw": "数分知识点　g",
+      "expect": {
+        "q": "数分知识点",
+        "engine": "google",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "13",
+      "raw": "  数分知识点 g  ",
+      "expect": {
+        "q": "数分知识点",
+        "engine": "google",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "14",
+      "raw": "C++ 教程 g",
+      "expect": {
+        "q": "C++ 教程",
+        "engine": "google",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "15",
+      "raw": "数据分析  br",
+      "expect": {
+        "q": "数据分析",
+        "engine": "brave",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "16",
+      "raw": "天气预报 zh",
+      "expect": {
+        "q": "天气预报",
+        "engine": "default",
+        "region": "cn",
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "17",
+      "raw": "天气预报 cn",
+      "expect": {
+        "q": "天气预报",
+        "engine": "default",
+        "region": "cn",
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "18",
+      "raw": "新幹線 jp",
+      "expect": {
+        "q": "新幹線",
+        "engine": "default",
+        "region": "jp",
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "19",
+      "raw": "treasury yield us",
+      "expect": {
+        "q": "treasury yield",
+        "engine": "default",
+        "region": "us",
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "20",
+      "raw": "concurrency en",
+      "expect": {
+        "q": "concurrency",
+        "engine": "default",
+        "region": "en",
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "21",
+      "raw": "数分知识点 !g",
+      "expect": {
+        "q": "数分知识点",
+        "engine": "google",
+        "region": null,
+        "router": "bang"
+      }
+    },
+    {
+      "id": "22",
+      "raw": "test!g",
+      "expect": {
+        "q": "test",
+        "engine": "google",
+        "region": null,
+        "router": "bang"
+      }
+    },
+    {
+      "id": "23",
+      "raw": "隐私搜索 !d",
+      "expect": {
+        "q": "隐私搜索",
+        "engine": "duckduckgo",
+        "region": null,
+        "router": "bang"
+      }
+    },
+    {
+      "id": "24",
+      "raw": "天气预报 !zh",
+      "expect": {
+        "q": "天气预报",
+        "engine": "default",
+        "region": "cn",
+        "router": "bang"
+      }
+    },
+    {
+      "id": "25",
+      "raw": "C g",
+      "expect": {
+        "q": "C g",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "26",
+      "raw": "1 g",
+      "expect": {
+        "q": "1 g",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "27",
+      "raw": "x b",
+      "expect": {
+        "q": "x b",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "28",
+      "raw": "A b",
+      "expect": {
+        "q": "A b",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "29",
+      "raw": "空 g",
+      "expect": {
+        "q": "空 g",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "30",
+      "raw": "\"sort g\"",
+      "expect": {
+        "q": "\"sort g\"",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "31",
+      "raw": "\"sort g\" 说明",
+      "expect": {
+        "q": "\"sort g\" 说明",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "32",
+      "raw": "数据 g extra",
+      "expect": {
+        "q": "数据 g extra",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "33",
+      "raw": "数据 zz",
+      "expect": {
+        "q": "数据 zz",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "34",
+      "raw": "数据 xx",
+      "expect": {
+        "q": "数据 xx",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "35",
+      "raw": "!g",
+      "expect": {
+        "q": "!g",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "36",
+      "raw": "g",
+      "expect": {
+        "q": "g",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "37",
+      "raw": "C 语言 g 入门",
+      "expect": {
+        "q": "C 语言 g 入门",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "38",
+      "raw": "\"未闭合 g",
+      "expect": {
+        "q": "\"未闭合 g",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "39",
+      "raw": "python asyncio",
+      "expect": {
+        "q": "python asyncio",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "40",
+      "raw": "数据分析 知识点",
+      "expect": {
+        "q": "数据分析 知识点",
+        "engine": "default",
+        "region": null,
+        "router": "default"
+      }
+    },
+    {
+      "id": "41",
+      "raw": "独立索引 sp",
+      "expect": {
+        "q": "独立索引",
+        "engine": "startpage",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "42",
+      "raw": "轻量搜索 mj",
+      "expect": {
+        "q": "轻量搜索",
+        "engine": "mojeek",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "43",
+      "raw": "新闻 y",
+      "expect": {
+        "q": "新闻",
+        "engine": "yahoo",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "44",
+      "raw": "中文检索 sg",
+      "expect": {
+        "q": "中文检索",
+        "engine": "sogou",
+        "region": null,
+        "router": "suffix"
+      }
+    },
+    {
+      "id": "45",
+      "raw": "官方文档 gc",
+      "expect": {
+        "q": "官方文档",
+        "engine": "google cse",
+        "region": null,
+        "router": "suffix"
+      }
+    }
+  ]
+}

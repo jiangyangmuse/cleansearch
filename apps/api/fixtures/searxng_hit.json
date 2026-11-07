@@ -1,0 +1,203 @@
+{
+  "query": "fixture",
+  "number_of_results": 11,
+  "results": [
+    {
+      "url": "https://docs.python.org/3/library/asyncio.html",
+      "title": "asyncio — 异步 I/O 并发编程 · Python 文档",
+      "content": "asyncio 是用于编写并发代码的库，使用 async/await 语法。它为多种系统提供高性能网络与 IPC 支持，并提供高层 API 用于并发执行任务、同步、超时控制与子进程管理。",
+      "engine": "google",
+      "engines": [
+        "google",
+        "brave"
+      ],
+      "score": 0.95,
+      "category": "general",
+      "publishedDate": null,
+      "parsed_url": [
+        "https:",
+        "docs.python.org",
+        "/3/library/asyncio.html"
+      ]
+    },
+    {
+      "url": "https://fastapi.tiangolo.com/",
+      "title": "FastAPI 官方文档 · 高性能 Python Web 框架",
+      "content": "FastAPI 是基于标准 Python 类型注解构建的高性能框架，自动生成 OpenAPI 文档，支持依赖注入、Pydantic 数据校验与异步端点。",
+      "engine": "bing",
+      "engines": [
+        "bing",
+        "brave"
+      ],
+      "score": 0.92,
+      "category": "general",
+      "publishedDate": "2026-06-18",
+      "parsed_url": [
+        "https:",
+        "fastapi.tiangolo.com",
+        "/"
+      ]
+    },
+    {
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/HTTP",
+      "title": "HTTP 概述 · MDN Web 文档",
+      "content": "HTTP 是用于传输超媒体文档的应用层协议，采用请求/响应模型。本文介绍消息结构、方法、状态码、头部字段与缓存语义。",
+      "engine": "brave",
+      "engines": [
+        "brave"
+      ],
+      "score": 0.88,
+      "category": "general",
+      "publishedDate": null,
+      "parsed_url": [
+        "https:",
+        "developer.mozilla.org",
+        "/zh-CN/docs/Web/HTTP"
+      ]
+    },
+    {
+      "url": "https://docs.python.org/3/library/sqlite3.html",
+      "title": "sqlite3 — SQLite 数据库接口 · Python 文档",
+      "content": "该模块提供符合 DB-API 2.0 的 SQLite 接口，支持事务、自定义函数、FTS5 全文索引扩展以及 WAL 日志模式。",
+      "engine": "google",
+      "engines": [
+        "google"
+      ],
+      "score": 0.86,
+      "category": "general",
+      "publishedDate": null,
+      "parsed_url": [
+        "https:",
+        "docs.python.org",
+        "/3/library/sqlite3.html"
+      ]
+    },
+    {
+      "url": "https://docs.searxng.org/admin/settings/settings_search.html",
+      "title": "搜索设置 · SearXNG 文档",
+      "content": "settings.yml 的 search 段控制安全搜索等级、分页、默认语言与响应格式。若要在 API 调用中拿到 JSON，必须在 formats 中显式开启 json。",
+      "engine": "duckduckgo",
+      "engines": [
+        "duckduckgo"
+      ],
+      "score": 0.83,
+      "category": "general",
+      "publishedDate": null,
+      "parsed_url": [
+        "https:",
+        "docs.searxng.org",
+        "/admin/settings/settings_search.html"
+      ]
+    },
+    {
+      "url": "https://zh.wikipedia.org/wiki/Inverted_index",
+      "title": "倒排索引 · 维基百科",
+      "content": "倒排索引是一种存储词项到文档映射的数据结构，是全文检索系统的核心。文章介绍词典、倒排表、压缩编码与查询求交流程。",
+      "engine": "google",
+      "engines": [
+        "google"
+      ],
+      "score": 0.79,
+      "category": "general",
+      "publishedDate": null,
+      "parsed_url": [
+        "https:",
+        "zh.wikipedia.org",
+        "/wiki/Inverted_index"
+      ]
+    },
+    {
+      "url": "https://cn.vitejs.dev/guide/",
+      "title": "开始 · Vite 中文文档",
+      "content": "Vite 是基于原生 ESM 的前端构建工具，开发时按需编译模块，构建时使用 Rollup。支持 React、Vue 等框架模板与代理配置。",
+      "engine": "bing",
+      "engines": [
+        "bing"
+      ],
+      "score": 0.77,
+      "category": "general",
+      "publishedDate": null,
+      "parsed_url": [
+        "https:",
+        "cn.vitejs.dev",
+        "/guide/"
+      ]
+    },
+    {
+      "url": "https://zh-hans.react.dev/",
+      "title": "React 官方中文文档",
+      "content": "React 是用于构建用户界面的库，以组件、状态与单向数据流组织界面。文档覆盖 Hooks、状态管理、并发特性与性能优化。",
+      "engine": "brave",
+      "engines": [
+        "brave"
+      ],
+      "score": 0.75,
+      "category": "general",
+      "publishedDate": null,
+      "parsed_url": [
+        "https:",
+        "zh-hans.react.dev",
+        "/"
+      ]
+    },
+    {
+      "url": "https://nginx.org/en/docs/http/ngx_http_proxy_module.html",
+      "title": "Module ngx_http_proxy_module · Nginx 文档",
+      "content": "proxy_pass、proxy_set_header、proxy_http_version 等指令用于把请求转发到上游服务器，本文列出全部指令与默认值。",
+      "engine": "google",
+      "engines": [
+        "google"
+      ],
+      "score": 0.72,
+      "category": "general",
+      "publishedDate": null,
+      "parsed_url": [
+        "https:",
+        "nginx.org",
+        "/en/docs/http/ngx_http_proxy_module.html"
+      ]
+    },
+    {
+      "url": "https://github.blog/news-insights/octoverse/",
+      "title": "Octoverse 2025：开源生态年度报告",
+      "content": "GitHub 年度报告统计语言增长、AI 辅助开发渗透率与最活跃仓库。Python 连续第三年成为使用量第一的语言。",
+      "engine": "duckduckgo",
+      "engines": [
+        "duckduckgo"
+      ],
+      "score": 0.68,
+      "category": "general",
+      "publishedDate": "2025-10-28",
+      "parsed_url": [
+        "https:",
+        "github.blog",
+        "/news-insights/octoverse/"
+      ]
+    },
+    {
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/HTTP?utm_source=telegram&utm_medium=social",
+      "title": "HTTP 概述 · MDN Web 文档（分享链接）",
+      "content": "同一篇文章的分享链接，带跟踪参数，用于验证去重逻辑。",
+      "engine": "duckduckgo",
+      "engines": [
+        "duckduckgo"
+      ],
+      "score": 0.51,
+      "category": "general",
+      "publishedDate": null,
+      "parsed_url": [
+        "https:",
+        "developer.mozilla.org",
+        "/zh-CN/docs/Web/HTTP"
+      ]
+    }
+  ],
+  "answers": [],
+  "corrections": [],
+  "infoboxes": [],
+  "suggestions": [
+    "python asyncio 教程",
+    "fastapi 入门"
+  ],
+  "unresponsive_engines": []
+}

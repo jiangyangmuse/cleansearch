@@ -1,0 +1,4 @@
+问题：{query}
+
+材料：
+{materials}

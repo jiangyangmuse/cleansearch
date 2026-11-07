@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>CleanSearch 收藏</title>
+  </head>
+  <body>
+    <h1>收藏到 CleanSearch</h1>
+    <input class="url-input" id="url" type="text" placeholder="当前页地址" aria-label="要收藏的地址" />
+    <label>标题 <input id="title" type="text" /></label>
+    <button id="save" disabled>收藏</button>
+    <p id="status" role="status"></p>
+    <details>
+      <summary>连接设置</summary>
+      <label>API 地址 <input id="api" type="text" placeholder="http://127.0.0.1:8000" /></label>
+      <label>访问 token <input id="token" type="password" placeholder="在 /tools 页面获取" /></label>
+      <button id="save-settings" type="button" disabled>保存设置</button>
+    </details>
+    <script src="popup.js"></script>
+  </body>
+</html>

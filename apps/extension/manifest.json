@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "CleanSearch 收藏",
+  "version": "0.1.0",
+  "description": "把当前页一键收藏到本地 CleanSearch；书签只存在你自己的机器上。",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1/*",
+    "http://localhost/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "收藏到 CleanSearch"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

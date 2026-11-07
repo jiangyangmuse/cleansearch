@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# Node
+node_modules/
+apps/web/dist/
+
+# 本地配置与数据
+.env
+data/
+*.db
+*.db-wal
+*.db-shm
+
+# 编辑器
+.vscode/
+.idea/

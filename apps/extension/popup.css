@@ -1,0 +1,35 @@
+body {
+  width: 320px;
+  margin: 0;
+  padding: 14px;
+  font: 13px/1.5 "Segoe UI", "PingFang SC", system-ui, sans-serif;
+  color: #1d2321;
+  background: #fbfbf9;
+}
+h1 { margin: 0 0 8px; font-size: 14px; }
+.url-input { margin-bottom: 8px; color: #66716c; }
+label { display: block; margin-bottom: 8px; color: #66716c; }
+input {
+  display: block;
+  width: 100%;
+  margin-top: 3px;
+  padding: 6px 8px;
+  font: inherit;
+  color: #1d2321;
+  border: 1px solid #e3e7e3;
+  border-radius: 6px;
+}
+button {
+  width: 100%;
+  padding: 7px;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: #2f6f4f;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#status { min-height: 18px; margin: 8px 0 0; color: #2f6f4f; }
+details { margin-top: 10px; color: #66716c; }
+details button { margin-top: 6px; background: #eaf2ed; color: #2f6f4f; }
