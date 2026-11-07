@@ -1,0 +1,182 @@
+{
+  "authorized_scope": "previous accepted fixes and current credits/CI documentation",
+  "base_sha": "403253542059e6dcc5625f76e07a5ac78b6adab9",
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "b702ecb48e88fa088105256f847b1829e67953df312aa2b759454fb669f3973e"
+    },
+    {
+      "path": "CONTRIBUTORS.md",
+      "sha256": "f8e315015cb5ee9e25567656891ff86e6ede86047ae1d0ae42310d8938dc1640"
+    },
+    {
+      "path": "README.md",
+      "sha256": "ccca25ae91301b240e733dcd2492cfa6db0e9fee21319c96619ba291a96c11e7"
+    },
+    {
+      "path": "apps/api/app/core/rdap.py",
+      "sha256": "13339b8bad2bc6926e2df8b07fe7de320ebe260192685bf8f50ade2fca24fa29"
+    },
+    {
+      "path": "apps/api/app/core/summarize.py",
+      "sha256": "139802baa44d529eae7c220956bf3c9c6ba8863568ee7417ea0485d05a158b63"
+    },
+    {
+      "path": "apps/api/app/prompts/summary_system.txt",
+      "sha256": "06eeb2326dc8ae77de68020c8add13957dae3dc2685ddf262d35a0ee425ab71d"
+    },
+    {
+      "path": "apps/api/tests/test_eval_tools.py",
+      "sha256": "335b169df3822aa9ae369850a834869a095a6e0c0bb2a6cc69aa6524a02f7cd0"
+    },
+    {
+      "path": "apps/api/tests/test_rdap.py",
+      "sha256": "68fc7ed7b3c69b5b234a850acb55120d72bd47f8a4a41afb62e9e5041ad83bfd"
+    },
+    {
+      "path": "apps/web/public/manifest.webmanifest",
+      "sha256": "022b39da6a986340e9701230ac1100ae7c96dc23a13400e23d76408b9da4e501"
+    },
+    {
+      "path": "docs/决策与接口变更.md",
+      "sha256": "3481d669685921b22fcb1d3964c1102e7a6bf90739bdb465d835b05a35c79885"
+    },
+    {
+      "path": "docs/进展与欠账.md",
+      "sha256": "550596455011b32ce70cd68ada7592e6c33c829fa5aeaf8aa15a89f4f1524185"
+    },
+    {
+      "path": "reports/2026-11-07-1659-next-action-review.md",
+      "sha256": "37065ea2f9d8f28de5c811343aa26b7dc8f596ffdf1291d518afa88527230b39"
+    },
+    {
+      "path": "reports/assets/hosted-ci-credit/document-check.json",
+      "sha256": "da234eb1385cf87c3cc2092b7223a8059f3533238fc9471c2168d0f22a203676"
+    },
+    {
+      "path": "reports/assets/hosted-ci-credit/hosted-ci.json",
+      "sha256": "615b0efa096f9349b3bee84f4f6f3f4981000bc9369b361d8f6dd81785171495"
+    },
+    {
+      "path": "reports/assets/hosted-ci-credit/prepublish-api-tests.xml",
+      "sha256": "ddd0962887091252b00f7ff02582df14f92df9e5be862f74639f2b3101fa8174"
+    },
+    {
+      "path": "reports/assets/next-action-review/api-tests.xml",
+      "sha256": "5fba40c0e99f70a66c36b668d53df3b37adbdfb874b59f73835c3063844a0503"
+    },
+    {
+      "path": "reports/assets/next-action-review/browser-before/android-emulation.json",
+      "sha256": "504cd1af05983d12a91b949a6366eb244da8c28f2112427ec7e467253b5eb488"
+    },
+    {
+      "path": "reports/assets/next-action-review/browser-before/extension.json",
+      "sha256": "8842a7cf9be46102f7828a456975b3c26009f33b301a9e0c6594fcc18b815e77"
+    },
+    {
+      "path": "reports/assets/next-action-review/browser/android-emulation.json",
+      "sha256": "b8222a90dd5554130fadaf604b04060d73f464e9edfd61c8f01f0a55b48e69ac"
+    },
+    {
+      "path": "reports/assets/next-action-review/browser/android-emulation.png",
+      "sha256": "ebe62e427c6fee3c07605a248b8721dc253aa9968f14edd8797a5ed4c5b55a22"
+    },
+    {
+      "path": "reports/assets/next-action-review/browser/extension.json",
+      "sha256": "79deca121971a4750468aa4cd910d5a206035c6176d9bb4baeef31f7da9c646f"
+    },
+    {
+      "path": "reports/assets/next-action-review/browser/extension.png",
+      "sha256": "926c17671d56821a820a74c514b0c439584245760ad35fb8f7f4cea3d92714a0"
+    },
+    {
+      "path": "reports/assets/next-action-review/cleanup.json",
+      "sha256": "0eeaf4c9328744642b254a1e1e5e28b5831e9b26389dcc4b6fc632230567c753"
+    },
+    {
+      "path": "reports/assets/next-action-review/manual-quality.md",
+      "sha256": "796254b4bfdd8cf6edeac994b59bef9c6ea2785277258e546b5c3ebe94106304"
+    },
+    {
+      "path": "reports/assets/next-action-review/probe-prompt.py",
+      "sha256": "5e8e194e6661c2bf84ab24c3a371b9e560c01ee1184b0af4a4ba66f36186caea"
+    },
+    {
+      "path": "reports/assets/next-action-review/probe-rdap.py",
+      "sha256": "2cff7df784d903ad139f22a3e191ee664c9f7cf4f9268b2883379812510fe899"
+    },
+    {
+      "path": "reports/assets/next-action-review/prompt-replay.json",
+      "sha256": "69f48e71d89a6a58b90db201981a50562d9a82b37318c5d58ee32372c690a1be"
+    },
+    {
+      "path": "reports/assets/next-action-review/rdap-concurrency.json",
+      "sha256": "2faddfaa45bfd9d0177b90ea6427528884fe0869409e4667ca75c913863ddb60"
+    },
+    {
+      "path": "reports/assets/next-action-review/rdap-controls.json",
+      "sha256": "32284ef23ff44b7a7337c1089176bb1bf009340391bb2f335dff5c7f8761df5e"
+    },
+    {
+      "path": "reports/assets/next-action-review/retrieval-40.json",
+      "sha256": "efabf2776adeff09a0a7d36ae0b30b0b61bf504ef94c277cb24b04a750f2428c"
+    },
+    {
+      "path": "reports/assets/next-action-review/smoke-powershell.txt",
+      "sha256": "71b3892ba9a4eec47a3b2f40acd29801bcd37e3c0a2e49d8cb56ae10c823d0fd"
+    },
+    {
+      "path": "reports/assets/next-action-review/smoke-python.txt",
+      "sha256": "ec14d57cf4a53d614a967391fc1dfe39a1a876b55e6ee18deac02ed9c73f72e6"
+    },
+    {
+      "path": "reports/assets/next-action-review/summary-12-reassessed.json",
+      "sha256": "bb328d2a80a992e26e6939d1ac242ea3a3743427e44bdf903105285e3c926aab"
+    },
+    {
+      "path": "reports/assets/next-action-review/summary-12.json",
+      "sha256": "bd52aff80a7228c8ca213279535aff168610faaff8d6f9674852ec2cb0b46f0a"
+    },
+    {
+      "path": "reports/assets/next-action-review/validation.json",
+      "sha256": "99afe17697d99a0255ce423a02a8f9e90391adf0151baa76bb2dab55e848feea"
+    },
+    {
+      "path": "reports/assets/next-action-review/verify.py",
+      "sha256": "f7605c678650e88d5962eebd6be7827d19c78f929c73b60252bd2e6e18317754"
+    },
+    {
+      "path": "scripts/browser-check.cjs",
+      "sha256": "f3bfad7f2860413517144a30ace446a0e0ca42a1078ecd9fa019f5a00774dda8"
+    },
+    {
+      "path": "scripts/browser-check.test.cjs",
+      "sha256": "86f60fbac81bfb1e5ed230af9ee2ffd8643e273f8d74ce60c3380cd9c18abbf5"
+    },
+    {
+      "path": "scripts/eval-expansion.py",
+      "sha256": "a7b60173282250a8fa83bdb545f7988b3ae2cec016253e2593f54870158d50d3"
+    },
+    {
+      "path": "scripts/eval-rdap.py",
+      "sha256": "30108a5be671133e677f712a4a1ffa1a9aff4321378f68f03a5085438209e3d3"
+    },
+    {
+      "path": "scripts/eval-summary.py",
+      "sha256": "b8b55c4e0384429bbb7c83a6f9ab40ddf512af7a4d13631cf7dccc3809da8681"
+    },
+    {
+      "path": "scripts/verify-android.cjs",
+      "sha256": "d97b748926fc495a1571f823ab6416f0668adee5f4cf4674beed822aa04a4e8a"
+    },
+    {
+      "path": "scripts/verify-extension.cjs",
+      "sha256": "7a23528e84187f8c7bd91059dcb3e5ba0dcb5fb2c27821becbb0e61ec6b38aad"
+    }
+  ],
+  "manifest_excluded_from_own_hash": true,
+  "unexpected_paths": [],
+  "configured_credential_scan": "pass",
+  "count": 43
+}

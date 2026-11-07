@@ -1,7 +1,9 @@
 # CleanSearch · 干净搜索聚合器
 
 聚合多引擎检索 + 零广告结果页 + 三档相关性分组 + 侧栏 AI 总结 + 书签启动台。
-本机单用户主线已交付：搜索、书签、正文增强、缓存、一键添加、千问/DeepSeek 总结，以及 Serper 真实兜底、RDAP 首轮校准和 Compose 持久化均有验收证据。下一阶段补远端 CI、正式浏览器/Android 验收与更广样本评估。[当前进展与待办](docs/进展与欠账.md) · [完工台账](reports/INDEX.md)
+本机单用户主线已交付：搜索、书签、正文增强、缓存、一键添加、千问/DeepSeek 总结，以及 Serper 真实兜底、RDAP 首轮校准和 Compose 持久化均有验收证据。已核实 GitHub 托管 CI 基线；工作区新增修复待发布复验，正式浏览器/Android 与更广样本仍需验收。[当前进展与待办](docs/进展与欠账.md) · [完工台账](reports/INDEX.md)
+
+[![CI](https://github.com/jiangyangmuse/cleansearch/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/jiangyangmuse/cleansearch/actions/workflows/ci.yml) · [贡献者与 AI 协作](CONTRIBUTORS.md)
 
 ## M0 做了什么
 
@@ -492,7 +494,7 @@ act -j verify -P ubuntu-24.04=ghcr.io/catthehacker/ubuntu:act-latest --container
 1. 冒烟步骤原来用 `shell: pwsh`，在 Linux runner 上直接 `command not found` → 改成 bash + `scripts/ci-smoke.py`（跨平台，15 项检查）。
 2. 等待服务就绪的内联 Python 写进 YAML 会破坏缩进 → 抽成 `scripts/ci-wait.py`。
 
-> 仍未做：推 GitHub 跑真实 Actions（无远端与凭据）。act 是本地等价验证，不算托管平台结果。
+> 历史说明：上述是本地 act 记录。GitHub 托管基线现已通过，详见下文；工作区新增修复仍需在发布后按对应提交复验。
 
 
 ### RDAP 域名年龄
@@ -516,9 +518,9 @@ python scripts/eval-rdap.py --db-path data/rdap-calibration-review.db --json-out
 
 ### CI 的当前边界
 
-`origin` 目前指向本地 `D:\agent\llq-remote.git`。DSH [上一轮报告](reports/completed/2026-11-07-1631-remote-ci-chrome-android-samples.md)记录了干净 clone 中 act 的 305 项测试、构建与 15 项冒烟；这是本地执行记录，尚没有本项目 GitHub 托管运行链接。本轮独立验证当前工作区的 API 测试、构建和两套冒烟，并将浏览器验收判断器的负例测试纳入工作流。
+DSH [本地记录](reports/completed/2026-11-07-1631-remote-ci-chrome-android-samples.md)中的 bare/act 验证已由后续 GitHub 托管基线补齐。当前 origin 为 `git@github.com:jiangyangmuse/cleansearch.git`，已提交版本的 API 测试、构建与冒烟通过；工作区 M17 修复和浏览器判断器测试尚未包含在该托管提交中。
 
-托管验收需要明确目标仓库、确认访问与 Actions 权限，并在获准提交/推送后核对相同提交 SHA 的运行结果。更换 remote URL 本身不会完成验收。按工作区协议，本轮没有提交、推送或改动现有远端。
+托管验收按具体提交 SHA 和运行链接记录。上轮本地验收为 323 项，已提交基线的托管测试为 315 项；这两个版本分别记录，待新增修复发布后再核对最新运行。
 
 ### 扩展与分享的浏览器级验收
 
@@ -558,41 +560,24 @@ python scripts/eval-rdap.py --aggregate docs/m10-evidence/p3-rdap-sample.json --
 
 ## GitHub 远端与托管 CI（2026-11-08）
 
-- 仓库：https://github.com/jiangyangmuse/cleansearch （public）
-- 认证：SSH（git@github.com:jiangyangmuse/cleansearch.git）
-- 提交身份：jyms_rue <jyme_rue@qq.com>（历史 4 个提交在推送前重写了作者）
+[公开仓库](https://github.com/jiangyangmuse/cleansearch)已通过 SSH 接入；现有提交作者保持不变。独立核对 GitHub API、job 步骤及日志，托管基线已验收。
 
-```powershell
-git remote set-url origin git@github.com:jiangyangmuse/cleansearch.git
-git push -u origin main
-```
+| 运行 | 提交 | 触发与结果 | 日本时间（JST） |
+| --- | --- | --- | --- |
+| [ci #1](https://github.com/jiangyangmuse/cleansearch/actions/runs/42393430557) | `479978e878a1d75732b696a6f5d28aa97bb744ab` | push main，success，33 秒 | 2026-11-08 01:51:59–01:52:32 |
+| [ci #2](https://github.com/jiangyangmuse/cleansearch/actions/runs/42393578528) | `403253542059e6dcc5625f76e07a5ac78b6adab9` | push main，success，42 秒 | 2026-11-08 01:53:47–01:54:29 |
 
-首次推送触发的 Actions 结果（33 秒，8 步全绿）：
+ci #2 的安装、API 测试、前端构建、fixture 冒烟及收尾步骤均成功；日志确认 **315 passed in 7.67s**、**42 modules transformed**、跨平台冒烟通过。证据按提交记录在 [托管 CI 核对文件](reports/assets/hosted-ci-credit/hosted-ci.json)。
 
-```
-ci #1  push main  completed success  33s
-  1. Set up job                             success
-  2. actions/checkout@v4                    success
-  3. actions/setup-python@v5                success
-  4. actions/setup-node@v4                  success
-  5. Install                                success
-  6. API tests                              success
-  7. Build web                              success
-  8. Smoke (fixture, no upstream network)   success
-```
+当前工作区 M17 修复（共享 RDAP 并发、验收工具、总结采集等）本地已验 323 项，尚未包含在上述已提交 SHA 中；新增的浏览器判断器测试步骤也尚未托管执行。发布这些改动后，需要再验新 SHA，不能用 ci #2 的绿色状态代替。
 
-https://github.com/jiangyangmuse/cleansearch/actions/runs/42393430557
+### 与本地验证的关系
 
-### 与本地 act 的差异（同样 8 步全绿）
+本地 act 用于提前验证工作流；GitHub 托管执行补充真实 runner 与权限环境的证据。两次托管成功不代表所有服务凭据、矩阵构建或分支保护均已验收；本轮未根据单次耗时推断缓存命中或性能收益。
 
-| 维度 | act（本地） | GitHub Actions |
-| --- | --- | --- |
-| 耗时 | 3–5 分钟（含拉镜像、装依赖） | 33 秒（托管缓存命中） |
-| 缓存 | setup-node 可命中，pip 无 | 两者都有托管缓存 |
-| runner | ghcr 的 ubuntu 镜像，工具自带安装 | GitHub 托管 runner，预装齐全 |
-| 权限 | 无 secrets/权限校验 | 有 GITHUB_TOKEN 与权限声明 |
+### 贡献署名
 
-结论：act 能在推送前拦住工作流问题（本轮它先抓到 pwsh 与 YAML 两个真 bug），但不能替代托管运行——缓存、runner 镜像与权限差异只有真跑才暴露。
+项目已记录 Codex 与 DeepSeek Harness（DSH）的实际 AI 协作贡献，见 [贡献者与 AI 协作](CONTRIBUTORS.md)。GitHub Contributors 自动统计依赖提交及关联账号；本文件记录工具署名，不伪造账号映射或改写历史作者。
 
 ### 本机跑真实 SearXNG（无 Docker 时）
 
@@ -736,4 +721,4 @@ llq/
 
 ## 下一步
 
-按条件补齐远端托管 CI、正式浏览器与 Android 验收，扩大包含新注册正常域名的质量评估集。[待办、前提与完成标准](docs/进展与欠账.md#需要补齐的验收)
+将已验收的工作区修复发布并复验新 SHA 的托管 CI，继续补正式浏览器/Android、新注册正常域名与事实质量验收。[待办、前提与完成标准](docs/进展与欠账.md#需要补齐的验收)

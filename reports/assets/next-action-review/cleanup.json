@@ -1,0 +1,13 @@
+{
+  "initial_failed_run_test_rows_removed": 3,
+  "fixture_remaining_bookmarks": 0,
+  "production_bookmarks_before": 2,
+  "production_bookmarks_after": 2,
+  "formal_bookmarks_written_by_this_review": false,
+  "temporary_ports": {
+    "18160": "stopped",
+    "18161": "stopped"
+  },
+  "production_health": "ok",
+  "ollama_health": 200
+}

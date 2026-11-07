@@ -1,0 +1,109 @@
+{
+  "scope": "desktop-chromium-pixel7-emulation",
+  "real_android": false,
+  "os_share_panel": "not-tested",
+  "os_install": "not-tested",
+  "checks": [
+    {
+      "name": "share_target declaration",
+      "ok": true,
+      "detail": "/bookmarks"
+    },
+    {
+      "name": "share parameter mapping",
+      "ok": true,
+      "detail": {
+        "title": "title",
+        "text": "text",
+        "url": "url"
+      }
+    },
+    {
+      "name": "unique URL absent before test",
+      "ok": true,
+      "detail": "fresh UUID URL"
+    },
+    {
+      "name": "url and title prefill",
+      "ok": true,
+      "detail": "url and title"
+    },
+    {
+      "name": "url and title title",
+      "ok": true,
+      "detail": "url and title"
+    },
+    {
+      "name": "url and title URL parameters cleared",
+      "ok": true,
+      "detail": "http://127.0.0.1:18160/bookmarks"
+    },
+    {
+      "name": "text-only URL prefill",
+      "ok": true,
+      "detail": "text-only URL"
+    },
+    {
+      "name": "text-only URL title",
+      "ok": true,
+      "detail": "text-only URL"
+    },
+    {
+      "name": "text-only URL URL parameters cleared",
+      "ok": true,
+      "detail": "http://127.0.0.1:18160/bookmarks"
+    },
+    {
+      "name": "URL in shared prose prefill",
+      "ok": true,
+      "detail": "URL in shared prose"
+    },
+    {
+      "name": "URL in shared prose title",
+      "ok": true,
+      "detail": "URL in shared prose"
+    },
+    {
+      "name": "URL in shared prose URL parameters cleared",
+      "ok": true,
+      "detail": "http://127.0.0.1:18160/bookmarks"
+    },
+    {
+      "name": "touch creates a new bookmark",
+      "ok": true,
+      "detail": "HTTP 201"
+    },
+    {
+      "name": "exact URL and title persisted",
+      "ok": true,
+      "detail": "exact match"
+    },
+    {
+      "name": "unsafe shared URL rejected",
+      "ok": true,
+      "detail": "javascript URL not prefilled"
+    },
+    {
+      "name": "manifest and CDP installability",
+      "ok": true,
+      "detail": "browser-level check only"
+    },
+    {
+      "name": "no runtime errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "test bookmark cleaned",
+      "ok": true,
+      "detail": "exact UUID URL removed"
+    }
+  ],
+  "browser_version": "156.0.8078.4",
+  "installability": {
+    "installabilityErrors": []
+  },
+  "manifest_errors": [],
+  "completed_at": "2026-11-07T07:56:19.585Z",
+  "passed": true
+}

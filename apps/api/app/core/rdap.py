@@ -12,6 +12,7 @@ import threading
 import time
 from dataclasses import dataclass
 from urllib.parse import urlsplit
+from weakref import WeakKeyDictionary
 
 from tld import get_fld
 
@@ -68,6 +69,9 @@ class DomainAgeStore:
         self._ttl = max(1, ttl_days) * 86400
         self._negative_ttl = max(1, negative_ttl_hours) * 3600
         self._lock = threading.Lock()
+        # 应用共享 store，同一事件循环的不同搜索也共享网络许可。
+        # 测试/嵌入客户端可使用不同循环，不能复用已绑定旧循环的信号量。
+        self._network_limits = WeakKeyDictionary()
         self._conn = sqlite3.connect(str(self.path), timeout=0.15, check_same_thread=False)
         self._conn.row_factory = sqlite3.Row
         try:
@@ -83,6 +87,13 @@ class DomainAgeStore:
     def close(self) -> None:
         with self._lock:
             self._conn.close()
+
+    def network_limit(self) -> asyncio.Semaphore:
+        loop = asyncio.get_running_loop()
+        with self._lock:
+            if loop not in self._network_limits:
+                self._network_limits[loop] = asyncio.Semaphore(CONCURRENCY)
+            return self._network_limits[loop]
 
     def get(self, domain: str) -> tuple[bool, int | None]:
         now = int(time.time())
@@ -161,20 +172,25 @@ async def lookup(domain: str, store: DomainAgeStore, fetcher: SafeFetcher) -> Ag
     hit, registered = await asyncio.to_thread(store.get, domain)
     if hit:
         return _age_info(domain, registered)
-    try:
-        page = await fetcher.fetch(
-            f"{BOOTSTRAP}{domain}", allowed_types={"application/rdap+json", "application/json"}
-        )
-        payload = json.loads(page.text)
-    except FetchError as exc:
-        if exc.status in (404, 410):
-            await asyncio.to_thread(store.put, domain, None)
-        return None
-    except ValueError:
-        return None
-    registered = _registered_at(payload)
-    await asyncio.to_thread(store.put, domain, registered)
-    return _age_info(domain, registered)
+    async with store.network_limit():
+        # 排队时其他请求可能已填好缓存；缓存命中始终绕过网络排队。
+        hit, registered = await asyncio.to_thread(store.get, domain)
+        if hit:
+            return _age_info(domain, registered)
+        try:
+            page = await fetcher.fetch(
+                f"{BOOTSTRAP}{domain}", allowed_types={"application/rdap+json", "application/json"}
+            )
+            payload = json.loads(page.text)
+        except FetchError as exc:
+            if exc.status in (404, 410):
+                await asyncio.to_thread(store.put, domain, None)
+            return None
+        except ValueError:
+            return None
+        registered = _registered_at(payload)
+        await asyncio.to_thread(store.put, domain, registered)
+        return _age_info(domain, registered)
 
 
 async def enrich(results, store: DomainAgeStore, fetcher: SafeFetcher, *, cache_only: bool = False) -> int:
@@ -219,6 +235,8 @@ async def enrich(results, store: DomainAgeStore, fetcher: SafeFetcher, *, cache_
     fresh = {domain for domain, info in infos.items() if info.fresh}
     bumped = 0
     for item in results:
+        if item.risk <= 0:
+            continue
         try:
             domain = registered_domain(urlsplit(item.url).hostname or "")
         except ValueError:

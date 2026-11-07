@@ -27,6 +27,8 @@ jobs:
           npm ci --prefix apps/web
       - name: API tests
         run: python -m pytest apps/api -q -o "addopts="
+      - name: Browser acceptance validator tests
+        run: node --test scripts/browser-check.test.cjs
       - name: Build web
         run: npm --prefix apps/web run build
       - name: Smoke (fixture, no upstream network)

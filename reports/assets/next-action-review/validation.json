@@ -1,0 +1,74 @@
+{
+  "acceptance_status": "partial",
+  "automation_audit_passed": true,
+  "historical_reports_preserved": 35,
+  "historical_ledger_rows_preserved": 35,
+  "ledger_reports": 36,
+  "top_report": "2026-11-07-1659-next-action-review.md",
+  "relative_links_checked": {
+    "README.md": 15,
+    "docs/进展与欠账.md": 33,
+    "docs/决策与接口变更.md": 2,
+    "reports/INDEX.md": 37,
+    "reports/2026-11-07-1659-next-action-review.md": 5,
+    "reports/assets/next-action-review/manual-quality.md": 0
+  },
+  "api_tests": 323,
+  "browser_checks": {
+    "extension": 10,
+    "android-emulation": 18
+  },
+  "summary_protocol": {
+    "fast": {
+      "cases": 6,
+      "protocol_passed": 6,
+      "first_text_median_ms": 7612.5,
+      "total_median_ms": 20655.0,
+      "fetched": 0,
+      "failed": 0,
+      "partial": 0
+    },
+    "full": {
+      "cases": 6,
+      "protocol_passed": 6,
+      "first_text_median_ms": 24135.5,
+      "total_median_ms": 36905.5,
+      "fetched": 15,
+      "failed": 15,
+      "partial": 6
+    }
+  },
+  "fresh_reference_gate": {
+    "required": 5,
+    "available": 0,
+    "passed": false
+  },
+  "configured_credential_scan": "pass",
+  "artifacts": {
+    "README.md": {
+      "lines": 700,
+      "non_whitespace_chars": 23109
+    },
+    "docs/进展与欠账.md": {
+      "lines": 84,
+      "non_whitespace_chars": 6555
+    },
+    "docs/决策与接口变更.md": {
+      "lines": 539,
+      "non_whitespace_chars": 26472
+    },
+    "reports/INDEX.md": {
+      "lines": 48,
+      "non_whitespace_chars": 5961
+    },
+    "reports/2026-11-07-1659-next-action-review.md": {
+      "lines": 106,
+      "non_whitespace_chars": 5604
+    },
+    "reports/assets/next-action-review/manual-quality.md": {
+      "lines": 18,
+      "non_whitespace_chars": 1146
+    }
+  },
+  "errors": []
+}

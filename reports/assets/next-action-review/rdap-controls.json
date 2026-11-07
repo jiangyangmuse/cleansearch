@@ -1,0 +1,343 @@
+{
+  "source": {
+    "artifact": "docs/m10-evidence/p3-rdap-sample.json",
+    "sha256": "58a181db61c30b37fe9e09d406c30d857d771c5b0308bd35bd9269ee1905fc5f",
+    "original_source": null,
+    "warning": "No provenance field means legitimacy provenance was not recorded"
+  },
+  "mode": "offline-aggregation",
+  "summary": {
+    "feed-phishing": {
+      "samples": 0,
+      "age_known": 0,
+      "unknown": 0,
+      "thresholds": {
+        "7": {
+          "young": 0,
+          "newly_flagged": 0
+        },
+        "30": {
+          "young": 0,
+          "newly_flagged": 0
+        },
+        "90": {
+          "young": 0,
+          "newly_flagged": 0
+        }
+      },
+      "newly_flagged_by_weight": {
+        "0.1": 0,
+        "0.15": 0,
+        "0.2": 0
+      }
+    },
+    "reference": {
+      "samples": 30,
+      "age_known": 26,
+      "unknown": 4,
+      "thresholds": {
+        "7": {
+          "young": 0,
+          "newly_flagged": 0
+        },
+        "30": {
+          "young": 0,
+          "newly_flagged": 0
+        },
+        "90": {
+          "young": 0,
+          "newly_flagged": 0
+        }
+      },
+      "newly_flagged_by_weight": {
+        "0.1": 0,
+        "0.15": 0,
+        "0.2": 0
+      }
+    },
+    "fresh_normal_controls": {
+      "age_known_under_30d": 0,
+      "with_recorded_provenance": 0,
+      "reference_provenance_missing": 30,
+      "new_site_false_positive_rate": null,
+      "scope": "offline age collection, not online four-second batch coverage"
+    }
+  },
+  "rows": [
+    {
+      "domain": "python[.]org",
+      "age_days": 11548,
+      "fresh": false,
+      "cold_ms": 2848,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "github[.]com",
+      "age_days": 6968,
+      "fresh": false,
+      "cold_ms": 4101,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "wikipedia[.]org",
+      "age_days": 9429,
+      "fresh": false,
+      "cold_ms": 2815,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "stackoverflow[.]com",
+      "age_days": 8351,
+      "fresh": false,
+      "cold_ms": 2939,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "mozilla[.]org",
+      "age_days": 10514,
+      "fresh": false,
+      "cold_ms": 3675,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "kernel[.]org",
+      "age_days": 10837,
+      "fresh": false,
+      "cold_ms": 3335,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "debian[.]org",
+      "age_days": 10104,
+      "fresh": false,
+      "cold_ms": 3876,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "postgresql[.]org",
+      "age_days": 10973,
+      "fresh": false,
+      "cold_ms": 2640,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "rust-lang[.]org",
+      "age_days": 6065,
+      "fresh": false,
+      "cold_ms": 3279,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "kubernetes[.]io",
+      "age_days": null,
+      "fresh": false,
+      "cold_ms": 1703,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "nodejs[.]org",
+      "age_days": 6248,
+      "fresh": false,
+      "cold_ms": 4103,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "npmjs[.]com",
+      "age_days": 6076,
+      "fresh": false,
+      "cold_ms": 4366,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "gitlab[.]com",
+      "age_days": 8331,
+      "fresh": false,
+      "cold_ms": 3098,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "cloudflare[.]com",
+      "age_days": 6471,
+      "fresh": false,
+      "cold_ms": 3007,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "digitalocean[.]com",
+      "age_days": 9705,
+      "fresh": false,
+      "cold_ms": 3168,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "chatgpt[.]com",
+      "age_days": 1437,
+      "fresh": false,
+      "cold_ms": 2862,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "claude[.]ai",
+      "age_days": 3016,
+      "fresh": false,
+      "cold_ms": 5768,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "deepseek[.]com",
+      "age_days": 9582,
+      "fresh": false,
+      "cold_ms": 6142,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "mistral[.]ai",
+      "age_days": 2732,
+      "fresh": false,
+      "cold_ms": 3136,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "together[.]ai",
+      "age_days": 3248,
+      "fresh": false,
+      "cold_ms": 3078,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "groq[.]com",
+      "age_days": 7048,
+      "fresh": false,
+      "cold_ms": 3044,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "perplexity[.]ai",
+      "age_days": 1582,
+      "fresh": false,
+      "cold_ms": 3809,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "huggingface[.]co",
+      "age_days": null,
+      "fresh": false,
+      "cold_ms": 1228,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "vercel[.]com",
+      "age_days": 9895,
+      "fresh": false,
+      "cold_ms": 2779,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "fly[.]io",
+      "age_days": null,
+      "fresh": false,
+      "cold_ms": 1402,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "railway[.]app",
+      "age_days": 2655,
+      "fresh": false,
+      "cold_ms": 4546,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "supabase[.]com",
+      "age_days": 3331,
+      "fresh": false,
+      "cold_ms": 3282,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "render[.]com",
+      "age_days": 10264,
+      "fresh": false,
+      "cold_ms": 5183,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "linear[.]app",
+      "age_days": 3103,
+      "fresh": false,
+      "cold_ms": 4089,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    },
+    {
+      "domain": "notion[.]so",
+      "age_days": null,
+      "fresh": false,
+      "cold_ms": 1279,
+      "warm_ms": 0,
+      "label": "reference",
+      "base_risk": 0.0
+    }
+  ],
+  "fresh_reference_gate": {
+    "required": 5,
+    "available": 0,
+    "passed": false
+  }
+}

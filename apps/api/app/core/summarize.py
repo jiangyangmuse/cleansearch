@@ -37,9 +37,10 @@ class Summarizer(Protocol):
 def build_materials(snapshot: Snapshot) -> str:
     blocks: list[str] = []
     for index, source in enumerate(snapshot.sources[:MAX_SOURCES], 1):
+        kind = {"snippet": "搜索摘要", "full": "正文摘录", "truncated": "截断正文摘录"}[source.material]
         blocks.append(
             f"[{index}] 标题：{source.title} ｜ 域名：{source.domain} ｜ 链接：{source.url}\n"
-            f"摘要：{source.snippet or '（无摘要）'}"
+            f"材料类型：{kind}\n内容：{source.snippet or '（无可用内容）'}"
         )
     return "\n\n".join(blocks)
 

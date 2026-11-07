@@ -1,0 +1,97 @@
+{
+  "repository": "jiangyangmuse/cleansearch",
+  "runs": [
+    {
+      "id": 42393578528,
+      "number": 2,
+      "branch": "main",
+      "sha": "403253542059e6dcc5625f76e07a5ac78b6adab9",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/jiangyangmuse/cleansearch/actions/runs/42393578528",
+      "started_at_utc": "2026-11-07T16:53:47Z",
+      "updated_at_utc": "2026-11-07T16:54:29Z"
+    },
+    {
+      "id": 42393430557,
+      "number": 1,
+      "branch": "main",
+      "sha": "479978e878a1d75732b696a6f5d28aa97bb744ab",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/jiangyangmuse/cleansearch/actions/runs/42393430557",
+      "started_at_utc": "2026-11-07T16:51:59Z",
+      "updated_at_utc": "2026-11-07T16:52:32Z"
+    }
+  ],
+  "latest_jobs": [
+    {
+      "id": 128466069623,
+      "name": "verify",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install",
+          "conclusion": "success"
+        },
+        {
+          "name": "API tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build web",
+          "conclusion": "success"
+        },
+        {
+          "name": "Smoke (fixture, no upstream network)",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "latest_log_summary": {
+    "api": "315 passed, 1 warning in 7.67s",
+    "build": "42 modules transformed",
+    "smoke": "15 checks; 冒烟通过"
+  },
+  "hosted_api_tests": 315,
+  "local_previously_verified_api_tests": 323,
+  "verified_committed_head": "403253542059e6dcc5625f76e07a5ac78b6adab9",
+  "committed_workflow_blob": "e7ea5810ef609fbaeec455116f0abe3c8e9e7f12",
+  "working_tree_workflow_blob": "17607f75f82453cecc5d27f0811cb068e8205891",
+  "scope": "Hosted run covers the committed SHA; working-tree M17 fixes and current documentation are not included until published."
+}

@@ -1,0 +1,16 @@
+{
+  "transport": "httpx.MockTransport; no real RDAP network",
+  "requests": 3,
+  "domains_per_request": 8,
+  "configured_concurrency": 4,
+  "batch_budget_seconds": 4.0,
+  "peak_network_concurrency": 4,
+  "network_calls_started": 4,
+  "active_after_completion": 0,
+  "request_ms": [
+    4046,
+    4016,
+    4029
+  ],
+  "global_across_workers": false
+}

@@ -1,0 +1,21 @@
+{
+  "artifacts": {
+    "CONTRIBUTORS.md": {
+      "relative_links": 2,
+      "non_whitespace_chars": 838
+    },
+    "README.md": {
+      "relative_links": 18,
+      "non_whitespace_chars": 24331
+    },
+    "docs/进展与欠账.md": {
+      "relative_links": 34,
+      "non_whitespace_chars": 6963
+    },
+    "docs/决策与接口变更.md": {
+      "relative_links": 2,
+      "non_whitespace_chars": 27699
+    }
+  },
+  "errors": []
+}

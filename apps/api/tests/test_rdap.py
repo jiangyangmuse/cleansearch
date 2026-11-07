@@ -134,6 +134,74 @@ async def test_batch_budget_includes_waiting_domains(tmp_path, monkeypatch) -> N
         store.close()
 
 
+async def test_concurrent_searches_share_network_limit_and_release_on_timeout(tmp_path, monkeypatch) -> None:
+    from app.core import rdap
+
+    monkeypatch.setattr(rdap, "BUDGET_SECONDS", 0.08)
+    active = peak = calls = 0
+    slow = True
+
+    async def handler(request):
+        nonlocal active, peak, calls
+        calls += 1
+        active += 1
+        peak = max(peak, active)
+        try:
+            if slow:
+                await asyncio.sleep(0.5)
+            return httpx.Response(429)
+        finally:
+            active -= 1
+
+    fetcher = SafeFetcher(transport=httpx.MockTransport(handler), resolver=lambda host: ["93.184.216.34"])
+    store = DomainAgeStore(tmp_path / "concurrent.db")
+    try:
+        await asyncio.gather(*(
+            enrich([make_result(f"https://request{batch}candidate{i}.com") for i in range(8)], store, fetcher)
+            for batch in range(3)
+        ))
+        assert peak <= rdap.CONCURRENCY
+        assert active == 0
+        # 预算取消后不泄漏许可；429 不写负缓存，下一次仍能重试。
+        slow = False
+        before = calls
+        assert await lookup("retry-after-budget.com", store, fetcher) is None
+        assert await lookup("retry-after-budget.com", store, fetcher) is None
+        assert calls == before + 2
+    finally:
+        store.close()
+
+
+async def test_cached_age_does_not_queue_behind_other_searches(tmp_path, monkeypatch) -> None:
+    from app.core import rdap
+
+    monkeypatch.setattr(rdap, "BUDGET_SECONDS", 0.3)
+    all_started = asyncio.Event()
+    started = 0
+
+    async def handler(request):
+        nonlocal started
+        started += 1
+        if started == rdap.CONCURRENCY:
+            all_started.set()
+        await asyncio.sleep(1)
+        return httpx.Response(404)
+
+    fetcher = SafeFetcher(transport=httpx.MockTransport(handler), resolver=lambda host: ["93.184.216.34"])
+    store = DomainAgeStore(tmp_path / "warm-priority.db")
+    store.put("cached-reference.com", int(time.time()) - 5 * 86400)
+    task = asyncio.create_task(enrich([make_result(f"https://slow{i}.com") for i in range(4)], store, fetcher))
+    try:
+        await asyncio.wait_for(all_started.wait(), timeout=1)
+        warm = [make_result("https://cached-reference.com")]
+        assert await asyncio.wait_for(enrich(warm, store, fetcher), timeout=0.1) == 1
+        assert started == rdap.CONCURRENCY
+    finally:
+        task.cancel()
+        await asyncio.gather(task, return_exceptions=True)
+        store.close()
+
+
 async def test_transient_failure_does_not_create_day_negative_cache(tmp_path) -> None:
     calls = []
 
@@ -164,6 +232,19 @@ async def test_subdomains_share_registered_domain_cache(tmp_path) -> None:
         await lookup("a.example.co.uk", store, fetcher)
         await lookup("b.example.co.uk", store, fetcher)
         assert len(calls) == 1 and calls[0].endswith("/domain/example.co.uk")
+    finally:
+        store.close()
+
+
+async def test_same_young_domain_does_not_add_risk_to_clean_result(tmp_path) -> None:
+    store = DomainAgeStore(tmp_path / "clean-result.db")
+    store.put("young-reference.com", int(time.time()) - 5 * 86400)
+    items = [make_result("https://young-reference.com/signal", 0.25),
+             make_result("https://young-reference.com/clean", 0.0)]
+    try:
+        assert await enrich(items, store, SafeFetcher(), cache_only=True) == 1
+        assert items[0].risk == 0.4
+        assert items[1].risk == 0 and items[1].reasons == []
     finally:
         store.close()
 

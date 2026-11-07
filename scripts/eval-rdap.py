@@ -49,16 +49,66 @@ async def collect(fetcher: SafeFetcher) -> tuple[list[dict], dict]:
     return rows, {"url": FEED, "sha256": hashlib.sha256(page.raw).hexdigest(), "collected_at": datetime.now(timezone.utc).isoformat()}
 
 
+def load_samples(path: Path) -> tuple[list[dict], dict]:
+    raw = path.read_bytes()
+    previous = json.loads(raw)
+    scorer = SafetyScorer(Blocklist())
+    samples = []
+    seen = set()
+    for item in previous["rows"]:
+        domain = registered_domain(item["domain"].replace("[.]", "."))
+        if domain is None or domain in seen:
+            raise ValueError("样本域名无效或注册域名重复")
+        seen.add(domain)
+        label = item.get("label", "reference")
+        if label not in ("feed-phishing", "reference"):
+            raise ValueError("label 必须为 feed-phishing 或 reference")
+        row = dict(item, domain=domain.replace(".", "[.]"), label=label,
+                   base_risk=item.get("base_risk", scorer.evaluate(f"https://{domain}").risk))
+        samples.append(row)
+    if not samples:
+        raise ValueError("样本不能为空")
+    source = {"artifact": path.as_posix(), "sha256": hashlib.sha256(raw).hexdigest(),
+              "original_source": previous.get("source"),
+              "warning": "No provenance field means legitimacy provenance was not recorded"}
+    return samples, source
+
+
+def summarize_rows(rows: list[dict]) -> dict:
+    summary = {}
+    for label in ("feed-phishing", "reference"):
+        group = [row for row in rows if row["label"] == label]
+        known = [row for row in group if row.get("age_days") is not None]
+        thresholds = {}
+        for days in (7, 30, 90):
+            young = [row for row in known if 0 <= row["age_days"] < days]
+            thresholds[str(days)] = {
+                "young": len(young),
+                "newly_flagged": sum(row["base_risk"] < 0.35 <= row["base_risk"] + AGE_PENALTY
+                                     for row in young if row["base_risk"] > 0),
+            }
+        weights = {str(weight): sum(row["base_risk"] < 0.35 <= row["base_risk"] + weight
+                                   for row in known if 0 <= row["age_days"] < 30 and row["base_risk"] > 0)
+                   for weight in (0.1, 0.15, 0.2)}
+        summary[label] = {"samples": len(group), "age_known": len(known), "unknown": len(group) - len(known),
+                          "thresholds": thresholds, "newly_flagged_by_weight": weights}
+    references = [r for r in rows if r["label"] == "reference"]
+    fresh = [r for r in references if r.get("age_days") is not None and 0 <= r["age_days"] < 30]
+    provenance = lambda r: isinstance(r.get("provenance"), str) and urlsplit(r["provenance"]).scheme in ("https", "http") and bool(urlsplit(r["provenance"]).hostname)
+    summary["fresh_normal_controls"] = {
+        "age_known_under_30d": len(fresh),
+        "with_recorded_provenance": sum(provenance(r) for r in fresh),
+        "reference_provenance_missing": sum(not provenance(r) for r in references),
+        "new_site_false_positive_rate": None if not fresh else "requires-human-verified-labels",
+        "scope": "offline age collection, not online four-second batch coverage",
+    }
+    return summary
+
+
 async def evaluate(args) -> dict:
     settings = get_settings()
     fetcher = SafeFetcher(timeout=12, extra_cidrs=settings.fetch_extra_cidrs)
-    if args.samples:
-        previous = json.loads(Path(args.samples).read_text(encoding="utf-8"))
-        samples, source = previous["rows"], previous["source"]
-    else:
-        samples, source = await collect(fetcher)
-    if len(samples) != 40:
-        raise ValueError("样本必须为 20 + 20 条")
+    samples, source = load_samples(Path(args.samples)) if args.samples else await collect(fetcher)
     store = DomainAgeStore(Path(args.db_path), ttl_days=settings.rdap_ttl_days)
     semaphore = asyncio.Semaphore(3)
     rate_lock = asyncio.Lock()
@@ -76,53 +126,46 @@ async def evaluate(args) -> dict:
             elapsed = round((time.perf_counter() - started) * 1000)
         age = round((time.time() - info.registered_at) / 86400, 2) if info and info.registered_at is not None else None
         row = {key: sample[key] for key in ("domain", "label", "base_risk")}
+        for key in ("provenance", "verified_at"):
+            if key in sample:
+                row[key] = sample[key]
         row.update(registered_at=info.registered_at if info else None, age_days=age, ms=elapsed)
         print(f"label={row['label']} domain={row['domain']} age_days={age} ms={elapsed}", flush=True)
         return row
 
-    tasks = []
+    tasks = [asyncio.create_task(one(sample)) for sample in samples]
     try:
-        for sample in samples:
-            tasks.append(asyncio.create_task(one(sample)))
         rows = await asyncio.gather(*tasks)
     finally:
         await asyncio.gather(*tasks, return_exceptions=True)
         store.close()
-
-    summary = {}
-    for label in ("feed-phishing", "reference"):
-        group = [row for row in rows if row["label"] == label]
-        known = [row for row in group if row["age_days"] is not None]
-        thresholds = {}
-        for days in (7, 30, 90):
-            young = [row for row in known if row["age_days"] < days]
-            newly_flagged = sum(
-                row["base_risk"] < 0.35 <= row["base_risk"] + AGE_PENALTY
-                for row in young if row["base_risk"] > 0
-            )
-            thresholds[str(days)] = {"young": len(young), "newly_flagged": newly_flagged}
-        weights = {}
-        for weight in (0.1, 0.15, 0.2):
-            weights[str(weight)] = sum(
-                row["base_risk"] < 0.35 <= row["base_risk"] + weight
-                for row in known if row["age_days"] < 30 and row["base_risk"] > 0
-            )
-        summary[label] = {"samples": len(group), "age_known": len(known), "unknown": len(group) - len(known), "thresholds": thresholds, "newly_flagged_by_weight": weights}
-    print(json.dumps(summary, ensure_ascii=False), flush=True)
-    return {"source": source, "measured_at": datetime.now(timezone.utc).isoformat(), "summary": summary, "rows": rows}
+    return {"source": source, "measured_at": datetime.now(timezone.utc).isoformat(), "summary": summarize_rows(rows), "rows": rows}
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--db-path", required=True, help="使用独立派生缓存数据库")
+    parser.add_argument("--db-path", help="使用独立派生缓存数据库；离线汇总不需要")
     parser.add_argument("--json-out", required=True)
-    parser.add_argument("--samples", default="", help="重放上次输出中的固定域名样本")
+    parser.add_argument("--samples", default="", help="重放带 domain/label/base_risk 的任意长度样本，可带 provenance/verified_at")
+    parser.add_argument("--aggregate", type=Path, help="只重新汇总已有年龄记录，不查询网络")
+    parser.add_argument("--require-fresh-references", type=int, default=0, help="要求至少 N 个 <30 天且有出处的正常对照；不足退出 2")
     args = parser.parse_args()
-    result = asyncio.run(evaluate(args))
+    if args.require_fresh_references < 0:
+        parser.error("require-fresh-references 不能为负数")
+    if args.aggregate:
+        rows, source = load_samples(args.aggregate)
+        result = {"source": source, "mode": "offline-aggregation", "summary": summarize_rows(rows), "rows": rows}
+    else:
+        if not args.db_path:
+            parser.error("网络查询需 --db-path")
+        result = asyncio.run(evaluate(args))
+    count = result["summary"]["fresh_normal_controls"]["with_recorded_provenance"]
+    result["fresh_reference_gate"] = {"required": args.require_fresh_references, "available": count, "passed": count >= args.require_fresh_references}
     output = Path(args.json_out)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
-    return 0
+    output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({"summary": result["summary"], "gate": result["fresh_reference_gate"]}, ensure_ascii=False))
+    return 0 if result["fresh_reference_gate"]["passed"] else 2
 
 
 if __name__ == "__main__":

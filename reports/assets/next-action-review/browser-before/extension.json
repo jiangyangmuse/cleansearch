@@ -1,0 +1,70 @@
+{
+  "scope": "unpacked-extension-automation",
+  "stable_chrome_manual": "not-tested",
+  "os_context_menu_click": "not-tested",
+  "checks": [
+    {
+      "name": "extension service worker loaded",
+      "ok": true,
+      "detail": "kjifckenhomjkomhbpjllmdcahhgphki"
+    },
+    {
+      "name": "test URLs absent",
+      "ok": true,
+      "detail": "fresh UUID URLs"
+    },
+    {
+      "name": "popup opened",
+      "ok": true,
+      "detail": "popup.html"
+    },
+    {
+      "name": "popup save succeeded",
+      "ok": true,
+      "detail": "status checked"
+    },
+    {
+      "name": "popup exact bookmark persisted",
+      "ok": true,
+      "detail": "exact match"
+    },
+    {
+      "name": "background save function succeeded",
+      "ok": true,
+      "detail": "shared save function, not OS menu click"
+    },
+    {
+      "name": "background exact bookmark persisted",
+      "ok": true,
+      "detail": "exact match"
+    },
+    {
+      "name": "manifest and CDP installability",
+      "ok": false,
+      "detail": "nonempty errors fail"
+    },
+    {
+      "name": "no runtime errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "test bookmarks cleaned",
+      "ok": false,
+      "detail": "Error: Cleanup HTTP 403"
+    }
+  ],
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/157.0.8103.38",
+    "revision": "@a733b5afbb3ba618844ff8876b89ad1a774b2f18",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+    "jsVersion": "15.7.112.23"
+  },
+  "selected_browser": "explicit-executable",
+  "installability": {
+    "installabilityErrors": []
+  },
+  "completed_at": "2026-11-07T07:49:42.706Z",
+  "passed": false
+}
