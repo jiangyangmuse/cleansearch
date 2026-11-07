@@ -512,74 +512,87 @@ python scripts/eval-rdap.py --db-path data/rdap-calibration-review.db --json-out
 ```
 
 
-## 远端、Chrome 与 Android 验收（2026-11-08 第二轮）
+## CI、浏览器与扩大样本复核（2026-11-07）
 
-### 远端 CI（本地 bare 仓库 + act 跑干净 clone）
+### CI 的当前边界
 
-没有 GitHub 凭据，先把远端补成可用的本地 bare 仓库，再在**干净 clone** 里跑 CI——证明工作流跑的是已提交代码，不依赖工作区残留。
+`origin` 目前指向本地 `D:\agent\llq-remote.git`。DSH [上一轮报告](reports/completed/2026-11-07-1631-remote-ci-chrome-android-samples.md)记录了干净 clone 中 act 的 305 项测试、构建与 15 项冒烟；这是本地执行记录，尚没有本项目 GitHub 托管运行链接。本轮独立验证当前工作区的 API 测试、构建和两套冒烟，并将浏览器验收判断器的负例测试纳入工作流。
+
+托管验收需要明确目标仓库、确认访问与 Actions 权限，并在获准提交/推送后核对相同提交 SHA 的运行结果。更换 remote URL 本身不会完成验收。按工作区协议，本轮没有提交、推送或改动现有远端。
+
+### 扩展与分享的浏览器级验收
+
+本轮使用现有 Chrome for Testing 157 与桌面 Chromium 的 Pixel 7 档案。CfT 扩展 **10/10**、移动档案 **18/18** 通过，使用独立数据库、唯一 URL、精确标题/URL 核对及测试数据清理；JSON 记录实际浏览器版本和未验范围。
 
 ```powershell
-git init --bare D:\agent\llq-remote.git
-git remote add origin D:\agent\llq-remote.git
+# 先以独立 DB_PATH 起 fixture 服务；不要使用正式书签库。
+$env:CS_CHROME_PATH='<本机已有 Chrome for Testing 的 chrome.exe 完整路径>'
+$env:CS_HEADLESS='true'
+node scripts/verify-extension.cjs http://127.0.0.1:18160 reports/assets/next-action-review/browser
+node scripts/verify-android.cjs http://127.0.0.1:18160 reports/assets/next-action-review/browser
+```
+
+覆盖三类分享输入（url、纯 text URL、说明文字内 URL）、参数清除、危险 URL 拒绝、触屏新建、清单解析与安装性错误检查。manifest 已显式设置 `enctype`，解析无警告；安装性检查遇到错误会失败。[扩展证据](reports/assets/next-action-review/browser/extension.json) · [移动模拟证据](reports/assets/next-action-review/browser/android-emulation.json)
+
+正式 Chrome 的开发者模式手动加载、原生书签管理器互迁、Android 真实安装与系统分享面板仍未验。后台保存函数通过也不等同实际点击系统右键菜单。CfT 继续支持加载开关的说明见 [Chrome 官方公告](https://groups.google.com/a/chromium.org/g/chromium-extensions/c/1-g8EFx2BBY)；设备档案的范围见 [Playwright 模拟说明](https://playwright.dev/docs/emulation)。离线启动尚未实现，属于另行排期的能力。
+
+### RDAP 对照与并发
+
+DSH 新增 30 个正常参考域名中年龄可得 26 个、未知 4 个，已知年龄全部超过 365 天；最年轻仍为 1,437 天。它只补充了老站对照，不能用于估计新注册正常站点的误报率，未知不能记为“正常且非新站”。旧记录未保留可证明四个未知原因的状态码。
+
+校准脚本现支持任意长度样本、出处 `provenance`、可选核验时间 `verified_at`、离线汇总及新站数量门槛。例如以下命令对旧 30 条记录会因不足 5 个有出处的新站返回非零，证据中标为未达标：
+
+```powershell
+python scripts/eval-rdap.py --aggregate docs/m10-evidence/p3-rdap-sample.json --require-fresh-references 5 --json-out reports/assets/next-action-review/rdap-controls.json
+```
+
+网络许可现在由同一应用 store/事件循环中的搜索共享，上限 4；缓存命中不等网络许可，整个批次含排队仍为 4 秒。受控三请求 × 每批八域名测得峰值 4、各批约 4 秒、结束时无在途请求；429 可重试。正常零风险条目也不会因同域其他条目触发年龄查询而被加分。跨 worker 全局限流及真实注册局 429 仍需观察，当前 30 天/0.15 策略保持。[并发数据](reports/assets/next-action-review/rdap-concurrency.json)
+
+### 检索与总结样本的口径
+
+- 40 条检索历史记录的全量 Top10 期望域名命中为 **20/40、20/40、23/40**（baseline/rank/rewrite），12 条扩展词子集为 **6/12、6/12、9/12**；另外 28 条为不改写对照。全量 MRR10 为 **0.3761、0.3629、0.4148**。脚本现同时保留三种分母、计入未命中，并记录新跑的请求失败；旧记录缺少的状态不会补写成成功。[离线重汇总](reports/assets/next-action-review/retrieval-40.json)
+- 这些仍是返回候选集上的宽口径期望域名指标，不代表完整相关性或原始上游召回。单看命中时的平均位次会忽略未命中，不能单独判定 rewrite 更优。
+- 新增 `scripts/eval-summary.py`，采集公开主题的 fast/full 正文、引用、模型、抓取/降级和耗时。自动验收要求完整 done、来源 ID/URL 绑定、有效编号引用和事件计数一致；事实正确性仍需人工核对。`--reassess` 可以离线重验已采集输出；首段耗时仅指总结请求，搜索耗时单独记录。
+- 本轮千问六主题双模式 **12/12 结构通过**；fast/full 首段中位 **7.61/24.14 秒**、总耗时中位 **20.66/36.91 秒**，full 正文取得 **15/30**，六次均降级。三主题事实审读与相同材料提示词重放仍发现 Rust/HTTP2 表述需要改写；GIL 样本增加了版本未核实说明。输入已区分材料类型并补充限定语规则，这不是事实准确率修复证明。[完整输出](reports/assets/next-action-review/summary-12-reassessed.json) · [人工审读](reports/assets/next-action-review/manual-quality.md)
+
+
+## GitHub 远端与托管 CI（2026-11-08）
+
+- 仓库：https://github.com/jiangyangmuse/cleansearch （public）
+- 认证：SSH（git@github.com:jiangyangmuse/cleansearch.git）
+- 提交身份：jyms_rue <jyme_rue@qq.com>（历史 4 个提交在推送前重写了作者）
+
+```powershell
+git remote set-url origin git@github.com:jiangyangmuse/cleansearch.git
 git push -u origin main
-git clone D:\agent\llq-remote.git D:\agent\build\llq-ci-clone
-cd D:\agent\build\llq-ci-clone
-act -j verify -P ubuntu-24.04=ghcr.io/catthehacker/ubuntu:act-latest --container-architecture linux/amd64
 ```
 
-干净 clone 里没有 `.env`、`node_modules`、`apps/web/dist`，CI 仍然：
+首次推送触发的 Actions 结果（33 秒，8 步全绿）：
 
 ```
-✅ Install（pip + npm ci）
-✅ API tests   305 passed
-✅ Build web
-✅ Smoke       15 checks
-🏁  Job succeeded
+ci #1  push main  completed success  33s
+  1. Set up job                             success
+  2. actions/checkout@v4                    success
+  3. actions/setup-python@v5                success
+  4. actions/setup-node@v4                  success
+  5. Install                                success
+  6. API tests                              success
+  7. Build web                              success
+  8. Smoke (fixture, no upstream network)   success
 ```
 
-> 换 GitHub 只需 `git remote set-url origin git@github.com:<you>/<repo>.git` 后推送，工作流无需改动。
+https://github.com/jiangyangmuse/cleansearch/actions/runs/42393430557
 
-### Chrome 验收（Chrome for Testing 157）
+### 与本地 act 的差异（同样 8 步全绿）
 
-正式版 Chrome 156 已移除 `--load-extension`（只能手动加载），但 **Chrome for Testing** 保留该开关：
+| 维度 | act（本地） | GitHub Actions |
+| --- | --- | --- |
+| 耗时 | 3–5 分钟（含拉镜像、装依赖） | 33 秒（托管缓存命中） |
+| 缓存 | setup-node 可命中，pip 无 | 两者都有托管缓存 |
+| runner | ghcr 的 ubuntu 镜像，工具自带安装 | GitHub 托管 runner，预装齐全 |
+| 权限 | 无 secrets/权限校验 | 有 GITHUB_TOKEN 与权限声明 |
 
-```powershell
-npx --yes @puppeteer/browsers install chrome@stable --path D:\agent\build\cft
-$env:CS_CHROME_PATH='D:\agent\build\cft\chrome\win64-157.0.8103.38\chrome-win64\chrome.exe'
-node scripts/verify-extension.cjs http://127.0.0.1:8000
-```
-
-结果：**12 项 ALL PASS**（popup 收藏、后台保存、PWA 清单、安装性、无 JS 错误）。
-
-### Android（浏览器层面，非真机）
-
-本机没有 Android SDK 与设备，只做了 Android 配置下的验证（`scripts/verify-android.cjs`，Pixel 7 档案）：
-
-| 项 | 结果 |
-| --- | --- |
-| manifest share_target | `action=/bookmarks method=GET`，title/text/url 齐全 |
-| 分享链接预填 | `?url=&text=&title=` → 表单已填 |
-| 触屏保存 | `tap` 提交后书签出现在接口里 |
-| PWA 安装性 | CDP `getInstallabilityErrors` 返回 `[]` |
-| JS 错误 | 无 |
-
-未验：真机安装、系统分享面板拉起、离线启动、深色模式系统联动。
-
-### RDAP 校准（30 个正常域名）
-
-```
-解析成功 26/30，查不到 4（kubernetes.io / huggingface.co / fly.io / notion.so —— ccTLD 或 RDAP 缺失）
-<30 天：0 个      <365 天：0 个
-最年轻：chatgpt.com 1437 天；中位 7008 天；最大 11548 天
-冷查询中位 3152 ms（最大 6142），缓存命中 0 ms
-```
-
-结论：30 天阈值在正常域名上**零误报**，可以保留；代价是可疑结果首次查询多 3–6 秒（已有 30 天缓存兜底）。
-
-### 检索与总结样本扩大
-
-- 标注查询 18 → **40 条**，重跑 `scripts/eval-expansion.py`：扩展命中的 12 条里，Top10 命中 baseline 6/12 → rank 6/12 → **rewrite 9/12**。
-- 总结：5 个主题 `mode=fast` 全部成功，首字中位 **7.24s**（最大 13.1s）、总耗时中位 **19.2s**、170 段、每题 10 条引用、0 个 partial。
+结论：act 能在推送前拦住工作流问题（本轮它先抓到 pwsh 与 YAML 两个真 bug），但不能替代托管运行——缓存、runner 镜像与权限差异只有真跑才暴露。
 
 ### 本机跑真实 SearXNG（无 Docker 时）
 

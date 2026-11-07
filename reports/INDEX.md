@@ -6,8 +6,12 @@
 
 历史口径更正（2026-11-07）：六阶段报告保留在本目录，台账状态沿用原记录。该报告 §8.1 的真实多引擎验收当时为「部分达成」；后续 `gc/y` 与容器补验已有通过证据，其他指定引擎仍取决于部署和网络。当前交付范围、待验条件及可选扩展统一见 [进展与欠账](../docs/进展与欠账.md)。
 
+复核更正（2026-11-07）：16:31 的 DSH 报告保留历史状态；本地 bare/act、CfT 与 Pixel 档案、老站对照不构成托管 CI、正式 Chrome/Android 真机或新站误报率通过。最新复核记录与当前进度另列，不改原报告或历史台账行。
+
 | 编号 | 日期时间 | 任务 | 类型 | 状态 | 报告 |
 | --- | --- | --- | --- | --- | --- |
+| 20261108-0153 | 2026-11-08 01:53 | [GitHub 远端与托管 CI](completed/2026-11-08-0153-github-remote-actions.md) | ops | 完成 | `completed/2026-11-08-0153-github-remote-actions.md` |
+| 20261107-1659 | 2026-11-07 16:59 | [DSH 后续验收复核与证据补强](2026-11-07-1659-next-action-review.md) | fix | 部分完成 | `2026-11-07-1659-next-action-review.md` |
 | 20261107-1631 | 2026-11-07 16:31 | [远端 CI、Chrome/Android 验收与样本扩大](completed/2026-11-07-1631-remote-ci-chrome-android-samples.md) | test | 完成 | `completed/2026-11-07-1631-remote-ci-chrome-android-samples.md` |
 | 20261107-1519 | 2026-11-07 15:19 | [当前交付与后续待办对齐](completed/2026-11-07-1519-progress-alignment.md) | docs | 完成 | `completed/2026-11-07-1519-progress-alignment.md` |
 | 20261107-1506 | 2026-11-07 15:06 | [RDAP 复核优化与四十域名校准](completed/2026-11-07-1506-rdap-review-calibration.md) | fix | 完成 | `completed/2026-11-07-1506-rdap-review-calibration.md` |
