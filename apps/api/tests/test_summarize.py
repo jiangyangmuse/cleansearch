@@ -123,6 +123,26 @@ def test_llm_timeout_emits_error_event(client: TestClient) -> None:
     assert names.count("cite") >= 1
 
 
+def test_unexpected_summary_error_does_not_expose_request_details(client: TestClient) -> None:
+    class BrokenSummarizer:
+        model = "fake-broken"
+
+        async def stream(self, snapshot):
+            raise RuntimeError("private upstream request detail")
+            yield ""  # pragma: no cover
+
+    sid = search(client)["meta"]["sid"]
+    app.dependency_overrides[get_summarizer] = BrokenSummarizer
+    try:
+        response = stream_summary(client, sid)
+    finally:
+        app.dependency_overrides.pop(get_summarizer, None)
+
+    events = dict(parse_sse(response.text))
+    assert events["error"]["code"] == "LLM_ERROR"
+    assert "done" not in events and "private upstream request detail" not in response.text
+
+
 def test_stub_summarizer_stays_within_citation_range() -> None:
     from app.core.session_store import Snapshot
 
@@ -138,8 +158,8 @@ def test_stub_summarizer_stays_within_citation_range() -> None:
     assert "分歧：" in text
 
 
-def test_session_store_ttl_and_capacity() -> None:
-    store = SessionStore(ttl_seconds=1, capacity=2)
+def test_session_store_ttl_and_capacity(tmp_path) -> None:
+    store = SessionStore(tmp_path / "sessions.db", ttl_seconds=1, capacity=2)
     src = [Source("r_1", "https://a.test", "a", "", "a.test")]
     store.put("s_1", "q", src)
     assert store.get("s_1") is not None
@@ -150,10 +170,11 @@ def test_session_store_ttl_and_capacity() -> None:
     assert len(store) == 2
     assert store.get("s_1") is None and store.get("s_3") is not None
 
-    # TTL：直接改创建时间模拟过期
-    snapshot = store.get("s_3")
-    assert snapshot is not None
-    snapshot.created_at = time.time() - 5
+    # TTL：直接改库里的创建时间模拟过期
+    import sqlite3
+
+    with sqlite3.connect(store.path) as conn:
+        conn.execute("UPDATE search_sessions SET created_at = ? WHERE sid = 's_3'", (int(time.time()) - 5,))
     assert store.get("s_3") is None
 
 
@@ -184,6 +205,20 @@ async def test_openai_client_streams_tokens() -> None:
     assert captured["url"] == "http://llm.test/v1/chat/completions"
     assert captured["body"]["stream"] is True
     assert captured["body"]["reasoning_effort"] == "none"
+
+
+@pytest.mark.parametrize(("status", "code"), [(401, "LLM_AUTH_FAILED"), (402, "LLM_INSUFFICIENT_BALANCE")])
+async def test_openai_client_reports_credentials_and_balance_errors(status: int, code: str) -> None:
+    transport = httpx.MockTransport(
+        lambda request: httpx.Response(status, json={"error": "private provider detail"})
+    )
+    client = OpenAICompatibleClient("http://llm.test/v1", "k", "m", 2, transport)
+
+    with pytest.raises(LLMBadResponse) as caught:
+        [token async for token in client.stream("s", "u")]
+
+    assert caught.value.code == code and caught.value.retryable is False
+    assert "private provider detail" not in caught.value.message
 
 
 @pytest.mark.parametrize("body", [

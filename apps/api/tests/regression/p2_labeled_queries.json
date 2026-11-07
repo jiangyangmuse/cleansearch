@@ -1,0 +1,285 @@
+{
+  "说明": "P2 评估集：query + 期望命中的域名（含常见中文来源，任一命中即算）。用于衡量扩展对排序/召回的影响，不是严格地面真值。",
+  "cases": [
+    {
+      "q": "数分 知识点",
+      "expect_domains": [
+        "zh.wikipedia.org",
+        "baike.baidu.com",
+        "mathworld.wolfram.com",
+        "wikipedia.org",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "高数 极限",
+      "expect_domains": [
+        "zh.wikipedia.org",
+        "mathworld.wolfram.com",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "机器学习 入门",
+      "expect_domains": [
+        "scikit-learn.org",
+        "zh.wikipedia.org",
+        "developers.google.com",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "深度学习 框架",
+      "expect_domains": [
+        "pytorch.org",
+        "tensorflow.org",
+        "zh.wikipedia.org",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "NLP 分词",
+      "expect_domains": [
+        "huggingface.co",
+        "zh.wikipedia.org",
+        "jieba.readthedocs.io",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "JS 事件循环",
+      "expect_domains": [
+        "developer.mozilla.org",
+        "nodejs.org",
+        "javascript.info",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "TS 类型 体操",
+      "expect_domains": [
+        "typescriptlang.org",
+        "github.com",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "py asyncio",
+      "expect_domains": [
+        "docs.python.org",
+        "realpython.com",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "k8s 调度",
+      "expect_domains": [
+        "kubernetes.io",
+        "zh.wikipedia.org",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "DB 索引 原理",
+      "expect_domains": [
+        "zh.wikipedia.org",
+        "postgresql.org",
+        "use-the-index-luke.com",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "LLM 提示词",
+      "expect_domains": [
+        "platform.openai.com",
+        "arxiv.org",
+        "zh.wikipedia.org",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "RAG 检索增强",
+      "expect_domains": [
+        "arxiv.org",
+        "python.langchain.com",
+        "zh.wikipedia.org",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "HTTP 缓存",
+      "expect_domains": [
+        "developer.mozilla.org",
+        "web.dev",
+        "zh.wikipedia.org",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "SQL 注入",
+      "expect_domains": [
+        "owasp.org",
+        "portswigger.net",
+        "zh.wikipedia.org",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "微服务 架构",
+      "expect_domains": [
+        "martinfowler.com",
+        "zh.wikipedia.org",
+        "aws.amazon.com",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "Rust 所有权",
+      "expect_domains": [
+        "doc.rust-lang.org",
+        "zh.wikipedia.org",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "Git rebase",
+      "expect_domains": [
+        "git-scm.com",
+        "atlassian.com",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    },
+    {
+      "q": "数分 期望 方差",
+      "expect_domains": [
+        "zh.wikipedia.org",
+        "mathworld.wolfram.com",
+        "wikipedia.org",
+        "baike.baidu.com",
+        "zhihu.com",
+        "csdn.net",
+        "cnblogs.com",
+        "jianshu.com",
+        "51cto.com",
+        "runoob.com"
+      ]
+    }
+  ]
+}

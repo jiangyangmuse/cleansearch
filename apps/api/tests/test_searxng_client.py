@@ -17,7 +17,7 @@ import httpx
 import pytest
 
 from app.config import Settings, get_settings
-from app.core.errors import UpstreamBadResponse, UpstreamTimeout, UpstreamUnavailable
+from app.core.errors import EngineUnavailable, UpstreamBadResponse, UpstreamTimeout, UpstreamUnavailable
 from app.core.searxng import SearxngClient
 
 FIXTURES = Path(__file__).resolve().parents[1] / "fixtures"
@@ -67,6 +67,26 @@ async def test_client_empty_results_are_zero_not_error() -> None:
     client = make_client(lambda request: httpx.Response(200, json=EMPTY))
     results, engines, unresponsive = await client.search("nothing", 1, None, True)
     assert results == [] and engines == [] and unresponsive == []
+
+
+async def test_explicit_engine_rejects_default_fallback() -> None:
+    client = make_client(lambda request: httpx.Response(200, json=HIT))
+    with pytest.raises(EngineUnavailable) as caught:
+        await client.search("test", 1, None, True, engine="startpage")
+    assert caught.value.code == "ENGINE_UNAVAILABLE"
+
+
+async def test_explicit_engine_only_keeps_matching_sources() -> None:
+    payload = {
+        "results": [
+            {"url": "https://example.com/a", "title": "a", "engines": ["google scholar", "bing"]},
+            {"url": "https://example.com/b", "title": "b", "engine": "bing"},
+        ]
+    }
+    client = make_client(lambda request: httpx.Response(200, json=payload))
+    results, engines, _ = await client.search("paper", 1, None, True, engine="scholar")
+    assert [item.url for item in results] == ["https://example.com/a"]
+    assert engines == results[0].engine == ["google scholar"]
 
 
 @pytest.mark.parametrize(("region", "language"), [("cn", "zh-CN"), ("jp", "ja-JP"), ("us", "en-US"), ("en-GB", "en-GB")])

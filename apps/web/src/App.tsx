@@ -39,6 +39,7 @@ export default function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [page, setPage] = useState(1);
   const drawerToggle = useRef<HTMLButtonElement>(null);
+  const touchStart = useRef<number | null>(null);
   const controller = useRef<AbortController | null>(null);
   const bootstrapped = useRef(false);
 
@@ -319,7 +320,31 @@ export default function App() {
                 <kbd>b</kbd> 收藏 · <kbd>s</kbd> 总结 · <kbd>Esc</kbd> 取消
               </p>
             </div>
-            <aside id="search-summary" className={drawerOpen ? "layout__side layout__side--open" : "layout__side"}>
+            <aside
+              id="search-summary"
+              className={drawerOpen ? "layout__side layout__side--open" : "layout__side"}
+              onTouchStart={(event) => {
+                touchStart.current = event.touches[0]?.clientY ?? null;
+              }}
+              onTouchMove={(event) => {
+                const start = touchStart.current;
+                if (start === null) return;
+                const delta = (event.touches[0]?.clientY ?? start) - start;
+                // 只处理向下拉（关抽屉），往上拉交给页面滚动
+                if (delta > 0 && event.currentTarget) {
+                  event.currentTarget.style.transform = `translateY(${Math.min(delta, 200)}px)`;
+                }
+              }}
+              onTouchEnd={(event) => {
+                const start = touchStart.current;
+                touchStart.current = null;
+                const element = event.currentTarget;
+                if (element) element.style.transform = "";
+                if (start === null) return;
+                const end = event.changedTouches[0]?.clientY ?? start;
+                if (end - start > 90) setDrawerOpen(false);
+              }}
+            >
               <SummaryPanel key={data.meta.sid} sid={data.meta.sid} query={data.parsed.q} />
             </aside>
             <button

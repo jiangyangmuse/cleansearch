@@ -34,6 +34,16 @@ class LLMBadResponse(LLMError):
     code = "LLM_BAD_RESPONSE"
 
 
+class LLMAuthFailed(LLMBadResponse):
+    code = "LLM_AUTH_FAILED"
+    retryable = False
+
+
+class LLMInsufficientBalance(LLMBadResponse):
+    code = "LLM_INSUFFICIENT_BALANCE"
+    retryable = False
+
+
 class OpenAICompatibleClient:
     def __init__(
         self,
@@ -77,6 +87,10 @@ class OpenAICompatibleClient:
                     "POST", f"{self.base_url}/chat/completions", json=payload, headers=headers
                 ) as response:
                     if response.status_code != 200:
+                        if response.status_code == 401:
+                            raise LLMAuthFailed("模型接口认证失败（HTTP 401），请检查 API 密钥")
+                        if response.status_code == 402:
+                            raise LLMInsufficientBalance("模型账户余额不足（HTTP 402）")
                         if response.status_code == 404:
                             raise LLMBadResponse(f"找不到模型 {self.model} 或模型接口，请检查配置")
                         raise LLMBadResponse(f"模型接口返回 HTTP {response.status_code}")

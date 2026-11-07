@@ -6,17 +6,20 @@
 from __future__ import annotations
 
 from html import escape
+from dataclasses import replace
 from urllib.parse import urlsplit
 
 from fastapi import APIRouter, Depends
 from fastapi.responses import HTMLResponse
+from starlette.concurrency import run_in_threadpool
 
 from app.config import get_settings
 from app.core.normalize import is_renderable_url
 from app.core.redirect import verify_go
+from app.core.rdap import AGE_PENALTY, AGE_REASON, DomainAgeStore, cached_age
 from app.core.safety import SafetyScorer
 from app.core.tokens import get_api_token
-from app.routers.search import get_safety
+from app.routers.search import get_age_store, get_safety
 
 router = APIRouter(tags=["go"])
 
@@ -44,7 +47,10 @@ PAGE = """<!doctype html>
 
 
 @router.get("/go", response_class=HTMLResponse)
-async def go(u: str, sig: str = "", safety: SafetyScorer = Depends(get_safety)) -> HTMLResponse:
+async def go(
+    u: str, sig: str = "", safety: SafetyScorer = Depends(get_safety),
+    age_store: DomainAgeStore | None = Depends(get_age_store),
+) -> HTMLResponse:
     secret = get_api_token(get_settings().api_token_path)
     url = verify_go(u, sig, secret)
     if not url or not is_renderable_url(url):
@@ -54,6 +60,10 @@ async def go(u: str, sig: str = "", safety: SafetyScorer = Depends(get_safety)) 
         )
     report = safety.evaluate(url)
     host = urlsplit(url).hostname or url
+    if get_settings().rdap_enabled and age_store is not None and report.risk > 0:
+        age = await run_in_threadpool(cached_age, host, age_store)
+        if age is not None and age.fresh:
+            report = replace(report, risk=round(min(1.0, report.risk + AGE_PENALTY), 3), reasons=(*report.reasons, AGE_REASON))
     reasons = "".join(f"<li>{escape(reason)}</li>" for reason in report.reasons)
     if not reasons:
         reasons = "<li>启发式检查未给出具体原因</li>"

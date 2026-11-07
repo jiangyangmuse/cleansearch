@@ -65,6 +65,13 @@ class FetchedPage:
     text: str
     bytes_read: int
     truncated: bool
+    raw: bytes = b""  # favicon 之类的二进制响应走这里
+
+
+ALLOWABLE_RANGES = (
+    ipaddress.ip_network("198.18.0.0/15"),   # RFC 2544 benchmark
+    ipaddress.ip_network("2001:2::/48"),     # RFC 5180 benchmark
+)
 
 
 def is_public_ip(value: str, allowed=()) -> bool:
@@ -72,13 +79,17 @@ def is_public_ip(value: str, allowed=()) -> bool:
         ip = ipaddress.ip_address(value)
     except ValueError:
         return False
+    # 显式放行只对「bench 网段」生效：本机代理会把公网解析到 198.18/2001:2::，
+    # 但不能让 0.0.0.0/0 这类宽网段把内网也放进来。
+    if allowed and any(ip in network for network in ALLOWABLE_RANGES) and any(
+        ip in network for network in allowed
+    ):
+        return True
     if isinstance(ip, ipaddress.IPv6Address):
         if ip.scope_id or ip.is_site_local or any(ip in network for network in IPV6_TRANSITION_RANGES):
             return False
         if ip.ipv4_mapped:
             return is_public_ip(str(ip.ipv4_mapped), allowed)
-    if ip in BENCHMARK_RANGE and any(ip in network for network in allowed):
-        return True
     return ip.is_global and not (ip.is_multicast or ip.is_reserved)
 
 
@@ -93,7 +104,7 @@ def parse_networks(cidrs) -> tuple:
 
 
 def default_resolver(host: str) -> list[str]:
-    infos = socket.getaddrinfo(host, None, proto=socket.IPPROTO_TCP)
+    infos = socket.getaddrinfo(host, None, proto=socket.IPPROTO_TCP, flags=socket.AI_ADDRCONFIG)
     return list(dict.fromkeys(info[4][0] for info in infos))
 
 
@@ -135,6 +146,17 @@ class SafeFetcher:
         # 仅供「本机网络经透明代理回落私有/bench 网段」时显式放行，默认关闭
         self._allowed = parse_networks(extra_cidrs)
 
+    def clone_with_timeout(self, timeout: float) -> "SafeFetcher":
+        """复制一份限额相同、超时更长的抓取器（拉取较大的 feed 文件用）。"""
+        return SafeFetcher(
+            timeout=timeout,
+            max_bytes=self.max_bytes,
+            max_redirects=self.max_redirects,
+            transport=self._transport,
+            resolver=self._resolver,
+            extra_cidrs=tuple(str(network) for network in self._allowed),
+        )
+
     async def _public_addresses(self, url: httpx.URL) -> list[str]:
         host = url.raw_host.decode("ascii")
         try:
@@ -152,21 +174,30 @@ class SafeFetcher:
             raise FetchBlocked(f"拒绝非公网地址：{host} → {', '.join(blocked[:3])}")
         return list(dict.fromkeys(str(ipaddress.ip_address(address)) for address in addresses))
 
-    async def fetch(self, url: str, max_bytes: int | None = None) -> FetchedPage:
-        return await self._walk(url, max_bytes if max_bytes is not None else self.max_bytes)
+    async def fetch(
+        self,
+        url: str,
+        max_bytes: int | None = None,
+        allowed_types: set[str] | frozenset[str] | None = None,
+    ) -> FetchedPage:
+        return await self._walk(
+            url, max_bytes if max_bytes is not None else self.max_bytes, allowed_types
+        )
 
     async def probe(self, url: str) -> int:
         """死链检测只读响应状态，任何媒体类型都可以是有效链接。"""
         return (await self._walk(url, None)).status
 
-    async def _walk(self, url: str, limit: int | None) -> FetchedPage:
+    async def _walk(
+        self, url: str, limit: int | None, allowed_types=None
+    ) -> FetchedPage:
         current = url
         try:
             async with asyncio.timeout(self.timeout):
                 for _ in range(self.max_redirects + 1):
                     target = validate_public_url(current)
                     addresses = await self._public_addresses(target)
-                    result = await self._request(target, addresses, limit)
+                    result = await self._request(target, addresses, limit, allowed_types)
                     if isinstance(result, FetchedPage):
                         return result
                     current = result
@@ -176,7 +207,9 @@ class SafeFetcher:
         except (httpx.HTTPError, httpx.InvalidURL) as exc:
             raise FetchFailed(f"抓取失败：{exc.__class__.__name__}") from exc
 
-    async def _request(self, url: httpx.URL, addresses: list[str], limit: int | None) -> FetchedPage | str:
+    async def _request(
+        self, url: httpx.URL, addresses: list[str], limit: int | None, allowed_types=None
+    ) -> FetchedPage | str:
         headers = {
             "Host": url.netloc.decode("ascii"),
             "User-Agent": USER_AGENT,
@@ -193,13 +226,15 @@ class SafeFetcher:
                     async with client.stream(
                         "GET", url.copy_with(host=address), headers=headers, extensions=extensions,
                     ) as response:
-                        return await self._read_response(url, response, limit)
+                        return await self._read_response(url, response, limit, allowed_types)
                 except (httpx.ConnectError, httpx.ConnectTimeout):
                     if index == len(addresses) - 1:
                         raise
         raise FetchFailed("没有可用的连接地址")
 
-    async def _read_response(self, url: httpx.URL, response: httpx.Response, limit: int | None) -> FetchedPage | str:
+    async def _read_response(
+        self, url: httpx.URL, response: httpx.Response, limit: int | None, allowed_types=None
+    ) -> FetchedPage | str:
         status = response.status_code
         if status in (301, 302, 303, 307, 308):
             location = response.headers.get("location")
@@ -211,7 +246,8 @@ class SafeFetcher:
         content_type = response.headers.get("content-type", "").split(";")[0].strip().lower()
         if limit is None:
             return FetchedPage(str(url), status, content_type, "", 0, False)
-        if content_type not in ALLOWED_CONTENT_TYPES:
+        permitted = allowed_types or ALLOWED_CONTENT_TYPES
+        if content_type not in permitted:
             raise FetchFailed(f"不支持的内容类型：{content_type or '未声明'}")
         if response.headers.get("content-encoding", "identity").strip().lower() != "identity":
             raise FetchFailed("正文抓取不接受压缩响应")
@@ -223,5 +259,6 @@ class SafeFetcher:
             if len(chunk) > remaining:
                 truncated = True
                 break
-        text = buffer.decode(response.encoding or "utf-8", "replace")
-        return FetchedPage(str(url), status, content_type, text, len(buffer), truncated)
+        raw = bytes(buffer)
+        text = raw.decode(response.encoding or "utf-8", "replace")
+        return FetchedPage(str(url), status, content_type, text, len(buffer), truncated, raw)

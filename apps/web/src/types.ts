@@ -57,6 +57,8 @@ export interface Bookmark {
   note: string | null;
   created_at: number;
   dead: number;
+  dead_status: number | null;
+  dead_checked_at: number | null;
   tags: string[];
 }
 

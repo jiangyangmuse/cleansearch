@@ -1,0 +1,38 @@
+{
+  "scope": "documentation-only; no business test or live API rerun",
+  "historical_reports_preserved": 33,
+  "historical_ledger_rows_preserved": 33,
+  "ledger_reports": 34,
+  "ledger_states": {
+    "完成": 29,
+    "部分完成": 5
+  },
+  "archived_reports": 27,
+  "root_reports": 7,
+  "top_report": "completed/2026-11-07-1519-progress-alignment.md",
+  "relative_links_checked": {
+    "docs/进展与欠账.md": 26,
+    "README.md": 8,
+    "reports/INDEX.md": 35,
+    "reports/completed/2026-11-07-1519-progress-alignment.md": 5
+  },
+  "artifacts": {
+    "docs/进展与欠账.md": {
+      "lines": 76,
+      "non_whitespace_chars": 5441
+    },
+    "README.md": {
+      "lines": 656,
+      "non_whitespace_chars": 20346
+    },
+    "reports/INDEX.md": {
+      "lines": 44,
+      "non_whitespace_chars": 5507
+    },
+    "reports/completed/2026-11-07-1519-progress-alignment.md": {
+      "lines": 79,
+      "non_whitespace_chars": 2610
+    }
+  },
+  "errors": []
+}

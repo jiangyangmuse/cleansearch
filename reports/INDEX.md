@@ -4,10 +4,21 @@
 
 排序：新的在上。
 
-六阶段报告保留在本目录。台账的「完成」沿用原记录，报告 §8.1 的真实多引擎验收为「部分达成」，最新复核仍有未通过的指定引擎。项目当前验收状态与待办见 [进展与欠账](../docs/进展与欠账.md)。
+历史口径更正（2026-11-07）：六阶段报告保留在本目录，台账状态沿用原记录。该报告 §8.1 的真实多引擎验收当时为「部分达成」；后续 `gc/y` 与容器补验已有通过证据，其他指定引擎仍取决于部署和网络。当前交付范围、待验条件及可选扩展统一见 [进展与欠账](../docs/进展与欠账.md)。
 
 | 编号 | 日期时间 | 任务 | 类型 | 状态 | 报告 |
 | --- | --- | --- | --- | --- | --- |
+| 20261107-1519 | 2026-11-07 15:19 | [当前交付与后续待办对齐](completed/2026-11-07-1519-progress-alignment.md) | docs | 完成 | `completed/2026-11-07-1519-progress-alignment.md` |
+| 20261107-1506 | 2026-11-07 15:06 | [RDAP 复核优化与四十域名校准](completed/2026-11-07-1506-rdap-review-calibration.md) | fix | 完成 | `completed/2026-11-07-1506-rdap-review-calibration.md` |
+| 20261107-1447 | 2026-11-07 14:47 | [RDAP 域名年龄信号](completed/2026-11-07-1447-rdap-domain-age.md) | feat | 完成 | `completed/2026-11-07-1447-rdap-domain-age.md` |
+| 20261107-1437 | 2026-11-07 14:37 | [Serper 真实兜底验收与容器云端链路](completed/2026-11-07-1437-serper-real-acceptance.md) | fix | 完成 | `completed/2026-11-07-1437-serper-real-acceptance.md` |
+| 20261107-1407 | 2026-11-07 14:07 | [商用兜底与 CI 真跑](completed/2026-11-07-1407-paid-fallback-ci-run.md) | feat | 完成 | `completed/2026-11-07-1407-paid-fallback-ci-run.md` |
+| 20261107-1206 | 2026-11-07 12:06 | [P0–P3 复核与全文抓取优化](completed/2026-11-07-1206-p0-p3-full-fetch-review.md) | fix | 完成 | `completed/2026-11-07-1206-p0-p3-full-fetch-review.md` |
+| 20261107-1148 | 2026-11-07 11:48 | [真实搜索接 DeepSeek 双模式验收与时延指标修复](completed/2026-11-07-1148-real-deepseek-summary-check.md) | fix | 完成 | `completed/2026-11-07-1148-real-deepseek-summary-check.md` |
+| 20261107-1136 | 2026-11-07 11:36 | [DeepSeek 总结接入与当前成果复验](completed/2026-11-07-1136-deepseek-summary-acceptance.md) | feat | 完成 | `completed/2026-11-07-1136-deepseek-summary-acceptance.md` |
+| 20261107-1123 | 2026-11-07 11:23 | [P3：扩展体验与部署形态](completed/2026-11-07-1123-p3-ux-and-deploy.md) | feat | 完成 | `completed/2026-11-07-1123-p3-ux-and-deploy.md` |
+| 20261107-1108 | 2026-11-07 11:08 | [P2：检索与正文质量评估与实现](completed/2026-11-07-1108-p2-retrieval-content-quality.md) | feat | 完成 | `completed/2026-11-07-1108-p2-retrieval-content-quality.md` |
+| 20261107-1056 | 2026-11-07 10:56 | [P1 收口：CI 基线、浏览器验收与模型实测](2026-11-07-1056-p1-ci-browser-model.md) | ops | 部分完成 | `2026-11-07-1056-p1-ci-browser-model.md` |
 | 20261107-1046 | 2026-11-07 10:46 | [P0-2：Docker Compose 部署与持久化验收](completed/2026-11-07-1046-p0-2-docker-verify.md) | ops | 完成 | `completed/2026-11-07-1046-p0-2-docker-verify.md` |
 | 20261107-1022 | 2026-11-07 10:22 | [P0 收口：真实引擎、缓存与持久化](2026-11-07-1022-p0-real-engines.md) | fix | 完成 | `2026-11-07-1022-p0-real-engines.md` |
 | 20261107-0003 | 2026-11-07 00:03 | [当前成果复核、归档与进度对齐](completed/2026-11-07-0003-progress-archive-review.md) | fix | 完成 | `completed/2026-11-07-0003-progress-archive-review.md` |

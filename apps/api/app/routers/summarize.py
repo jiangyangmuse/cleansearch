@@ -12,6 +12,7 @@ from contextlib import aclosing
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse, StreamingResponse
 
+from app.config import get_settings
 from app.core.fetch import SafeFetcher
 from app.core.llm import LLMError
 from app.core.session_store import SessionStore, get_session_store
@@ -66,7 +67,8 @@ async def summarize(
         materials = snapshot
         stats = {"fetched": 0, "failed": 0, "truncated": 0}
         if mode == "full":
-            materials, stats = await enrich_with_full_text(snapshot, fetcher, FULL_MAX_SOURCES)
+            full_fetcher = fetcher.clone_with_timeout(get_settings().summary_fetch_timeout)
+            materials, stats = await enrich_with_full_text(snapshot, full_fetcher, FULL_MAX_SOURCES)
         sources = materials.sources[:MAX_SOURCES]
         partial = bool(stats["failed"] or stats["truncated"])
         yield sse(
@@ -110,10 +112,10 @@ async def summarize(
                 {"code": exc.code, "message": exc.message, "retryable": exc.retryable},
             )
             return
-        except Exception as exc:  # 兜底：任何未预期异常都要让前端进入 error 态
+        except Exception:  # 未知异常可能包含上游请求细节，只返回固定提示。
             yield sse(
                 "error",
-                {"code": "LLM_ERROR", "message": str(exc)[:200], "retryable": True},
+                {"code": "LLM_ERROR", "message": "生成总结时发生内部错误，请重试", "retryable": True},
             )
             return
 

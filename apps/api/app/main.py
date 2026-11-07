@@ -13,7 +13,9 @@ from starlette.concurrency import run_in_threadpool
 from app import __version__
 from app.config import REPO_ROOT, Settings, get_settings, reload_settings
 from app.core.errors import SearchError
+from app.core.metrics import RequestMetricsMiddleware, get_metrics
 from app.core.tokens import read_api_token, token_matches
+from app.routers import assets as assets_router
 from app.routers import bookmarks as bookmarks_router
 from app.routers import go as go_router
 from app.routers import page as page_router
@@ -36,6 +38,7 @@ app.include_router(go_router.router)
 app.include_router(page_router.router)
 app.include_router(summarize_router.router)
 app.include_router(tools_router.router)
+app.include_router(assets_router.router)
 
 
 CORS_HEADERS = {
@@ -72,6 +75,14 @@ def _cross_origin_denied(code: str, message: str, status: int, *, cors: bool = F
         content={"error": {"code": code, "message": message, "retryable": False}},
         headers=CORS_HEADERS if cors else None,
     )
+
+
+app.add_middleware(RequestMetricsMiddleware)
+
+
+@app.get("/api/metrics")
+def metrics_snapshot() -> dict:
+    return get_metrics().snapshot()
 
 
 @app.middleware("http")
@@ -143,7 +154,7 @@ async def health() -> HealthResponse:
         searxng_url=current.searxng_url,
         web_dist=str(current.web_dist),
         web_built=index.is_file(),
-        blocklist_rules=_blocklist_rules(current.blocklist_path),
+        blocklist_rules=_blocklist_rules(current.blocklist_path, current.feed_output_path),
         llm_provider=current.llm_provider,
         llm_model="stub-extractive" if current.llm_provider == "stub" else current.llm_model,
         bookmarks=_bookmark_count(current.db_path),
@@ -163,12 +174,18 @@ def _bookmark_count(path: Path) -> int:
         return 0
 
 
-def _blocklist_rules(path: Path) -> int:
-    try:
-        lines = path.read_text(encoding="utf-8").splitlines()
-    except OSError:
-        return 0
-    return sum(1 for line in lines if line.strip() and not line.lstrip().startswith("#"))
+def _blocklist_rules(path: Path, feed_path: Path | None = None) -> int:
+    """基础黑名单 + 可刷新 feed 的条数之和。"""
+    total = 0
+    for candidate in (path, feed_path):
+        if candidate is None:
+            continue
+        try:
+            lines = candidate.read_text(encoding="utf-8").splitlines()
+        except OSError:
+            continue
+        total += sum(1 for line in lines if line.strip() and not line.lstrip().startswith("#"))
+    return total
 
 
 def _mount_web() -> None:

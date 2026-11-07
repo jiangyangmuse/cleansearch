@@ -37,10 +37,8 @@ class EnginesUnresponsive(UpstreamUnavailable):
         self.engines = engines or []
 
 
-class EngineUnavailable(SearchError):
+class EngineUnavailable(EnginesUnresponsive):
     code = "ENGINE_UNAVAILABLE"
-    http_status = 503
-    retryable = True
 
 
 class UpstreamBadResponse(SearchError):

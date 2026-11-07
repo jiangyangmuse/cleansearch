@@ -193,6 +193,34 @@ def test_search_succeeds_when_sqlite_cache_is_busy(cached_client: TestClient, ca
     assert cached_client.post("/api/search", json={"q": "python 文档"}).json()["meta"]["cached"]
 
 
+def test_paid_setting_changes_do_not_reuse_search_cache(cached_client: TestClient) -> None:
+    from app.core.aggregator import Aggregator
+    from app.core.paid import PaidSearch
+    from app.core.searxng import SearxngClient
+
+    holder = {}
+    app.dependency_overrides[get_aggregator] = lambda: holder["aggregator"]
+    try:
+        for enabled in (False, True, False):
+            settings = replace(get_settings(), provider="searxng", brave_api_key="", serper_api_key="test", paid_fallback=enabled)
+            aggregator = Aggregator(settings)
+            aggregator._searxng = SearxngClient(settings, transport=httpx.MockTransport(
+                lambda request: httpx.Response(200, json={"results": []})
+            ))
+            if enabled:
+                aggregator._paid = PaidSearch(settings, transport=httpx.MockTransport(
+                    lambda request: httpx.Response(200, json={
+                        "organic": [{"link": "https://paid.test/a", "title": "HTTP"}]
+                    })
+                ))
+            holder["aggregator"] = aggregator
+            body = cached_client.post("/api/search", json={"q": "HTTP"}).json()
+            assert bool(body["meta"]["total"]) is enabled
+            assert body["meta"]["cached"] is False
+    finally:
+        app.dependency_overrides.pop(get_aggregator, None)
+
+
 def test_page_summary_cache_hit(cached_client: TestClient, cache: Cache) -> None:
     calls = {"n": 0}
 

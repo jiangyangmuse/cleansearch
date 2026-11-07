@@ -1,0 +1,784 @@
+{
+  "rows": [
+    {
+      "q": "数分 知识点",
+      "off": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 15,
+        "cached": false,
+        "engines": [
+          "google cse",
+          "brave",
+          "yahoo"
+        ],
+        "unresponsive": [
+          "duckduckgo(CAPTCHA)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 3084
+      },
+      "on": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 15,
+        "cached": false,
+        "engines": [
+          "google cse",
+          "brave",
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "duckduckgo(CAPTCHA)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 4578
+      }
+    },
+    {
+      "q": "高数 极限",
+      "on": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 15,
+        "cached": false,
+        "engines": [
+          "google cse",
+          "brave",
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "duckduckgo(CAPTCHA)",
+          "sogou(unexpected crash)",
+          "wikipedia(timeout)"
+        ],
+        "ms": 5813
+      },
+      "off": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 15,
+        "cached": false,
+        "engines": [
+          "brave",
+          "yahoo"
+        ],
+        "unresponsive": [
+          "duckduckgo(CAPTCHA)",
+          "google cse(too many requests)",
+          "sogou(unexpected crash)",
+          "wikipedia(Suspended: timeout)"
+        ],
+        "ms": 1503
+      }
+    },
+    {
+      "q": "机器学习 入门",
+      "off": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 14,
+        "cached": false,
+        "engines": [
+          "brave",
+          "yahoo"
+        ],
+        "unresponsive": [
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)",
+          "wikipedia(Suspended: timeout)"
+        ],
+        "ms": 1356
+      },
+      "on": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 3,
+        "ok": true,
+        "status": 200,
+        "total": 13,
+        "cached": false,
+        "engines": [
+          "brave",
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 5299
+      }
+    },
+    {
+      "q": "深度学习 框架",
+      "on": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 4,
+        "ok": true,
+        "status": 200,
+        "total": 10,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)",
+          "wikipedia(timeout)"
+        ],
+        "ms": 5806
+      },
+      "off": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 4,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)",
+          "wikipedia(Suspended: timeout)"
+        ],
+        "ms": 1360
+      }
+    },
+    {
+      "q": "NLP 分词",
+      "off": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)",
+          "wikipedia(Suspended: timeout)"
+        ],
+        "ms": 1413
+      },
+      "on": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 14,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 4856
+      }
+    },
+    {
+      "q": "JS 事件循环",
+      "on": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1,
+        "ok": true,
+        "status": 200,
+        "total": 16,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 4795
+      },
+      "off": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 2269
+      }
+    },
+    {
+      "q": "TS 类型 体操",
+      "off": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 1650
+      },
+      "on": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 3,
+        "ok": true,
+        "status": 200,
+        "total": 14,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 4835
+      }
+    },
+    {
+      "q": "py asyncio",
+      "on": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1,
+        "ok": true,
+        "status": 200,
+        "total": 11,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 3370
+      },
+      "off": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 1481
+      }
+    },
+    {
+      "q": "k8s 调度",
+      "off": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 3,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 1187
+      },
+      "on": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 4,
+        "ok": true,
+        "status": 200,
+        "total": 13,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 3844
+      }
+    },
+    {
+      "q": "DB 索引 原理",
+      "on": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 13,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 4995
+      },
+      "off": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 1485
+      }
+    },
+    {
+      "q": "LLM 提示词",
+      "off": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 1963
+      },
+      "on": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 15,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 3897
+      }
+    },
+    {
+      "q": "RAG 检索增强",
+      "on": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 9,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 4256
+      },
+      "off": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 1594
+      }
+    },
+    {
+      "q": "HTTP 缓存",
+      "off": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 2166
+      },
+      "on": {
+        "hit10": true,
+        "strong": true,
+        "first_rank": 1,
+        "ok": true,
+        "status": 200,
+        "total": 12,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 4605
+      }
+    },
+    {
+      "q": "SQL 注入",
+      "on": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1,
+        "ok": true,
+        "status": 200,
+        "total": 15,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 5197
+      },
+      "off": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 2570
+      }
+    },
+    {
+      "q": "微服务 架构",
+      "off": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 1497
+      },
+      "on": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 1,
+        "ok": true,
+        "status": 200,
+        "total": 11,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 3852
+      }
+    },
+    {
+      "q": "Rust 所有权",
+      "on": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 11,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 4268
+      },
+      "off": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 1477
+      }
+    },
+    {
+      "q": "Git rebase",
+      "off": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 3,
+        "ok": true,
+        "status": 200,
+        "total": 7,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 2142
+      },
+      "on": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 2,
+        "ok": true,
+        "status": 200,
+        "total": 10,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 4518
+      }
+    },
+    {
+      "q": "数分 期望 方差",
+      "on": {
+        "hit10": true,
+        "strong": false,
+        "first_rank": 4,
+        "ok": true,
+        "status": 200,
+        "total": 9,
+        "cached": false,
+        "engines": [
+          "yahoo",
+          "serper"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 5238
+      },
+      "off": {
+        "hit10": false,
+        "strong": false,
+        "first_rank": null,
+        "ok": true,
+        "status": 200,
+        "total": 6,
+        "cached": false,
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [
+          "brave(Suspended: too many requests)",
+          "duckduckgo(CAPTCHA)",
+          "google cse(Suspended: too many requests)",
+          "sogou(unexpected crash)"
+        ],
+        "ms": 1810
+      }
+    }
+  ],
+  "summary": {
+    "off": {
+      "cases": 18,
+      "success": 18,
+      "hit10": 6,
+      "strong": 0,
+      "median_ms": 1548.5,
+      "p95_ms": 3084
+    },
+    "on": {
+      "cases": 18,
+      "success": 18,
+      "hit10": 11,
+      "strong": 2,
+      "median_ms": 4700.0,
+      "p95_ms": 5813
+    }
+  }
+}

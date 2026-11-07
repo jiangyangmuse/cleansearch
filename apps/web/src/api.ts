@@ -240,6 +240,8 @@ export interface PageSummary {
   extractor: string;
   truncated: boolean;
   summary: { one_liner: string; bullets: string[]; key_data: unknown[]; caveats: string[] };
+  key_data: { label: string; value: string }[];
+  anchors: { i: number; text: string }[];
   summary_text: string;
   model: string;
 }
@@ -261,6 +263,39 @@ export async function checkDeadLinks(ids?: number[]) {
       body: JSON.stringify(ids ? { ids, limit: Math.max(1, ids.length) } : {}),
     },
   );
+}
+
+export function faviconUrl(host: string | null | undefined): string | null {
+  if (!host) return null;
+  return `/api/favicon?host=${encodeURIComponent(host)}`;
+}
+
+export interface ImportJob {
+  id: string;
+  state: "running" | "done" | "error";
+  processed: number;
+  total: number;
+  created: number;
+  skipped: number;
+  groups_created: number;
+  error: string;
+}
+
+export async function startImportJob(file: File): Promise<{ id: string }> {
+  const body = new FormData();
+  body.append("file", file);
+  const response = await fetch("/api/bookmarks/import/jobs", { method: "POST", body });
+  if (!response.ok) {
+    const detail = await response.json().catch(() => ({}));
+    throw new ApiError(detail?.error?.message ?? "导入任务创建失败", "IMPORT_FAILED", response.status);
+  }
+  return response.json();
+}
+
+export async function importJobStatus(id: string): Promise<ImportJob> {
+  const response = await fetch(`/api/bookmarks/import/jobs/${id}`, { cache: "no-store" });
+  if (!response.ok) throw new ApiError("导入任务不存在", "IMPORT_JOB_MISSING", response.status);
+  return response.json();
 }
 
 export async function importBookmarks(file: File) {

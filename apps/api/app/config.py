@@ -36,6 +36,11 @@ def _env_int(name: str, default: int) -> int:
         return default
 
 
+def _path(name: str, fallback: str) -> Path:
+    value = _env(name, fallback) or fallback
+    return Path(value).expanduser()
+
+
 def _env_bool(name: str, default: bool) -> bool:
     raw = (_env(name) or "").lower()
     if not raw:
@@ -66,6 +71,7 @@ class Settings:
     db_path: Path
     # 正文抓取（M4）：受控入口的限额
     fetch_timeout: float
+    summary_fetch_timeout: float
     fetch_max_bytes: int
     fetch_max_redirects: int
     fetch_concurrency: int
@@ -78,6 +84,17 @@ class Settings:
     # 黑名单 feed：可刷新的纯文本源（OpenPhish 等无 key 源）
     feed_urls: tuple[str, ...]
     feed_output_path: Path
+    # RDAP 域名年龄：给风险分补「新注册域名」信号
+    rdap_enabled: bool
+    rdap_ttl_days: int
+    # 商用检索兜底：配置了 brave/serper key 且开关打开才启用
+    brave_api_key: str
+    serper_api_key: str
+    paid_fallback: bool
+    # favicon 缓存目录
+    favicon_dir: Path
+    # 查询扩展：off（不扩展）/ rank（只影响排序）/ rewrite（并入上游查询）
+    expansion_mode: str
     # 熔断：连续失败阈值与冷却秒数
     breaker_enabled: bool
     breaker_fails: int
@@ -109,6 +126,9 @@ def get_settings() -> Settings:
     llm_provider = (_env("LLM_PROVIDER", "") or "").lower()
     if llm_provider not in ("openai", "stub"):
         llm_provider = "openai" if llm_base_url else "stub"
+    summary_fetch_timeout = _env_float("SUMMARY_FETCH_TIMEOUT", 4.0)
+    if not 0 < summary_fetch_timeout <= 10:
+        summary_fetch_timeout = 4.0
     return Settings(
         provider=provider,
         blocklist_path=blocklist,
@@ -123,6 +143,7 @@ def get_settings() -> Settings:
         session_capacity=_env_int("SESSION_CAPACITY", 64),
         db_path=db_path,
         fetch_timeout=_env_float("FETCH_TIMEOUT", 2.5),
+        summary_fetch_timeout=summary_fetch_timeout,
         fetch_max_bytes=_env_int("FETCH_MAX_BYTES", 2_000_000),
         fetch_max_redirects=_env_int("FETCH_MAX_REDIRECTS", 3),
         fetch_concurrency=_env_int("FETCH_CONCURRENCY", 6),
@@ -136,6 +157,13 @@ def get_settings() -> Settings:
         feed_output_path=(lambda p: p if p.is_absolute() else (REPO_ROOT / p).resolve())(
             Path(_env("FEED_OUTPUT_PATH", "data/blocklist-feeds.txt") or "data/blocklist-feeds.txt")
         ),
+        rdap_enabled=_env_bool("RDAP_ENABLED", True),
+        rdap_ttl_days=_env_int("RDAP_TTL_DAYS", 30),
+        brave_api_key=_env("BRAVE_API_KEY", "") or "",
+        serper_api_key=_env("SERPER_API_KEY", "") or "",
+        paid_fallback=_env_bool("PAID_FALLBACK", True),
+        favicon_dir=_path("FAVICON_DIR", "data/favicons"),
+        expansion_mode=(_env("EXPANSION_MODE", "rank") or "rank").lower(),
         breaker_enabled=_env_bool("BREAKER_ENABLED", True),
         breaker_fails=_env_int("BREAKER_FAILS", 3),
         breaker_cooldown=_env_int("BREAKER_COOLDOWN", 3600),

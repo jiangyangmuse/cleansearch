@@ -51,7 +51,7 @@ def search_key(
     namespace: tuple[str, ...] = (),
 ) -> str:
     raw = json.dumps(
-        ["search-v2", namespace, q, engine, region, page, safe, fixture],
+        ["search-v4", namespace, q, engine, region, page, safe, fixture],
         ensure_ascii=False,
         sort_keys=True,
     )
@@ -74,6 +74,9 @@ class Cache:
         self._conn.row_factory = sqlite3.Row
         try:
             self._conn.execute("PRAGMA journal_mode=WAL")
+            # 单文件多连接：给写入排队，避免 database is locked
+            self._conn.execute("PRAGMA busy_timeout=5000")
+            self._conn.execute("PRAGMA synchronous=NORMAL")
             self._conn.executescript(SCHEMA)
         except sqlite3.Error:
             self._conn.close()

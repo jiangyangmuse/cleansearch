@@ -1,0 +1,29 @@
+[
+  {
+    "url": "https://docs.python.org/3/library/asyncio.html",
+    "bytes": 25411,
+    "trafilatura_chars": 2174,
+    "stdlib_chars": 2236,
+    "trafilatura_head": "asyncio — Asynchronous I/O¶\nasyncio is a library to write concurrent code using ",
+    "stdlib_head": "asyncio is a library to write concurrent code using the async/await syntax.\nasyn",
+    "extractor_used": "trafilatura"
+  },
+  {
+    "url": "https://developer.mozilla.org/zh-CN/docs/Web/HTTP",
+    "bytes": 234849,
+    "trafilatura_chars": 1698,
+    "stdlib_chars": 1487,
+    "trafilatura_head": "HTTP\n超文本传输协议（HTTP）是一个用于传输超媒体文档（例如 HTML）的应用层协议。它是为 Web 浏览器与 Web 服务器之间的通信而设计的，但也可以",
+    "stdlib_head": "此页面由社区从英文翻译而来。了解更多并加入 MDN Web Docs 社区。\n超文本传输协议（HTTP）是一个用于传输超媒体文档（例如 HTML）的应用层协议。",
+    "extractor_used": "trafilatura"
+  },
+  {
+    "url": "https://web.telegram.org/k/",
+    "bytes": 20699,
+    "trafilatura_chars": 0,
+    "stdlib_chars": 0,
+    "trafilatura_head": "",
+    "stdlib_head": "",
+    "extractor_used": "stdlib"
+  }
+]

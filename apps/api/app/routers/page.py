@@ -49,6 +49,39 @@ def _structure(text: str) -> dict:
     return {"one_liner": one_liner, "bullets": bullets, "key_data": [], "caveats": caveats}
 
 
+KEY_DATA = re.compile(
+    r"(?<![\w.])(\d[\d,.]*\s*(?:%|个百分点|倍|GB|MB|KB|TB|ms|毫秒|秒|分钟|小时|万|亿|元|美元|条|台|人))"
+)
+SENTENCE_SPLIT = re.compile(r"[。！？\n]|(?<=\.)\s")
+
+
+def _key_data(text: str, limit: int = 8) -> list[dict]:
+    """从原文抽「数字 + 单位」的关键数据；启发式，不做语义判断。"""
+    found: list[dict] = []
+    seen: set[tuple[str, str]] = set()
+    for sentence in SENTENCE_SPLIT.split(text):
+        sentence = (sentence or "").strip()
+        if not sentence:
+            continue
+        for match in KEY_DATA.finditer(sentence):
+            value = match.group(1).strip()
+            label = sentence[max(0, match.start() - 24): match.start()].strip() or "原文数据"
+            key = (label, value)
+            if key in seen:
+                continue
+            seen.add(key)
+            found.append({"label": label[-40:], "value": value})
+            if len(found) >= limit:
+                return found
+    return found
+
+
+def _anchors(text: str, limit: int = 5) -> list[dict]:
+    """原文段落锚点：段落序号 + 首句，供人工回原文定位（不是 DOM 锚点）。"""
+    paragraphs = [line.strip() for line in text.splitlines() if len(line.strip()) >= 20]
+    return [{"i": index, "text": paragraph[:80]} for index, paragraph in enumerate(paragraphs[:limit], 1)]
+
+
 @router.post("/page/summarize")
 async def page_summarize(
     payload: PageRequest,
@@ -57,8 +90,10 @@ async def page_summarize(
     cache: Cache | None = Depends(get_cache),
 ) -> dict:
     url = payload.url.strip()
+    # 单页总结是用户主动等：给大页面更长的抓取预算；全文增强仍走短超时
+    page_fetcher = fetcher.clone_with_timeout(max(10.0, fetcher.timeout))
     try:
-        page = await fetcher.fetch(url)
+        page = await page_fetcher.fetch(url)
     except FetchBlocked as exc:
         raise HTTPException(status_code=403, detail=exc.message) from exc
     except FetchTimeout as exc:
@@ -107,6 +142,9 @@ async def page_summarize(
         "extractor": article.extractor,
         "truncated": page.truncated,
         "summary": _structure(text),
+        # 数据与锚点直接从原文抽，避免模型编数字；模型输出只负责结论与要点
+        "key_data": _key_data(article.text),
+        "anchors": _anchors(article.text),
         "summary_text": text,
         "model": summarizer.model,
         "cached": reused,

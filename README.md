@@ -1,7 +1,7 @@
 # CleanSearch · 干净搜索聚合器
 
 聚合多引擎检索 + 零广告结果页 + 三档相关性分组 + 侧栏 AI 总结 + 书签启动台。
-本机搜索、书签、正文增强、缓存和一键添加已交付。默认真实搜索和本机千问总结已联通，指定引擎与容器部署仍待验收。[当前进展与待办](docs/进展与欠账.md) · [完工台账](reports/INDEX.md)
+本机单用户主线已交付：搜索、书签、正文增强、缓存、一键添加、千问/DeepSeek 总结，以及 Serper 真实兜底、RDAP 首轮校准和 Compose 持久化均有验收证据。下一阶段补远端 CI、正式浏览器/Android 验收与更广样本评估。[当前进展与待办](docs/进展与欠账.md) · [完工台账](reports/INDEX.md)
 
 ## M0 做了什么
 
@@ -86,7 +86,7 @@ event: error  data: {"code":"LLM_TIMEOUT","message":"等待模型响应超时（
 
 - `sid` 不存在或过期 → `404 SESSION_NOT_FOUND`（`retryable=false`）；
 - 零结果不落快照，直接 404；
-- `mode` 只接受 `fast`，其它值 → `400 MODE_UNSUPPORTED`；
+- `mode` 接受 `fast`（使用搜索摘要）和 `full`（尽量补抓正文），其它值返回 `400 MODE_UNSUPPORTED`。
 - `GET /api/health` 提供 `llm_provider` / `llm_model`。桩与真实模型都必须输出正文、有效引用并以 `done` 结束，冒烟才会通过。
 
 ### 接真实模型
@@ -99,6 +99,20 @@ ollama list
 ```
 
 `-OllamaModel` 连接本机 `127.0.0.1:11434/v1`，默认发送 `reasoning_effort=none`，减少等待正文的时间。可在环境变量或 `.env` 里设置 `LLM_REASONING_EFFORT` 覆盖。`LLM_TIMEOUT` 限制等待首段可见正文的时间，随后也用于读取超时，默认 30 秒。
+
+#### 使用 DeepSeek 云端总结
+
+将 API 密钥单独存为工作区内的 `data/deepseek-api-key.txt`，一行即可。该目录已被 Git 忽略。启动后在首页点击「有结果」，再点击「生成总结」。
+
+```powershell
+.\scripts\serve.ps1 -Provider fixture -DeepSeek
+```
+
+正式检索时把 `fixture` 改为 `searxng`。`-DeepSeek` 连接官方端点，使用 `deepseek-flash` 并关闭推理模式。启用后，发起总结时会把查询与所用的摘要或正文发送给 DeepSeek。需要本机总结时，使用上面的 `-OllamaModel` 命令。[DeepSeek API 文档](https://api-docs.deepseek.com/quick_start/agent_integrations/)
+
+总结遇到认证失败或余额不足时分别返回 `LLM_AUTH_FAILED` 或 `LLM_INSUFFICIENT_BALANCE`。修正配置或余额后重新生成。[DeepSeek 错误码](https://api-docs.deepseek.com/zh-cn/quick_start/error_codes/)
+
+真实 SearXNG 已用 Google CSE 和 Yahoo 对三个公开技术主题验收 `fast` 与 `full`。正文抓取失败时保留搜索摘要并提示降级。[实测结果](docs/进展与欠账.md)
 
 通用 OpenAI 兼容端点也可以直接通过环境变量配置。`LLM_REASONING_EFFORT` 留空时由端点决定。
 
@@ -157,7 +171,7 @@ GET    /api/bookmarks/export         text/html; attachment
 | --- | --- | --- |
 | 受控抓取入口 | `apps/api/app/core/fetch.py`：只连接已校验地址，逐跳复检重定向目标，总时限 2.5s、正文上限 2MB | ✅ |
 | 正文提取 | `apps/api/app/core/extract.py`：trafilatura（装了就用）→ 标准库 HTMLParser 回退；过滤脚本/导航/面包屑 | ✅ |
-| 正文增强 | `GET /api/summarize?mode=full`：并发抓前 5 条正文，失败保留摘要并标 `failed`/`degraded` | ✅ |
+| 正文增强 | `GET /api/summarize?mode=full` 并发抓前 5 条。`SUMMARY_FETCH_TIMEOUT` 单独控制每条抓取预算，默认 4 秒。失败保留摘要并标 `failed`/`degraded` | ✅ |
 | 单页总结 | `POST /api/page/summarize` + `/s?u=<url>` 页面：一句话结论 / 要点 / 分歧 | ✅ |
 | 死链检测 | `POST /api/bookmarks/check`：并发 5，只检查当前页所选书签，404/410 标记为「失效」 | ✅ |
 | 侧栏交互 | 摘要完成后可增强，页脚显示抓取、降级和截断条数，引用标出素材来源 | ✅ |
@@ -174,6 +188,8 @@ M4 不做：三源实时黑名单 feed 与 `/go` 中转（需 API key，见方�
 
 > 本机网络经透明代理把公网域名解析到 `198.18.x.x`（bench 网段），默认会被判为非公网。
 > 本机可显式设置 `FETCH_EXTRA_CIDRS=198.18.0.0/15`。该例外仅用于此网段的 DNS 解析结果。默认配置拒绝这类地址。
+
+抓取解析按系统已配置的地址族查询，并复查返回的每个地址。在未配置 IPv6 的容器里，会使用已配置的 IPv4 网络。
 
 ### 接口
 
@@ -270,7 +286,7 @@ bookmarklet 和扩展都在「别人的页面」里发起请求，无法用 Orig
 | 书签标签 | `bookmark_tags` + `/api/bookmarks?tag=` + 启动台标签条 | ✅ |
 | 搜索分页 | 结果页「上一页 / 下一页」，空页可返回 | ✅ |
 | `/tools` 入口 | 头部导航「一键添加」 | ✅ |
-| git 与 CI | `.github/workflows/ci.yml`（pytest + build），仓库已 `git init` 并暂存 | ✅（初始提交留给你执行） |
+| Git 与 CI | 已有首个本地提交。`.github/workflows/ci.yml` 依次运行测试、构建和完整离线冒烟 | 远端执行待验 |
 
 
 ### 引擎后缀（2026-11-07 实测）
@@ -287,7 +303,7 @@ bookmarklet 和扩展都在「别人的页面」里发起请求，无法用 Orig
 | `w` | wikipedia | ❌ 返回空 |
 | `g` | google | ❌ 默认 disabled，启用后 access denied |
 
-`sp`（startpage）、`mj`（mojeek）保留在映射表里，但当前 SearXNG 版本没有这两个引擎，指定它们会被忽略。
+`sp`（startpage）、`mj`（mojeek）保留在映射表里。当前 SearXNG 配置未提供这些引擎，若上游回退到其他来源，API 返回 `503 ENGINE_UNAVAILABLE`。指定引擎的成功响应只含该引擎的结果。
 
 ### 真实验收结果（2026-11-07）
 
@@ -337,6 +353,163 @@ docker compose up -d --build
 
 注意：容器里的 SearXNG 引擎可用性与宿主机原生实例不同——本机容器内 `duckduckgo` 可用、`google cse` 偶发超时；宿主机原生实例反之。
 仓库的 `searxng/settings.yml` 已显式启用 `bing/yahoo/sogou`，保证 `compose up` 后引擎集一致。
+
+
+### 容器接宿主机模型 / feed 刷新（2026-11-08 实测）
+
+```dotenv
+# .env
+LLM_PROVIDER=openai
+LLM_MODEL=qwen3.5-4b-local:latest
+LLM_TIMEOUT=120
+LLM_REASONING_EFFORT=none
+COMPOSE_LLM_BASE_URL=http://host.docker.internal:11434/v1
+FEED_URLS=https://openphish.com/feed.txt
+FETCH_EXTRA_CIDRS=198.18.0.0/15   # 仅当容器 DNS 把公网解析到代理网段时需要
+```
+
+改完必须 `docker compose up -d --build api`（代码烤进镜像，只 `--force-recreate` 不会生效）。
+
+实测：
+
+| 项目 | 结果 |
+| --- | --- |
+| fast 总结（容器搜索 + 宿主机千问） | 首字 6.8–10.9s，总 13.4–23.0s，引用全部绑定 |
+| full 总结 | 首字 5.1–7.8s，抓取 2/5 与 0/5，均 `partial=true`（真实站点 403/超时） |
+| feed 刷新 | OpenPhish 298 条 → `blocklist_rules` 3→301，样本 URL 命中黑名单 |
+| 扩展（Edge 157） | 12 项全过；Chrome 156 已移除 `--load-extension`，需手动加载 |
+
+> `mode=full` 的抓取失败是设计内降级：正文不可用时保留搜索摘要并标 `partial`，不是错误。
+
+
+## P2：检索与正文质量（2026-11-07 首版验收）
+
+### 词典扩展评估（18 条标注查询，真实上游）
+
+同一批候选集下三种条件对比（只统计 12 条命中扩展词典的查询）：
+
+| 条件 | Top10 命中 | 强相关命中 | 首个命中平均位次 |
+| --- | --- | --- | --- |
+| baseline（不扩展） | 6/12 | 1/12 | 1.33 |
+| rank（只影响排序，默认） | 8/12 | 1/12 | 3.62 |
+| rewrite（别名并入上游查询） | **9/12** | **2/12** | 3.67 |
+
+脚本：`python scripts/eval-expansion.py --base-url http://127.0.0.1:8000 --json-out docs/m10-evidence/p2-expansion.json`
+
+结论：`rewrite` 提召回但多一次上游请求、平均位次略降；默认仍是 `rank`，需要召回时设 `EXPANSION_MODE=rewrite`（`off` 可完全关闭）。
+
+### 正文提取：trafilatura vs 标准库
+
+| 页面 | trafilatura | 标准库 | 说明 |
+| --- | --- | --- | --- |
+| docs.python.org/3/library/asyncio.html | 2174 字 | 2236 字 | 两者接近，trafilatura 去掉了页头 |
+| developer.mozilla.org/zh-CN/docs/Web/HTTP | 1698 字 | 1487 字 | trafilatura 去掉了「社区翻译」横幅 |
+| web.telegram.org/k/（纯 JS） | 0 字 | 0 字 | 都提取不到，接口按设计返回 422 |
+
+容器镜像已装可选依赖（`pip install ".[content]"`），响应里 `extractor=trafilatura`；没装的环境自动回退标准库。
+
+### 单页总结增强
+
+- 单页总结有 10 秒抓取预算。侧栏全文模式默认 4 秒，可用 `SUMMARY_FETCH_TIMEOUT` 设置大于 0 且不超过 10 秒的预算。普通抓取仍由 `FETCH_TIMEOUT` 控制。
+- `key_data`：从**原文**抽「数字 + 单位」（%、秒、倍、MB…），最多 8 条，避免模型编数字。
+- `anchors`：原文段落序号 + 首句（最多 5 条），用于人工回原文定位；不是 DOM 锚点。
+
+实测：MDN 缓存页 → `extractor=trafilatura`、7396 字、`key_data=5`（如 `604800 秒`）、`anchors=5`；SPA 页面 → 422「正文过短或需要登录」。
+
+### 技术路线取舍（首版评估与后续状态）
+
+| 候选 | 结论 | 理由 |
+| --- | --- | --- |
+| 语义分（embedding） | 暂不引入 | 尚无向量服务与质量/延迟对照，先扩大词典扩展标注；9/12 是当前小样本结果 |
+| LLM 重排 | 暂不引入首屏 | 已测千问总结首字 6.8–10.9s；重排自身的质量与延迟尚未测量，需独立评估 |
+| 商用兜底（Brave/Serper） | **Serper 已接入并实测，Brave 待凭据** | 后续 18 条开关对照的期望域名 Top10 命中 6/18→11/18，延迟同步增加，详见下文 |
+
+
+## P3：扩展体验与部署形态（2026-11-07 首版验收）
+
+| 项 | 交付 | 验证 |
+| --- | --- | --- |
+| 搜索快照跨进程 | 从进程内存搬到 SQLite（表 `search_sessions`，TTL + 容量淘汰） | 进程 A 搜索 → 进程 B 总结，8 条引用正常 |
+| 写入策略 | 主数据及缓存连接使用 `WAL + busy_timeout=5000 + synchronous=NORMAL`；RDAP 派生缓存采用独立短锁等待 | 已有多实例共用主库的验收记录；跨请求 RDAP 压测仍待补 |
+| 大量导入进度 | `POST /api/bookmarks/import/jobs` + 轮询，按钮显示 `导入中 x/y` | 2000 条导入，2000/2000 完成 |
+| 死链快照 | 新增 `dead_status` / `dead_checked_at`，徽标显示「失效 · 404」 | 真实 404 页面实测 |
+| favicon 缓存 | `GET /api/favicon?host=`，只提供完整栅格图标，磁盘缓存 7 天 + 负缓存 1 小时 | 新抓取与旧磁盘缓存均拒绝 SVG，返回的图标带响应类型和沙盒护栏 |
+| 拖拽分组 | 书签卡拖到分组 chip 即改分组 | Playwright 拖拽后 `group_id=1` |
+| 移动抽屉手势 | 抽屉顶部下滑 >90px 关闭 | 390×844 触摸模拟通过 |
+| 观测 | `/api/metrics` 提供分组计数、HTTP 错误率、p50/p95 与运行时间 | 流式请求在正文发送完成后计入，SSE `error` 仍按其 HTTP 响应状态统计 |
+
+**未排期（可选范围）**：Tauri 桌面包、原站广告拦截（EasyList）。这两项需要各自的构建链与规则维护，先记录不实现。
+
+> 多进程范围：搜索快照已落 SQLite，已有跨进程总结证据。指标仍是每进程独立的内存窗口；导入任务状态也在发起进程内存中，重启会丢失进度，多 worker 轮询可能找不到任务。需要多 worker 或重启续查时，应先持久化任务状态。
+
+
+### 商用检索补充与故障兜底
+
+在本地 `.env` 配置任一 key 后启用，真实搜索的第 1 页、未指定引擎时补一路结果。主上游连接失败、引擎全部失败或实例熔断时，也可由付费结果完成搜索。
+
+```dotenv
+BRAVE_API_KEY=        # Brave Search API
+SERPER_API_KEY=       # Serper.dev（Google 结果）
+PAID_FALLBACK=true    # 关掉可临时停用
+```
+
+固定样本、指定引擎和后续页不调用付费接口。来源进入 `meta.engines`，复用安全过滤、打分与 canonical URL 去重，重复结果保留两个来源。调用失败写入 `meta.unresponsive` 并单独计入该来源熔断，冷却中暂停付费请求。
+
+契约测试：`python -m pytest apps/api/tests/test_paid.py -q`（用 MockTransport，不碰真实接口）。
+Serper 真实接口和主上游故障兜底均已验证。18 条标注查询关闭/开启兜底的期望域名 Top10 命中为 6/18 与 11/18，P95 为 3.08 秒与 5.81 秒，两侧均关闭缓存。该指标衡量这批标注域名的可见性。[完整对照](reports/assets/serper-validation/labelled-comparison.json) · [Serper](https://serper.dev/)
+
+复验时启动两个隔离实例，分别设置 `PAID_FALLBACK=false` 与 `true`、`CACHE_ENABLED=false`，然后执行下列命令。对照包含 18 条公开查询，开启侧每条查询会请求一次 Serper。
+
+```powershell
+python scripts/eval-expansion.py --base-url http://127.0.0.1:18140 --compare-base-url http://127.0.0.1:18141 --json-out reports/assets/serper-validation/labelled-comparison.json
+```
+
+
+### CI 本地执行（2026-11-08，act + Docker）
+
+GitHub Actions 没有远端也能跑：用 `act` 在 Docker 里执行同一份 `.github/workflows/ci.yml`。
+
+```powershell
+winget install --id nektos.act -e
+docker pull ghcr.io/catthehacker/ubuntu:act-latest   # Docker Hub 的 catthehacker 镜像会要求登录，用 ghcr
+act -j verify -P ubuntu-24.04=ghcr.io/catthehacker/ubuntu:act-latest --container-architecture linux/amd64
+```
+
+实测结果：
+
+```
+✅ actions/checkout@v4
+✅ actions/setup-python@v5 (3.12.16)
+✅ actions/setup-node@v4 (22.23.4)
+✅ Install  (pip install -e apps/api[dev] + npm ci)
+✅ API tests  290 passed
+✅ Build web  vite built in 809ms
+✅ Smoke (fixture, no upstream network)  15 checks
+🏁  Job succeeded
+```
+
+过程中修掉两个真问题：
+1. 冒烟步骤原来用 `shell: pwsh`，在 Linux runner 上直接 `command not found` → 改成 bash + `scripts/ci-smoke.py`（跨平台，15 项检查）。
+2. 等待服务就绪的内联 Python 写进 YAML 会破坏缩进 → 抽成 `scripts/ci-wait.py`。
+
+> 仍未做：推 GitHub 跑真实 Actions（无远端与凭据）。act 是本地等价验证，不算托管平台结果。
+
+
+### RDAP 域名年龄
+
+启用 `RDAP_ENABLED=true` 后，已有风险信号的真实结果可补充注册年龄。系统使用包内 PSL 把子域名归一到注册域名，注册不足 30 天时增加 0.15 风险分。搜索卡片与确认页会显示年龄理由，确认页只读缓存。
+
+每批最多 8 个注册域名，并发 4，整个批次含排队共用 4 秒预算。固定样本模式只使用已有年龄缓存。SQLite 缓存正常保留 30 天，404/410 或成功响应中未给注册时间时负缓存 1 天，最多保留 4,096 项。429、服务故障和超时可在后续查询重试。[RDAP 引导服务](https://about.rdap.org/)
+
+本机透明代理的 bench 地址仍需显式配置 `FETCH_EXTRA_CIDRS`，网络访问继续执行地址校验与连接钉扎。
+
+已校准公开 feed 的 20 个注册域名与 20 个参考域名。分别获得 18 和 19 个注册时间，不足 30 天的数量为 4 和 0，保留当前阈值及权重。对单批 8 个域名的受控负载复测，缓存耗时 21 ms，慢查询在 4,015 ms 结束。[校准数据](reports/assets/rdap-review/calibration.json) · [负载数据](reports/assets/rdap-review/load.json)
+
+复验命令只访问公开 feed 和 RDAP 服务，样本在输出中使用去链接化的域名。
+
+```powershell
+python scripts/eval-rdap.py --db-path data/rdap-calibration-review.db --json-out reports/assets/rdap-review/calibration.json
+```
 
 ### 本机跑真实 SearXNG（无 Docker 时）
 
@@ -480,4 +653,4 @@ llq/
 
 ## 下一步
 
-优先稳定真实 SearXNG 的指定引擎，再验证完整响应的冷热缓存、Compose 重建后的数据持久化。[验收条件](docs/进展与欠账.md#后续优先级)
+按条件补齐远端托管 CI、正式浏览器与 Android 验收，扩大包含新注册正常域名的质量评估集。[待办、前提与完成标准](docs/进展与欠账.md#需要补齐的验收)

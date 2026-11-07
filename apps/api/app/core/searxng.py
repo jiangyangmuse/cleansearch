@@ -13,6 +13,7 @@ import httpx
 
 from app.config import Settings
 from app.core.errors import (
+    EngineUnavailable,
     EnginesUnresponsive,
     UpstreamBadResponse,
     UpstreamTimeout,
@@ -58,8 +59,9 @@ class SearxngClient:
         }
         if region:
             params["language"] = REGION_LANGUAGES.get(region.lower(), region)
-        if engine and engine != "default":
-            params["engines"] = ENGINE_NAMES.get(engine, engine)
+        routed_engine = ENGINE_NAMES.get(engine, engine) if engine and engine != "default" else None
+        if routed_engine:
+            params["engines"] = routed_engine
 
         try:
             async with httpx.AsyncClient(
@@ -89,7 +91,18 @@ class SearxngClient:
         except ValueError as exc:
             raise UpstreamBadResponse("SearXNG 返回的不是 JSON，检查 formats 是否开启 json") from exc
 
-        return self.parse_payload(payload)
+        results, engines, unresponsive = self.parse_payload(payload)
+        if routed_engine and results:
+            results = [item for item in results if routed_engine in item.engine]
+            if not results:
+                raise EngineUnavailable(
+                    f"指定引擎 {routed_engine} 未返回结果。请检查上游配置，或移除引擎后缀重试。",
+                    engines=[f"{routed_engine}(路由未生效)"],
+                )
+            for item in results:
+                item.engine = [routed_engine]
+            engines = [routed_engine]
+        return results, engines, unresponsive
 
     @staticmethod
     def parse_payload(payload: object) -> tuple[list[Result], list[str], list[str]]:

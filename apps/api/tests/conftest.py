@@ -24,6 +24,8 @@ os.environ["LLM_PROVIDER"] = "stub"
 os.environ["LLM_STUB_DELAY"] = "0"
 os.environ["WEB_DIST"] = str(_STATIC)
 os.environ["DB_PATH"] = str(Path(tempfile.mkdtemp(prefix="cs-db-")) / "cs.db")
+os.environ["RDAP_ENABLED"] = "false"  # 测试默认不联网查域名年龄；需要时单独打桩
+os.environ["FAVICON_DIR"] = str(Path(tempfile.mkdtemp(prefix="cs-icon-")) / "favicons")
 # 默认关缓存：用例之间互不污染；缓存专项用例自己打开
 os.environ["CACHE_ENABLED"] = "false"
 os.environ["API_TOKEN_PATH"] = str(Path(tempfile.mkdtemp(prefix="cs-token-")) / "api-token.txt")

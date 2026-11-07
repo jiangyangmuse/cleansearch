@@ -73,7 +73,9 @@ async def refresh_blacklist(
             status_code=400,
             detail="未配置 FEED_URLS；可在请求体传 urls，或设置环境变量 FEED_URLS",
         )
-    results = await refresh_feeds(urls, settings.feed_output_path, fetcher)
+    # feed 文件常有几 MB，给它们更长的超时；其余限额不变
+    feed_fetcher = fetcher.clone_with_timeout(max(10.0, fetcher.timeout))
+    results = await refresh_feeds(urls, settings.feed_output_path, feed_fetcher)
     ok = [item for item in results if item.ok]
     return {
         "output": str(settings.feed_output_path),

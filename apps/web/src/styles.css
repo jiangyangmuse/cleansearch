@@ -714,3 +714,5 @@ kbd {
 }
 .bm-tag--active { color: #fff; background: var(--accent); border-color: var(--accent); }
 .bm-card__tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+
+.page-summary__label { color: var(--muted); }

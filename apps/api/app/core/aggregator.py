@@ -15,7 +15,8 @@ from app.core.errors import (
     UpstreamUnavailable,
 )
 from app.core.fixture_provider import FixtureProvider
-from app.core.searxng import SearxngClient
+from app.core.paid import build_paid_search
+from app.core.searxng import ENGINE_NAMES, SearxngClient
 from app.schemas import Result
 
 
@@ -33,6 +34,7 @@ class Aggregator:
         self._settings = settings
         self._fixture = FixtureProvider()
         self._searxng = SearxngClient(settings)
+        self._paid = build_paid_search(settings)
         self._health = health
 
 
@@ -49,6 +51,10 @@ class Aggregator:
     def provider_name(self) -> str:
         return self._settings.provider
 
+    @property
+    def paid_provider(self) -> str:
+        return self._paid.engine if self._paid is not None and self.provider_name == "searxng" else ""
+
     async def search(
         self,
         q: str,
@@ -60,49 +66,80 @@ class Aggregator:
     ) -> Aggregated:
         started = time.perf_counter()
         health = self._health_store()
+        provider = self._settings.provider
+        paid_search = self._paid if provider == "searxng" and page == 1 and engine == "default" else None
 
-        if health is not None:
-            if engine and engine != "default" and health.is_open(engine):
-                minutes = health.remaining(engine) // 60 + 1
-                raise EngineUnavailable(
-                    f"引擎 {engine} 连续失败已熔断，约 {minutes} 分钟后重试；可换一个引擎（去掉后缀或改 b / d / br）"
-                )
-            if health.is_open(UPSTREAM_KEY):
-                minutes = health.remaining(UPSTREAM_KEY) // 60 + 1
-                raise UpstreamUnavailable(
-                    f"上游检索服务熔断中（连续失败），约 {minutes} 分钟后自动恢复"
-                )
+        routed_engine = ENGINE_NAMES.get(engine, engine)
+        if health is not None and routed_engine != "default" and health.is_open(routed_engine):
+            minutes = health.remaining(routed_engine) // 60 + 1
+            raise EngineUnavailable(
+                f"引擎 {engine} 连续失败已熔断，约 {minutes} 分钟后重试；可移除后缀或更换引擎"
+            )
 
-        try:
-            if self._settings.provider == "fixture":
-                results, engines, unresponsive = self._fixture.search(
-                    q, page, region, safe, engine=engine, fixture=fixture
-                )
-                provider = "fixture"
+        results: list[Result] = []
+        engines: list[str] = []
+        unresponsive: list[str] = []
+        primary_error: SearchError | None = None
+        if health is not None and health.is_open(UPSTREAM_KEY):
+            minutes = health.remaining(UPSTREAM_KEY) // 60 + 1
+            primary_error = UpstreamUnavailable(
+                f"上游检索服务熔断中，约 {minutes} 分钟后自动恢复"
+            )
+        else:
+            try:
+                if provider == "fixture":
+                    results, engines, unresponsive = self._fixture.search(
+                        q, page, region, safe, engine=engine, fixture=fixture
+                    )
+                else:
+                    results, engines, unresponsive = await self._searxng.search(
+                        q, page, region, safe, engine=engine, fixture=fixture
+                    )
+            except EnginesUnresponsive as exc:
+                primary_error = exc
+                unresponsive = list(exc.engines)
+                if health is not None:
+                    for raw in exc.engines:
+                        health.record_failure(engine_name(raw), raw)
+            except SearchError as exc:
+                primary_error = exc
+                if health is not None:
+                    health.record_failure(UPSTREAM_KEY, exc.message)
             else:
-                results, engines, unresponsive = await self._searxng.search(
-                    q, page, region, safe, engine=engine, fixture=fixture
-                )
-                provider = "searxng"
-        except EnginesUnresponsive as exc:
-            # 实例是通的，只是引擎集体不给结果：只记引擎级，不锁整站
-            if health is not None:
-                for raw in exc.engines:
-                    health.record_failure(engine_name(raw), raw)
-            raise
-        except SearchError as exc:
-            if health is not None:
-                health.record_failure(UPSTREAM_KEY, exc.message)
-            raise
+                if health is not None:
+                    elapsed = int((time.perf_counter() - started) * 1000)
+                    health.record_success(UPSTREAM_KEY, elapsed)
+                    for name in engines:
+                        health.record_success(name)
+                    for raw in unresponsive:
+                        health.record_failure(engine_name(raw), raw)
 
-        if health is not None:
-            elapsed = int((time.perf_counter() - started) * 1000)
-            health.record_success(UPSTREAM_KEY, elapsed)
-            # 先记成功（有结果），再记失败——同一个引擎被标 unresponsive 时以失败为准
-            for name in engines:
-                health.record_success(name)
-            for raw in unresponsive:
-                health.record_failure(engine_name(raw), raw)
+        if primary_error is not None:
+            if paid_search is None:
+                raise primary_error
+            if not unresponsive:
+                unresponsive.append(f"searxng({primary_error.code})")
+
+        if paid_search is not None:
+            paid_engine = paid_search.engine
+            if health is not None and health.is_open(paid_engine):
+                unresponsive.append(f"{paid_engine}(熔断冷却中)")
+            else:
+                paid = await paid_search.search(q, page, region)
+                if paid.error:
+                    unresponsive.append(f"{paid.engine}({paid.error})")
+                    if health is not None:
+                        health.record_failure(paid.engine, paid.error)
+                else:
+                    # 统一交给检索路由做 canonical 去重，保留重复 URL 的付费来源。
+                    results.extend(paid.results)
+                    if paid.results and paid.engine not in engines:
+                        engines.append(paid.engine)
+                    if health is not None:
+                        health.record_success(paid.engine)
+
+        if primary_error is not None and not results:
+            raise primary_error
 
         return Aggregated(
             results=results,

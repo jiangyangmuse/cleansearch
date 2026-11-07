@@ -113,6 +113,19 @@ export default function PageSummaryPage() {
                 </ul>
               </section>
             ) : null}
+            {data.key_data.length > 0 ? (
+              <section className="page-summary__block">
+                <h2>关键数据</h2>
+                <ul>
+                  {data.key_data.map((item, index) => (
+                    <li key={index}>
+                      {item.label ? <span className="page-summary__label">{item.label}：</span> : null}
+                      <strong>{item.value}</strong>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
             {data.summary.caveats.length > 0 ? (
               <section className="page-summary__block">
                 <h2>分歧与不确定</h2>
@@ -121,6 +134,20 @@ export default function PageSummaryPage() {
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
+              </section>
+            ) : null}
+            {data.anchors.length > 0 ? (
+              <section className="page-summary__block">
+                <h2>原文锚点</h2>
+                <ol>
+                  {data.anchors.map((anchor) => (
+                    <li key={anchor.i} value={anchor.i}>
+                      {anchor.text}
+                      {anchor.text.length >= 80 ? "…" : ""}
+                    </li>
+                  ))}
+                </ol>
+                <p className="state__hint">按段落在原文里的序号标注，回原文时可按序号定位。</p>
               </section>
             ) : null}
             <p className="page-summary__foot">

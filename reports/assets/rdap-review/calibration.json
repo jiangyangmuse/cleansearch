@@ -1,0 +1,380 @@
+{
+  "source": {
+    "url": "https://openphish.com/feed.txt",
+    "sha256": "e17a925c5d4034c9468ce3b186740a3fdd01c807cb92a3fa40c1c3dde20fc114",
+    "collected_at": "2026-11-07T05:59:30.057592+00:00"
+  },
+  "measured_at": "2026-11-07T06:00:18.356503+00:00",
+  "summary": {
+    "feed-phishing": {
+      "samples": 20,
+      "age_known": 18,
+      "unknown": 2,
+      "thresholds": {
+        "7": {
+          "young": 3,
+          "newly_flagged": 0
+        },
+        "30": {
+          "young": 4,
+          "newly_flagged": 0
+        },
+        "90": {
+          "young": 4,
+          "newly_flagged": 0
+        }
+      },
+      "newly_flagged_by_weight": {
+        "0.1": 0,
+        "0.15": 0,
+        "0.2": 1
+      }
+    },
+    "reference": {
+      "samples": 20,
+      "age_known": 19,
+      "unknown": 1,
+      "thresholds": {
+        "7": {
+          "young": 0,
+          "newly_flagged": 0
+        },
+        "30": {
+          "young": 0,
+          "newly_flagged": 0
+        },
+        "90": {
+          "young": 0,
+          "newly_flagged": 0
+        }
+      },
+      "newly_flagged_by_weight": {
+        "0.1": 0,
+        "0.15": 0,
+        "0.2": 0
+      }
+    }
+  },
+  "rows": [
+    {
+      "domain": "22001565[.]com",
+      "label": "feed-phishing",
+      "base_risk": 0.0,
+      "registered_at": 1717223787,
+      "age_days": 888.97,
+      "ms": 3547
+    },
+    {
+      "domain": "roblox[.]com[.]gr",
+      "label": "feed-phishing",
+      "base_risk": 0.1,
+      "registered_at": null,
+      "age_days": null,
+      "ms": 1991
+    },
+    {
+      "domain": "freehosting[.]dev",
+      "label": "feed-phishing",
+      "base_risk": 0.0,
+      "registered_at": 1590335173,
+      "age_days": 2357.59,
+      "ms": 2941
+    },
+    {
+      "domain": "u[.]to",
+      "label": "feed-phishing",
+      "base_risk": 0.0,
+      "registered_at": 1637194431,
+      "age_days": 1815.24,
+      "ms": 4036
+    },
+    {
+      "domain": "plesk[.]page",
+      "label": "feed-phishing",
+      "base_risk": 0.1,
+      "registered_at": 1584500787,
+      "age_days": 2425.12,
+      "ms": 3877
+    },
+    {
+      "domain": "22111565[.]com",
+      "label": "feed-phishing",
+      "base_risk": 0.0,
+      "registered_at": 1717223786,
+      "age_days": 888.97,
+      "ms": 3269
+    },
+    {
+      "domain": "helpledger[.]live",
+      "label": "feed-phishing",
+      "base_risk": 0.0,
+      "registered_at": 1793400811,
+      "age_days": 7.3,
+      "ms": 3371
+    },
+    {
+      "domain": "33771565[.]com",
+      "label": "feed-phishing",
+      "base_risk": 0.0,
+      "registered_at": 1717223787,
+      "age_days": 888.97,
+      "ms": 3327
+    },
+    {
+      "domain": "redysel[.]com",
+      "label": "feed-phishing",
+      "base_risk": 0.0,
+      "registered_at": 1681277558,
+      "age_days": 1305.02,
+      "ms": 3406
+    },
+    {
+      "domain": "shilpakotha[.]com",
+      "label": "feed-phishing",
+      "base_risk": 0.0,
+      "registered_at": 1774895354,
+      "age_days": 221.48,
+      "ms": 3346
+    },
+    {
+      "domain": "kk365756[.]com",
+      "label": "feed-phishing",
+      "base_risk": 0.0,
+      "registered_at": 1769164792,
+      "age_days": 287.81,
+      "ms": 3335
+    },
+    {
+      "domain": "github[.]io",
+      "label": "feed-phishing",
+      "base_risk": 0.0,
+      "registered_at": null,
+      "age_days": null,
+      "ms": 1377
+    },
+    {
+      "domain": "slowattik[.]top",
+      "label": "feed-phishing",
+      "base_risk": 0.15,
+      "registered_at": 1767033286,
+      "age_days": 312.48,
+      "ms": 3610
+    },
+    {
+      "domain": "365972[.]top",
+      "label": "feed-phishing",
+      "base_risk": 0.15,
+      "registered_at": 1734676606,
+      "age_days": 686.97,
+      "ms": 3720
+    },
+    {
+      "domain": "fhytuie[.]xyz",
+      "label": "feed-phishing",
+      "base_risk": 0.15,
+      "registered_at": 1793907544,
+      "age_days": 1.43,
+      "ms": 3660
+    },
+    {
+      "domain": "paypaldashboard[.]app",
+      "label": "feed-phishing",
+      "base_risk": 0.0,
+      "registered_at": 1793925705,
+      "age_days": 1.22,
+      "ms": 3305
+    },
+    {
+      "domain": "kesug[.]com",
+      "label": "feed-phishing",
+      "base_risk": 0.0,
+      "registered_at": 1692458260,
+      "age_days": 1175.61,
+      "ms": 3153
+    },
+    {
+      "domain": "ckvptc[.]com",
+      "label": "feed-phishing",
+      "base_risk": 0.0,
+      "registered_at": 1793906229,
+      "age_days": 1.45,
+      "ms": 3175
+    },
+    {
+      "domain": "live-website[.]com",
+      "label": "feed-phishing",
+      "base_risk": 0.1,
+      "registered_at": 1529572867,
+      "age_days": 3060.86,
+      "ms": 3084
+    },
+    {
+      "domain": "cpanel[.]site",
+      "label": "feed-phishing",
+      "base_risk": 0.1,
+      "registered_at": 1725499397,
+      "age_days": 793.19,
+      "ms": 3364
+    },
+    {
+      "domain": "python[.]org",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 796280400,
+      "age_days": 11548.04,
+      "ms": 2732
+    },
+    {
+      "domain": "github[.]com",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 1191954050,
+      "age_days": 6968.49,
+      "ms": 2880
+    },
+    {
+      "domain": "wikipedia[.]org",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 979344734,
+      "age_days": 9429.24,
+      "ms": 2706
+    },
+    {
+      "domain": "mozilla[.]org",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 885618000,
+      "age_days": 10514.04,
+      "ms": 3057
+    },
+    {
+      "domain": "microsoft[.]com",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 673156800,
+      "age_days": 12973.08,
+      "ms": 3039
+    },
+    {
+      "domain": "apple[.]com",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 540709200,
+      "age_days": 14506.04,
+      "ms": 3143
+    },
+    {
+      "domain": "w3[.]org",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 773467200,
+      "age_days": 11812.08,
+      "ms": 2904
+    },
+    {
+      "domain": "ietf[.]org",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 794898000,
+      "age_days": 11564.04,
+      "ms": 2881
+    },
+    {
+      "domain": "iana[.]org",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 802324800,
+      "age_days": 11478.08,
+      "ms": 2681
+    },
+    {
+      "domain": "icann[.]org",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 905745600,
+      "age_days": 10281.08,
+      "ms": 2881
+    },
+    {
+      "domain": "ubuntu[.]com",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 1085855919,
+      "age_days": 8196.47,
+      "ms": 3656
+    },
+    {
+      "domain": "kernel[.]org",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 857710800,
+      "age_days": 10837.04,
+      "ms": 3058
+    },
+    {
+      "domain": "postgresql[.]org",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 845956800,
+      "age_days": 10973.08,
+      "ms": 3013
+    },
+    {
+      "domain": "sqlite[.]org",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 1028645872,
+      "age_days": 8858.63,
+      "ms": 2713
+    },
+    {
+      "domain": "docs[.]rs",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": null,
+      "age_days": null,
+      "ms": 1406
+    },
+    {
+      "domain": "rust-lang[.]org",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 1269982045,
+      "age_days": 6065.38,
+      "ms": 3025
+    },
+    {
+      "domain": "nodejs[.]org",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 1254235855,
+      "age_days": 6247.63,
+      "ms": 2939
+    },
+    {
+      "domain": "npmjs[.]com",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 1269037678,
+      "age_days": 6076.31,
+      "ms": 2978
+    },
+    {
+      "domain": "pypi[.]org",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 1437750803,
+      "age_days": 4123.62,
+      "ms": 3443
+    },
+    {
+      "domain": "stackoverflow[.]com",
+      "label": "reference",
+      "base_risk": 0.0,
+      "registered_at": 1072466287,
+      "age_days": 8351.45,
+      "ms": 3539
+    }
+  ]
+}

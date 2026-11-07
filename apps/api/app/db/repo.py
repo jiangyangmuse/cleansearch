@@ -54,10 +54,23 @@ class BookmarkRepo:
         self._conn = sqlite3.connect(str(self.path), check_same_thread=False)
         self._conn.row_factory = sqlite3.Row
         self._conn.execute("PRAGMA journal_mode=WAL")
+        # 单文件多连接：给写入排队，避免 database is locked
+        self._conn.execute("PRAGMA busy_timeout=5000")
+        self._conn.execute("PRAGMA synchronous=NORMAL")
         self._conn.execute("PRAGMA foreign_keys=ON")
         self.fts_enabled = self._init_schema()
 
     # ---------- 初始化 ----------
+    def _migrate(self) -> None:
+        columns = {row[1] for row in self._conn.execute("PRAGMA table_info(bookmarks)")}
+        for name, ddl in (
+            ("dead_status", "ALTER TABLE bookmarks ADD COLUMN dead_status INTEGER"),
+            ("dead_checked_at", "ALTER TABLE bookmarks ADD COLUMN dead_checked_at INTEGER"),
+        ):
+            if name not in columns:
+                self._conn.execute(ddl)
+        self._conn.commit()
+
     def _init_schema(self) -> bool:
         with self._lock:
             self._conn.executescript(SCHEMA_PATH.read_text(encoding="utf-8"))
@@ -71,6 +84,7 @@ class BookmarkRepo:
                 for statement in FTS_DDL:
                     self._conn.execute(statement)
                 self._conn.commit()
+            self._migrate()
             return True
         except sqlite3.OperationalError:
             return False
@@ -223,7 +237,7 @@ class BookmarkRepo:
         return cursor.lastrowid
 
     def update(self, bookmark_id: int, **fields: object) -> dict | None:
-        allowed = {"title", "group_id", "note", "dead"}
+        allowed = {"title", "group_id", "note", "dead", "dead_status", "dead_checked_at"}
         changes = {
             key: value for key, value in fields.items()
             if key in allowed and (value is not None or key == "group_id")
@@ -251,10 +265,15 @@ class BookmarkRepo:
             cursor = self._conn.execute("DELETE FROM bookmarks WHERE id = ?", (bookmark_id,))
         return bool(cursor.rowcount)
 
-    def save_link_checks(self, changes: list[tuple[int, int, str]]) -> None:
+    def save_link_checks(self, changes: list[tuple[int | None, int, str, int | None, int]]) -> None:
+        """changes: (dead, id, url, http_status, checked_at)。
+
+        dead 为 None 表示「这次没确认」：只更新状态码与检查时间，保留原标记。
+        """
         with self._lock, self._conn:
             self._conn.executemany(
-                "UPDATE bookmarks SET dead = ?1 WHERE id = ?2 AND url = ?3 AND dead IS NOT ?1",
+                "UPDATE bookmarks SET dead = COALESCE(?1, dead), dead_status = ?4, dead_checked_at = ?5 "
+                "WHERE id = ?2 AND url = ?3",
                 changes,
             )
 
@@ -362,7 +381,7 @@ class BookmarkRepo:
             )
 
     # ---------- 导入导出 ----------
-    def import_netscape(self, text: str) -> dict:
+    def import_netscape(self, text: str, progress=None) -> dict:
         """导入规则：已存在的 URL 一律跳过，不覆盖已有标题与分组。
 
         分组按需创建，只给真正新增的条目建，避免留下空分组。
@@ -377,7 +396,12 @@ class BookmarkRepo:
             groups = self.groups()
             known_groups = {self._folder_path(group): group["id"] for group in groups}
             used_names = {group["name"] for group in groups}
+            total = len(items)
+            processed = 0
             for item in items:
+                processed += 1
+                if progress and (processed % 50 == 0 or processed == total):
+                    progress(processed, total)
                 key = canonical_url(item.url) if is_renderable_url(item.url) else ""
                 if not key or self._conn.execute("SELECT 1 FROM bookmarks WHERE url_key = ?", (key,)).fetchone():
                     skipped += 1

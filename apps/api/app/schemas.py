@@ -138,6 +138,8 @@ class Bookmark(BaseModel):
     last_visit: int | None = None
     visits: int = 0
     dead: int = 0
+    dead_status: int | None = None
+    dead_checked_at: int | None = None
     tags: list[str] = Field(default_factory=list)
 
 

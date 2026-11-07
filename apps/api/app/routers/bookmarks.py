@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 import asyncio
+import threading
+import time
+import uuid
 from functools import lru_cache
 from typing import Annotated
 
@@ -144,6 +147,83 @@ def import_bookmarks(
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
+IMPORT_JOBS: dict[str, dict] = {}
+IMPORT_LOCK = threading.Lock()
+IMPORT_JOBS_KEPT = 20
+
+
+def _new_job(job_id: str, total: int = 0) -> dict:
+    return {
+        "id": job_id,
+        "state": "running",
+        "processed": 0,
+        "total": total,
+        "created": 0,
+        "skipped": 0,
+        "groups_created": 0,
+        "error": "",
+        "started_at": int(time.time()),
+    }
+
+
+@router.post("/bookmarks/import/jobs")
+async def start_import_job(
+    file: UploadFile = File(...),
+    repo: BookmarkRepo = Depends(get_repo),
+) -> dict:
+    """大文件导入：立刻返回任务号，前端轮询进度。"""
+    raw = file.file.read(MAX_IMPORT_BYTES + 1)
+    if len(raw) > MAX_IMPORT_BYTES:
+        raise HTTPException(status_code=413, detail="文件超过 20MB")
+    try:
+        text = raw.decode("utf-8-sig")
+    except UnicodeDecodeError as exc:
+        raise HTTPException(status_code=400, detail="请使用 UTF-8 编码的书签 HTML") from exc
+
+    job_id = uuid.uuid4().hex[:12]
+    with IMPORT_LOCK:
+        job = _new_job(job_id)
+        IMPORT_JOBS[job_id] = job
+        # 只保留最近若干个任务，避免常驻内存膨胀
+        for stale in list(IMPORT_JOBS)[:-IMPORT_JOBS_KEPT]:
+            IMPORT_JOBS.pop(stale, None)
+
+    def progress(processed: int, total: int) -> None:
+        with IMPORT_LOCK:
+            if job_id in IMPORT_JOBS:
+                IMPORT_JOBS[job_id]["processed"] = processed
+                IMPORT_JOBS[job_id]["total"] = total
+
+    def work() -> None:
+        try:
+            result = repo.import_netscape(text, progress=progress)
+        except Exception as exc:  # BookmarkError 与写库异常都要落到任务状态里
+            with IMPORT_LOCK:
+                IMPORT_JOBS[job_id].update(state="error", error=str(exc))
+            return
+        with IMPORT_LOCK:
+            IMPORT_JOBS[job_id].update(
+                state="done",
+                processed=result.get("total", IMPORT_JOBS[job_id]["processed"]),
+                total=result.get("total", IMPORT_JOBS[job_id]["total"]),
+                created=result.get("created", 0),
+                skipped=result.get("skipped", 0),
+                groups_created=result.get("groups_created", 0),
+            )
+
+    threading.Thread(target=work, name=f"import-{job_id}", daemon=True).start()
+    return {"id": job_id}
+
+
+@router.get("/bookmarks/import/jobs/{job_id}")
+def import_job_status(job_id: str) -> dict:
+    with IMPORT_LOCK:
+        job = IMPORT_JOBS.get(job_id)
+        if job is None:
+            raise HTTPException(status_code=404, detail="导入任务不存在或已被清理")
+        return dict(job)
+
+
 @router.get("/bookmarks/export")
 def export_bookmarks(repo: BookmarkRepo = Depends(get_repo)) -> Response:
     html = repo.export_netscape()
@@ -173,21 +253,41 @@ async def check_bookmarks(
 
     async def probe(item: dict) -> dict:
         async with semaphore:
+            code: int | None = None
             try:
-                await fetcher.probe(item["url"])
+                code = await fetcher.probe(item["url"])
                 status = "alive"
                 detail = ""
             except FetchError as exc:
+                code = exc.status
                 status = "dead" if exc.status in (404, 410) else "unknown"
                 detail = exc.message
-        return {"id": item["id"], "url": item["url"], "dead": status == "dead", "status": status, "detail": detail}
+        return {
+            "id": item["id"],
+            "url": item["url"],
+            "dead": status == "dead",
+            "status": status,
+            "http_status": code,
+            "detail": detail,
+        }
 
     results = await asyncio.gather(*(probe(item) for item in items))
-    changes = [(int(result["dead"]), result["id"], result["url"]) for result in results if result["status"] != "unknown"]
+    checked_at = int(time.time())
+    changes = [
+        (
+            None if result["status"] == "unknown" else int(result["dead"]),
+            result["id"],
+            result["url"],
+            result["http_status"],
+            checked_at,
+        )
+        for result in results
+    ]
     if changes:
         await run_in_threadpool(repo.save_link_checks, changes)
     return {
         "checked": len(results),
+        "checked_at": checked_at,
         "dead": sum(1 for result in results if result["dead"]),
         "unknown": sum(1 for result in results if result["status"] == "unknown"),
         "items": results,

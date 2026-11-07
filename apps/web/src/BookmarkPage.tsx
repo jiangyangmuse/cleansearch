@@ -1,6 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
-import { ApiError, checkDeadLinks, createGroup, deleteBookmark, importBookmarks, listBookmarks, moveBookmark, saveBookmark } from "./api";
+import {
+  ApiError,
+  checkDeadLinks,
+  createGroup,
+  deleteBookmark,
+  faviconUrl,
+  importJobStatus,
+  listBookmarks,
+  moveBookmark,
+  saveBookmark,
+  startImportJob,
+} from "./api";
 import ThemeToggle from "./components/ThemeToggle";
 import type { Bookmark, BookmarkGroup } from "./types";
 import { safeHref } from "./url";
@@ -61,6 +72,8 @@ export default function BookmarkPage() {
   const [groupName, setGroupName] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const [checking, setChecking] = useState(false);
+  const [importProgress, setImportProgress] = useState<{ processed: number; total: number } | null>(null);
+  const [dragging, setDragging] = useState<number | null>(null);
 
   // Android 分享的链接也可能藏在 text 的一段说明中。
   useEffect(() => {
@@ -209,16 +222,28 @@ export default function BookmarkPage() {
     if (!file || importing) return;
     setImporting(true);
     setError(null);
+    setImportProgress(null);
     try {
-      const result = await importBookmarks(file);
-      setMessage(
-        `导入 ${result.total} 条：新增 ${result.created}，跳过 ${result.skipped} 条重复或不支持的链接，新建分组 ${result.groups_created}`,
-      );
-      reload(true);
+      const { id } = await startImportJob(file);
+      // 轮询到结束：大文件导入时用户能看到进度而不是干等
+      for (;;) {
+        await new Promise((resolve) => setTimeout(resolve, 400));
+        const job = await importJobStatus(id);
+        setImportProgress({ processed: job.processed, total: job.total });
+        if (job.state === "done") {
+          setMessage(
+            `导入 ${job.total} 条：新增 ${job.created}，跳过 ${job.skipped} 条，新建分组 ${job.groups_created}`,
+          );
+          reload(true);
+          break;
+        }
+        if (job.state === "error") throw new Error(job.error || "导入失败");
+      }
     } catch (caught) {
-      setError(caught instanceof ApiError ? caught.message : "导入失败");
+      setError(caught instanceof ApiError ? caught.message : caught instanceof Error ? caught.message : "导入失败");
     } finally {
       setImporting(false);
+      setImportProgress(null);
     }
   };
 
@@ -266,7 +291,11 @@ export default function BookmarkPage() {
               }}
             />
             <button className="button button--ghost" type="button" disabled={importing} onClick={() => fileRef.current?.click()}>
-              {importing ? "导入中…" : "导入 HTML"}
+              {importing
+                ? importProgress && importProgress.total > 0
+                  ? `导入中 ${importProgress.processed}/${importProgress.total}`
+                  : "导入中…"
+                : "导入 HTML"}
             </button>
             <a className="button button--ghost" href="/api/bookmarks/export" download>
               导出 HTML
@@ -294,6 +323,17 @@ export default function BookmarkPage() {
               aria-pressed={view.group === group.id}
               type="button"
               onClick={() => selectGroup(group.id)}
+              onDragOver={(event) => {
+                if (dragging !== null) event.preventDefault();
+              }}
+              onDrop={(event) => {
+                event.preventDefault();
+                const raw = event.dataTransfer.getData("text/plain");
+                const id = Number(raw || dragging);
+                const item = items.find((candidate) => candidate.id === id);
+                setDragging(null);
+                if (item) void move(item, group.id);
+              }}
             >
               {group.name} <span className="chip__count">{group.count}</span>
             </button>
@@ -397,14 +437,42 @@ export default function BookmarkPage() {
                 className={item.dead ? "bm-card bm-card--dead" : "bm-card"}
                 key={item.id}
                 data-bookmark-id={item.id}
+                draggable
+                onDragStart={(event) => {
+                  setDragging(item.id);
+                  event.dataTransfer.setData("text/plain", String(item.id));
+                  event.dataTransfer.effectAllowed = "move";
+                }}
+                onDragEnd={() => setDragging(null)}
+                style={dragging === item.id ? { opacity: 0.4 } : undefined}
               >
                 <div className="bm-card__meta">
-                  {item.favicon ? (
-                    <img src={item.favicon} alt="" width={16} height={16} loading="lazy" />
+                  {item.favicon || hostOf(item.url) ? (
+                    <img
+                      src={faviconUrl(hostOf(item.url)) ?? item.favicon ?? ""}
+                      alt=""
+                      width={16}
+                      height={16}
+                      loading="lazy"
+                      onError={(event) => {
+                        event.currentTarget.style.visibility = "hidden";
+                      }}
+                    />
                   ) : null}
                   <span>{hostOf(item.url)}</span>
                   {item.group_name ? <span className="card__tag">{item.group_name}</span> : null}
-                  {item.dead ? <span className="bm-card__dead">失效</span> : null}
+                  {item.dead ? (
+                    <span
+                      className="bm-card__dead"
+                      title={
+                        item.dead_checked_at
+                          ? `检查于 ${new Date(item.dead_checked_at * 1000).toLocaleString()}`
+                          : "尚未记录检查时间"
+                      }
+                    >
+                      失效{item.dead_status ? ` · ${item.dead_status}` : ""}
+                    </span>
+                  ) : null}
                 </div>
                 <h2 className="bm-card__title">
                   {href ? (

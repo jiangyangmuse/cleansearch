@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import secrets
+import sqlite3
 import time
 from functools import lru_cache
 from pathlib import Path
@@ -17,10 +18,13 @@ from starlette.concurrency import run_in_threadpool
 from app.config import get_settings
 from app.core.aggregator import Aggregator, get_aggregator
 from app.core.normalize import dedupe_results, dedupe_similar_titles
-from app.core.expand import expand_aliases
+from app.core.expand import expand_aliases, upstream_query
 from app.core.query_parser import parse_query
 from app.core.redirect import build_go_path
+from app.core.fetch import SafeFetcher
+from app.core.rdap import DomainAgeStore, enrich as enrich_domain_age
 from app.core.safety import Blocklist, SafetyScorer
+from app.deps import get_fetcher
 from app.core.scoring import group_results, score_results
 from app.core.session_store import SessionStore, Source, get_session_store
 from app.core.tokens import get_api_token
@@ -48,6 +52,17 @@ def get_safety() -> SafetyScorer:
     return SafetyScorer(
         Blocklist(settings.blocklist_path, extra_paths=(settings.feed_output_path,))
     )
+
+
+@lru_cache(maxsize=1)
+def get_age_store() -> DomainAgeStore | None:
+    settings = get_settings()
+    if not settings.rdap_enabled:
+        return None
+    try:
+        return DomainAgeStore(settings.db_path, ttl_days=settings.rdap_ttl_days)
+    except (OSError, sqlite3.Error):
+        return None
 
 
 def _register_snapshot(
@@ -96,12 +111,16 @@ async def search(
     safety: SafetyScorer = Depends(get_safety),
     store: SessionStore = Depends(get_session_store),
     cache: Cache | None = Depends(get_cache),
+    age_store: DomainAgeStore | None = Depends(get_age_store),
+    fetcher: SafeFetcher = Depends(get_fetcher),
 ) -> SearchResponse:
     settings = get_settings()
     started = time.perf_counter()
     parsed = parse_query(payload.q)
     region = parsed.region or (payload.region or "").strip() or None
-    aliases = expand_aliases(parsed.q)
+    mode = settings.expansion_mode if settings.expansion_mode in ("off", "rank", "rewrite") else "rank"
+    aliases = [] if mode == "off" else expand_aliases(parsed.q)
+    query_for_upstream = upstream_query(parsed.q, aliases, mode)
     parsed_response = ParsedQuery(
         q=parsed.q,
         engine=parsed.engine,
@@ -122,7 +141,11 @@ async def search(
             payload.page,
             payload.opts.safe,
             payload.opts.fixture,
-            namespace=(provider, settings.searxng_url if provider == "searxng" else "", revision),
+            namespace=(
+                provider, settings.searxng_url if provider == "searxng" else "", revision,
+                mode, getattr(aggregator, "paid_provider", ""),
+                "rdap-v2" if settings.rdap_enabled else "rdap-off",
+            ),
         )
         cached = await run_in_threadpool(cache.get_search, qkey)
         if cached and cached.get("provider") == provider and safety.blocklist.revision == revision:
@@ -143,7 +166,7 @@ async def search(
                 return SearchResponse(parsed=parsed_response, groups=groups, meta=meta)
 
     outcome = await aggregator.search(
-        q=parsed.q,
+        q=query_for_upstream,
         page=payload.page,
         region=region,
         safe=payload.opts.safe,
@@ -156,14 +179,30 @@ async def search(
     for item in outcome.results:
         report = safety.evaluate(item.url)
         item.risk = report.risk
+        item.reasons = list(report.reasons)
         if report.blocked:
             blocked += 1
             continue
         kept.append(item)
 
+    # 域名年龄：只查前若干个域名，超时/失败静默跳过；命中「新注册」才加分
+    if settings.rdap_enabled and age_store is not None and kept:
+        bumped = await enrich_domain_age(kept, age_store, fetcher, cache_only=provider == "fixture")
+        if bumped:
+            survivors = []
+            for item in kept:
+                if item.risk >= 0.6:
+                    blocked += 1
+                else:
+                    survivors.append(item)
+            kept = survivors
+
     deduped, url_duplicates = dedupe_results(kept)
     deduped, title_duplicates = dedupe_similar_titles(deduped)
+    risk_reasons = {item.id: list(item.reasons) for item in deduped}
     score_results(parsed.q, deduped, aliases)
+    for item in deduped:
+        item.reasons = list(dict.fromkeys([*item.reasons, *risk_reasons[item.id]]))
 
     strong, related, weak = group_results(deduped)
     results = strong + related + weak

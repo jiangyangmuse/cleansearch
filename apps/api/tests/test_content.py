@@ -43,7 +43,11 @@ def test_extract_keeps_article_drops_navigation() -> None:
     assert article.extractor in ("stdlib", "trafilatura")
 
 
-def test_extract_drops_navigation_breadcrumb() -> None:
+def test_extract_drops_navigation_breadcrumb(monkeypatch) -> None:
+    import app.core.extract as extract_module
+
+    # 这段断言针对标准库回退里的导航过滤；装了 trafilatura 时固定走回退路径
+    monkeypatch.setattr(extract_module, "_trafilatura", None)
     html = (
         "<html><body><div>Navigation index modules | next | previous | Python » 3.15.2 » Library</div>"
         "<p>. 事件循环负责调度协程，并在等待 IO 时切换任务。</p>"
@@ -214,6 +218,30 @@ def test_full_mode_uses_fetched_content(client: TestClient) -> None:
     assert done["tokens"] > 0
 
 
+def test_full_mode_uses_independent_fetch_timeout(client: TestClient, monkeypatch) -> None:
+    from dataclasses import replace
+
+    from app.config import get_settings
+    from app.routers import summarize
+
+    seen = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(request.extensions["timeout"]["read"])
+        return httpx.Response(200, text=ARTICLE_HTML, headers={"content-type": "text/html"})
+
+    fetcher = make_public_fetcher(handler)
+    settings = replace(get_settings(), summary_fetch_timeout=4.0)
+    monkeypatch.setattr(summarize, "get_settings", lambda: settings)
+    monkeypatch.setitem(app.dependency_overrides, get_fetcher, lambda: fetcher)
+    sid = client.post("/api/search", json={"q": "python 文档"}).json()["meta"]["sid"]
+    assert client.get("/api/summarize", params={"sid": sid, "mode": "fast"}).status_code == 200
+    assert not seen
+    response = client.get("/api/summarize", params={"sid": sid, "mode": "full"})
+    assert seen == [4.0] * 5 and fetcher.timeout < 4.0
+    assert dict(_parse_sse(response.text))["meta"]["fetched"] == 5
+
+
 def test_full_mode_degrades_when_all_fetches_fail(client: TestClient) -> None:
     def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(500, text="boom")
@@ -253,3 +281,24 @@ def test_full_mode_labels_each_citation_when_some_fetches_fail(client: TestClien
     materials = {payload["domain"]: payload["material"] for name, payload in events if name == "cite"}
     assert materials["fastapi.tiangolo.com"] == "snippet" and "full" in materials.values()
     assert dict(events)["done"]["partial"] is True
+
+
+def test_page_summary_returns_key_data_and_anchors(client: TestClient, public_html) -> None:
+    body = client.post("/api/page/summarize", json={"url": "https://example.com/a"}).json()
+    assert isinstance(body["key_data"], list)
+    assert isinstance(body["anchors"], list)
+    assert body["anchors"] == [] or all({"i", "text"} <= set(item) for item in body["anchors"])
+
+
+def test_key_data_extracts_numbers_with_units() -> None:
+    from app.routers.page import _anchors, _key_data
+
+    text = (
+        "本次测试的命中率提升到 92%，平均延迟下降到 120 毫秒。\n"
+        "另一个数据集上覆盖率是 87%，样本量约 1.2 万条。"
+    )
+    data = _key_data(text)
+    values = {item["value"] for item in data}
+    assert "92%" in values and "120 毫秒" in values
+    assert len(data) <= 8
+    assert _anchors(text)[0]["i"] == 1

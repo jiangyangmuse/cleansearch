@@ -47,3 +47,14 @@ def expand_aliases(query: str) -> list[str]:
                 if alias not in found and alias.lower() != lowered:
                     found.append(alias)
     return found[:MAX_ALIASES]
+
+
+MODES = ("off", "rank", "rewrite")
+
+
+def upstream_query(query: str, aliases: list[str], mode: str) -> str:
+    """rewrite 模式把别名并入查询发给上游；rank/off 模式原样发送。"""
+    if mode != "rewrite" or not aliases:
+        return query
+    # 只带前两个别名，避免查询过长触发上游改写
+    return query + " " + " ".join(aliases[:2])
