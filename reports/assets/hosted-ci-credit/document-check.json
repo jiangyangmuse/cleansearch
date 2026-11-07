@@ -1,20 +1,46 @@
 {
+  "status": "pass",
+  "verified_code_sha": "43ea950930bc05076f2742597137e78e94db68cd",
+  "run_url": "https://github.com/jiangyangmuse/cleansearch/actions/runs/42395082507",
+  "hosted_api_tests": 323,
+  "local_api_tests": 323,
+  "product_tree_matches_verified_commit": true,
+  "credit_mode": "published project file; no fabricated GitHub account attribution",
+  "historical_reports_preserved": 37,
+  "historical_ledger_rows_preserved": 37,
+  "ledger_reports": 38,
+  "relative_links_checked": {
+    "CONTRIBUTORS.md": 2,
+    "README.md": 18,
+    "docs/进展与欠账.md": 34,
+    "docs/决策与接口变更.md": 3,
+    "reports/INDEX.md": 39,
+    "reports/completed/2026-11-08-0212-hosted-ci-credits.md": 4
+  },
   "artifacts": {
     "CONTRIBUTORS.md": {
-      "relative_links": 2,
+      "lines": 17,
       "non_whitespace_chars": 838
     },
     "README.md": {
-      "relative_links": 18,
-      "non_whitespace_chars": 24331
+      "lines": 725,
+      "non_whitespace_chars": 24460
     },
     "docs/进展与欠账.md": {
-      "relative_links": 34,
-      "non_whitespace_chars": 6963
+      "lines": 87,
+      "non_whitespace_chars": 6944
     },
     "docs/决策与接口变更.md": {
-      "relative_links": 2,
-      "non_whitespace_chars": 27699
+      "lines": 566,
+      "non_whitespace_chars": 27995
+    },
+    "reports/INDEX.md": {
+      "lines": 50,
+      "non_whitespace_chars": 6271
+    },
+    "reports/completed/2026-11-08-0212-hosted-ci-credits.md": {
+      "lines": 92,
+      "non_whitespace_chars": 4196
     }
   },
   "errors": []

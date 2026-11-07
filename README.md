@@ -1,7 +1,7 @@
 # CleanSearch · 干净搜索聚合器
 
 聚合多引擎检索 + 零广告结果页 + 三档相关性分组 + 侧栏 AI 总结 + 书签启动台。
-本机单用户主线已交付：搜索、书签、正文增强、缓存、一键添加、千问/DeepSeek 总结，以及 Serper 真实兜底、RDAP 首轮校准和 Compose 持久化均有验收证据。已核实 GitHub 托管 CI 基线；工作区新增修复待发布复验，正式浏览器/Android 与更广样本仍需验收。[当前进展与待办](docs/进展与欠账.md) · [完工台账](reports/INDEX.md)
+本机单用户主线已交付：搜索、书签、正文增强、缓存、一键添加、千问/DeepSeek 总结，以及 Serper 真实兜底、RDAP 首轮校准和 Compose 持久化均有验收证据。GitHub 托管 CI 已覆盖本轮修复，正式浏览器/Android 与更广样本仍需验收。[当前进展与待办](docs/进展与欠账.md) · [完工台账](reports/INDEX.md)
 
 [![CI](https://github.com/jiangyangmuse/cleansearch/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/jiangyangmuse/cleansearch/actions/workflows/ci.yml) · [贡献者与 AI 协作](CONTRIBUTORS.md)
 
@@ -494,7 +494,7 @@ act -j verify -P ubuntu-24.04=ghcr.io/catthehacker/ubuntu:act-latest --container
 1. 冒烟步骤原来用 `shell: pwsh`，在 Linux runner 上直接 `command not found` → 改成 bash + `scripts/ci-smoke.py`（跨平台，15 项检查）。
 2. 等待服务就绪的内联 Python 写进 YAML 会破坏缩进 → 抽成 `scripts/ci-wait.py`。
 
-> 历史说明：上述是本地 act 记录。GitHub 托管基线现已通过，详见下文；工作区新增修复仍需在发布后按对应提交复验。
+> 历史说明：上述是本地 act 记录。GitHub 托管基线及本轮修复均已通过，具体提交与日志见下文。
 
 
 ### RDAP 域名年龄
@@ -518,9 +518,9 @@ python scripts/eval-rdap.py --db-path data/rdap-calibration-review.db --json-out
 
 ### CI 的当前边界
 
-DSH [本地记录](reports/completed/2026-11-07-1631-remote-ci-chrome-android-samples.md)中的 bare/act 验证已由后续 GitHub 托管基线补齐。当前 origin 为 `git@github.com:jiangyangmuse/cleansearch.git`，已提交版本的 API 测试、构建与冒烟通过；工作区 M17 修复和浏览器判断器测试尚未包含在该托管提交中。
+DSH [本地记录](reports/completed/2026-11-07-1631-remote-ci-chrome-android-samples.md)中的 bare/act 验证已由后续 GitHub 托管基线补齐。当前 origin 为 `git@github.com:jiangyangmuse/cleansearch.git`；M17 修复与浏览器判断器测试已通过本次 ci #3，结果按具体提交保留。
 
-托管验收按具体提交 SHA 和运行链接记录。上轮本地验收为 323 项，已提交基线的托管测试为 315 项；这两个版本分别记录，待新增修复发布后再核对最新运行。
+托管验收按具体提交 SHA 和运行链接记录：早期基线为 315 项，本次修复版本为 323 项，另有浏览器验收判断器测试；各次运行分别保留。
 
 ### 扩展与分享的浏览器级验收
 
@@ -566,10 +566,11 @@ python scripts/eval-rdap.py --aggregate docs/m10-evidence/p3-rdap-sample.json --
 | --- | --- | --- | --- |
 | [ci #1](https://github.com/jiangyangmuse/cleansearch/actions/runs/42393430557) | `479978e878a1d75732b696a6f5d28aa97bb744ab` | push main，success，33 秒 | 2026-11-08 01:51:59–01:52:32 |
 | [ci #2](https://github.com/jiangyangmuse/cleansearch/actions/runs/42393578528) | `403253542059e6dcc5625f76e07a5ac78b6adab9` | push main，success，42 秒 | 2026-11-08 01:53:47–01:54:29 |
+| [ci #3](https://github.com/jiangyangmuse/cleansearch/actions/runs/42395082507) | `43ea950930bc05076f2742597137e78e94db68cd` | push main，success，44 秒 | 2026-11-08 02:11:33–02:12:17 |
 
-ci #2 的安装、API 测试、前端构建、fixture 冒烟及收尾步骤均成功；日志确认 **315 passed in 7.67s**、**42 modules transformed**、跨平台冒烟通过。证据按提交记录在 [托管 CI 核对文件](reports/assets/hosted-ci-credit/hosted-ci.json)。
+ci #3 的安装、API 测试、浏览器验收判断器负例、前端构建、fixture 冒烟及收尾步骤全部成功。日志确认 **323 passed in 8.13s**、Node 判断器 **1 test / pass 1 / fail 0**、**42 modules transformed**、跨平台冒烟 **15/15**。源码与证据已发布，核对见 [托管 CI 证据](reports/assets/hosted-ci-credit/hosted-ci.json)。
 
-当前工作区 M17 修复（共享 RDAP 并发、验收工具、总结采集等）本地已验 323 项，尚未包含在上述已提交 SHA 中；新增的浏览器判断器测试步骤也尚未托管执行。发布这些改动后，需要再验新 SHA，不能用 ci #2 的绿色状态代替。
+ci #1/#2 的 315 项记录是较早版本；本次 323 项修复由 ci #3 的 SHA 对应验证。后续仅更新验收文档时保留这一代码验收关联，不把文档提交误记为新的功能交付。
 
 ### 与本地验证的关系
 
@@ -721,4 +722,4 @@ llq/
 
 ## 下一步
 
-将已验收的工作区修复发布并复验新 SHA 的托管 CI，继续补正式浏览器/Android、新注册正常域名与事实质量验收。[待办、前提与完成标准](docs/进展与欠账.md#需要补齐的验收)
+托管 CI 已收口；继续补正式浏览器/Android、新注册正常域名与事实质量验收。[待办、前提与完成标准](docs/进展与欠账.md#需要补齐的验收)
