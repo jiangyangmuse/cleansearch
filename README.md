@@ -592,6 +592,46 @@ ci #1/#2 的 315 项记录是较早版本；本次 323 项修复由 ci #3 的 SH
 
 项目已记录 Codex 与 DeepSeek Harness（DSH）的实际 AI 协作贡献，见 [贡献者与 AI 协作](CONTRIBUTORS.md)。GitHub Contributors 自动统计依赖提交及关联账号；本文件记录工具署名，不伪造账号映射或改写历史作者。
 
+
+## 收口与推送（2026-11-08）
+
+工作区里并行执行体留下的 M19 引擎目录/回退、导航去重与评估工具已全部收口：
+
+- 提交：`31764ad feat: engine catalog with fallback routes, navigation dedupe, eval tooling`
+- 推送：`5af2daf..31764ad main -> main`
+- Actions：工作流 badge 返回 `ci - passing`（https://github.com/jiangyangmuse/cleansearch/actions）
+
+推送前的本地验证：
+
+```
+python -m pytest apps/api -q -o addopts=   362 passed
+npm --prefix apps/web run build           42 modules
+node --test scripts/engine-query.test.cjs  14 passed
+node --test scripts/browser-check.test.cjs  1 passed
+smoke.ps1（fixture）                        16/16
+```
+
+### 分支保护：需要你的 GitHub 凭据
+
+GitHub 的分支保护只能通过 API/网页设置，SSH 推送权限不够。两种做法：
+
+网页：Settings → Branches → Add branch protection rule → 分支填 `main` → 勾选 Require status checks to pass → 选 `verify`（本工作流的 job 名）。
+
+命令行（需要先 `gh auth login`）：
+
+```powershell
+gh api --method PUT repos/jiangyangmuse/cleansearch/branches/main/protection `
+  -F 'required_status_checks[strict]=true' `
+  -F 'required_status_checks[contexts][]=verify' `
+  -F 'enforce_admins=true' `
+  -F 'required_pull_request_reviews=null' `
+  -F 'restrictions=null'
+```
+
+### 匿名 API 限制
+
+公开仓库的 Actions 状态可用 badge 读取，但 `/actions/runs` 这类 JSON API 匿名额度是 60 次/小时，本轮已被用尽；需要更细的 job 日志时请用 `gh run view`（带登录）。
+
 ### 本机跑真实 SearXNG（无 Docker 时）
 
 ```powershell
