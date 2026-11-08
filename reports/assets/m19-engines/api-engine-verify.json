@@ -1,0 +1,179 @@
+[
+  {
+    "code": "b",
+    "q": "python 文档 b",
+    "http": 200,
+    "total": 10,
+    "engines": [
+      "bing"
+    ],
+    "unresponsive": [],
+    "router": "suffix",
+    "parsed_engine": "bing",
+    "ms": 694
+  },
+  {
+    "code": "d",
+    "q": "python 文档 d",
+    "http": 200,
+    "total": 10,
+    "engines": [
+      "duckduckgo"
+    ],
+    "unresponsive": [],
+    "router": "suffix",
+    "parsed_engine": "duckduckgo",
+    "ms": 2014
+  },
+  {
+    "code": "y",
+    "q": "python 文档 y",
+    "http": 200,
+    "total": 7,
+    "engines": [
+      "yahoo"
+    ],
+    "unresponsive": [],
+    "router": "suffix",
+    "parsed_engine": "yahoo",
+    "ms": 1168
+  },
+  {
+    "code": "mj",
+    "q": "python 文档 mj",
+    "http": 200,
+    "total": 10,
+    "engines": [
+      "mojeek"
+    ],
+    "unresponsive": [],
+    "router": "suffix",
+    "parsed_engine": "mojeek",
+    "ms": 2362
+  },
+  {
+    "code": "gc",
+    "q": "python 文档 gc",
+    "http": 200,
+    "total": 13,
+    "engines": [
+      "google cse"
+    ],
+    "unresponsive": [],
+    "router": "suffix",
+    "parsed_engine": "google cse",
+    "ms": 652
+  },
+  {
+    "code": "n",
+    "q": "python 文档 n",
+    "http": 200,
+    "total": 16,
+    "engines": [
+      "naver"
+    ],
+    "unresponsive": [],
+    "router": "suffix",
+    "parsed_engine": "naver",
+    "ms": 5422
+  },
+  {
+    "code": "yd",
+    "q": "python 文档 yd",
+    "http": 200,
+    "total": 10,
+    "engines": [
+      "yandex"
+    ],
+    "unresponsive": [],
+    "router": "suffix",
+    "parsed_engine": "yandex",
+    "ms": 4634
+  },
+  {
+    "code": "sw",
+    "q": "python 文档 sw",
+    "http": 200,
+    "total": 10,
+    "engines": [
+      "swisscows"
+    ],
+    "unresponsive": [],
+    "router": "suffix",
+    "parsed_engine": "swisscows",
+    "ms": 2249
+  },
+  {
+    "code": "w",
+    "q": "Python w",
+    "http": 200,
+    "total": 1,
+    "engines": [
+      "wikipedia"
+    ],
+    "unresponsive": [],
+    "router": "suffix",
+    "parsed_engine": "wikipedia",
+    "ms": 464
+  },
+  {
+    "code": "g",
+    "q": "python 文档 g",
+    "http": 200,
+    "total": 12,
+    "engines": [
+      "google cse"
+    ],
+    "unresponsive": [
+      "google(Suspended: access denied)"
+    ],
+    "router": "suffix",
+    "parsed_engine": "google",
+    "ms": 908
+  },
+  {
+    "code": "sc",
+    "q": "retrieval augmented generation sc",
+    "http": 200,
+    "total": 10,
+    "engines": [
+      "serper"
+    ],
+    "unresponsive": [
+      "google scholar(Suspended: access denied)"
+    ],
+    "router": "suffix",
+    "parsed_engine": "scholar",
+    "ms": 5602
+  },
+  {
+    "code": "sg",
+    "q": "python 文档 sg",
+    "http": 200,
+    "total": 5,
+    "engines": [
+      "360search"
+    ],
+    "unresponsive": [
+      "sogou(unexpected crash)"
+    ],
+    "router": "suffix",
+    "parsed_engine": "sogou",
+    "ms": 1565
+  },
+  {
+    "code": "sp",
+    "q": "python 文档 sp",
+    "http": 200,
+    "total": 10,
+    "engines": [
+      "mojeek"
+    ],
+    "unresponsive": [
+      "startpage(路由未生效)"
+    ],
+    "router": "suffix",
+    "parsed_engine": "startpage",
+    "ms": 3772
+  }
+]

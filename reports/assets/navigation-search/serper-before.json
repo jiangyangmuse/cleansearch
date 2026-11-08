@@ -1,0 +1,70 @@
+{
+  "query": "deepseek",
+  "organic": [
+    {
+      "title": "DeepSeek | Into the Unknown",
+      "link": "https://www.deepseek.com/en/",
+      "displayedLink": "https://www.deepseek.com › ...",
+      "snippet": "DeepSeek is an AI research company focused on building world-leading general artificial intelligence. We develop and open-source frontier LLMs",
+      "position": 1
+    },
+    {
+      "title": "DeepSeek Platform",
+      "link": "https://platform.deepseek.com/",
+      "displayedLink": "https://platform.deepseek.com",
+      "snippet": "Join DeepSeek API platform to access our AI models, developer resources and API documentation. Create new products, experiences, and ways of working with the ...",
+      "position": 2
+    },
+    {
+      "title": "deepseek-ai (DeepSeek)",
+      "link": "https://huggingface.co/deepseek-ai",
+      "displayedLink": "https://huggingface.co › deepseek-ai",
+      "snippet": "DeepSeek (深度求索), founded in 2023, is a Chinese company dedicated to making AGI a reality. Unravel the mystery of AGI with curiosity.",
+      "position": 3
+    },
+    {
+      "title": "DeepSeek",
+      "link": "https://chat.deepseek.com/",
+      "displayedLink": "https://chat.deepseek.com",
+      "snippet": "Chat with DeepSeek AI – your intelligent assistant for coding, content creation, file reading, and more. Upload documents, engage in long-context ...",
+      "position": 4
+    },
+    {
+      "title": "DeepSeek (@deepseek_ai) / X",
+      "link": "https://x.com/deepseek_ai",
+      "displayedLink": "1.2M+ followers",
+      "snippet": "Introducing DeepInfer, our in-house inference framework, now fully open source! Powering DeepSeek-V4.1-Flash at scale with high throughput and low latency.",
+      "position": 5
+    },
+    {
+      "title": "DeepSeek - AI Assistant - Apps on Google Play",
+      "link": "https://play.google.com/store/apps/details?id=com.deepseek.chat&hl=en_US",
+      "displayedLink": "https://play.google.com › store › apps › details › id=com...",
+      "snippet": "DeepSeek's official AI assistant for free! it delivers faster responses and more powerful features to help you solve problems and live more efficiently.",
+      "position": 6
+    },
+    {
+      "title": "DeepSeek: The Chinese AI app that has the world talking",
+      "link": "https://www.bbc.com/news/articles/c5yv5976z9po",
+      "displayedLink": "https://www.bbc.com › news › articles",
+      "snippet": "DeepSeek is the name of a free AI-powered chatbot, which looks, feels and works very much like ChatGPT. That means it's used for many of the ...",
+      "date": "Feb 4, 2025",
+      "position": 7
+    },
+    {
+      "title": "DeepSeek",
+      "link": "https://en.wikipedia.org/wiki/DeepSeek",
+      "displayedLink": "https://en.wikipedia.org › wiki › DeepSeek",
+      "snippet": "DeepSeek, [b] is a Chinese artificial intelligence (AI) company that develops open weights large language models (LLMs).",
+      "position": 8
+    },
+    {
+      "title": "Download DeepSeek",
+      "link": "https://www.deepseek.com/en/download/",
+      "displayedLink": "https://www.deepseek.com › download",
+      "snippet": "DeepSeek app. The official AI assistant from DeepSeek. Chat with leading AI models for free.The official AI assistant from DeepSeek.",
+      "position": 9
+    }
+  ],
+  "knowledgeGraph": {}
+}

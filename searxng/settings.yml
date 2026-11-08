@@ -1,4 +1,12 @@
 # SearXNG 最小配置：开 JSON、关 limiter，供本机 FastAPI 聚合调用。
+#
+# 引擎说明（2026-11-08 本机实测）：
+# - bing 必须用 cn.bing.com；www.bing.com 会 302 到 cn，而 SearXNG 引擎默认不跟随重定向。
+# - mojeek / swisscows / startpage 在默认 settings 里是 inactive: true，
+#   只写 disabled: false 不会加载；要显式 inactive: false。
+# - wikipedia 默认只返回 infobox；后缀 w 需要 display_type 含 list。
+# - Google / Google Scholar / Brave / Startpage 网页端会被 403、access denied 或 CAPTCHA；
+#   保留为不可用，由应用层的回退链与 Serper 兜底处理。
 use_default_settings: true
 
 general:
@@ -14,14 +22,66 @@ search:
   formats: [html, json]     # json 必须显式开启，否则 /api/search 报 UPSTREAM_BAD_RESPONSE
   autocomplete: ""
 
+outgoing:
+  request_timeout: 4.0
+  max_request_timeout: 10.0
+
 ui:
   static_use_hash: true
 
-# 2026-11-07 实测：这几个 general 引擎默认 disabled，启用后才有独立来源
 engines:
+  # ---- 主力：默认参与聚合，本机实测可用 ----
   - name: bing
     disabled: false
+    base_url: "https://cn.bing.com"
+    timeout: 6
   - name: yahoo
     disabled: false
+    timeout: 6
   - name: sogou
     disabled: false
+    timeout: 6
+  - name: duckduckgo web
+    disabled: false
+    timeout: 8
+  - name: google cse
+    timeout: 6
+  - name: mojeek
+    disabled: false
+    inactive: false
+    timeout: 6
+  - name: swisscows
+    disabled: false
+    inactive: false
+    timeout: 8
+  - name: 360search
+    disabled: false
+    timeout: 8
+  - name: naver
+    disabled: false
+    timeout: 6
+  - name: yandex
+    disabled: false
+    timeout: 6
+  # ---- 垂直引擎：只在指定后缀/分类时使用 ----
+  - name: wikipedia
+    display_type: [infobox, list]
+  - name: youtube
+    timeout: 8
+  - name: github
+    timeout: 10
+  - name: arxiv
+    timeout: 10
+  # ---- 明确不可用：不要参与默认聚合，避免拖慢/干扰结果 ----
+  - name: google
+    disabled: true            # 直连 403；g 后缀走 google cse / Serper
+  - name: google scholar
+    disabled: true            # access denied；sc 后缀走 Serper /scholar
+  - name: brave
+    disabled: true            # 网页端限流；brave 后缀优先用官方 API key
+  - name: startpage
+    disabled: true            # PoW CAPTCHA；sp 后缀回退 mojeek
+  - name: dogpile
+    disabled: true            # access denied
+  - name: marginalia
+    disabled: true

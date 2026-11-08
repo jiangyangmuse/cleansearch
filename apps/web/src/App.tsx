@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ApiError, getSearchProvider, search } from "./api";
+import { ApiError, getEngines, getSearchProvider, search } from "./api";
+import EngineBar from "./components/EngineBar";
+import { engineQuery } from "./engineQuery";
 import MetaBar from "./components/MetaBar";
 import ResultList from "./components/ResultList";
 import SearchBar from "./components/SearchBar";
 import SummaryPanel from "./components/SummaryPanel";
 import { EmptyState, ErrorState, LoadingState } from "./components/StatePanel";
 import ThemeToggle from "./components/ThemeToggle";
-import type { SearchResponse } from "./types";
+import type { EngineInfo, SearchResponse } from "./types";
 
 type Phase = "idle" | "loading" | "ok" | "empty" | "error";
 
@@ -29,6 +31,7 @@ export default function App() {
   const [data, setData] = useState<SearchResponse | null>(null);
   const [error, setError] = useState<ApiError | null>(null);
   const [showSamples, setShowSamples] = useState(false);
+  const [engines, setEngines] = useState<EngineInfo[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   // 键盘连按时 setState 尚未生效，用 ref 保证 j/k 连续移动不丢步
   const selectedRef = useRef<string | null>(null);
@@ -77,6 +80,13 @@ export default function App() {
           : new ApiError("未知错误，查看浏览器控制台", "UNKNOWN", 0),
       );
       setPhase("error");
+    } finally {
+      // 每次请求后刷新健康状态；旧请求的目录响应不能覆盖新请求。
+      if (!current.signal.aborted) {
+        void getEngines(current.signal).then((payload) => {
+          if (!current.signal.aborted && payload.provider === "searxng") setEngines(payload.engines);
+        }).catch(() => { /* 目录失败不影响搜索结果 */ });
+      }
     }
   }, [select]);
 
@@ -94,6 +104,24 @@ export default function App() {
     }).catch(() => { /* 搜索不依赖自检入口 */ });
     return () => check.abort();
   }, []);
+
+  useEffect(() => {
+    const check = new AbortController();
+    void getEngines(check.signal).then((payload) => {
+      if (!check.signal.aborted && !controller.current && payload.provider === "searxng") setEngines(payload.engines);
+    }).catch(() => { /* 引擎目录不可用时保持纯文本后缀 */ });
+    return () => check.abort();
+  }, []);
+
+  const pickEngine = useCallback(
+    (code: string) => {
+      const next = engineQuery(input, code, engines);
+      if (next === null) return;
+      setInput(next);
+      void runSearch(next);
+    },
+    [input, engines, runSearch],
+  );
 
   const groups = data?.groups ?? { strong: [], related: [], weak: [] };
 
@@ -220,6 +248,13 @@ export default function App() {
           onSubmit={() => void runSearch(input)}
         />
 
+        <EngineBar
+          engines={engines}
+          busy={phase === "loading"}
+          canPick={engineQuery(input, "g", engines) !== null}
+          onPick={pickEngine}
+        />
+
         {showSamples ? <div className="samples">
           <span>自检样本：</span>
           {SAMPLES.map((sample) => (
@@ -241,7 +276,7 @@ export default function App() {
           <div className="state state--idle">
             <h2>输入关键词开始</h2>
             <p>
-              支持后缀路由（数分知识点 g）与 bang（python !b）。结果按强相关 / 相关 / 弱相关三档展示，弱相关默认折叠；刷新后按地址栏的 q 复现同一查询。
+              支持后缀路由（数分知识点 g）与 bang（python !b），也可以点上方引擎按钮。不可用引擎会按回退链自动换源（如 g → Google CSE → Serper）。结果按强相关 / 相关 / 弱相关三档展示，弱相关默认折叠；刷新后按地址栏的 q 复现同一查询。
             </p>
           </div>
         ) : null}

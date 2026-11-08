@@ -17,6 +17,7 @@ from app.core.metrics import RequestMetricsMiddleware, get_metrics
 from app.core.tokens import read_api_token, token_matches
 from app.routers import assets as assets_router
 from app.routers import bookmarks as bookmarks_router
+from app.routers import engines as engines_router
 from app.routers import go as go_router
 from app.routers import page as page_router
 from app.routers import search as search_router
@@ -34,6 +35,7 @@ app = FastAPI(
 )
 app.include_router(search_router.router)
 app.include_router(bookmarks_router.router)
+app.include_router(engines_router.router)
 app.include_router(go_router.router)
 app.include_router(page_router.router)
 app.include_router(summarize_router.router)

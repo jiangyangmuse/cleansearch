@@ -220,6 +220,10 @@ export async function getSearchProvider(signal: AbortSignal): Promise<string> {
   return health.provider;
 }
 
+export async function getEngines(signal?: AbortSignal) {
+  return jsonRequest<import("./types").EnginesResponse>("/api/engines", { signal });
+}
+
 export async function createGroup(name: string) {
   return jsonRequest<import("./types").BookmarkGroup>("/api/groups", {
     method: "POST",

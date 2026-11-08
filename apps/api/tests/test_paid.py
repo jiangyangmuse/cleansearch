@@ -66,6 +66,30 @@ def test_serper_results_are_normalised() -> None:
     assert result.engine == "serper" and result.results[0].url == "https://serper.test/x"
 
 
+def test_serper_scholar_route_is_used_for_scholar_fallback() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        assert str(request.url) == "https://google.serper.dev/scholar"
+        body = json.loads(request.content)
+        assert body["q"] == "RAG"
+        return httpx.Response(
+            200,
+            json={"organic": [{"link": "https://paper.test/x", "title": "Paper", "snippet": "S"}]},
+        )
+
+    settings = replace(get_settings(), brave_api_key="", serper_api_key="serper-key")
+    paid = PaidSearch(settings, transport=httpx.MockTransport(handler))
+    result = __import__("asyncio").run(paid.search_for_engine("scholar", "RAG"))
+
+    assert result is not None and result.engine == "serper"
+    assert result.results[0].url == "https://paper.test/x"
+
+
+def test_paid_route_returns_none_for_engines_without_paid_endpoint() -> None:
+    settings = replace(get_settings(), brave_api_key="", serper_api_key="serper-key")
+    paid = PaidSearch(settings, transport=httpx.MockTransport(lambda request: httpx.Response(500)))
+    assert __import__("asyncio").run(paid.search_for_engine("bing", "HTTP")) is None
+
+
 def test_http_error_is_reported_not_raised() -> None:
     def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(429, json={"error": "rate limited"})
@@ -202,11 +226,16 @@ async def test_explicit_engine_and_later_pages_skip_paid(page, engine) -> None:
         lambda request: httpx.Response(200, json={"results": []})
     ))
 
-    def unexpected_request(request):
-        pytest.fail("指定引擎或翻页不应调用付费接口")
+    calls = []
 
-    aggregator._paid = PaidSearch(settings, transport=httpx.MockTransport(unexpected_request))
+    def paid_handler(request):
+        # 翻页和显式引擎正常零结果都不应触发付费。
+        calls.append(request)
+        return httpx.Response(200, json={"organic": []})
+
+    aggregator._paid = PaidSearch(settings, transport=httpx.MockTransport(paid_handler))
     assert not (await aggregator.search("HTTP", page=page, engine=engine)).results
+    assert calls == []
 
 
 def test_canonical_duplicate_retains_both_sources(client, monkeypatch) -> None:

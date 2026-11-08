@@ -1,0 +1,13 @@
+{
+  "checked_files": [
+    "reports/INDEX.md",
+    "reports/2026-11-08-1137-m19-engine-suffix-repair.md",
+    "reports/completed/2026-11-08-1335-engine-fallback-review.md",
+    "docs/进展与欠账.md",
+    "docs/决策与接口变更.md"
+  ],
+  "missing_links": [],
+  "ledger_top": "| 20261108-1335 | 2026-11-08 13:35 | [M19 引擎回退复核与边界完善](completed/2026-11-08-1335-engine-fallback-review.md) | fix | 完成 | `completed/2026-11-08-1335-engine-fallback-review.md` |",
+  "ledger_rows": 41,
+  "test_ports_released": true
+}

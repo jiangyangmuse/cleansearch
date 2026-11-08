@@ -116,6 +116,59 @@ a { color: inherit; text-decoration: none; }
   font-size: 12px;
 }
 
+.engines {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.engines__label {
+  margin-right: 2px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.engines__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.engines__chip:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.engines__code {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+}
+
+.engines__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #9aa4b2;
+  flex: 0 0 auto;
+}
+
+.engines__dot--ok { background: #2f9e44; }
+.engines__dot--cooldown { background: #e8a317; }
+.engines__dot--unknown { background: #9aa4b2; }
+
+.engines__more {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
 .chip {
   padding: 3px 10px;
   font-size: 12px;

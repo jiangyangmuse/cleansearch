@@ -9,24 +9,7 @@ import re
 import unicodedata
 from dataclasses import dataclass
 
-ENGINE_SUFFIXES: dict[str, str] = {
-    "g": "google",
-    "b": "bing",
-    "d": "duckduckgo",
-    "ddg": "duckduckgo",
-    "br": "brave",
-    "yt": "youtube",
-    "gh": "github",
-    "ar": "arxiv",
-    "sc": "scholar",
-    "w": "wikipedia",
-    # 这批是 2026-11-07 在本机 SearXNG 实测可用、且独立索引的引擎
-    "gc": "google cse",
-    "sp": "startpage",
-    "mj": "mojeek",
-    "y": "yahoo",
-    "sg": "sogou",
-}
+from app.core.engine_catalog import ENGINE_SUFFIXES
 
 REGION_SUFFIXES: dict[str, str] = {
     "zh": "cn",

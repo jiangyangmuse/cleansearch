@@ -1,0 +1,123 @@
+{
+  "scope": "受控断开 SearXNG（本机 port 1），真实 Serper；非 13 引擎在线重验",
+  "rows": [
+    {
+      "q": "python 文档 !g",
+      "page": 1,
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "google",
+        "region": null,
+        "router": "bang",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "serper"
+        ],
+        "unresponsive": [
+          "searxng(UPSTREAM_UNAVAILABLE)"
+        ],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 4874,
+        "total": 7,
+        "upstream_total": 7,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        },
+        "sid": "s_fe72fa90c9fb575d49b7eed27b211343"
+      },
+      "urls": [
+        "https://docspy3zh.readthedocs.io/",
+        "https://docs.python.org/zh-cn/3/",
+        "https://docs.pythonlang.cn/"
+      ]
+    },
+    {
+      "q": "python 文档 !g",
+      "page": 1,
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "google",
+        "region": null,
+        "router": "bang",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "serper"
+        ],
+        "unresponsive": [
+          "searxng(UPSTREAM_UNAVAILABLE)"
+        ],
+        "provider": "searxng",
+        "cached": true,
+        "ms": 0,
+        "total": 7,
+        "upstream_total": 7,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        },
+        "sid": "s_32402a2102d91e5611df5e2c758aa95a"
+      },
+      "urls": [
+        "https://docspy3zh.readthedocs.io/",
+        "https://docs.python.org/zh-cn/3/",
+        "https://docs.pythonlang.cn/"
+      ]
+    },
+    {
+      "q": "attention is all you need !sc",
+      "page": 1,
+      "http": 200,
+      "parsed": {
+        "q": "attention is all you need",
+        "engine": "scholar",
+        "region": null,
+        "router": "bang",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "serper"
+        ],
+        "unresponsive": [
+          "searxng(UPSTREAM_UNAVAILABLE)"
+        ],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 5374,
+        "total": 9,
+        "upstream_total": 10,
+        "filtered": {
+          "dup": 1,
+          "risk": 0
+        },
+        "sid": "s_99d551bdfc2718d804f297e7d7953a80"
+      },
+      "urls": [
+        "https://arxiv.org/abs/2104.04692",
+        "https://arxiv.org/abs/2308.07661",
+        "https://arxiv.org/abs/2108.09084"
+      ]
+    },
+    {
+      "q": "python 文档 !g",
+      "page": 2,
+      "http": 503,
+      "error": {
+        "code": "UPSTREAM_UNAVAILABLE",
+        "message": "无法连接 SearXNG（http://127.0.0.1:1）：ConnectError",
+        "retryable": true
+      }
+    }
+  ]
+}

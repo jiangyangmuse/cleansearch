@@ -144,6 +144,7 @@ async def search(
             namespace=(
                 provider, settings.searxng_url if provider == "searxng" else "", revision,
                 mode, getattr(aggregator, "paid_provider", ""),
+                "engine-fallback-v2", getattr(aggregator, "paid_capabilities", ""),
                 "rdap-v2" if settings.rdap_enabled else "rdap-off",
             ),
         )

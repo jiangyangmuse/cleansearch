@@ -1,0 +1,34 @@
+{
+  "api": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "362",
+    "time": "8.576",
+    "timestamp": "2026-11-08T13:35:20.710471+09:00",
+    "hostname": "Kaltsit-Mon3tr"
+  },
+  "before_regressions": {
+    "failed": 8,
+    "passed": 5,
+    "command": "python -m pytest apps/api/tests/test_engine_fallback.py -q"
+  },
+  "node": {
+    "passed": 15,
+    "failed": 0,
+    "command": "node --test scripts/browser-check.test.cjs scripts/engine-query.test.cjs"
+  },
+  "web": {
+    "modules": 44,
+    "exit_code": 0,
+    "command": "npm --prefix apps/web run build"
+  },
+  "smoke": {
+    "powershell": 16,
+    "python": 15,
+    "failed": 0
+  },
+  "remote_ci_rerun": false,
+  "real_13_engine_matrix_rerun": false
+}

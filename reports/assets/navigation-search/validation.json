@@ -1,0 +1,40 @@
+{
+  "status": "pass",
+  "new_regression_cases": 11,
+  "isolated_full_tests": 334,
+  "merged_full_tests": 347,
+  "replayed_candidate_counts": [
+    9,
+    7,
+    9
+  ],
+  "live_home_url": "https://www.deepseek.com/en/",
+  "live_home_visible": true,
+  "cache_cold_then_warm": true,
+  "patch_matches_tested_snapshot": true,
+  "old_ledger_rows_preserved": 38,
+  "ledger_rows": 40,
+  "document_artifacts": {
+    "docs/决策与接口变更.md": {
+      "links": 3,
+      "lines": 602,
+      "non_whitespace_chars": 29845
+    },
+    "docs/进展与欠账.md": {
+      "links": 37,
+      "lines": 95,
+      "non_whitespace_chars": 7649
+    },
+    "reports/INDEX.md": {
+      "links": 41,
+      "lines": 52,
+      "non_whitespace_chars": 6579
+    },
+    "reports/completed/2026-11-08-1138-navigation-title-dedupe.md": {
+      "links": 6,
+      "lines": 91,
+      "non_whitespace_chars": 4039
+    }
+  },
+  "errors": []
+}

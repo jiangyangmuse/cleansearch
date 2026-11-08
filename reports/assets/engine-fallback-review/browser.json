@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "mode": "Playwright Chromium；目录受控，搜索由真实 fixture API 解析",
+  "catalogReads": 4,
+  "requests": [
+    {
+      "q": "python !g",
+      "parsed": {
+        "q": "python",
+        "engine": "google",
+        "region": null,
+        "router": "bang",
+        "expanded": []
+      }
+    },
+    {
+      "q": "python !b",
+      "parsed": {
+        "q": "python",
+        "engine": "bing",
+        "region": null,
+        "router": "bang",
+        "expanded": []
+      }
+    },
+    {
+      "q": "C g !b",
+      "parsed": {
+        "q": "C g",
+        "engine": "bing",
+        "region": null,
+        "router": "bang",
+        "expanded": []
+      }
+    }
+  ],
+  "errors": [],
+  "desktop": "1280x900",
+  "mobile": "390x844",
+  "nativeAndroid": false
+}

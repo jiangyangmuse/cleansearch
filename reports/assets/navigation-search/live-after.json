@@ -1,0 +1,288 @@
+[
+  {
+    "parsed": {
+      "q": "deepseek",
+      "engine": "default",
+      "region": null,
+      "router": "default",
+      "expanded": []
+    },
+    "groups": {
+      "strong": [],
+      "related": [
+        {
+          "id": "r_2",
+          "url": "https://en.wikipedia.org/wiki/DeepSeek",
+          "display_url": "en.wikipedia.org › wiki › DeepSeek",
+          "title": "DeepSeek",
+          "snippet": "DeepSeek, [b] is a Chinese artificial intelligence (AI) company that develops open weights large language models (LLMs). Based in Hangzhou, Zhejiang,",
+          "engine": [
+            "serper"
+          ],
+          "score": 0.5054,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://en.wikipedia.org/favicon.ico",
+          "published": null,
+          "read_minutes": null
+        },
+        {
+          "id": "r_1",
+          "url": "https://www.deepseek.com/en/",
+          "display_url": "www.deepseek.com › en",
+          "title": "DeepSeek | Into the Unknown",
+          "snippet": "DeepSeek is an AI research company focused on building world-leading general artificial intelligence. We develop and open-source frontier LLMs including ...",
+          "engine": [
+            "serper"
+          ],
+          "score": 0.3552,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://www.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null
+        },
+        {
+          "id": "r_4",
+          "url": "https://huggingface.co/deepseek-ai",
+          "display_url": "huggingface.co › deepseek-ai",
+          "title": "deepseek-ai (DeepSeek)",
+          "snippet": "DeepSeek (深度求索), founded in 2023, is a Chinese company dedicated to making AGI a reality. Unravel the mystery of AGI with curiosity.",
+          "engine": [
+            "serper"
+          ],
+          "score": 0.3552,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://huggingface.co/favicon.ico",
+          "published": null,
+          "read_minutes": null
+        },
+        {
+          "id": "r_3",
+          "url": "https://play.google.com/store/apps/details?id=com.deepseek.chat&hl=en_US",
+          "display_url": "play.google.com › apps › details",
+          "title": "DeepSeek - AI Assistant - Apps on Google Play",
+          "snippet": "DeepSeek's official AI assistant for free! it delivers faster responses and more powerful features to help you solve problems and live more efficiently.",
+          "engine": [
+            "serper"
+          ],
+          "score": 0.3548,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://play.google.com/favicon.ico",
+          "published": null,
+          "read_minutes": null
+        },
+        {
+          "id": "r_6",
+          "url": "https://www.bbc.com/news/articles/c5yv5976z9po",
+          "display_url": "www.bbc.com › articles › c5yv5976z9po",
+          "title": "DeepSeek: The Chinese AI app that has the world talking",
+          "snippet": "DeepSeek, a Chinese artificial intelligence (AI) startup, made headlines worldwide after it topped app download charts and caused US tech stocks ...",
+          "engine": [
+            "serper"
+          ],
+          "score": 0.3547,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://www.bbc.com/favicon.ico",
+          "published": null,
+          "read_minutes": null
+        },
+        {
+          "id": "r_5",
+          "url": "https://x.com/deepseek_ai",
+          "display_url": "x.com › deepseek_ai",
+          "title": "DeepSeek (@deepseek_ai) / X",
+          "snippet": "Introducing DeepInfer, our in-house inference framework, now fully open source! Powering DeepSeek-V4.1-Flash at scale with high throughput and low latency.",
+          "engine": [
+            "serper"
+          ],
+          "score": 0.3146,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://x.com/favicon.ico",
+          "published": null,
+          "read_minutes": null
+        }
+      ],
+      "weak": []
+    },
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "serper"
+      ],
+      "unresponsive": [
+        "searxng(UPSTREAM_UNAVAILABLE)"
+      ],
+      "provider": "searxng",
+      "cached": false,
+      "ms": 6787,
+      "total": 6,
+      "upstream_total": 6,
+      "filtered": {
+        "dup": 0,
+        "risk": 0
+      },
+      "sid": "s_b9fa16a43c30c09b312c965d7bbc08ff"
+    }
+  },
+  {
+    "parsed": {
+      "q": "deepseek",
+      "engine": "default",
+      "region": null,
+      "router": "default",
+      "expanded": []
+    },
+    "groups": {
+      "strong": [],
+      "related": [
+        {
+          "id": "r_2",
+          "url": "https://en.wikipedia.org/wiki/DeepSeek",
+          "display_url": "en.wikipedia.org › wiki › DeepSeek",
+          "title": "DeepSeek",
+          "snippet": "DeepSeek, [b] is a Chinese artificial intelligence (AI) company that develops open weights large language models (LLMs). Based in Hangzhou, Zhejiang,",
+          "engine": [
+            "serper"
+          ],
+          "score": 0.5054,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://en.wikipedia.org/favicon.ico",
+          "published": null,
+          "read_minutes": null
+        },
+        {
+          "id": "r_1",
+          "url": "https://www.deepseek.com/en/",
+          "display_url": "www.deepseek.com › en",
+          "title": "DeepSeek | Into the Unknown",
+          "snippet": "DeepSeek is an AI research company focused on building world-leading general artificial intelligence. We develop and open-source frontier LLMs including ...",
+          "engine": [
+            "serper"
+          ],
+          "score": 0.3552,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://www.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null
+        },
+        {
+          "id": "r_4",
+          "url": "https://huggingface.co/deepseek-ai",
+          "display_url": "huggingface.co › deepseek-ai",
+          "title": "deepseek-ai (DeepSeek)",
+          "snippet": "DeepSeek (深度求索), founded in 2023, is a Chinese company dedicated to making AGI a reality. Unravel the mystery of AGI with curiosity.",
+          "engine": [
+            "serper"
+          ],
+          "score": 0.3552,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://huggingface.co/favicon.ico",
+          "published": null,
+          "read_minutes": null
+        },
+        {
+          "id": "r_3",
+          "url": "https://play.google.com/store/apps/details?id=com.deepseek.chat&hl=en_US",
+          "display_url": "play.google.com › apps › details",
+          "title": "DeepSeek - AI Assistant - Apps on Google Play",
+          "snippet": "DeepSeek's official AI assistant for free! it delivers faster responses and more powerful features to help you solve problems and live more efficiently.",
+          "engine": [
+            "serper"
+          ],
+          "score": 0.3548,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://play.google.com/favicon.ico",
+          "published": null,
+          "read_minutes": null
+        },
+        {
+          "id": "r_6",
+          "url": "https://www.bbc.com/news/articles/c5yv5976z9po",
+          "display_url": "www.bbc.com › articles › c5yv5976z9po",
+          "title": "DeepSeek: The Chinese AI app that has the world talking",
+          "snippet": "DeepSeek, a Chinese artificial intelligence (AI) startup, made headlines worldwide after it topped app download charts and caused US tech stocks ...",
+          "engine": [
+            "serper"
+          ],
+          "score": 0.3547,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://www.bbc.com/favicon.ico",
+          "published": null,
+          "read_minutes": null
+        },
+        {
+          "id": "r_5",
+          "url": "https://x.com/deepseek_ai",
+          "display_url": "x.com › deepseek_ai",
+          "title": "DeepSeek (@deepseek_ai) / X",
+          "snippet": "Introducing DeepInfer, our in-house inference framework, now fully open source! Powering DeepSeek-V4.1-Flash at scale with high throughput and low latency.",
+          "engine": [
+            "serper"
+          ],
+          "score": 0.3146,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://x.com/favicon.ico",
+          "published": null,
+          "read_minutes": null
+        }
+      ],
+      "weak": []
+    },
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "serper"
+      ],
+      "unresponsive": [
+        "searxng(UPSTREAM_UNAVAILABLE)"
+      ],
+      "provider": "searxng",
+      "cached": true,
+      "ms": 1,
+      "total": 6,
+      "upstream_total": 6,
+      "filtered": {
+        "dup": 0,
+        "risk": 0
+      },
+      "sid": "s_7495d98bd7d62638a3778cecabc93b7d"
+    }
+  }
+]

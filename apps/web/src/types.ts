@@ -43,6 +43,33 @@ export interface SearchResponse {
   meta: SearchMeta;
 }
 
+export interface EngineInfo {
+  code: string;
+  label: string;
+  engine: string;
+  searx_engine: string;
+  fallbacks: string[];
+  paid: string;
+  aliases: string[];
+  note: string;
+  status: "ok" | "cooldown" | "unknown";
+  available: boolean | null;
+  can_fallback: boolean;
+  selectable: boolean;
+  fails: number;
+  avg_ms: number | null;
+  last_error: string | null;
+  remaining_seconds: number;
+}
+
+export interface EnginesResponse {
+  provider: string;
+  searxng_url: string;
+  breaker: boolean;
+  paid: { serper: boolean; brave: boolean };
+  engines: EngineInfo[];
+}
+
 export interface ApiErrorPayload {
   error: { code: string; message: string; retryable: boolean };
 }

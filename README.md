@@ -291,21 +291,33 @@ bookmarklet 和扩展都在「别人的页面」里发起请求，无法用 Orig
 | Git 与 CI | 已有首个本地提交。`.github/workflows/ci.yml` 依次运行测试、构建和完整离线冒烟 | 远端执行待验 |
 
 
-### 引擎后缀（2026-11-07 实测）
+### 引擎后缀（2026-11-08 复测）
 
-| 后缀 | 引擎 | 本机可用性 |
-| --- | --- | --- |
-| `gc` | google cse | ✅ 稳定（10–14 条，0.6–0.7s） |
-| `y` | yahoo | ✅ 稳定（6–7 条，1.2–1.3s） |
-| `d` | duckduckgo | ⚠️ 间歇 CAPTCHA |
-| `b` | bing | ❌ 返回空 |
-| `br` | brave | ❌ 限流（too many requests） |
-| `sc` | google scholar | ❌ access denied |
-| `sg` | sogou | ❌ SearXNG 侧 unexpected crash |
-| `w` | wikipedia | ❌ 返回空 |
-| `g` | google | ❌ 默认 disabled，启用后 access denied |
+| 后缀 | 引擎 | 本机可用性 | 说明 |
+| --- | --- | --- | --- |
+| `b` | bing | ✅ 10 条 | SearXNG 必须用 `cn.bing.com`；www 会 302 且引擎默认不跟随 |
+| `d` / `ddg` | duckduckgo | ✅ 10 条 | 间歇 CAPTCHA 时回退 `duckduckgo web` |
+| `dw` | duckduckgo web | ✅ 10 条 | DuckDuckGo 备用入口 |
+| `y` | yahoo | ✅ 7 条 | |
+| `mj` | mojeek | ✅ 10 条 | 默认 `inactive: true`，配置里已显式 `inactive: false` |
+| `gc` | google cse | ✅ 10–20 条 | 偶发超时；超时 8s，作为 `g` 的首选回退 |
+| `g` | google | ⚠️ 403 → `google cse` | 网页端 access denied；回退 CSE，再按配置走 Serper |
+| `w` | wikipedia | ✅ 常见词条 | 已补 `display_type: [infobox, list]`；冷门多词查询可能零结果 |
+| `n` | naver | ✅ 14–19 条 | |
+| `yd` | yandex | ✅ 10–15 条 | |
+| `sw` | swisscows | ✅ 9–20 条 | 需 `inactive: false` |
+| `so` | 360search | ✅ 4–6 条 | `sg` 的回退目标 |
+| `sg` | sogou | ⚠️ SearXNG 侧 crash → `360search` | 失败自动换 360 |
+| `sp` | startpage | ⚠️ PoW CAPTCHA → `mojeek` | 失败自动换 Mojeek |
+| `sc` | google scholar | ⚠️ access denied → Serper | 配置 `SERPER_API_KEY` 时走 `/scholar` |
+| `br` | brave | ⚠️ 限流 | 配置 `BRAVE_API_KEY` 后走官方接口 |
+| `yt` / `gh` / `ar` | youtube / github / arxiv | ✅ 10–30 条 | 垂直引擎，显式后缀使用 |
 
-`sp`（startpage）、`mj`（mojeek）保留在映射表里。当前 SearXNG 配置未提供这些引擎，若上游回退到其他来源，API 返回 `503 ENGINE_UNAVAILABLE`。指定引擎的成功响应只含该引擎的结果。
+`google`、`google scholar`、`brave`、`startpage` 在 SearXNG 里保持禁用，避免拖慢默认聚合；显式后缀由应用层回退链接管。`/api/engines` 会返回每个后缀的最近状态、平均延迟与错误；前端首页的引擎按钮直接读它。
+
+M19 复核补充：目录的 `status` / `available` 表示主源健康；`can_fallback` 表示首屏还有回退来源可尝试，`selectable` 表示当前至少有一路未冷却。未知状态不保证在线。主源冷却但有回退时按钮仍可用，搜索结束后刷新目录；切换引擎只替换一个可解析的末尾短码，兼容 `!g`，保留 `C g` 等普通查询正文。前端查询回归：`node --test scripts/engine-query.test.cjs`，已纳入托管 CI 配置。
+
+`scripts/probe-engines.py` 的 `ok` / `count` 只统计来源包含指定引擎的结果，`raw_count` 保留原始条数；避免未启用引擎被静默回落默认聚合时误判可用。旧矩阵中 Startpage、Marginalia、Dogpile、Yandex API 的成功计数存在这种误判，旧文件保留，见 M19 报告 §8 更正。
 
 ### 真实验收结果（2026-11-07）
 
@@ -455,7 +467,7 @@ SERPER_API_KEY=       # Serper.dev（Google 结果）
 PAID_FALLBACK=true    # 关掉可临时停用
 ```
 
-固定样本、指定引擎和后续页不调用付费接口。来源进入 `meta.engines`，复用安全过滤、打分与 canonical URL 去重，重复结果保留两个来源。调用失败写入 `meta.unresponsive` 并单独计入该来源熔断，冷却中暂停付费请求。
+固定样本和后续页不调用付费接口；指定引擎仅在第 1 页、主引擎与回退链全部失败后才调用对应接口（`g`/`gc` 走 Serper `/search`，`sc` 走 Serper `/scholar`，`br` 走 Brave API）。正常零结果直接返回空态，不回退、不计故障；付费源合法零结果也返回空态。实例故障中止同实例的免费尝试，并保留实例错误分类。来源进入 `meta.engines`，复用安全过滤、打分与 canonical URL 去重，重复结果保留两个来源。调用失败写入 `meta.unresponsive` 并单独计入该来源熔断，冷却中暂停付费请求。
 
 契约测试：`python -m pytest apps/api/tests/test_paid.py -q`（用 MockTransport，不碰真实接口）。
 Serper 真实接口和主上游故障兜底均已验证。18 条标注查询关闭/开启兜底的期望域名 Top10 命中为 6/18 与 11/18，P95 为 3.08 秒与 5.81 秒，两侧均关闭缓存。该指标衡量这批标注域名的可见性。[完整对照](reports/assets/serper-validation/labelled-comparison.json) · [Serper](https://serper.dev/)
@@ -690,7 +702,9 @@ python scripts/verify-searxng.py --base-url http://127.0.0.1:8000 --engines g b
 
 上游错误使用 `{"error":{"code":"...","message":"...","retryable":true}}`。不可用或超时返回 HTTP `503`，错误码为 `UPSTREAM_UNAVAILABLE` 或 `UPSTREAM_TIMEOUT`。坏响应返回 HTTP `502`，错误码为 `UPSTREAM_BAD_RESPONSE`。
 
-其他端点：`GET /api/health`（provider / web_built / 版本）、`GET /api/docs`（OpenAPI）。
+其他端点：`GET /api/health`（provider / web_built / 版本）、`GET /api/engines`（后缀目录、回退链、健康状态）、`GET /api/docs`（OpenAPI）。
+
+显式引擎（后缀或 bang）失败时会按目录回退，例如 `g` → `google cse` → Serper，`sc` → Serper `/scholar`；成功响应的 `meta.engines` 是实际来源，`meta.unresponsive` 保留失败尝试。任一路合法零结果立即返回 `200 + status=empty`；只有故障才继续回退，付费兜底限第 1 页且遵守提供商熔断。
 
 ## 目录结构
 

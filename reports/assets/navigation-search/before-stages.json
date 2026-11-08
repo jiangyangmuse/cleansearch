@@ -1,0 +1,113 @@
+{
+  "parsed": [
+    {
+      "url": "https://www.deepseek.com/en/",
+      "title": "DeepSeek | Into the Unknown"
+    },
+    {
+      "url": "https://platform.deepseek.com/",
+      "title": "DeepSeek Platform"
+    },
+    {
+      "url": "https://huggingface.co/deepseek-ai",
+      "title": "deepseek-ai (DeepSeek)"
+    },
+    {
+      "url": "https://chat.deepseek.com/",
+      "title": "DeepSeek"
+    },
+    {
+      "url": "https://x.com/deepseek_ai",
+      "title": "DeepSeek (@deepseek_ai) / X"
+    },
+    {
+      "url": "https://play.google.com/store/apps/details?id=com.deepseek.chat&hl=en_US",
+      "title": "DeepSeek - AI Assistant - Apps on Google Play"
+    },
+    {
+      "url": "https://www.bbc.com/news/articles/c5yv5976z9po",
+      "title": "DeepSeek: The Chinese AI app that has the world talking"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/DeepSeek",
+      "title": "DeepSeek"
+    },
+    {
+      "url": "https://www.deepseek.com/en/download/",
+      "title": "Download DeepSeek"
+    }
+  ],
+  "after_title_dedupe": [
+    {
+      "url": "https://www.deepseek.com/en/",
+      "title": "DeepSeek | Into the Unknown",
+      "engine": [
+        "serper"
+      ],
+      "score": 0.3546
+    },
+    {
+      "url": "https://platform.deepseek.com/",
+      "title": "DeepSeek Platform",
+      "engine": [
+        "serper"
+      ],
+      "score": 0.3545
+    },
+    {
+      "url": "https://huggingface.co/deepseek-ai",
+      "title": "deepseek-ai (DeepSeek)",
+      "engine": [
+        "serper"
+      ],
+      "score": 0.3545
+    },
+    {
+      "url": "https://x.com/deepseek_ai",
+      "title": "DeepSeek (@deepseek_ai) / X",
+      "engine": [
+        "serper"
+      ],
+      "score": 0.314
+    },
+    {
+      "url": "https://play.google.com/store/apps/details?id=com.deepseek.chat&hl=en_US",
+      "title": "DeepSeek - AI Assistant - Apps on Google Play",
+      "engine": [
+        "serper"
+      ],
+      "score": 0.3542
+    },
+    {
+      "url": "https://www.bbc.com/news/articles/c5yv5976z9po",
+      "title": "DeepSeek: The Chinese AI app that has the world talking",
+      "engine": [
+        "serper"
+      ],
+      "score": 0.3539
+    },
+    {
+      "url": "https://www.deepseek.com/en/download/",
+      "title": "Download DeepSeek",
+      "engine": [
+        "serper"
+      ],
+      "score": 0.3553
+    }
+  ],
+  "removed_url": 0,
+  "removed_title": 2,
+  "groups": [
+    [],
+    [
+      "https://www.deepseek.com/en/download/",
+      "https://www.deepseek.com/en/",
+      "https://platform.deepseek.com/",
+      "https://huggingface.co/deepseek-ai",
+      "https://play.google.com/store/apps/details?id=com.deepseek.chat&hl=en_US",
+      "https://www.bbc.com/news/articles/c5yv5976z9po",
+      "https://x.com/deepseek_ai"
+    ],
+    []
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "temporary_ports": {
+    "18170": "stopped",
+    "18171": "stopped"
+  },
+  "failed_native_upstream_process": "exited",
+  "formal_database_modified": false,
+  "model_configuration_modified": false
+}

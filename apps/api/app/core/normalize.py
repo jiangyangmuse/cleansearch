@@ -211,14 +211,35 @@ def hamming(a: int, b: int) -> int:
     return bin(a ^ b).count("1")
 
 
+_LANDING_LOCALE = re.compile(r"[a-z]{2}(?:-[a-z]{2})?", re.IGNORECASE)
+_LANDING_INDEX = {"index.html", "index.htm", "index.php"}
+MIN_TITLE_DEDUPE_TOKENS = 4
+
+
+def _landing_page(url: str) -> bool:
+    """A home or language entry is a distinct destination, not a syndicated article."""
+    try:
+        path = urlsplit(url).path.strip("/").lower()
+    except ValueError:
+        return False
+    return not path or path in _LANDING_INDEX or bool(_LANDING_LOCALE.fullmatch(path))
+
+
 def dedupe_similar_titles(
     results: list[Result], max_distance: int = 3
 ) -> tuple[list[Result], int]:
-    """标题 simhash 近重复合并：保留先出现的条目，合并引擎列表。"""
+    """仅对信息量足够的非入口页做标题近重复合并。
+
+    品牌短标题无法证明页面相同，首页/语言首页也不应被同名文章吞掉。
+    相同 URL 已由 dedupe_results 合并，不在这里猜测不同地址是否等价。
+    """
     kept: list[Result] = []
     fingerprints: list[tuple[int, Result]] = []
     removed = 0
     for item in results:
+        if _landing_page(item.url) or len(set(title_fingerprint_tokens(item.title))) < MIN_TITLE_DEDUPE_TOKENS:
+            kept.append(item)
+            continue
         fingerprint = title_simhash(item.title)
         if fingerprint is None:
             kept.append(item)

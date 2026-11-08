@@ -1,0 +1,93 @@
+{
+  "source": "replay of captured real Serper response",
+  "raw_candidates": 9,
+  "removed_url": 0,
+  "removed_title": 0,
+  "groups": [
+    [],
+    [
+      {
+        "id": "r_8",
+        "url": "https://en.wikipedia.org/wiki/DeepSeek",
+        "title": "DeepSeek",
+        "score": 0.5038,
+        "engine": [
+          "serper"
+        ]
+      },
+      {
+        "id": "r_9",
+        "url": "https://www.deepseek.com/en/download/",
+        "title": "Download DeepSeek",
+        "score": 0.3542,
+        "engine": [
+          "serper"
+        ]
+      },
+      {
+        "id": "r_4",
+        "url": "https://chat.deepseek.com/",
+        "title": "DeepSeek",
+        "score": 0.3537,
+        "engine": [
+          "serper"
+        ]
+      },
+      {
+        "id": "r_1",
+        "url": "https://www.deepseek.com/en/",
+        "title": "DeepSeek | Into the Unknown",
+        "score": 0.3536,
+        "engine": [
+          "serper"
+        ]
+      },
+      {
+        "id": "r_2",
+        "url": "https://platform.deepseek.com/",
+        "title": "DeepSeek Platform",
+        "score": 0.3535,
+        "engine": [
+          "serper"
+        ]
+      },
+      {
+        "id": "r_3",
+        "url": "https://huggingface.co/deepseek-ai",
+        "title": "deepseek-ai (DeepSeek)",
+        "score": 0.3535,
+        "engine": [
+          "serper"
+        ]
+      },
+      {
+        "id": "r_6",
+        "url": "https://play.google.com/store/apps/details?id=com.deepseek.chat&hl=en_US",
+        "title": "DeepSeek - AI Assistant - Apps on Google Play",
+        "score": 0.3533,
+        "engine": [
+          "serper"
+        ]
+      },
+      {
+        "id": "r_7",
+        "url": "https://www.bbc.com/news/articles/c5yv5976z9po",
+        "title": "DeepSeek: The Chinese AI app that has the world talking",
+        "score": 0.353,
+        "engine": [
+          "serper"
+        ]
+      },
+      {
+        "id": "r_5",
+        "url": "https://x.com/deepseek_ai",
+        "title": "DeepSeek (@deepseek_ai) / X",
+        "score": 0.3131,
+        "engine": [
+          "serper"
+        ]
+      }
+    ],
+    []
+  ]
+}

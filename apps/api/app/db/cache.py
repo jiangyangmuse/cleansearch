@@ -51,7 +51,7 @@ def search_key(
     namespace: tuple[str, ...] = (),
 ) -> str:
     raw = json.dumps(
-        ["search-v4", namespace, q, engine, region, page, safe, fixture],
+        ["search-v5", namespace, q, engine, region, page, safe, fixture],
         ensure_ascii=False,
         sort_keys=True,
     )

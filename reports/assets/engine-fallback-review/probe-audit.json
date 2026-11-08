@@ -1,0 +1,86 @@
+{
+  "source": "../m19-engines/engine-probe.json",
+  "finding": "成功计数大于零但 sources 不含请求引擎；只能证明默认聚合有结果",
+  "false_positive_rows": [
+    {
+      "engine": "startpage",
+      "old_ok": 2,
+      "old_counts": [
+        83,
+        79
+      ],
+      "sources": [
+        "360search",
+        "bing",
+        "duckduckgo",
+        "duckduckgo web",
+        "google cse",
+        "mojeek",
+        "naver",
+        "swisscows",
+        "yahoo",
+        "yandex"
+      ]
+    },
+    {
+      "engine": "marginalia",
+      "old_ok": 2,
+      "old_counts": [
+        84,
+        78
+      ],
+      "sources": [
+        "360search",
+        "bing",
+        "duckduckgo",
+        "duckduckgo web",
+        "google cse",
+        "mojeek",
+        "naver",
+        "swisscows",
+        "yahoo",
+        "yandex"
+      ]
+    },
+    {
+      "engine": "dogpile",
+      "old_ok": 2,
+      "old_counts": [
+        84,
+        75
+      ],
+      "sources": [
+        "360search",
+        "bing",
+        "duckduckgo",
+        "duckduckgo web",
+        "google cse",
+        "mojeek",
+        "naver",
+        "swisscows",
+        "yahoo",
+        "yandex"
+      ]
+    },
+    {
+      "engine": "yandex api",
+      "old_ok": 2,
+      "old_counts": [
+        84,
+        78
+      ],
+      "sources": [
+        "360search",
+        "bing",
+        "duckduckgo",
+        "duckduckgo web",
+        "google cse",
+        "mojeek",
+        "naver",
+        "swisscows",
+        "yahoo",
+        "yandex"
+      ]
+    }
+  ]
+}

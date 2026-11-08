@@ -12,6 +12,7 @@ from __future__ import annotations
 import httpx
 
 from app.config import Settings
+from app.core.engine_catalog import searx_engine_name
 from app.core.errors import (
     EngineUnavailable,
     EnginesUnresponsive,
@@ -24,7 +25,6 @@ from app.schemas import Result
 
 USER_AGENT = "CleanSearch/0.1 (+local; M0)"
 REGION_LANGUAGES = {"cn": "zh-CN", "jp": "ja-JP", "us": "en-US"}
-ENGINE_NAMES = {"scholar": "google scholar"}
 
 
 class SearxngClient:
@@ -59,7 +59,7 @@ class SearxngClient:
         }
         if region:
             params["language"] = REGION_LANGUAGES.get(region.lower(), region)
-        routed_engine = ENGINE_NAMES.get(engine, engine) if engine and engine != "default" else None
+        routed_engine = searx_engine_name(engine) if engine and engine != "default" else None
         if routed_engine:
             params["engines"] = routed_engine
 

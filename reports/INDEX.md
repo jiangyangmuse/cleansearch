@@ -4,12 +4,17 @@
 
 排序：新的在上。
 
+复核更正（2026-11-08，M19）：原报告的历史状态保留；显式翻页误计费、空态误回退及熔断边界已在本次修复。旧直接探测矩阵 4 行为默认聚合假阳性，详见 [原报告 §8](2026-11-08-1137-m19-engine-suffix-repair.md) 与 [复核证据](completed/2026-11-08-1335-engine-fallback-review.md)。原 13 后缀在线矩阵本轮未重跑；新增本地回归与 CI 配置未发布。
+
 历史口径更正（2026-11-07）：六阶段报告保留在本目录，台账状态沿用原记录。该报告 §8.1 的真实多引擎验收当时为「部分达成」；后续 `gc/y` 与容器补验已有通过证据，其他指定引擎仍取决于部署和网络。当前交付范围、待验条件及可选扩展统一见 [进展与欠账](../docs/进展与欠账.md)。
 
 复核更正（2026-11-07）：16:31 的 DSH 报告保留历史状态；本地 bare/act、CfT 与 Pixel 档案、老站对照不构成托管 CI、正式 Chrome/Android 真机或新站误报率通过。最新复核记录与当前进度另列，不改原报告或历史台账行。
 
 | 编号 | 日期时间 | 任务 | 类型 | 状态 | 报告 |
 | --- | --- | --- | --- | --- | --- |
+| 20261108-1335 | 2026-11-08 13:35 | [M19 引擎回退复核与边界完善](completed/2026-11-08-1335-engine-fallback-review.md) | fix | 完成 | `completed/2026-11-08-1335-engine-fallback-review.md` |
+| 20261108-1138 | 2026-11-08 11:38 | [品牌导航入口误去重复现与修复](completed/2026-11-08-1138-navigation-title-dedupe.md) | fix | 完成 | `completed/2026-11-08-1138-navigation-title-dedupe.md` |
+| 20261108-1137 | 2026-11-08 11:37 | [M19 引擎后缀可用性修复](2026-11-08-1137-m19-engine-suffix-repair.md) | fix | 完成 | `2026-11-08-1137-m19-engine-suffix-repair.md` |
 | 20261108-0212 | 2026-11-08 02:12 | [托管 CI 收口与 AI 贡献署名](completed/2026-11-08-0212-hosted-ci-credits.md) | ops | 完成 | `completed/2026-11-08-0212-hosted-ci-credits.md` |
 | 20261108-0153 | 2026-11-08 01:53 | [GitHub 远端与托管 CI](completed/2026-11-08-0153-github-remote-actions.md) | ops | 完成 | `completed/2026-11-08-0153-github-remote-actions.md` |
 | 20261107-1659 | 2026-11-07 16:59 | [DSH 后续验收复核与证据补强](2026-11-07-1659-next-action-review.md) | fix | 部分完成 | `2026-11-07-1659-next-action-review.md` |

@@ -1,0 +1,52 @@
+{
+  "isolated_base_git_sha": "5af2dafaabff87480b283c40010a7baaed84ed99",
+  "patched_files": {
+    "apps/api/app/core/normalize.py": "f5df5a0cdc945b46e174198068dee41e50ad45c7412a5f1e4c04995e91bb2681",
+    "apps/api/app/db/cache.py": "e5ad868d714170578fd01850682b5559ecc27a03a5ba593f2c4fe96b93dc3084",
+    "apps/api/tests/test_navigation_dedupe.py": "d4755c9f9d9327a40a970334ff184748a1cba20868a967402b6b9712eebfc7bb"
+  },
+  "isolated_patch_matches_workspace": true,
+  "verification": {
+    "api-tests.xml": {
+      "suites": [
+        {
+          "tests": "347",
+          "failures": "1",
+          "errors": "0",
+          "skipped": "0",
+          "time": "8.685"
+        }
+      ],
+      "failure_cases": [
+        {
+          "name": "test_catalog_rows_are_consistent",
+          "class": "tests.test_engine_catalog"
+        }
+      ]
+    },
+    "isolated-api-tests.xml": {
+      "suites": [
+        {
+          "tests": "334",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "8.988"
+        }
+      ],
+      "failure_cases": []
+    },
+    "merged-api-tests.xml": {
+      "suites": [
+        {
+          "tests": "347",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "8.941"
+        }
+      ],
+      "failure_cases": []
+    }
+  }
+}

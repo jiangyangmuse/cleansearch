@@ -245,6 +245,36 @@ def test_page_summary_cache_hit(cached_client: TestClient, cache: Cache) -> None
     assert calls["n"] == 2  # 缓存命中也要先抓页面拿正文哈希，省的是模型调用
 
 
+def test_explicit_paid_capability_change_invalidates_cache_with_same_preferred_provider(cached_client):
+    from app.core.aggregator import Aggregator
+    from app.core.paid import PaidSearch
+    from app.core.searxng import SearxngClient
+
+    holder = {}
+    app.dependency_overrides[get_aggregator] = lambda: holder["aggregator"]
+    try:
+        for serper in ("", "test"):
+            settings = replace(get_settings(), provider="searxng", brave_api_key="test",
+                               serper_api_key=serper, paid_fallback=True)
+            aggregator = Aggregator(settings)
+            assert aggregator.paid_provider == "brave"
+            aggregator._searxng = SearxngClient(settings, transport=httpx.MockTransport(
+                lambda request: httpx.Response(200, json={
+                    "results": [{"url": "https://example.com/a", "title": "HTTP", "engine": "bing"}]
+                })
+            ))
+            # 正常显式结果不应触发付费；测试只验证配置切换后的缓存隔离。
+            aggregator._paid = PaidSearch(settings, transport=httpx.MockTransport(
+                lambda request: pytest.fail("healthy explicit search must not spend")
+            ))
+            holder["aggregator"] = aggregator
+            first = cached_client.post("/api/search", json={"q": "HTTP b"}).json()
+            assert first["meta"]["cached"] is False
+            assert cached_client.post("/api/search", json={"q": "HTTP b"}).json()["meta"]["cached"]
+    finally:
+        app.dependency_overrides.pop(get_aggregator, None)
+
+
 def test_page_cache_respects_model_limit_and_current_url(cached_client: TestClient) -> None:
     model_calls = []
 
