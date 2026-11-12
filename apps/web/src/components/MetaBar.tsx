@@ -9,14 +9,16 @@ const ROUTER_LABEL: Record<ParsedQuery["router"], string> = {
 export default function MetaBar({ meta, parsed }: { meta: SearchMeta; parsed: ParsedQuery }) {
   const providerLabel = meta.provider === "fixture" ? "固定样本" : "SearXNG";
   const routed = parsed.router !== "default";
+  const displayed = meta.total + (meta.official ?? 0);
   return (
     <div className="metabar">
       <span className={`badge badge--${meta.provider}`}>{providerLabel}</span>
       {meta.cached ? <span className="badge badge--cached" title="命中本地缓存">缓存</span> : null}
       <span>
-        展示 {meta.total} 条
-        {meta.upstream_total !== meta.total ? <span className="metabar__muted"> / 上游 {meta.upstream_total}</span> : null}
+        展示 {displayed} 条
+        {meta.upstream_total !== displayed ? <span className="metabar__muted"> / 上游 {meta.upstream_total}</span> : null}
       </span>
+      {meta.official > 0 ? <span className="metabar__official">官方入口 {meta.official}{meta.directory > 0 ? ` · 目录直达 ${meta.directory}` : ""}</span> : null}
       {meta.filtered.dup > 0 ? <span>去重 {meta.filtered.dup}</span> : null}
       {meta.filtered.risk > 0 ? <span className="metabar__warn">拦截 {meta.filtered.risk}</span> : null}
       <span>{meta.ms} ms</span>

@@ -11,6 +11,7 @@ class SearchOpts(BaseModel):
     safe: bool = True
     exact: bool = False
     summarize: bool = False
+    literal: bool = False  # 整段作为查询文本，末尾词不解析为路由
     # M0 自检用：显式指定 fixture 样本，未指定则按查询内容判定
     fixture: Literal["hit", "empty", "error", "risky"] | None = None
 
@@ -54,12 +55,38 @@ class Result(BaseModel):
     read_minutes: int | None = None
     # 可疑结果的确认中转地址（/go?u=&sig=），正常结果为 None
     go_url: str | None = None
+    # 品牌首页自称官网但未通过身份核验；不等于确认恶意。
+    brand_warning: str | None = None
+    category: Literal["encyclopedia", "download", "video"] | None = None
+
+
+class AISearchResponse(BaseModel):
+    provider: str
+    results: list[Result]
+    cached: bool = False
 
 
 class Groups(BaseModel):
     strong: list[Result] = Field(default_factory=list)
     related: list[Result] = Field(default_factory=list)
     weak: list[Result] = Field(default_factory=list)
+
+
+class OfficialLink(Result):
+    """官方地址：区分检索候选与目录直达，不伪造搜索来源。"""
+
+    role: str
+    label: str
+    host: str
+    source: str = ""
+    verified: str = ""
+    origin: Literal["search", "directory"] = "search"
+
+
+class OfficialSection(BaseModel):
+    key: str
+    brand: str
+    entries: list[OfficialLink] = Field(default_factory=list)
 
 
 class FilteredCounts(BaseModel):
@@ -77,6 +104,8 @@ class SearchMeta(BaseModel):
     total: int = 0
     upstream_total: int = 0
     filtered: FilteredCounts = Field(default_factory=FilteredCounts)
+    official: int = 0
+    directory: int = 0
     sid: str
 
 
@@ -84,6 +113,8 @@ class SearchResponse(BaseModel):
     parsed: ParsedQuery
     groups: Groups
     meta: SearchMeta
+    # 品牌导航查询的独立官方入口区；未知品牌或未命中时为 None
+    official: OfficialSection | None = None
 
 
 class ErrorBody(BaseModel):

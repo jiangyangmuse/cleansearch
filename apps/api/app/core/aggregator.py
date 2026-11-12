@@ -67,6 +67,7 @@ class Aggregator:
         safe: bool = True,
         engine: str = "default",
         fixture: str | None = None,
+        allow_paid: bool = True,
     ) -> Aggregated:
         started = time.perf_counter()
         health = self._health_store()
@@ -86,7 +87,7 @@ class Aggregator:
                 health=health,
             )
 
-        paid_search = self._paid if provider == "searxng" and page == 1 and engine == "default" else None
+        paid_search = self._paid if allow_paid and provider == "searxng" and page == 1 and engine == "default" else None
 
         routed_engine = searx_engine_name(engine)
         if health is not None and engine != "default" and health.is_open(routed_engine):
@@ -139,7 +140,8 @@ class Aggregator:
             if not unresponsive:
                 unresponsive.append(f"searxng({primary_error.code})")
 
-        if paid_search is not None:
+        # 免费请求成功（包括合法空态/部分引擎失败）不补付费结果。
+        if paid_search is not None and primary_error is not None:
             paid_engine = paid_search.engine
             if health is not None and health.is_open(paid_engine):
                 unresponsive.append(f"{paid_engine}(熔断冷却中)")

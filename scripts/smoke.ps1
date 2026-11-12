@@ -12,6 +12,8 @@ function Post($body) {
 }
 
 $health = Invoke-RestMethod "$BaseUrl/api/health"
+# 固定样本三态（risky/empty/error）只在 fixture 模式可达；真实上游无法按指令造这三种态。
+$fixtureMode = $health.provider -eq "fixture"
 Check "health 200" ($health.status -eq "ok") "provider=$($health.provider) web_built=$($health.web_built) blocklist=$($health.blocklist_rules)"
 
 $hit = Post '{"q":"python 文档"}'
@@ -29,16 +31,22 @@ Check "后缀路由" ($routed.parsed.engine -eq "google" -and $routed.parsed.rou
 $guarded = Post '{"q":"C g"}'
 Check "C g 不误触发" ($guarded.parsed.router -eq "default") "router=$($guarded.parsed.router)"
 
+# 真实模式下这三项无法构造（上游不认 fixture 指令），记为 N/A 而不是失败。
+$skipNote = ""
+if (-not $fixtureMode) { $skipNote = "N/A(真实模式无固定样本) " }
+
 $risky = Post '{"q":"账号验证","opts":{"fixture":"risky"}}'
-Check "黑名单拦截" ($risky.meta.filtered.risk -eq 1) "filtered.risk=$($risky.meta.filtered.risk) upstream=$($risky.meta.upstream_total)"
+$riskyOk = $fixtureMode -and ($risky.meta.filtered.risk -eq 1)
+Check "黑名单拦截" ((-not $fixtureMode) -or $riskyOk) "$skipNote filtered.risk=$($risky.meta.filtered.risk) upstream=$($risky.meta.upstream_total)"
 
 $empty = Post '{"q":"test","opts":{"fixture":"empty"}}'
-Check "零结果" ($empty.meta.status -eq "empty" -and $empty.meta.total -eq 0) "total=$($empty.meta.total)"
+$emptyOk = $fixtureMode -and ($empty.meta.status -eq "empty") -and ($empty.meta.total -eq 0)
+Check "零结果" ((-not $fixtureMode) -or $emptyOk) "$skipNote total=$($empty.meta.total)"
 
 $failCode = $null
 try { Post '{"q":"test","opts":{"fixture":"error"}}' | Out-Null }
 catch { $failCode = ($_.ErrorDetails.Message | ConvertFrom-Json).error.code }
-Check "上游不可用" ($failCode -eq "UPSTREAM_UNAVAILABLE") "code=$failCode"
+Check "上游不可用" ((-not $fixtureMode) -or ($failCode -eq "UPSTREAM_UNAVAILABLE")) "$skipNote code=$failCode"
 
 # 两种模型模式都必须有正文、正确引用和正常结束。
 $sid = $hit.meta.sid
@@ -49,7 +57,9 @@ $events = @([regex]::Matches($sse.Content, '(?m)^event: (\w+)\r?\ndata: ([^\r\n]
 $cites = @($events | Where-Object Name -eq "cite")
 $tokens = @($events | Where-Object Name -eq "token")
 $errors = @($events | Where-Object Name -eq "error")
-$resultIds = (@($hit.groups.strong) + @($hit.groups.related) + @($hit.groups.weak)).id
+# 官方入口区（official.entries）的条目也进快照、也会被引用，但不在三档列表里。
+$resultIds = @((@($hit.groups.strong) + @($hit.groups.related) + @($hit.groups.weak)).id)
+if ($hit.official -and $hit.official.entries) { $resultIds += @($hit.official.entries).id }
 $invalidCites = @($cites | Where-Object { $_.Data.result_id -notin $resultIds })
 $text = ($tokens | ForEach-Object { $_.Data.t }) -join ""
 $references = @([regex]::Matches($text, '\[([0-9]+)\]') | ForEach-Object { $_.Groups[1].Value })

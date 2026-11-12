@@ -19,6 +19,8 @@ from dataclasses import replace
 from app.config import get_settings
 from app.core.extract import extract_article
 from app.core.llm import OpenAICompatibleClient
+from app.core.model_routing import collect_text, configured_client, imported_client, route_model
+from app.core.model_settings import ModelEntry, ModelSettings
 from app.core.session_store import Snapshot
 
 PROMPT_DIR = Path(__file__).resolve().parents[1] / "prompts"
@@ -50,12 +52,17 @@ def build_user_prompt(snapshot: Snapshot) -> str:
     return template.format(query=snapshot.query, materials=build_materials(snapshot))
 
 
-def build_system_prompt(*, single_page: bool = False) -> str:
+def build_system_prompt(*, single_page: bool = False, multiple_pages: bool = False) -> str:
     prompt = (PROMPT_DIR / "summary_system.txt").read_text(encoding="utf-8")
     if single_page:
         prompt += (
             "\n单页总结格式：第一行只写一句结论。正文足够时，另起行列出 2–3 条不同要点，"
             "每条以「- 」开头。省略「结论」「要点」等小标题，材料不足时可以少写。"
+        )
+    if multiple_pages:
+        prompt += (
+            "\n多网页总结格式：为每个有正文的来源各写一条带引用编号的独立要点。"
+            "网页数量决定条数；多篇之间确有共同点或差异时，最后再补充一句。"
         )
     return prompt
 
@@ -98,10 +105,20 @@ class LLMSummarizer:
         self.model = client.model
 
     async def stream(self, snapshot: Snapshot) -> AsyncGenerator[str, None]:
-        system = build_system_prompt(single_page=snapshot.provider == "page")
+        system = build_system_prompt(single_page=snapshot.provider == "page", multiple_pages=snapshot.provider == "pages")
         async with aclosing(self._client.stream(system, build_user_prompt(snapshot))) as stream:
             async for token in stream:
                 yield token
+
+
+async def summarize_with_models(snapshot: Snapshot, config: ModelSettings, default: Summarizer) -> tuple[str, str]:
+    async def builtin() -> tuple[str, str]:
+        return await collect_text(default.stream(snapshot)), default.model
+
+    async def imported(model: ModelEntry) -> str:
+        return await collect_text(LLMSummarizer(imported_client(model)).stream(snapshot))
+
+    return await route_model(config, "summary", imported, builtin)
 
 
 class StubSummarizer:
@@ -157,15 +174,5 @@ class StubSummarizer:
 
 @lru_cache(maxsize=1)
 def get_summarizer() -> Summarizer:
-    settings = get_settings()
-    if settings.llm_provider == "openai" and settings.llm_base_url:
-        return LLMSummarizer(
-            OpenAICompatibleClient(
-                base_url=settings.llm_base_url,
-                api_key=settings.llm_api_key,
-                model=settings.llm_model,
-                timeout=settings.llm_timeout,
-                reasoning_effort=settings.llm_reasoning_effort,
-            )
-        )
-    return StubSummarizer(delay=settings.llm_stub_delay)
+    client = configured_client()
+    return LLMSummarizer(client) if client else StubSummarizer(delay=get_settings().llm_stub_delay)

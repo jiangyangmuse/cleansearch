@@ -33,7 +33,11 @@ def engines() -> dict:
     rows = []
     for item in catalog_rows():
         row = dict(item)
-        health_row = health.row(item["searx_engine"]) if health is not None else None
+        try:
+            health_row = health.row(item["searx_engine"]) if health is not None else None
+        except (sqlite3.Error, IndexError, TypeError):
+            # 健康表损坏/并发异常不应让整个目录 500；该引擎显示 unknown 即可。
+            health_row = None
         if health_row is None:
             row.update(
                 {
@@ -47,6 +51,12 @@ def engines() -> dict:
             )
         else:
             open_ = health_row.open
+            remaining = 0
+            if open_:
+                try:
+                    remaining = health.remaining(item["searx_engine"])
+                except (sqlite3.Error, IndexError, TypeError):
+                    remaining = 0
             row.update(
                 {
                     "status": "cooldown" if open_ else ("ok" if health_row.last_ok else "unknown"),
@@ -54,7 +64,7 @@ def engines() -> dict:
                     "fails": health_row.fails,
                     "avg_ms": health_row.avg_ms,
                     "last_error": health_row.last_error,
-                    "remaining_seconds": health.remaining(item["searx_engine"]) if open_ else 0,
+                    "remaining_seconds": remaining,
                 }
             )
         candidates = engine_candidates(item["engine"])

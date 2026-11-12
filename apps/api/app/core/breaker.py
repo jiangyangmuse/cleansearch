@@ -76,18 +76,23 @@ class EngineHealthStore:
 
     # ---------- 查询 ----------
     def row(self, engine: str) -> HealthRow:
-        found = self._conn.execute(
-            "SELECT * FROM engine_health WHERE engine = ?", (engine,)
-        ).fetchone()
+        # 用位置索引读取：row_factory 在并发连接里可能被替换成默认 tuple，
+        # 按列名取会在 /api/engines 这类只读接口上偶发 IndexError。
+        with self._lock:
+            found = self._conn.execute(
+                "SELECT engine, fails, open_until, last_ok, avg_ms, last_error "
+                "FROM engine_health WHERE engine = ?",
+                (engine,),
+            ).fetchone()
         if found is None:
             return HealthRow(engine, 0, 0, None, None, None)
         return HealthRow(
-            engine=found["engine"],
-            fails=found["fails"],
-            open_until=found["open_until"],
-            last_ok=found["last_ok"],
-            avg_ms=found["avg_ms"],
-            last_error=found["last_error"],
+            engine=found[0],
+            fails=found[1],
+            open_until=found[2],
+            last_ok=found[3],
+            avg_ms=found[4],
+            last_error=found[5],
         )
 
     def is_open(self, engine: str) -> bool:
@@ -97,18 +102,20 @@ class EngineHealthStore:
         return max(0, self.row(engine).open_until - int(time.time()))
 
     def snapshot(self) -> list[dict]:
-        rows = self._conn.execute(
-            "SELECT * FROM engine_health ORDER BY engine"
-        ).fetchall()
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT engine, fails, open_until, last_ok, avg_ms, last_error "
+                "FROM engine_health ORDER BY engine"
+            ).fetchall()
         now = int(time.time())
         return [
             {
-                "engine": row["engine"],
-                "fails": row["fails"],
-                "open": row["open_until"] > now,
-                "remaining_seconds": max(0, row["open_until"] - now),
-                "avg_ms": row["avg_ms"],
-                "last_error": row["last_error"],
+                "engine": row[0],
+                "fails": row[1],
+                "open": row[2] > now,
+                "remaining_seconds": max(0, row[2] - now),
+                "avg_ms": row[4],
+                "last_error": row[5],
             }
             for row in rows
         ]
@@ -120,7 +127,7 @@ class EngineHealthStore:
             existing = self._conn.execute(
                 "SELECT avg_ms FROM engine_health WHERE engine = ?", (engine,)
             ).fetchone()
-            avg = existing["avg_ms"] if existing else None
+            avg = existing[0] if existing else None
             if latency_ms is not None:
                 # 简单指数平滑，避免一次抖动污染长期均值
                 avg = latency_ms if avg is None else int(avg * 0.7 + latency_ms * 0.3)
@@ -138,7 +145,7 @@ class EngineHealthStore:
             current = self._conn.execute(
                 "SELECT fails FROM engine_health WHERE engine = ?", (engine,)
             ).fetchone()
-            fails = (current["fails"] if current else 0) + 1
+            fails = (current[0] if current else 0) + 1
             open_until = now + self._cooldown if fails >= self._threshold else 0
             self._conn.execute(
                 "INSERT INTO engine_health (engine, fails, open_until, last_error) "

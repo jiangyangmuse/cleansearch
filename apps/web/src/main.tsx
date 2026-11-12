@@ -4,8 +4,10 @@ import App from "./App";
 import BookmarkPage from "./BookmarkPage";
 import PageSummaryPage from "./PageSummaryPage";
 import ToolsPage from "./ToolsPage";
+import SettingsPage from "./SettingsPage";
 import { applyTheme, readTheme } from "./theme";
 import "./styles.css";
+import "./workspace.css";
 
 applyTheme(readTheme());
 
@@ -16,6 +18,8 @@ const path = window.location.pathname.replace(/\/+$/, "") || "/";
 const page =
   path === "/bookmarks" ? (
     <BookmarkPage />
+  ) : path === "/settings" ? (
+    <SettingsPage />
   ) : path === "/s" ? (
     <PageSummaryPage />
   ) : path === "/tools" ? (

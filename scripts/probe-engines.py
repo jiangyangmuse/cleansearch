@@ -5,6 +5,7 @@
       --json-out docs/m11-evidence/engine-probe.json
 
 每个引擎跑两轮查询，记录结果数、来源、延迟与 unresponsive；
+先读取 /config 跳过未加载的引擎，避免静默默认聚合造成额外请求。
 用于回答「哪些后缀现在真的能用」，不替代 API 层验收。
 """
 
@@ -27,7 +28,23 @@ ENGINES = [
 QUERIES = ["python 文档", "SearXNG meta search"]
 
 
-def probe(base: str, engine: str, query: str) -> dict:
+def loaded_engines(base: str) -> set[str] | None:
+    """配置不可读时保留未知，不能将它误当成所有引擎都未加载。"""
+    try:
+        with urllib.request.urlopen(f"{base.rstrip('/')}/config", timeout=10) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+        engines = payload.get("engines") if isinstance(payload, dict) else None
+        if not isinstance(engines, list) or any(not isinstance(item, dict) or not isinstance(item.get("name"), str) for item in engines):
+            return None
+        return {item["name"] for item in engines}
+    except (OSError, ValueError):
+        return None
+
+
+def probe(base: str, engine: str, query: str, loaded: set[str] | None = None) -> dict:
+    if loaded is not None and engine not in loaded:
+        return {"engine": engine, "query": query, "ms": 0, "ok": False, "count": 0,
+                "sources": [], "unresponsive": [], "skipped": "not_loaded"}
     params = urllib.parse.urlencode({"q": query, "format": "json", "engines": engine, "pageno": 1})
     url = f"{base}/search?{params}"
     started = time.perf_counter()
@@ -81,9 +98,10 @@ def main() -> None:
     parser.add_argument("--json-out", default="")
     args = parser.parse_args()
 
+    loaded = loaded_engines(args.base_url)
     rows = []
     for engine in args.engines:
-        attempts = [probe(args.base_url, engine, q) for q in QUERIES]
+        attempts = [probe(args.base_url, engine, q, loaded) for q in QUERIES]
         oks = [item for item in attempts if item.get("ok")]
         latencies = [item["ms"] for item in attempts]
         sources = sorted({source for item in attempts for source in item.get("sources", [])})
@@ -95,6 +113,9 @@ def main() -> None:
             "engine": engine,
             "ok": len(oks),
             "attempts": len(attempts),
+            "search_requests": sum(not item.get("skipped") for item in attempts),
+            "catalog_checked": loaded is not None,
+            "skipped": "not_loaded" if loaded is not None and engine not in loaded else "",
             "median_ms": int(statistics.median(latencies)) if latencies else 0,
             "counts": [item.get("count", 0) for item in attempts],
             "sources": sources,

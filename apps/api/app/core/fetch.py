@@ -174,6 +174,12 @@ class SafeFetcher:
             raise FetchBlocked(f"拒绝非公网地址：{host} → {', '.join(blocked[:3])}")
         return list(dict.fromkeys(str(ipaddress.ip_address(address)) for address in addresses))
 
+    async def pin_public_target(self, url: str) -> tuple[httpx.URL, str, str]:
+        """供已授权的公网模型调用复用 DNS 校验与连接地址固定。"""
+        target = validate_public_url(url)
+        addresses = await self._public_addresses(target)
+        return target.copy_with(host=addresses[0]), target.netloc.decode("ascii"), target.raw_host.decode("ascii")
+
     async def fetch(
         self,
         url: str,

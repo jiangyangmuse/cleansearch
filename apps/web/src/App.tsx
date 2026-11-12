@@ -1,16 +1,35 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ApiError, getEngines, getSearchProvider, search } from "./api";
+import { flushSync } from "react-dom";
+import { ApiError, getEngines, getSearchProvider, search, searchAI } from "./api";
+import AISearchPanel, { type AISearchState } from "./components/AISearchPanel";
+import ContentModules from "./components/ContentModules";
 import EngineBar from "./components/EngineBar";
-import { engineQuery } from "./engineQuery";
+import { engineQuery, hasAISuffix } from "./engineQuery";
 import MetaBar from "./components/MetaBar";
+import OfficialPanel from "./components/OfficialPanel";
+import PageBatchSummary from "./components/PageBatchSummary";
+import QuickBookmarks from "./components/QuickBookmarks";
 import ResultList from "./components/ResultList";
 import SearchBar from "./components/SearchBar";
 import SummaryPanel from "./components/SummaryPanel";
+import TranslationPanel from "./components/TranslationPanel";
 import { EmptyState, ErrorState, LoadingState } from "./components/StatePanel";
-import ThemeToggle from "./components/ThemeToggle";
-import type { EngineInfo, SearchResponse } from "./types";
+import WorkspaceHeader from "./components/WorkspaceHeader";
+import { rememberSearch } from "./searchHistory";
+import { readDailyAI, saveDailyAI } from "./searchPreferences";
+import type { EngineInfo, ResultCategory, SearchResponse } from "./types";
 
 type Phase = "idle" | "loading" | "ok" | "empty" | "error";
+type View = "all" | ResultCategory;
+type SidePanel = "ai" | "summary" | "translate";
+type SearchOptions = { page?: number; paging?: boolean; record?: boolean; literal?: boolean };
+
+const VIEWS: { id: View; label: string; icon: string }[] = [
+  { id: "all", label: "首页", icon: "home" },
+  { id: "encyclopedia", label: "百科", icon: "book" },
+  { id: "video", label: "视频", icon: "video" },
+  { id: "download", label: "下载", icon: "download" },
+];
 
 const SAMPLES = [
   { label: "有结果", q: "python 文档" },
@@ -24,9 +43,20 @@ function readInitialQuery(): string {
   return params.get("q") ?? "";
 }
 
+function readInitialLiteral(): boolean {
+  return new URLSearchParams(window.location.search).get("literal") === "1";
+}
+
+function readView(): View {
+  const id = new URLSearchParams(window.location.search).get("category");
+  return VIEWS.find(view => view.id === id)?.id ?? "all";
+}
+
 export default function App() {
   const [input, setInput] = useState(readInitialQuery);
+  const [inputLiteral, setInputLiteral] = useState(readInitialLiteral);
   const [query, setQuery] = useState(readInitialQuery);
+  const [literal, setLiteral] = useState(readInitialLiteral);
   const [phase, setPhase] = useState<Phase>("idle");
   const [data, setData] = useState<SearchResponse | null>(null);
   const [error, setError] = useState<ApiError | null>(null);
@@ -39,37 +69,82 @@ export default function App() {
     selectedRef.current = id;
     setSelectedId(id);
   }, []);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [view, setView] = useState(readView);
+  const [sidePanel, setSidePanel] = useState<SidePanel | null>(null);
   const [page, setPage] = useState(1);
-  const drawerToggle = useRef<HTMLButtonElement>(null);
-  const touchStart = useRef<number | null>(null);
+  const aiToggle = useRef<HTMLButtonElement>(null);
+  const summaryToggle = useRef<HTMLButtonElement>(null);
+  const translateToggle = useRef<HTMLButtonElement>(null);
+  const enginesDisclosure = useRef<HTMLDetailsElement>(null);
   const controller = useRef<AbortController | null>(null);
+  const aiController = useRef<AbortController | null>(null);
+  const [dailyAI, setDailyAI] = useState(readDailyAI);
+  const dailyAIRef = useRef(dailyAI);
+  const [aiState, setAIState] = useState<AISearchState | null>(null);
   const bootstrapped = useRef(false);
 
-  const runSearch = useCallback(async (raw: string, nextPage = 1) => {
+  const changeView = useCallback((next: View) => {
+    setView(next);
+    select(null);
+    const url = new URL(window.location.href);
+    if (next === "all") url.searchParams.delete("category");
+    else url.searchParams.set("category", next);
+    window.history.replaceState(null, "", url);
+  }, [select]);
+
+  const runAISearch = useCallback(async (q: string, literal: boolean) => {
+    aiController.current?.abort();
+    const current = new AbortController();
+    aiController.current = current;
+    setAIState({ phase: "loading" });
+    setSidePanel("ai");
+    try {
+      const data = await searchAI(q, current.signal, literal);
+      if (!current.signal.aborted) setAIState({ phase: "ok", data });
+    } catch (error) {
+      if (!current.signal.aborted) {
+        setAIState({ phase: "error", error: error instanceof ApiError
+          ? error : new ApiError("AI 检索暂不可用", "AI_SEARCH_ERROR", 0) });
+      }
+    }
+  }, []);
+
+  const runSearch = useCallback(async (raw: string, options: SearchOptions = {}) => {
+    const { page: nextPage = 1, paging = false, record = true, literal = false } = options;
     const q = raw.trim();
     if (!q) return;
+    if (record && !paging) rememberSearch({ query: q, literal });
     controller.current?.abort();
     const current = new AbortController();
     controller.current = current;
+    if (!paging) {
+      if (dailyAIRef.current || (!literal && hasAISuffix(q))) {
+        void runAISearch(q, literal);
+      } else {
+        aiController.current?.abort();
+        setAIState(null);
+      }
+    }
 
     setQuery(q);
+    setLiteral(literal);
     setPage(nextPage);
     setPhase("loading");
     setError(null);
     select(null);
-    setDrawerOpen(false);
+    if (!paging) setSidePanel(currentPanel => currentPanel === "summary" ? null : currentPanel);
     const params = new URLSearchParams(window.location.search);
-    if (params.get("q") !== q) {
-      params.set("q", q);
-      window.history.replaceState(null, "", `?${params.toString()}`);
-    }
+    params.set("q", q);
+    if (literal) params.set("literal", "1");
+    else params.delete("literal");
+    window.history.replaceState(null, "", `?${params.toString()}`);
 
     try {
-      const response = await search({ q, page: nextPage, opts: { safe: true } }, current.signal);
+      const response = await search({ q, page: nextPage, opts: { safe: true, literal } }, current.signal);
       if (current.signal.aborted) return;
       setData(response);
-      setPhase(response.meta.total > 0 ? "ok" : "empty");
+      const hasOfficial = (response.official?.entries.length ?? 0) > 0;
+      setPhase(response.meta.total > 0 || hasOfficial ? "ok" : "empty");
     } catch (caught) {
       if (caught instanceof DOMException && caught.name === "AbortError") return;
       if (current.signal.aborted) return;
@@ -88,13 +163,27 @@ export default function App() {
         }).catch(() => { /* 目录失败不影响搜索结果 */ });
       }
     }
-  }, [select]);
+  }, [runAISearch, select]);
+
+  useEffect(() => {
+    const sync = () => {
+      const enabled = readDailyAI();
+      dailyAIRef.current = enabled;
+      setDailyAI(enabled);
+      if (!enabled && (literal || !hasAISuffix(query))) {
+        aiController.current?.abort();
+        setAIState(null);
+      }
+    };
+    window.addEventListener("pageshow", sync);
+    return () => window.removeEventListener("pageshow", sync);
+  }, [query, literal]);
 
   useEffect(() => {
     if (bootstrapped.current) return;
     bootstrapped.current = true;
     const initial = readInitialQuery().trim();
-    if (initial) void runSearch(initial);
+    if (initial) void runSearch(initial, { record: false, literal: readInitialLiteral() });
   }, [runSearch]);
 
   useEffect(() => {
@@ -115,26 +204,25 @@ export default function App() {
 
   const pickEngine = useCallback(
     (code: string) => {
-      const next = engineQuery(input, code, engines);
+      const next = engineQuery(input, code, engines, inputLiteral);
       if (next === null) return;
+      if (enginesDisclosure.current) enginesDisclosure.current.open = false;
       setInput(next);
+      setInputLiteral(false);
       void runSearch(next);
     },
-    [input, engines, runSearch],
+    [input, inputLiteral, engines, runSearch],
   );
 
   const groups = data?.groups ?? { strong: [], related: [], weak: [] };
-
-  // 键盘用：只统计当前可见的卡片（弱相关折叠时不参与 j/k）
-  const visibleResults = useCallback(() => {
-    if (!data) return [];
-    const weakOpen = document.querySelector<HTMLDetailsElement>("details.group--collapsible")?.open;
-    return [
-      ...data.groups.strong,
-      ...data.groups.related,
-      ...(weakOpen ? data.groups.weak : []),
-    ];
-  }, [data]);
+  const groupedContent = [...groups.strong, ...groups.related, ...groups.weak];
+  const currentView = VIEWS.find(item => item.id === view) ?? VIEWS[0];
+  const categoryResults = groupedContent.filter(item => item.category === view);
+  const summaryData = phase === "ok" ? data : null;
+  const canSummarize = summaryData && (
+    groupedContent.some(item => !item.brand_warning) ||
+    summaryData.official?.entries.some(entry => entry.origin !== "directory")
+  );
 
   useEffect(() => {
     let pendingG = false;
@@ -147,10 +235,15 @@ export default function App() {
 
       if (event.key === "Escape") {
         select(null);
-        setDrawerOpen(false);
-        const toggle = drawerToggle.current;
-        if (toggle?.getAttribute("aria-expanded") === "true" && toggle.getClientRects().length) {
-          toggle.focus();
+        const disclosure = enginesDisclosure.current;
+        if (disclosure?.open) {
+          disclosure.open = false;
+          if (disclosure.contains(target)) disclosure.querySelector("summary")?.focus();
+          return;
+        }
+        if (sidePanel) {
+          setSidePanel(null);
+          ({ ai: aiToggle, summary: summaryToggle, translate: translateToggle })[sidePanel].current?.focus();
         } else if (typing) {
           target?.blur();
         }
@@ -174,27 +267,32 @@ export default function App() {
         return;
       }
       pendingG = false;
-      if (phase !== "ok") return;
+      if (event.key === "s" && phase === "ok") {
+        window.dispatchEvent(new CustomEvent("cs:summarize"));
+        setSidePanel("summary");
+        return;
+      }
 
-      const list = visibleResults();
+      // 只导航当前分区及已展开的面板与分组。
+      const list = Array.from(document.querySelectorAll<HTMLElement>(".workspace [id^='result-']"))
+        .filter(card => card.getClientRects().length && !card.closest("details:not([open])"));
       if (!list.length) return;
-      const index = list.findIndex((item) => item.id === selectedRef.current);
+      const index = list.findIndex(card => card.id === `result-${selectedRef.current}`);
 
       if (event.key === "j" || event.key === "k") {
         event.preventDefault();
         const nextIndex =
           event.key === "j" ? Math.min(list.length - 1, index + 1) : Math.max(0, index - 1);
-        const id = list[index === -1 ? 0 : nextIndex].id;
-        select(id);
-        const card = document.getElementById(`result-${id}`);
-        card?.focus({ preventScroll: true });
-        card?.scrollIntoView({ block: "nearest" });
+        const card = list[index === -1 ? 0 : nextIndex];
+        select(card.id.slice("result-".length));
+        card.focus({ preventScroll: true });
+        card.scrollIntoView({ block: "nearest" });
         return;
       }
-      const card = index < 0 ? null : document.getElementById(`result-${list[index].id}`);
+      const card = list[index];
       if (event.key === "Enter") {
         if (target?.closest("a[href], button, summary, [role=button], [role=link]")) return;
-        const link = card?.querySelector<HTMLAnchorElement>(".card__title a[href]");
+        const link = card?.querySelector<HTMLAnchorElement>(".card__title a[href], .official__link[href]");
         if (link) {
           event.preventDefault();
           link.click();
@@ -205,10 +303,6 @@ export default function App() {
         if (!event.repeat) card?.querySelector<HTMLButtonElement>(".card__save")?.click();
         return;
       }
-      if (event.key === "s") {
-        window.dispatchEvent(new CustomEvent("cs:summarize"));
-        setDrawerOpen(true);
-      }
     };
 
     window.addEventListener("keydown", onKeyDown);
@@ -216,189 +310,213 @@ export default function App() {
       window.removeEventListener("keydown", onKeyDown);
       window.clearTimeout(pendingTimer);
     };
-  }, [phase, select, visibleResults]);
+  }, [phase, select, sidePanel]);
 
   return (
-    <div className="app">
-      <header className="header">
-        <div className="brand">
-          <span className="brand__mark" aria-hidden="true" />
-          <span className="brand__name">CleanSearch</span>
-          <span className="brand__tag">M4 · 正文增强</span>
-        </div>
-        <span className="header__links">
-          <ThemeToggle />
-          <a className="header__link header__link--active" href="/s">
-            单页总结
-          </a>
-          <a className="header__link header__link--active" href="/tools">
-            一键添加
-          </a>
-          <a className="header__link header__link--active" href="/bookmarks">
-            书签启动台
-          </a>
-        </span>
-      </header>
-
-      <main className="main">
-        <SearchBar
-          value={input}
-          busy={phase === "loading"}
-          onChange={setInput}
-          onSubmit={() => void runSearch(input)}
-        />
-
-        <EngineBar
-          engines={engines}
-          busy={phase === "loading"}
-          canPick={engineQuery(input, "g", engines) !== null}
-          onPick={pickEngine}
-        />
-
-        {showSamples ? <div className="samples">
-          <span>自检样本：</span>
-          {SAMPLES.map((sample) => (
-            <button
-              key={sample.label}
-              className="chip"
-              type="button"
-              onClick={() => {
-                setInput(sample.q);
-                void runSearch(sample.q);
-              }}
-            >
-              {sample.label}
-            </button>
-          ))}
-        </div> : null}
-
-        {phase === "idle" ? (
-          <div className="state state--idle">
-            <h2>输入关键词开始</h2>
-            <p>
-              支持后缀路由（数分知识点 g）与 bang（python !b），也可以点上方引擎按钮。不可用引擎会按回退链自动换源（如 g → Google CSE → Serper）。结果按强相关 / 相关 / 弱相关三档展示，弱相关默认折叠；刷新后按地址栏的 q 复现同一查询。
-            </p>
+    <div className="workspace-app">
+      <WorkspaceHeader onHistorySearch={({ query: previous, literal }) => {
+        changeView("all");
+        setInput(previous);
+        setInputLiteral(literal);
+        void runSearch(previous, { literal });
+      }} />
+      <div className="workspace">
+        <nav className="workspace-nav" aria-label="搜索分类">
+          <div className="workspace-nav__items">
+            {VIEWS.map(({ id, label, icon }) => (
+              <button key={id} type="button" className="workspace-nav__item"
+                aria-current={view === id ? "page" : undefined} onClick={() => changeView(id)}>
+                <i className={`ws-icon ws-icon--${icon}`} aria-hidden="true" />{label}
+              </button>
+            ))}
           </div>
-        ) : null}
+        </nav>
 
-        {phase === "loading" ? <LoadingState query={query} /> : null}
-
-        {phase === "error" && error ? (
-          <ErrorState error={error} query={query} onRetry={() => void runSearch(query)} />
-        ) : null}
-
-        {phase === "empty" ? (
-          <>
-            <EmptyState query={query} />
-            {page > 1 ? (
-              <div className="pager">
-                <button className="chip" type="button" onClick={() => void runSearch(query, page - 1)}>
-                  上一页
-                </button>
-                <span className="pager__label">第 {page} 页</span>
-              </div>
-            ) : null}
-          </>
-        ) : null}
-
-        {phase === "ok" && data ? (
-          <div className="layout">
-            <div className="layout__results">
-              <MetaBar meta={data.meta} parsed={data.parsed} />
-              {data.parsed.expanded.length > 0 ? (
-                <p className="shortcuts">已扩展同义词：{data.parsed.expanded.join(" / ")}</p>
-              ) : null}
-              <div className="pager">
-                <button
-                  className="chip"
-                  type="button"
-                  disabled={page <= 1}
-                  onClick={() => void runSearch(query, Math.max(1, page - 1))}
-                >
-                  上一页
-                </button>
-                <span className="pager__label">第 {page} 页</span>
-                <button
-                  className="chip"
-                  type="button"
-                  disabled={data.meta.total === 0}
-                  onClick={() => void runSearch(query, page + 1)}
-                >
-                  下一页
-                </button>
-              </div>
-              <ResultList
-                title="强相关"
-                results={groups.strong}
-                hint="默认展开"
-                selectedId={selectedId}
-                onSelect={select}
-              />
-              <ResultList
-                title="相关"
-                results={groups.related}
-                hint="默认展开"
-                selectedId={selectedId}
-                onSelect={select}
-              />
-              <ResultList
-                title="弱相关"
-                results={groups.weak}
-                hint="默认折叠"
-                collapsible
-                defaultOpen={false}
-                selectedId={selectedId}
-                onSelect={select}
-              />
-              <p className="shortcuts">
-                <kbd>/</kbd> 聚焦 · <kbd>j</kbd>/<kbd>k</kbd> 选择 · <kbd>Enter</kbd> 打开 ·{" "}
-                <kbd>b</kbd> 收藏 · <kbd>s</kbd> 总结 · <kbd>Esc</kbd> 取消
-              </p>
+        <main className="workspace-main">
+          <div className="workspace-search">
+            <SearchBar value={input} busy={phase === "loading"} onChange={value => {
+              setInput(value);
+              setInputLiteral(false);
+            }} onSubmit={() => void runSearch(input, { literal: inputLiteral })} />
+            <div className="workspace-search__options">
+              {engines.length > 0 && (
+                <details className="workspace-engines" ref={enginesDisclosure}>
+                  <summary>引擎后缀 <i className="ws-icon ws-icon--chevron" aria-hidden="true" /></summary>
+                  <EngineBar engines={engines} busy={phase === "loading"}
+                    canPick={engineQuery(input, "g", engines, inputLiteral) !== null} onPick={pickEngine} />
+                </details>
+              )}
+              <label className="workspace-ai-setting"
+                title={dailyAI ? "随每次搜索请求 AI 服务，可能产生 API 费用" : "输入 ds 后缀可单次启用"}>
+                <input className="workspace-switch" type="checkbox" role="switch" checked={dailyAI}
+                  onChange={(event) => {
+                    const next = event.target.checked;
+                    dailyAIRef.current = next;
+                    setDailyAI(next);
+                    saveDailyAI(next);
+                    if (!next && (literal || !hasAISuffix(query))) {
+                      aiController.current?.abort();
+                      setAIState(null);
+                      setSidePanel(current => current === "ai" ? null : current);
+                    }
+                  }} />
+                日常 AI 检索
+              </label>
+              <span className={dailyAI ? "workspace-search__cost" : "workspace-search__keys"}>
+                {dailyAI ? "每次搜索可能产生 API 费用" : <><kbd>/</kbd> 聚焦搜索</>}
+              </span>
             </div>
-            <aside
-              id="search-summary"
-              className={drawerOpen ? "layout__side layout__side--open" : "layout__side"}
-              onTouchStart={(event) => {
-                touchStart.current = event.touches[0]?.clientY ?? null;
-              }}
-              onTouchMove={(event) => {
-                const start = touchStart.current;
-                if (start === null) return;
-                const delta = (event.touches[0]?.clientY ?? start) - start;
-                // 只处理向下拉（关抽屉），往上拉交给页面滚动
-                if (delta > 0 && event.currentTarget) {
-                  event.currentTarget.style.transform = `translateY(${Math.min(delta, 200)}px)`;
-                }
-              }}
-              onTouchEnd={(event) => {
-                const start = touchStart.current;
-                touchStart.current = null;
-                const element = event.currentTarget;
-                if (element) element.style.transform = "";
-                if (start === null) return;
-                const end = event.changedTouches[0]?.clientY ?? start;
-                if (end - start > 90) setDrawerOpen(false);
-              }}
-            >
-              <SummaryPanel key={data.meta.sid} sid={data.meta.sid} query={data.parsed.q} />
-            </aside>
-            <button
-              className="summary-toggle"
-              type="button"
-              ref={drawerToggle}
-              onClick={() => setDrawerOpen((open) => !open)}
-              aria-expanded={drawerOpen}
-              aria-controls="search-summary"
-            >
-              {drawerOpen ? "收起总结" : "AI 总结"}
-            </button>
+            {showSamples && (
+              <div className="samples">
+                <span>自检样本</span>
+                {SAMPLES.map((sample) => (
+                  <button key={sample.label} className="chip" type="button" onClick={() => {
+                    setInput(sample.q);
+                    setInputLiteral(false);
+                    void runSearch(sample.q);
+                  }}>
+                    {sample.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
-        ) : null}
-      </main>
 
-      <footer className="footer">
-        CleanSearch · 本机单用户 · 检索层 SearXNG，前端 React + Vite，后端 FastAPI
-      </footer>
+          <div className="workspace-results">
+            {view !== "all" && <h1 className="workspace-results__title">{currentView.label}</h1>}
+            {view !== "all" && phase === "idle" && (
+              <p className="workspace-results__hint">输入关键词，查看{currentView.label}结果。</p>
+            )}
+            {phase === "loading" && <LoadingState query={query} />}
+            {phase === "error" && error && (
+              <ErrorState error={error} query={query}
+                onRetry={() => void runSearch(query, { page, paging: page > 1, literal, record: false })} />
+            )}
+            {phase === "empty" && (
+              <>
+                <EmptyState query={query} />
+                {page > 1 && (
+                  <div className="pager">
+                    <button className="chip" type="button" onClick={() => void runSearch(query, { page: page - 1, paging: true, literal })}>
+                      上一页
+                    </button>
+                    <span className="pager__label">第 {page} 页</span>
+                  </div>
+                )}
+              </>
+            )}
+            {phase === "ok" && data && (
+              <>
+                {view === "all" && (
+                  <>
+                    <MetaBar meta={data.meta} parsed={data.parsed} />
+                    <OfficialPanel section={data.official} selectedId={selectedId} onSelect={select} />
+                    {data.parsed.expanded.length > 0 && (
+                      <p className="shortcuts">已扩展同义词：{data.parsed.expanded.join(" / ")}</p>
+                    )}
+                  </>
+                )}
+                <div className="pager">
+                  <button className="chip" type="button" disabled={page <= 1}
+                    onClick={() => void runSearch(query, { page: page - 1, paging: true, literal })}>
+                    上一页
+                  </button>
+                  <span className="pager__label">第 {page} 页</span>
+                  <button className="chip" type="button" disabled={page >= 10 || data.meta.total === 0}
+                    onClick={() => void runSearch(query, { page: page + 1, paging: true, literal })}>
+                    下一页
+                  </button>
+                </div>
+                {view === "all" ? (
+                  <>
+                    <ContentModules results={groupedContent} selectedId={selectedId} onSelect={select} />
+                    <ResultList title="强相关" results={groups.strong.filter(result => !result.category)}
+                      selectedId={selectedId} onSelect={select} />
+                    <ResultList title="相关" results={groups.related.filter(result => !result.category)}
+                      selectedId={selectedId} onSelect={select} />
+                    <ResultList title="弱相关" results={groups.weak.filter(result => !result.category)}
+                      collapsible defaultOpen={false} selectedId={selectedId} onSelect={select} />
+                  </>
+                ) : categoryResults.length ? (
+                  <ResultList title={`${currentView.label}结果`} results={categoryResults}
+                    selectedId={selectedId} onSelect={select} />
+                ) : (
+                  <p className="workspace-results__hint" role="status">本页没有{currentView.label}结果。</p>
+                )}
+                <p className="shortcuts">
+                  <kbd>j</kbd>/<kbd>k</kbd> 选择 · <kbd>Enter</kbd> 打开 ·{" "}
+                  <kbd>b</kbd> 收藏 · <kbd>s</kbd> 总结 · <kbd>Esc</kbd> 取消
+                </p>
+              </>
+            )}
+          </div>
+        </main>
+
+        <aside className="workspace-side" aria-label="搜索辅助">
+          <QuickBookmarks />
+          <div className="workspace-tools">
+            <div className="workspace-tools__toggles">
+              <button type="button" ref={aiToggle} aria-expanded={sidePanel === "ai"} aria-controls="search-ai"
+                onClick={() => setSidePanel(current => current === "ai" ? null : "ai")}>
+                <i className="ws-icon ws-icon--spark" aria-hidden="true">✦</i>AI 检索
+              </button>
+              <button type="button" ref={summaryToggle} aria-expanded={sidePanel === "summary"} aria-controls="search-summary"
+                onClick={() => setSidePanel(current => current === "summary" ? null : "summary")}>
+                <i className="ws-icon ws-icon--text" aria-hidden="true" />AI 总结
+              </button>
+              <button type="button" ref={translateToggle} aria-expanded={sidePanel === "translate"} aria-controls="search-translate"
+                onClick={() => setSidePanel(current => current === "translate" ? null : "translate")}>
+                <i className="ws-icon ws-icon--language" aria-hidden="true">文</i>翻译
+              </button>
+            </div>
+            <div className="workspace-tools__panels">
+              <div id="search-ai" hidden={sidePanel !== "ai"}>
+                {aiState ? (
+                  <AISearchPanel state={aiState} selectedId={selectedId} onSelect={select}
+                    onRetry={() => void runAISearch(query, literal)} />
+                ) : (
+                  <section className="workspace-tool-empty" aria-label="AI 检索">
+                    <h2>AI 检索</h2>
+                    <p>{dailyAI
+                      ? "提交搜索后，AI 检索结果会显示在这里。"
+                      : <>在搜索词末尾加 <kbd>ds</kbd>，即可单次启用。</>}</p>
+                  </section>
+                )}
+              </div>
+              <div id="search-summary" hidden={sidePanel !== "summary"}>
+                <PageBatchSummary />
+                {summaryData ? (
+                  <SummaryPanel key={summaryData.meta.sid} sid={canSummarize ? summaryData.meta.sid : null}
+                    query={summaryData.parsed.q} revealResult={(id) => {
+                      if (view !== "all" && !document.getElementById(`result-${id}`)) {
+                        flushSync(() => changeView("all"));
+                      }
+                    }} />
+                ) : (
+                  <section className="workspace-tool-empty" aria-label="AI 总结">
+                    <h2>AI 总结</h2><p>找到搜索结果后，即可生成带引用的总结。</p>
+                  </section>
+                )}
+              </div>
+              <div id="search-translate" hidden={sidePanel !== "translate"}>
+                <TranslationPanel onSearch={text => {
+                  const chars = Array.from(text.replace(/\s+/g, " ").trim());
+                  const value = chars.slice(0, 512).join("");
+                  changeView("all");
+                  setInput(value);
+                  setInputLiteral(true);
+                  if (chars.length > 512) {
+                    document.querySelector<HTMLInputElement>('input[name="q"]')?.focus();
+                    return false;
+                  }
+                  void runSearch(value, { literal: true });
+                  return true;
+                }} />
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
     </div>
   );
 }

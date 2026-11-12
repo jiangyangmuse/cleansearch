@@ -1,4 +1,5 @@
 export type Group = "strong" | "related" | "weak";
+export type ResultCategory = "encyclopedia" | "download" | "video";
 
 export interface Result {
   id: string;
@@ -14,6 +15,29 @@ export interface Result {
   published: string | null;
   read_minutes: number | null;
   go_url?: string | null;
+  brand_warning?: string | null;
+  category?: ResultCategory | null;
+}
+
+export interface AISearchResponse {
+  provider: string;
+  results: Result[];
+  cached: boolean;
+}
+
+export interface OfficialLink extends Result {
+  origin: "search" | "directory";
+  role: string;
+  label: string;
+  host: string;
+  source: string;
+  verified: string;
+}
+
+export interface OfficialSection {
+  key: string;
+  brand: string;
+  entries: OfficialLink[];
 }
 
 export interface SearchMeta {
@@ -26,6 +50,8 @@ export interface SearchMeta {
   total: number;
   upstream_total: number;
   filtered: { dup: number; risk: number };
+  official: number;
+  directory: number;
   sid: string;
 }
 
@@ -41,6 +67,7 @@ export interface SearchResponse {
   parsed: ParsedQuery;
   groups: Record<Group, Result[]>;
   meta: SearchMeta;
+  official: OfficialSection | null;
 }
 
 export interface EngineInfo {

@@ -7,11 +7,12 @@ type Status = "idle" | "streaming" | "done" | "error";
 interface Props {
   sid: string | null;
   query: string;
+  revealResult?: (id: string) => void;
 }
 
 const FLASH_MS = 1500;
 
-export default function SummaryPanel({ sid, query }: Props) {
+export default function SummaryPanel({ sid, query, revealResult }: Props) {
   const [status, setStatus] = useState<Status>("idle");
   const [text, setText] = useState("");
   const [citations, setCitations] = useState<Citation[]>([]);
@@ -99,6 +100,7 @@ export default function SummaryPanel({ sid, query }: Props) {
   const citationById = new Map(citations.map((cite) => [cite.i, cite]));
 
   const seek = (resultId: string) => {
+    revealResult?.(resultId);
     const target = document.getElementById(`result-${resultId}`);
     if (!target) return;
     const group = target.closest("details");

@@ -1,4 +1,4 @@
-import type { ApiErrorPayload, SearchResponse } from "./types";
+import type { AISearchResponse, ApiErrorPayload, SearchResponse } from "./types";
 
 export class ApiError extends Error {
   code: string;
@@ -18,13 +18,13 @@ export interface SearchBody {
   q: string;
   page?: number;
   region?: string | null;
-  opts?: { safe?: boolean; exact?: boolean; summarize?: boolean; fixture?: string | null };
+  opts?: { safe?: boolean; exact?: boolean; summarize?: boolean; literal?: boolean; fixture?: string | null };
 }
 
-export async function search(body: SearchBody, signal?: AbortSignal): Promise<SearchResponse> {
+async function requestSearch<T>(path: string, body: SearchBody, signal?: AbortSignal): Promise<T> {
   let response: Response;
   try {
-    response = await fetch("/api/search", {
+    response = await fetch(path, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -48,7 +48,15 @@ export async function search(body: SearchBody, signal?: AbortSignal): Promise<Se
     throw new ApiError(message, code, response.status, retryable);
   }
 
-  return (await response.json()) as SearchResponse;
+  return (await response.json()) as T;
+}
+
+export function search(body: SearchBody, signal?: AbortSignal): Promise<SearchResponse> {
+  return requestSearch("/api/search", body, signal);
+}
+
+export function searchAI(q: string, signal?: AbortSignal, literal = false): Promise<AISearchResponse> {
+  return requestSearch("/api/ai-search", { q, opts: { literal } }, signal);
 }
 
 
@@ -165,17 +173,57 @@ async function jsonRequest<T>(input: RequestInfo, init?: RequestInit): Promise<T
   const response = await fetch(input, init);
   if (!response.ok) {
     let message = `请求失败（HTTP ${response.status}）`;
+    let code = "HTTP_" + response.status;
+    let retryable = response.status >= 500;
     try {
-      const payload = (await response.json()) as { detail?: string; error?: { message: string } };
+      const payload = (await response.json()) as { detail?: string; error?: ApiErrorPayload["error"] };
       message = typeof payload.detail === "string" ? payload.detail : payload.error?.message ?? message;
+      code = payload.error?.code ?? code;
+      retryable = payload.error?.retryable ?? retryable;
     } catch {
       /* 保留默认文案 */
     }
-    throw new ApiError(message, "HTTP_" + response.status, response.status, response.status >= 500);
+    throw new ApiError(message, code, response.status, retryable);
   }
   if (response.status === 204) return undefined as T;
   return (await response.json()) as T;
 }
+
+export type ModelFeature = "search" | "summary" | "translate";
+export type ModelEntry = {
+  id: string; label: string; base_url: string; model: string;
+  has_key?: boolean; api_key?: string; features: ModelFeature[];
+};
+export type ModelAssignment = { primary: string | null; fallback: string | null };
+export type ModelSettings = {
+  revision: number; models: ModelEntry[];
+  assignments: Partial<Record<ModelFeature, ModelAssignment>>;
+};
+
+function writeJSON<T>(path: string, method: "POST" | "PUT", body: unknown, signal?: AbortSignal) {
+  return jsonRequest<T>(path, {
+    method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal,
+  });
+}
+
+export const loadModelSettings = (signal?: AbortSignal) =>
+  jsonRequest<ModelSettings>("/api/settings/models", { signal, cache: "no-store" });
+
+export const saveModelSettings = (settings: ModelSettings, signal?: AbortSignal) =>
+  writeJSON<ModelSettings>("/api/settings/models", "PUT", {
+    ...settings, models: settings.models.map(({ has_key: _hasKey, ...model }) => model),
+  }, signal);
+
+export type BatchSummary = {
+  pages: { url: string; final_url?: string; title?: string; truncated?: boolean; error?: string }[];
+  summary: string; model: string | null;
+};
+
+export const summarizePages = (urls: string[], signal?: AbortSignal) =>
+  writeJSON<BatchSummary>("/api/pages/summarize", "POST", { urls }, signal);
+
+export const translateText = (text: string, target: string, signal?: AbortSignal) =>
+  writeJSON<{ text: string; model: string }>("/api/translate", "POST", { text, target }, signal);
 
 export async function listBookmarks(
   params: { q?: string; group?: number | null; limit?: number; offset?: number } = {},

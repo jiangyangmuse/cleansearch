@@ -21,6 +21,7 @@ const engines = [
 for (const [query, expected] of [
   ["python 文档", "python 文档 !b"],
   ["python !g", "python !b"],
+  ["明日方舟 ds", "明日方舟 !b"],
   ["python!g", "python !b"],
   ["python g", "python !b"],
   ["python ddg", "python !b"],
@@ -38,3 +39,17 @@ for (const [query, expected] of [
     assert.equal(exports_.engineQuery(query, "b", engines), expected);
   });
 }
+
+test("AI suffix is explicit and follows normal suffix boundaries", () => {
+  for (const q of ["明日方舟 ds", "nexon!ds", "明日方舟　！ＤＳ"]) {
+    assert.equal(exports_.hasAISuffix(q), true);
+  }
+  for (const q of ["ds", "nexonds", "C ds", '"nexon ds"']) {
+    assert.equal(exports_.hasAISuffix(q), false);
+  }
+});
+
+test("choosing an engine keeps suffix-like words in a literal query", () => {
+  assert.equal(exports_.engineQuery("Nintendo ds", "b", engines, true), "Nintendo ds !b");
+  assert.equal(exports_.engineQuery("listen en", "b", engines, true), "listen en !b");
+});

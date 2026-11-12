@@ -6,6 +6,16 @@ export default function ThemeToggle() {
   const [choice, setChoice] = useState<ThemeChoice>(() => readTheme());
 
   useEffect(() => {
+    const sync = () => setChoice(readTheme());
+    window.addEventListener("cs:theme", sync);
+    window.addEventListener("pageshow", sync);
+    return () => {
+      window.removeEventListener("cs:theme", sync);
+      window.removeEventListener("pageshow", sync);
+    };
+  }, []);
+
+  useEffect(() => {
     applyTheme(choice);
     if (choice !== "auto") return;
     const media = window.matchMedia("(prefers-color-scheme: dark)");
@@ -20,7 +30,11 @@ export default function ThemeToggle() {
       type="button"
       title={THEME_LABEL[choice]}
       aria-label={THEME_LABEL[choice]}
-      onClick={() => setChoice(nextTheme(choice))}
+      onClick={() => {
+        const next = nextTheme(choice);
+        applyTheme(next);
+        setChoice(next);
+      }}
     >
       {choice === "auto" ? "自动" : choice === "light" ? "浅色" : "深色"}
     </button>

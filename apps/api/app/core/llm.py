@@ -12,6 +12,8 @@ from collections.abc import AsyncGenerator
 
 import httpx
 
+from app.core.fetch import FetchError, SafeFetcher
+
 
 class LLMError(Exception):
     code = "LLM_ERROR"
@@ -53,6 +55,8 @@ class OpenAICompatibleClient:
         timeout: float,
         transport: httpx.AsyncBaseTransport | None = None,
         reasoning_effort: str | None = None,
+        endpoint_guard: SafeFetcher | None = None,
+        trust_env: bool = True,
     ) -> None:
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
@@ -60,6 +64,8 @@ class OpenAICompatibleClient:
         self.timeout = timeout
         self._transport = transport
         self.reasoning_effort = reasoning_effort
+        self._endpoint_guard = endpoint_guard
+        self._trust_env = trust_env
 
     async def stream(self, system: str, user: str) -> AsyncGenerator[str, None]:
         payload = {
@@ -76,15 +82,23 @@ class OpenAICompatibleClient:
         headers = {
             "Content-Type": "application/json",
             "Accept": "text/event-stream",
-            "Authorization": f"Bearer {self.api_key}",
         }
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
         try:
             # 推理片段可能持续到达，但侧栏要在期限内收到可见正文。
             async with asyncio.timeout(self.timeout) as first_text_timeout, httpx.AsyncClient(
-                timeout=self.timeout, transport=self._transport
+                timeout=self.timeout, transport=self._transport, trust_env=self._trust_env,
+                follow_redirects=False,
             ) as client:
+                target = f"{self.base_url}/chat/completions"
+                extensions = {}
+                if self._endpoint_guard:
+                    target, host, sni = await self._endpoint_guard.pin_public_target(target)
+                    headers["Host"] = host
+                    extensions["sni_hostname"] = sni
                 async with client.stream(
-                    "POST", f"{self.base_url}/chat/completions", json=payload, headers=headers
+                    "POST", target, json=payload, headers=headers, extensions=extensions,
                 ) as response:
                     if response.status_code != 200:
                         if response.status_code == 401:
@@ -116,6 +130,8 @@ class OpenAICompatibleClient:
             raise LLMTimeout(f"等待模型响应超时（{self.timeout:g} 秒）") from exc
         except httpx.HTTPError as exc:
             raise LLMUnavailable(f"无法连接 LLM（{self.base_url}）：{exc.__class__.__name__}") from exc
+        except FetchError as exc:
+            raise LLMUnavailable(exc.message) from exc
 
     @staticmethod
     def _parse_content(data: str) -> str:

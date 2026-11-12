@@ -54,6 +54,8 @@ def _base_ok(base: str) -> bool:
 def _resolve(code: str) -> tuple[str, str | None, bool] | None:
     """返回 (engine, region, is_engine)；未知短码返回 None。"""
     lowered = code.lower()
+    if lowered == "ds":
+        return "default", None, False
     if lowered in ENGINE_SUFFIXES:
         return ENGINE_SUFFIXES[lowered], None, True
     if lowered in REGION_SUFFIXES:
@@ -61,11 +63,9 @@ def _resolve(code: str) -> tuple[str, str | None, bool] | None:
     return None
 
 
-def parse_query(raw: str) -> Parsed:
+def parse_query(raw: str, *, literal: bool = False) -> Parsed:
     q = unicodedata.normalize("NFKC", raw or "").strip()
-    if not q:
-        return Parsed(q="")
-    if _has_unbalanced_quotes(q):
+    if literal or not q or _has_unbalanced_quotes(q):
         return Parsed(q=q)
 
     bang = _BANG_RE.search(q)

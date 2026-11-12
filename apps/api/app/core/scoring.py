@@ -73,6 +73,9 @@ def tokenize(text: str) -> list[str]:
     """英文按词、中文按二元组切分，够 BM25 用且不引入词典依赖。"""
     lowered = (text or "").lower()
     tokens = LATIN_TOKEN.findall(lowered)
+    # 保留完整技术名，同时识别 deepseek-ai / DeepSeek-V4 等复合词的组成部分。
+    tokens += [part for token in list(tokens) for part in re.findall(r"[a-z0-9]+", token)
+               if part != token]
     for run in CJK_RUN.findall(lowered):
         if len(run) == 1:
             tokens.append(run)
@@ -178,7 +181,8 @@ def spam_score(result: Result, query: str) -> float:
     if title_tokens:
         query_tokens = set(tokenize(query))
         hits = sum(1 for token in title_tokens if token in query_tokens)
-        if hits / len(title_tokens) > 0.25 and len(title_tokens) >= 3:
+        repeats = max((title_tokens.count(term) for term in query_tokens), default=0)
+        if repeats >= 3 and hits / len(title_tokens) > 0.5:
             score += 0.4
     return round(min(score, 1.0), 4)
 

@@ -15,6 +15,7 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from app.config import get_settings
 from app.core.fetch import SafeFetcher
 from app.core.llm import LLMError
+from app.core.model_settings import ModelSettings, read_model_settings
 from app.core.session_store import SessionStore, get_session_store
 from app.core.summarize import (
     FULL_MAX_SOURCES,
@@ -22,6 +23,7 @@ from app.core.summarize import (
     Summarizer,
     enrich_with_full_text,
     get_summarizer,
+    summarize_with_models,
 )
 from app.deps import get_fetcher
 
@@ -52,6 +54,7 @@ async def summarize(
     store: SessionStore = Depends(get_session_store),
     summarizer: Summarizer = Depends(get_summarizer),
     fetcher: SafeFetcher = Depends(get_fetcher),
+    model_settings: ModelSettings = Depends(read_model_settings),
 ) -> StreamingResponse | JSONResponse:
     if mode not in ("fast", "full"):
         return _error(400, "MODE_UNSUPPORTED", "mode 只支持 fast 或 full")
@@ -71,10 +74,21 @@ async def summarize(
             materials, stats = await enrich_with_full_text(snapshot, full_fetcher, FULL_MAX_SOURCES)
         sources = materials.sources[:MAX_SOURCES]
         partial = bool(stats["failed"] or stats["truncated"])
+        text = None
+        model = summarizer.model
+        if model_settings.routed("summary"):
+            try:
+                text, model = await summarize_with_models(materials, model_settings, summarizer)
+            except LLMError as exc:
+                yield sse("error", {"code": exc.code, "message": exc.message, "retryable": exc.retryable})
+                return
+            except Exception:
+                yield sse("error", {"code": "LLM_ERROR", "message": "生成总结时发生内部错误，请重试", "retryable": True})
+                return
         yield sse(
             "meta",
             {
-                "model": summarizer.model,
+                "model": model,
                 "sources": len(sources),
                 "mode": mode,
                 "sid": sid,
@@ -100,12 +114,16 @@ async def summarize(
 
         tokens = 0
         try:
-            async with aclosing(summarizer.stream(materials)) as stream:
-                async for token in stream:
-                    if not token:
-                        continue
-                    tokens += 1
-                    yield sse("token", {"t": token})
+            if text is not None:
+                tokens = 1
+                yield sse("token", {"t": text})
+            else:
+                async with aclosing(summarizer.stream(materials)) as stream:
+                    async for token in stream:
+                        if not token:
+                            continue
+                        tokens += 1
+                        yield sse("token", {"t": token})
         except LLMError as exc:
             yield sse(
                 "error",

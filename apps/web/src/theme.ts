@@ -18,6 +18,7 @@ export function resolveTheme(choice: ThemeChoice): "light" | "dark" {
 }
 
 export function applyTheme(choice: ThemeChoice): void {
+  const previous = document.documentElement.dataset.themeChoice;
   document.documentElement.dataset.theme = resolveTheme(choice);
   document.documentElement.dataset.themeChoice = choice;
   try {
@@ -25,6 +26,7 @@ export function applyTheme(choice: ThemeChoice): void {
   } catch {
     // 存储受限时仍允许在当前页面切换主题。
   }
+  if (choice !== previous) window.dispatchEvent(new Event("cs:theme"));
 }
 
 export function nextTheme(choice: ThemeChoice): ThemeChoice {

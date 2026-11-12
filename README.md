@@ -319,6 +319,8 @@ M19 复核补充：目录的 `status` / `available` 表示主源健康；`can_fa
 
 `scripts/probe-engines.py` 的 `ok` / `count` 只统计来源包含指定引擎的结果，`raw_count` 保留原始条数；避免未启用引擎被静默回落默认聚合时误判可用。旧矩阵中 Startpage、Marginalia、Dogpile、Yandex API 的成功计数存在这种误判，旧文件保留，见 M19 报告 §8 更正。
 
+部署复验补充：脚本先读 `/config`，未加载引擎标为 `skipped=not_loaded`，`search_requests=0`，避免触发默认聚合；配置不可读则 `catalog_checked=false`，继续按来源核对。该轮首屏为 11/13，Mojeek 与 Startpage 受冷却阻断。
+
 ### 真实验收结果（2026-11-07）
 
 ```
@@ -459,7 +461,7 @@ FETCH_EXTRA_CIDRS=198.18.0.0/15   # 仅当容器 DNS 把公网解析到代理网
 
 ### 商用检索补充与故障兜底
 
-在本地 `.env` 配置任一 key 后启用，真实搜索的第 1 页、未指定引擎时补一路结果。主上游连接失败、引擎全部失败或实例熔断时，也可由付费结果完成搜索。
+在本地 `.env` 配置任一 key 并启用 `PAID_FALLBACK` 后，只在首屏免费主上游确实故障（连接失败、引擎全部失败或实例熔断）时考虑付费兜底。免费请求成功、正常零结果或只有部分引擎失败时，均不额外调用付费源。指定 Bing 不走 Serper。
 
 ```dotenv
 BRAVE_API_KEY=        # Brave Search API
@@ -472,7 +474,7 @@ PAID_FALLBACK=true    # 关掉可临时停用
 契约测试：`python -m pytest apps/api/tests/test_paid.py -q`（用 MockTransport，不碰真实接口）。
 Serper 真实接口和主上游故障兜底均已验证。18 条标注查询关闭/开启兜底的期望域名 Top10 命中为 6/18 与 11/18，P95 为 3.08 秒与 5.81 秒，两侧均关闭缓存。该指标衡量这批标注域名的可见性。[完整对照](reports/assets/serper-validation/labelled-comparison.json) · [Serper](https://serper.dev/)
 
-复验时启动两个隔离实例，分别设置 `PAID_FALLBACK=false` 与 `true`、`CACHE_ENABLED=false`，然后执行下列命令。对照包含 18 条公开查询，开启侧每条查询会请求一次 Serper。
+以下 18 条对照属于旧版“首屏额外补付费结果”策略的历史证据；当前策略已改为故障兜底，开启开关不再意味着每条查询都付费，不能用旧脚本条件推断现行调用次数。
 
 ```powershell
 python scripts/eval-expansion.py --base-url http://127.0.0.1:18140 --compare-base-url http://127.0.0.1:18141 --json-out reports/assets/serper-validation/labelled-comparison.json
@@ -670,6 +672,46 @@ settings 关键项：`search.formats: [html, json]`、`server.limiter: false`、
 - `meta.unresponsive`：本次哪些引擎没给结果（来自 SearXNG）；
 - 可疑结果（0.35 ≤ risk < 0.6）多出 `go_url`，前端点击先进 `/go?u=&sig=` 确认页；签名错 → 403。
 
+## 品牌官方入口（2026-11-08）
+
+品牌导航查询（如 `deepseek`、`明日方舟`、`nexon`）在结果上方单独显示「官方入口」区，按官网 / 聊天 / 文档 / 控制台 / 代码仓库等角色组织。识别依据入口表：
+
+| 规则 | 行为 |
+| --- | --- |
+| 入口表 | `apps/api/app/core/official.py`，包含精确主机、允许路径、角色、核验来源与日期 |
+| 主机 | 精确相等；`www.deepseek.com.example.org`、`deepseek.com` 不会被当成 `www.deepseek.com` |
+| 路径 | `/` 只认首页与语言首页（`/en/`、`/zh-CN/`）；其他路径按目录边界匹配，`/docs` 不匹配 `/docsomething`；共享托管必须带组织前缀（`github.com/python`） |
+| 来源 | 搜索候选标为“搜索结果”；首屏缺失角色从已核验表补“目录直达”，无引擎来源、不作 AI 总结材料。同角色只取一条 |
+| 查询意图 | 教程 / 新闻 / 对比 / 招聘类查询不显示官方入口区，保持普通结果；未收录品牌一律保持普通结果 |
+| 核验 | `python scripts/verify-official.py` 分类 ok / blocked / fail；旧 112 项核验为 107/5/0，本轮新增 DeepSeek 平台页、下载及仓库依据官方页面链接核对，未重跑全表网络核验 |
+
+官方入口链接会从三档结果列表中移除，避免同一地址在页面上出现两次；快照仍把它登记为总结来源。
+
+检索候选中的官方页面仍可供总结引用；目录直达没有搜索摘要，不进入总结快照。只有目录或待核验品牌首页时不提供总结。导航查询中的自称官网/品牌近似域首页会提示“品牌身份未核验”并降到弱相关；这不表示已确认恶意，也不拦截正常第三方文章。复合技术名（如 `deepseek-ai/DeepSeek-V4`）按完整名及组成词匹配，正常标题不会仅因命中查询词多而被算作堆砌。
+
+复核补充：仅“单一品牌 + 导航词”的查询显示入口（如 `deepseek documentation`）；`deepseek how to use`、`python list comprehension`、多品牌或剩余词义不明的查询保持普通排序。身份匹配要求 HTTPS 默认端口，含路径回退或编码歧义的地址不认证。官方入口支持收藏、j/k/Enter/b 快捷键和总结引用定位；冷热缓存保留同一 ID、摘要及风险确认链接。页面“展示”数为 `meta.total + meta.official`；目录内容变更会自动隔离搜索缓存。
+
+在本机启动后可用 `http://127.0.0.1:8000/?q=deepseek` 检查官网、聊天、文档、控制台四类入口。使用 Ollama 总结时，可在环境配置中填写 `LLM_BASE_URL=http://127.0.0.1:11434/v1` 和已安装的模型名称。
+
+```powershell
+python scripts/verify-official.py                     # 核验入口表，写 reports/assets/official-entries/verified.json
+python scripts/verify-official.py --only deepseek     # 只核验一个品牌
+```
+
+### AI 网页检索与内容分类
+
+搜索 `明日方舟 ds` 或 `明日方舟 !ds`，结果页右栏会显示 AI 检索网页。打开搜索框下方的「日常 AI 检索」后，提交普通查询也会调用 AI 检索。开关默认关闭并保存在当前浏览器，翻页复用右栏结果。
+
+系统 AI 检索使用 DeepSeek Search API，同一查询可在缓存有效期内复用结果。密钥读取 `DEEPSEEK_SEARCH_API_KEY` 或本机 `data/deepseek-api-key.txt`，环境变量优先。成功请求可能计费。[DeepSeek Search API](https://api-docs.deepseek.com/guides/search/)
+
+识别到的百科页面、应用商店或下载页、视频播放页分别显示在对应模块。模块随本次命中的结果出现，普通网页继续按相关性展示。
+
+### 桌面工具与模型设置
+
+- 顶栏的「···」打开搜索历史。书签快捷栏可以收起，完整书签页从顶栏进入。
+- 右侧 AI 总结支持一次填写最多 5 个公开网页。翻译完成后可一键按译文搜索，末尾短码也作为译文保留。
+- 在 `/settings` 的「模型填写」中添加一个或多个支持流式 Chat Completions 的模型，勾选其用途，再分别为 AI 检索、总结和翻译选择默认模型与备选。备选只有启用相应功能才会在默认失败时调用。为 AI 检索分配导入模型后，网页由免费上游提供，模型负责筛选排序。
+
 ## 本机启动
 
 ### 0. 依赖
@@ -737,10 +779,17 @@ python scripts/verify-searxng.py --base-url http://127.0.0.1:8000 --engines g b
   "groups": { "strong": [Result...], "related": [], "weak": [] },
   "meta": { "status": "ok|empty", "engines": ["google"], "unresponsive": [],
             "provider": "fixture|searxng", "cached": false, "ms": 3, "total": 10,
-            "filtered": { "dup": 1, "risk": 0 }, "sid": "s_1a2b" } }
+            "filtered": { "dup": 1, "risk": 0 }, "official": 0, "sid": "s_1a2b" },
+  "official": null }
 ```
 
 上游错误使用 `{"error":{"code":"...","message":"...","retryable":true}}`。不可用或超时返回 HTTP `503`，错误码为 `UPSTREAM_UNAVAILABLE` 或 `UPSTREAM_TIMEOUT`。坏响应返回 HTTP `502`，错误码为 `UPSTREAM_BAD_RESPONSE`。
+
+品牌查询时 `official` 为 `{key, brand, entries:[{role,label,url,display_url,title,host,source,verified,engine}]}`，`meta.official` 为入口条数；非品牌查询为 `null`。官方入口不计入 `meta.total`。
+
+`official.entries[]` 同时包含完整 `Result` 字段（含 `id/snippet/score/risk/reasons/go_url`）；身份字段叠加在结果上，缓存不再生成替代 ID。总结来源优先放官方入口，再放三档结果，仍受现有最多 10 来源、全文最多抓取 5 条的限制。
+
+新增 `official.entries[].origin=search|directory`、`meta.directory`、`Result.brand_warning`。`meta.official` 包含两种来源；`upstream_total` 仅统计实际搜索候选，页面总展示数可能因目录直达而大于上游条数。总结排除目录及带品牌身份警示的结果。缓存命名空间为 `official-v4`（含完整入口表摘要）与 `engine-fallback-v3`，不清空书签。
 
 其他端点：`GET /api/health`（provider / web_built / 版本）、`GET /api/engines`（后缀目录、回退链、健康状态）、`GET /api/docs`（OpenAPI）。
 
@@ -758,13 +807,14 @@ llq/
 │  ├─ app/core/searxng.py    真实 SearXNG 客户端（超时 / 连接失败 / 坏响应分类）
 │  ├─ app/core/fixture_provider.py  固定样本上游（三态）
 │  ├─ app/core/normalize.py  URL 规范化、展示串、去重
+│  ├─ app/core/official.py   品牌入口表与精确主机/路径匹配
 │  ├─ app/core/aggregator.py 选择上游 + 计时
 │  ├─ fixtures/              SearXNG 形状的固定样本
 │  └─ tests/                 API 契约、护栏、解析、安全、打分与缓存测试
 ├─ apps/web/                 React 19 + TS + Vite
 │  ├─ src/App.tsx            状态机 idle/loading/ok/empty/error
 │  ├─ src/api.ts             fetch 封装 + 错误码
-│  └─ src/components/        SearchBar / ResultList / ResultCard / MetaBar / StatePanel
+│  └─ src/components/        SearchBar / ResultList / ResultCard / MetaBar / OfficialPanel / StatePanel
 ├─ searxng/settings.yml      开 json、关 limiter
 ├─ docker-compose.yml        可选：SearXNG + API
 └─ scripts/                  serve.ps1 / dev.ps1 / smoke.ps1

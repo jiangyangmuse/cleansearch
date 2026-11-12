@@ -68,6 +68,8 @@ def test_same_landing_url_tracking_variants_still_deduplicate():
 def test_brand_search_keeps_official_destinations_end_to_end(client, monkeypatch):
     # Reproduce the reported ordering: an earlier reference with the same title
     # used to consume the homepage and chat URLs before ranking could see them.
+    # 官方入口区上线后，首页与聊天页不再出现在三档列表里，但必须完整保留在
+    # `official` 分区（含去重后合并的引擎来源）。
     monkeypatch.setattr(get_aggregator()._fixture, "_hit", {"results": [
         {"url": "https://en.wikipedia.org/wiki/DeepSeek", "title": "DeepSeek", "engine": "google"},
         {"url": "https://www.deepseek.com/", "title": "DeepSeek", "engine": "serper"},
@@ -76,14 +78,19 @@ def test_brand_search_keeps_official_destinations_end_to_end(client, monkeypatch
     ]})
     body = client.post("/api/search", json={"q": "deepseek"}).json()
     items = [r for group in body["groups"].values() for r in group]
-    urls = {item["url"] for item in items}
-    assert urls == {"https://en.wikipedia.org/wiki/DeepSeek", "https://www.deepseek.com/", "https://chat.deepseek.com/"}
+    assert {item["url"] for item in items} == {"https://en.wikipedia.org/wiki/DeepSeek"}
     assert body["meta"]["filtered"]["dup"] == 1
-    home = next(item for item in items if item["url"] == "https://www.deepseek.com/")
+
+    entries = [entry for entry in body["official"]["entries"] if entry["origin"] == "search"]
+    assert {entry["url"] for entry in entries} == {
+        "https://www.deepseek.com/",
+        "https://chat.deepseek.com/",
+    }
+    home = next(entry for entry in entries if entry["url"] == "https://www.deepseek.com/")
     assert set(home["engine"]) == {"serper", "bing"}
     reference = next(item for item in items if "wikipedia.org" in item["url"])
     assert reference["engine"] == ["google"]
-    assert len({item["id"] for item in items}) == 3
+    assert len({item["id"] for item in items}) == 1
 
 
 def test_search_key_does_not_reuse_prior_title_dedupe_policy():

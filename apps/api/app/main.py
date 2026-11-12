@@ -16,6 +16,7 @@ from app.core.errors import SearchError
 from app.core.metrics import RequestMetricsMiddleware, get_metrics
 from app.core.tokens import read_api_token, token_matches
 from app.routers import assets as assets_router
+from app.routers import ai_tools as ai_tools_router
 from app.routers import bookmarks as bookmarks_router
 from app.routers import engines as engines_router
 from app.routers import go as go_router
@@ -41,6 +42,7 @@ app.include_router(page_router.router)
 app.include_router(summarize_router.router)
 app.include_router(tools_router.router)
 app.include_router(assets_router.router)
+app.include_router(ai_tools_router.router)
 
 
 CORS_HEADERS = {

@@ -1,10 +1,18 @@
 import type { EngineInfo } from "./types";
 
+export function hasAISuffix(raw: string): boolean {
+  const text = raw.normalize("NFKC").trim();
+  if (text.split('"').length % 2 === 0) return false;
+  const match = /(?:\s*!|\s+)ds$/i.exec(text);
+  return match !== null && [...text.slice(0, match.index).trim()].length >= 2;
+}
+
 // 与后端相同：只替换实际可解析的末尾短码，不逐层删掉查询正文。
-export function engineQuery(raw: string, code: string, engines: EngineInfo[]): string | null {
+export function engineQuery(raw: string, code: string, engines: EngineInfo[], literal = false): string | null {
   const text = raw.normalize("NFKC").trim();
   if (text.split('"').length % 2 === 0) return null;
-  const codes = new Set(["zh", "cn", "jp", "us", "en"]);
+  if (literal) return [...text].length >= 2 ? `${text} !${code}` : null;
+  const codes = new Set(["zh", "cn", "jp", "us", "en", "ds"]);
   for (const engine of engines) {
     codes.add(engine.code);
     engine.aliases.forEach((alias) => codes.add(alias));

@@ -13,6 +13,7 @@ from app.core import aggregator as aggregator_module
 from app.core.breaker import EngineHealthStore, UPSTREAM_KEY
 from app.core.paid import PaidSearch, build_paid_search
 from app.core.searxng import SearxngClient
+from app.core.errors import SearchError
 
 
 def brave_payload(urls: list[str]) -> dict:
@@ -102,11 +103,11 @@ def test_http_error_is_reported_not_raised() -> None:
     assert "429" in result.error
 
 
-def test_aggregator_merges_and_dedupes_paid_results(monkeypatch) -> None:
+def test_aggregator_uses_paid_only_after_default_failure() -> None:
     settings = replace(get_settings(), provider="searxng", brave_api_key="test-key", serper_api_key="")
     aggregator = aggregator_module.Aggregator(settings)
     aggregator._searxng = SearxngClient(settings, transport=httpx.MockTransport(
-        lambda request: httpx.Response(200, json={"results": []})
+        lambda request: httpx.Response(503)
     ))
     aggregator._paid = PaidSearch(settings, transport=httpx.MockTransport(
         lambda request: httpx.Response(
@@ -138,7 +139,7 @@ def test_paid_failure_does_not_break_search() -> None:
 
     result = __import__("asyncio").run(aggregator.search("HTTP"))
     assert result.results, "主上游结果必须保留"
-    assert any(item.startswith("brave(") for item in result.unresponsive)
+    assert not result.unresponsive, "健康免费检索不触发付费或记录付费故障"
 
 
 @pytest.mark.parametrize("failure", ["connection", "engines", "circuit"])
@@ -199,9 +200,7 @@ async def test_paid_circuit_records_each_failure_once(tmp_path) -> None:
     health = EngineHealthStore(tmp_path / "paid-health.db", fail_threshold=3, cooldown=60)
     aggregator = aggregator_module.Aggregator(settings, health=health)
     aggregator._searxng = SearxngClient(settings, transport=httpx.MockTransport(
-        lambda request: httpx.Response(200, json={
-            "results": [{"url": "https://main.test/a", "title": "主上游", "engine": "google"}]
-        })
+        lambda request: httpx.Response(503)
     ))
     calls = []
 
@@ -212,7 +211,8 @@ async def test_paid_circuit_records_each_failure_once(tmp_path) -> None:
     aggregator._paid = PaidSearch(settings, transport=httpx.MockTransport(paid_failure))
     try:
         for _ in range(4):
-            assert (await aggregator.search("HTTP")).results
+            with pytest.raises(SearchError):
+                await aggregator.search("HTTP")
         assert len(calls) == 3 and health.row("serper").fails == 3
     finally:
         health.close()
@@ -238,24 +238,11 @@ async def test_explicit_engine_and_later_pages_skip_paid(page, engine) -> None:
     assert calls == []
 
 
-def test_canonical_duplicate_retains_both_sources(client, monkeypatch) -> None:
-    from app.main import app
-    from app.core.aggregator import get_aggregator
-
-    settings = replace(get_settings(), provider="searxng", brave_api_key="", serper_api_key="test")
-    aggregator = aggregator_module.Aggregator(settings)
-    aggregator._searxng = SearxngClient(settings, transport=httpx.MockTransport(
-        lambda request: httpx.Response(200, json={"results": [{
-            "url": "https://example.com/a?utm_source=primary", "title": "HTTP 文档", "engine": "google"
-        }]})
-    ))
-    aggregator._paid = PaidSearch(settings, transport=httpx.MockTransport(
-        lambda request: httpx.Response(200, json={"organic": [{
-            "link": "https://example.com/a", "title": "HTTP 文档"
-        }]})
-    ))
-    monkeypatch.setitem(app.dependency_overrides, get_aggregator, lambda: aggregator)
-    payload = client.post("/api/search", json={"q": "HTTP 文档"}).json()
-    results = [item for group in payload["groups"].values() for item in group]
-    assert len(results) == 1 and set(results[0]["engine"]) == {"google", "serper"}
-    assert payload["meta"]["filtered"]["dup"] == 1
+def test_canonical_duplicate_retains_both_sources() -> None:
+    from app.core.normalize import normalise_result, dedupe_results
+    # 去重仍保留已有来源；不以额外付费调用制造同 URL 共识。
+    results, count = dedupe_results([
+        normalise_result({"url": "https://example.com/a?utm_source=primary", "title": "HTTP", "engine": "google"}, 1),
+        normalise_result({"url": "https://example.com/a", "title": "HTTP", "engine": "serper"}, 2),
+    ])
+    assert count == 1 and len(results) == 1 and set(results[0].engine) == {"google", "serper"}

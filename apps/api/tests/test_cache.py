@@ -201,11 +201,12 @@ def test_paid_setting_changes_do_not_reuse_search_cache(cached_client: TestClien
     holder = {}
     app.dependency_overrides[get_aggregator] = lambda: holder["aggregator"]
     try:
+        seen = set()
         for enabled in (False, True, False):
             settings = replace(get_settings(), provider="searxng", brave_api_key="", serper_api_key="test", paid_fallback=enabled)
             aggregator = Aggregator(settings)
             aggregator._searxng = SearxngClient(settings, transport=httpx.MockTransport(
-                lambda request: httpx.Response(200, json={"results": []})
+                lambda request: httpx.Response(200, json={"results": [{"url": "https://free.test/a", "title": "HTTP", "engine": "bing"}]})
             ))
             if enabled:
                 aggregator._paid = PaidSearch(settings, transport=httpx.MockTransport(
@@ -215,8 +216,10 @@ def test_paid_setting_changes_do_not_reuse_search_cache(cached_client: TestClien
                 ))
             holder["aggregator"] = aggregator
             body = cached_client.post("/api/search", json={"q": "HTTP"}).json()
-            assert bool(body["meta"]["total"]) is enabled
-            assert body["meta"]["cached"] is False
+            assert body["meta"]["total"] > 0
+            assert body["meta"]["cached"] is (enabled in seen)
+            seen.add(enabled)
+            assert cached_client.post("/api/search", json={"q": "HTTP"}).json()["meta"]["cached"]
     finally:
         app.dependency_overrides.pop(get_aggregator, None)
 

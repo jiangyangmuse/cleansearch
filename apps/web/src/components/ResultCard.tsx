@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ApiError, faviconUrl, saveBookmark } from "../api";
+import { faviconUrl } from "../api";
+import BookmarkButton from "./BookmarkButton";
 import type { Result } from "../types";
 import { safeHref } from "../url";
 
@@ -11,8 +11,6 @@ interface Props {
 }
 
 const RISK_FLAG = 0.35;
-
-type SaveState = "idle" | "saving" | "saved" | "exists" | "error";
 
 export default function ResultCard({ result, index, selected, onSelect }: Props) {
   // /go 中转是站内相对地址，直接放行；外链还要过 safeHref
@@ -26,31 +24,6 @@ export default function ResultCard({ result, index, selected, onSelect }: Props)
   }
   const flagged = result.risk >= RISK_FLAG;
   const explanation = result.reasons.join("；");
-
-  const [saveState, setSaveState] = useState<SaveState>("idle");
-
-  const save = async () => {
-    if (saveState === "saving" || saveState === "saved" || saveState === "exists") return;
-    setSaveState("saving");
-    try {
-      const response = await saveBookmark({ url: result.url, title: result.title });
-      setSaveState(response.deduplicated ? "exists" : "saved");
-    } catch (caught) {
-      setSaveState("error");
-      if (!(caught instanceof ApiError)) console.error(caught);
-    }
-  };
-
-  const saveLabel =
-    saveState === "saving"
-      ? "收藏中…"
-      : saveState === "saved"
-        ? "已收藏"
-        : saveState === "exists"
-          ? "已在书签"
-          : saveState === "error"
-            ? "收藏失败"
-            : "收藏";
 
   return (
     <article
@@ -95,16 +68,9 @@ export default function ResultCard({ result, index, selected, onSelect }: Props)
             可疑 · {result.risk.toFixed(2)}
           </span>
         ) : null}
+        {result.brand_warning ? <span className="card__risk" title={result.brand_warning}>品牌身份未核验</span> : null}
         {result.go_url ? <span className="card__tag" title="打开前会先确认">中转确认</span> : null}
-        <button
-          className={`card__save card__save--${saveState}`}
-          type="button"
-          onClick={() => void save()}
-          disabled={saveState === "saving"}
-          title="收藏到本机书签"
-        >
-          {saveLabel}
-        </button>
+        <BookmarkButton result={result} />
       </div>
       <h2 className="card__title">
         {href ? (

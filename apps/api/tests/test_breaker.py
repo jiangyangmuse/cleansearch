@@ -61,6 +61,14 @@ def test_snapshot_lists_engines(store: EngineHealthStore) -> None:
     assert rows[0]["engine"] == "google" and rows[0]["fails"] == 1
 
 
+def test_row_and_snapshot_work_with_plain_tuple_rows(store: EngineHealthStore) -> None:
+    """并发连接可能把 row_factory 还原成默认 tuple；按列名取值会偶发 IndexError。"""
+    store.record_failure("google", "x")
+    store._conn.row_factory = None
+    assert store.row("google").fails == 1
+    assert store.snapshot()[0]["engine"] == "google"
+
+
 async def test_aggregator_records_health(store: EngineHealthStore) -> None:
     settings = replace(get_settings(), provider="fixture", breaker_enabled=True)
     aggregator = Aggregator(settings, health=store)

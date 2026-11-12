@@ -7,6 +7,7 @@ import re
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from app.schemas import Result
+from app.core.result_category import result_category
 
 TRACKING_PARAMS = {
     "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content",
@@ -140,6 +141,7 @@ def normalise_result(raw: dict, index: int) -> Result | None:
         reasons=[f"来源 {engine_list[0]}" if engine_list else "来源未知"],
         favicon=favicon_for(url),
         published=published,
+        category=result_category(url, title),
     )
 
 
