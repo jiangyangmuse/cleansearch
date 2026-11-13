@@ -176,7 +176,22 @@ reports/
 
 ---
 
-## 8 移植到其它工作区
+## 8 推送流程（用户 2026-11-14 定）
+
+用户当轮明确要求推送时，按改动性质分流：
+
+| 改动性质 | 做法 |
+| --- | --- |
+| 文档、报告、单文件修复、样式微调、文案 | 直接 `commit` + `push origin main` |
+| 接口/契约（`schemas.py`、路由签名）、DB schema、缓存键语义、构建配置（`vite.config.ts`、`sw.js`）、依赖升级 | 开分支 `feat/<slug>` → 推送该分支 → 给用户 PR 链接，等 `verify` 绿后由用户合并 |
+
+- `main` 有分支保护（需 PR + `verify`）；当前账号有管理员绕过权限，直推会留下 "Bypassed rule violations" 记录，能不做就不做。
+- 本机没有 `gh` CLI，无法自动建 PR：推分支后把 `https://github.com/jiangyangmuse/cleansearch/compare/main...<branch>?expand=1` 给用户。
+- 推送后核对 CI：`https://api.github.com/repos/jiangyangmuse/cleansearch/actions/runs?per_page=2`。
+
+---
+
+## 9 移植到其它工作区
 
 复制本文件到新工作区根目录即生效。
 
