@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { ApiError, loadModelSettings, saveModelSettings, type ModelEntry, type ModelFeature, type ModelSettings } from "../api";
+import { useEffect, useRef, useState } from "react";
+import { ApiError, loadModelSettings, saveModelSettings, testModelConnection,
+  type ModelEntry, type ModelFeature, type ModelSettings } from "../api";
 
 const FEATURES: { id: ModelFeature; label: string }[] = [
   { id: "search", label: "AI 检索" },
@@ -29,22 +30,73 @@ function parseImport(text: string): ModelEntry[] {
 
 export default function ModelSettingsPanel() {
   const [settings, setSettings] = useState<ModelSettings | null>(null);
+  const [saved, setSaved] = useState<ModelSettings | null>(null);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
   const [importText, setImportText] = useState("");
   const [reload, setReload] = useState(0);
+  // 每个模型的连通性测试结果：只请求 /models，不耗 token
+  const [tests, setTests] = useState<Record<string, { state: "testing" | "ok" | "fail"; text: string }>>({});
+  const testRequests = useRef(new Map<string, AbortController>());
+
+  const invalidateTest = (id: string) => {
+    testRequests.current.get(id)?.abort();
+    testRequests.current.delete(id);
+    setTests(current => {
+      const next = { ...current };
+      delete next[id];
+      return next;
+    });
+  };
+
+  const testConnection = async (model: ModelEntry) => {
+    if (!saved || testRequests.current.has(model.id)) return;
+    const request = new AbortController();
+    testRequests.current.set(model.id, request);
+    setTests(current => ({ ...current, [model.id]: { state: "testing", text: "测试中…" } }));
+    try {
+      const result = await testModelConnection(model.id, saved.revision, request.signal);
+      if (request.signal.aborted) return;
+      const available = result.models === undefined ? "可用" : `可用（${result.models} 个模型）`;
+      setTests(current => ({
+        ...current,
+        [model.id]: result.ok
+          ? { state: "ok", text: result.model_listed === false ? `${available}，列表未列出所填模型` : available }
+          : { state: "fail", text: result.message ?? "连接失败" },
+      }));
+    } catch (caught) {
+      if (request.signal.aborted) return;
+      setTests(current => ({
+        ...current,
+        [model.id]: { state: "fail", text: caught instanceof ApiError ? caught.message : "测试失败" },
+      }));
+    } finally {
+      if (testRequests.current.get(model.id) === request) testRequests.current.delete(model.id);
+    }
+  };
 
   useEffect(() => {
     const controller = new AbortController();
     setError("");
-    void loadModelSettings(controller.signal).then(setSettings).catch(error => {
+    const requests = testRequests.current;
+    void loadModelSettings(controller.signal).then(value => {
+      if (!controller.signal.aborted) {
+        setSaved(value);
+        setSettings(value);
+      }
+    }).catch(error => {
       if (!controller.signal.aborted) setError(error instanceof Error ? error.message : "模型配置加载失败");
     });
-    return () => controller.abort();
+    return () => {
+      controller.abort();
+      requests.forEach(request => request.abort());
+      requests.clear();
+    };
   }, [reload]);
 
   const update = (id: string, patch: Partial<ModelEntry>) => {
+    if ("base_url" in patch || "model" in patch || "api_key" in patch) invalidateTest(id);
     setNotice("");
     setSettings(current => current && ({
       ...current, models: current.models.map(model => model.id === id ? { ...model, ...patch } : model),
@@ -53,6 +105,7 @@ export default function ModelSettingsPanel() {
 
   const remove = (id: string) => {
     if (!settings) return;
+    invalidateTest(id);
     const assignments = { ...settings.assignments };
     for (const { id: feature } of FEATURES) {
       const route = assignments[feature];
@@ -71,7 +124,12 @@ export default function ModelSettingsPanel() {
     setNotice("");
     setError("");
     try {
-      setSettings(await saveModelSettings(settings));
+      testRequests.current.forEach(request => request.abort());
+      testRequests.current.clear();
+      setTests({});
+      const next = await saveModelSettings(settings);
+      setSaved(next);
+      setSettings(next);
       setNotice("模型配置已保存");
     } catch (error) {
       setError(error instanceof ApiError ? error.message : "模型配置保存失败");
@@ -99,10 +157,25 @@ export default function ModelSettingsPanel() {
                 添加模型
               </button>
             </div>
-            {settings.models.map((model, index) => (
+            {settings.models.map((model, index) => {
+              const persisted = saved?.models.find(item => item.id === model.id);
+              const needsSave = !persisted || model.base_url !== persisted.base_url ||
+                model.model !== persisted.model || model.api_key !== undefined;
+              const test = tests[model.id];
+              return (
               <fieldset className="model-entry" key={model.id}>
                 <legend>模型 {index + 1}</legend>
-                <button type="button" className="model-entry__remove" onClick={() => remove(model.id)}>移除</button>
+                <div className="model-entry__tools">
+                  <button type="button" className="chip" disabled={needsSave || test?.state === "testing"}
+                    onClick={() => void testConnection(model)}>
+                    {test?.state === "testing" ? "测试中…" : "测试连接"}
+                  </button>
+                  <button type="button" className="model-entry__remove" onClick={() => remove(model.id)}>移除</button>
+                </div>
+                {needsSave && <p className="model-settings__hint">保存模型的连接设置后可测试。</p>}
+                <p className={test ? `model-entry__test model-entry__test--${test.state}` : "sr-only"} role="status">
+                  {test?.text}
+                </p>
                 <div className="model-entry__fields">
                   <label>显示名称<input value={model.label} required maxLength={80}
                     placeholder="例如 本地千问" onChange={event => update(model.id, { label: event.target.value })} /></label>
@@ -129,7 +202,8 @@ export default function ModelSettingsPanel() {
                   ))}
                 </fieldset>
               </fieldset>
-            ))}
+              );
+            })}
             <details className="model-settings__import">
               <summary>批量导入 JSON</summary>
               <textarea aria-label="模型 JSON" value={importText} maxLength={100000} rows={4}

@@ -1,0 +1,300 @@
+{
+ "base": "http://127.0.0.1:8000",
+ "query": "Python 文档",
+ "provider": "searxng",
+ "rows": [
+  {
+   "suffix": "default",
+   "q": "Python 文档",
+   "http": 200,
+   "status": "ok",
+   "total": 20,
+   "provider": "searxng",
+   "ms": 2666,
+   "unresponsive": [
+    "duckduckgo(CAPTCHA)",
+    "swisscows(Suspended: access denied)"
+   ],
+   "sources": [
+    "360search",
+    "bing",
+    "duckduckgo web",
+    "google cse",
+    "mojeek",
+    "naver",
+    "sogou",
+    "yahoo",
+    "yandex"
+   ],
+   "elapsed_ms": 6695
+  },
+  {
+   "suffix": "g",
+   "q": "Python 文档 g",
+   "http": 200,
+   "status": "ok",
+   "total": 15,
+   "provider": "searxng",
+   "ms": 3614,
+   "unresponsive": [
+    "google(access denied)"
+   ],
+   "sources": [
+    "google cse"
+   ],
+   "elapsed_ms": 3624
+  },
+  {
+   "suffix": "b",
+   "q": "Python 文档 b",
+   "http": 200,
+   "status": "ok",
+   "total": 9,
+   "provider": "searxng",
+   "ms": 362,
+   "unresponsive": [],
+   "sources": [
+    "bing"
+   ],
+   "elapsed_ms": 383
+  },
+  {
+   "suffix": "d",
+   "q": "Python 文档 d",
+   "http": 200,
+   "status": "ok",
+   "total": 9,
+   "provider": "searxng",
+   "ms": 2262,
+   "unresponsive": [
+    "duckduckgo(CAPTCHA)"
+   ],
+   "sources": [
+    "duckduckgo web"
+   ],
+   "elapsed_ms": 2271
+  },
+  {
+   "suffix": "dw",
+   "q": "Python 文档 dw",
+   "http": 200,
+   "status": "ok",
+   "total": 8,
+   "provider": "searxng",
+   "ms": 1459,
+   "unresponsive": [],
+   "sources": [
+    "duckduckgo web"
+   ],
+   "elapsed_ms": 1467
+  },
+  {
+   "suffix": "br",
+   "q": "Python 文档 br",
+   "http": 503,
+   "status": "http_error",
+   "error": {
+    "code": "ENGINE_UNAVAILABLE",
+    "message": "引擎 brave 没有可用结果（已尝试 brave）：brave(Suspended: too many requests)",
+    "retryable": true
+   },
+   "elapsed_ms": 179
+  },
+  {
+   "suffix": "yt",
+   "q": "Python 文档 yt",
+   "http": 200,
+   "status": "ok",
+   "total": 14,
+   "provider": "searxng",
+   "ms": 1209,
+   "unresponsive": [],
+   "sources": [
+    "youtube"
+   ],
+   "elapsed_ms": 1223
+  },
+  {
+   "suffix": "gh",
+   "q": "Python 文档 gh",
+   "http": 200,
+   "status": "ok",
+   "total": 12,
+   "provider": "searxng",
+   "ms": 3526,
+   "unresponsive": [],
+   "sources": [
+    "github"
+   ],
+   "elapsed_ms": 7552
+  },
+  {
+   "suffix": "ar",
+   "q": "Python 文档 ar",
+   "http": 200,
+   "status": "ok",
+   "total": 10,
+   "provider": "searxng",
+   "ms": 1010,
+   "unresponsive": [],
+   "sources": [
+    "arxiv"
+   ],
+   "elapsed_ms": 1021
+  },
+  {
+   "suffix": "sc",
+   "q": "Python 文档 sc",
+   "http": 200,
+   "status": "ok",
+   "total": 9,
+   "provider": "searxng",
+   "ms": 5649,
+   "unresponsive": [
+    "google scholar(unexpected crash)"
+   ],
+   "sources": [
+    "serper"
+   ],
+   "elapsed_ms": 7136
+  },
+  {
+   "suffix": "w",
+   "q": "Python 文档 w",
+   "http": 200,
+   "status": "ok",
+   "total": 0,
+   "provider": "searxng",
+   "ms": 887,
+   "unresponsive": [],
+   "sources": [],
+   "elapsed_ms": 892
+  },
+  {
+   "suffix": "gc",
+   "q": "Python 文档 gc",
+   "http": 200,
+   "status": "ok",
+   "total": 15,
+   "provider": "searxng",
+   "ms": 874,
+   "unresponsive": [],
+   "sources": [
+    "google cse"
+   ],
+   "elapsed_ms": 888
+  },
+  {
+   "suffix": "sp",
+   "q": "Python 文档 sp",
+   "http": 200,
+   "status": "ok",
+   "total": 10,
+   "provider": "searxng",
+   "ms": 3499,
+   "unresponsive": [
+    "startpage(路由未生效)"
+   ],
+   "sources": [
+    "mojeek"
+   ],
+   "elapsed_ms": 3512
+  },
+  {
+   "suffix": "mj",
+   "q": "Python 文档 mj",
+   "http": 200,
+   "status": "ok",
+   "total": 10,
+   "provider": "searxng",
+   "ms": 1125,
+   "unresponsive": [],
+   "sources": [
+    "mojeek"
+   ],
+   "elapsed_ms": 1141
+  },
+  {
+   "suffix": "y",
+   "q": "Python 文档 y",
+   "http": 200,
+   "status": "ok",
+   "total": 6,
+   "provider": "searxng",
+   "ms": 1280,
+   "unresponsive": [],
+   "sources": [
+    "yahoo"
+   ],
+   "elapsed_ms": 1288
+  },
+  {
+   "suffix": "sg",
+   "q": "Python 文档 sg",
+   "http": 200,
+   "status": "ok",
+   "total": 10,
+   "provider": "searxng",
+   "ms": 894,
+   "unresponsive": [],
+   "sources": [
+    "sogou"
+   ],
+   "elapsed_ms": 903
+  },
+  {
+   "suffix": "so",
+   "q": "Python 文档 so",
+   "http": 200,
+   "status": "ok",
+   "total": 5,
+   "provider": "searxng",
+   "ms": 612,
+   "unresponsive": [],
+   "sources": [
+    "360search"
+   ],
+   "elapsed_ms": 622
+  },
+  {
+   "suffix": "n",
+   "q": "Python 文档 n",
+   "http": 200,
+   "status": "ok",
+   "total": 12,
+   "provider": "searxng",
+   "ms": 902,
+   "unresponsive": [],
+   "sources": [
+    "naver"
+   ],
+   "elapsed_ms": 3417
+  },
+  {
+   "suffix": "yd",
+   "q": "Python 文档 yd",
+   "http": 200,
+   "status": "ok",
+   "total": 10,
+   "provider": "searxng",
+   "ms": 1201,
+   "unresponsive": [],
+   "sources": [
+    "yandex"
+   ],
+   "elapsed_ms": 1212
+  },
+  {
+   "suffix": "sw",
+   "q": "Python 文档 sw",
+   "http": 503,
+   "status": "http_error",
+   "error": {
+    "code": "ENGINE_UNAVAILABLE",
+    "message": "引擎 swisscows 没有可用结果（没有可尝试的引擎）：swisscows(熔断冷却，约 60 分钟)",
+    "retryable": true
+   },
+   "elapsed_ms": 7
+  }
+ ]
+}

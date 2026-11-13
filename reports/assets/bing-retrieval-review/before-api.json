@@ -1,0 +1,208 @@
+{
+  "parsed": {
+    "q": "deepseek",
+    "engine": "bing",
+    "region": null,
+    "router": "bang",
+    "expanded": []
+  },
+  "groups": {
+    "strong": [],
+    "related": [
+      {
+        "id": "r_4",
+        "url": "https://github.com/deepseek-ai",
+        "display_url": "github.com › deepseek-ai",
+        "title": "DeepSeek · GitHub",
+        "snippet": "2023年10月21日 · DeepInfer Public DeepInfer: High-performance, large-scale inference framework for DeepSeek models Python …",
+        "engine": [
+          "bing"
+        ],
+        "score": 0.512,
+        "risk": 0.0,
+        "reasons": [
+          "标题与摘要命中查询词",
+          "权威域名"
+        ],
+        "favicon": "https://github.com/favicon.ico",
+        "published": null,
+        "read_minutes": null,
+        "go_url": null
+      },
+      {
+        "id": "r_3",
+        "url": "https://download.deepseek.com/",
+        "display_url": "download.deepseek.com",
+        "title": "DeepSeek App",
+        "snippet": "2026年9月2日 · 下载 DeepSeek 应用 - 您的智能助手，随时随地享受 AI 服务。 支持 iOS 和 Android 平台。 | Download DeepSeek …",
+        "engine": [
+          "bing"
+        ],
+        "score": 0.362,
+        "risk": 0.0,
+        "reasons": [
+          "标题与摘要命中查询词"
+        ],
+        "favicon": "https://download.deepseek.com/favicon.ico",
+        "published": null,
+        "read_minutes": null,
+        "go_url": null
+      },
+      {
+        "id": "r_7",
+        "url": "https://openrouter.ai/deepseek/deepseek-v4-pro-0813",
+        "display_url": "openrouter.ai › deepseek › deepseek-v4-pro-0813",
+        "title": "DeepSeek V4 Pro 0813 - API Pricing & Benchmarks | OpenRouter",
+        "snippet": "2026年8月12日 · DeepSeek V4 Pro 0813 is a large-scale mixture-of-experts model from DeepSeek. This is the GA release of …",
+        "engine": [
+          "bing"
+        ],
+        "score": 0.3616,
+        "risk": 0.0,
+        "reasons": [
+          "标题与摘要命中查询词"
+        ],
+        "favicon": "https://openrouter.ai/favicon.ico",
+        "published": null,
+        "read_minutes": null,
+        "go_url": null
+      },
+      {
+        "id": "r_5",
+        "url": "https://apps.apple.com/us/app/deepseek-ai-assistant/id6737597349",
+        "display_url": "apps.apple.com › deepseek-ai-assistant › id6737597349",
+        "title": "DeepSeek - AI Assistant - App Store",
+        "snippet": "As a free AI model, DeepSeek is quite robust and handles many of the same core tasks as other leading AI apps, making it a solid …",
+        "engine": [
+          "bing"
+        ],
+        "score": 0.3608,
+        "risk": 0.0,
+        "reasons": [
+          "标题与摘要命中查询词"
+        ],
+        "favicon": "https://apps.apple.com/favicon.ico",
+        "published": null,
+        "read_minutes": null,
+        "go_url": null
+      },
+      {
+        "id": "r_9",
+        "url": "https://opencode.ai/data/deepseek/deepseek-v4-flash",
+        "display_url": "opencode.ai › deepseek › deepseek-v4-flash",
+        "title": "DeepSeek V4 Flash Usage, Cost & Rank | OpenCode Data",
+        "snippet": "5 天之前 · DeepSeek V4 Flash ranked #46 by tokens across OpenCode last week, with 3.6% of tokens over the past two months. …",
+        "engine": [
+          "bing"
+        ],
+        "score": 0.3606,
+        "risk": 0.0,
+        "reasons": [
+          "标题与摘要命中查询词"
+        ],
+        "favicon": "https://opencode.ai/favicon.ico",
+        "published": null,
+        "read_minutes": null,
+        "go_url": null
+      },
+      {
+        "id": "r_8",
+        "url": "https://build.nvidia.com/deepseek-ai",
+        "display_url": "build.nvidia.com › deepseek-ai",
+        "title": "AI Models by DeepSeek AI | Try NVIDIA NIM APIs",
+        "snippet": "2026年9月18日 · deepseek-v4.1-flash 552B MoE, 8B active params with native multimodal support and lower API cost using smaller …",
+        "engine": [
+          "bing"
+        ],
+        "score": 0.359,
+        "risk": 0.0,
+        "reasons": [
+          "标题与摘要命中查询词"
+        ],
+        "favicon": "https://build.nvidia.com/favicon.ico",
+        "published": null,
+        "read_minutes": null,
+        "go_url": null
+      },
+      {
+        "id": "r_1",
+        "url": "https://baike.baidu.com/item/%E6%9D%AD%E5%B7%9E%E6%B7%B1%E5%BA%A6%E6%B1%82%E7%B4%A2%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/64541110",
+        "display_url": "baike.baidu.com › %E6%9D%AD%E5%B7%9E%E6%B7%B1%E5%BA%A6%E6%B1%82%E7%B4%A2%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8 › 64541110",
+        "title": "杭州深度求索人工智能基础技术研究有限公司_百度百科",
+        "snippet": "主要产品：公司推出DeepSeek系列大语言模型，包括2024年1月首个DeepSeek LLM、2024年5月DeepSeek-V2、2024年12 …",
+        "engine": [
+          "bing"
+        ],
+        "score": 0.3421,
+        "risk": 0.1,
+        "reasons": [
+          "标题与摘要命中查询词",
+          "URL 过长"
+        ],
+        "favicon": "https://baike.baidu.com/favicon.ico",
+        "published": null,
+        "read_minutes": null,
+        "go_url": null
+      },
+      {
+        "id": "r_2",
+        "url": "https://www.deepseek.com/en/platform/",
+        "display_url": "www.deepseek.com › en › platform",
+        "title": "DeepSeek | API Platform",
+        "snippet": "2026年8月13日 · Build with DeepSeek API Code your applica Build new products, experiences, and workflows with the DeepSeek V4 …",
+        "engine": [
+          "bing"
+        ],
+        "score": 0.3222,
+        "risk": 0.0,
+        "reasons": [
+          "标题与摘要命中查询词"
+        ],
+        "favicon": "https://www.deepseek.com/favicon.ico",
+        "published": null,
+        "read_minutes": null,
+        "go_url": null
+      }
+    ],
+    "weak": [
+      {
+        "id": "r_6",
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813",
+        "display_url": "huggingface.co › deepseek-ai › DeepSeek-V4-Pro-0813",
+        "title": "deepseek-ai/DeepSeek-V4-Pro-0813 · Hugging Face",
+        "snippet": "DeepSeek-V4 ... DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence",
+        "engine": [
+          "bing"
+        ],
+        "score": 0.1,
+        "risk": 0.0,
+        "reasons": [
+          "仅弱匹配"
+        ],
+        "favicon": "https://huggingface.co/favicon.ico",
+        "published": null,
+        "read_minutes": null,
+        "go_url": null
+      }
+    ]
+  },
+  "meta": {
+    "status": "ok",
+    "engines": [
+      "bing"
+    ],
+    "unresponsive": [],
+    "provider": "searxng",
+    "cached": true,
+    "ms": 1,
+    "total": 9,
+    "upstream_total": 9,
+    "filtered": {
+      "dup": 0,
+      "risk": 0
+    },
+    "official": 0,
+    "sid": "s_34d47a6873710aca16df794fce56145f"
+  },
+  "official": null
+}

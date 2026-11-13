@@ -1,0 +1,15 @@
+{
+  "status": 200,
+  "model": "qwen3.5-4b-local:latest",
+  "groups": [
+    {
+      "label": "Python 官方入门教程",
+      "count": 5
+    },
+    {
+      "label": "Python 中文入门视频",
+      "count": 5
+    }
+  ],
+  "browserErrors": []
+}

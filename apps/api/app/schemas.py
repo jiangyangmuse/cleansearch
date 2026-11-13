@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+import re
 from typing import Literal
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_serializer
 
 
 class SearchOpts(BaseModel):
@@ -12,8 +13,45 @@ class SearchOpts(BaseModel):
     exact: bool = False
     summarize: bool = False
     literal: bool = False  # 整段作为查询文本，末尾词不解析为路由
+    # 筛选能力：时间范围 / 语言 / 站点限定 / 去重强度
+    time_range: Literal["day", "week", "month", "year"] | None = None
+    language: str | None = Field(default=None, max_length=12)
+    site: str | None = Field(default=None, max_length=253)
+    dedupe: Literal["off", "normal", "strict"] = "normal"
     # M0 自检用：显式指定 fixture 样本，未指定则按查询内容判定
     fixture: Literal["hit", "empty", "error", "risky"] | None = None
+
+    @field_validator("language")
+    @classmethod
+    def _check_language(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        text = value.strip().lower()
+        if not text:
+            return None
+        if not re.fullmatch(r"[a-z]{2,3}(?:-[A-Za-z]{2,4})?", text):
+            raise ValueError("语言代码形如 zh、en 或 pt-BR")
+        language, separator, region = text.partition("-")
+        return language + separator + (region.title() if len(region) == 4 else region.upper())
+
+    @field_validator("site")
+    @classmethod
+    def _check_site(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        text = value.strip().lower()
+        if not text:
+            return None
+        for prefix in ("https://", "http://"):
+            if text.startswith(prefix):
+                text = text[len(prefix):]
+        text = re.split(r"[/?#]", text, maxsplit=1)[0].removesuffix(".")
+        if text.startswith("www."):
+            text = text[4:]
+        labels = text.split(".")
+        if len(labels) < 2 or any(not re.fullmatch(r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?", label) for label in labels):
+            raise ValueError("站点限定只接受域名，例如 example.com")
+        return text
 
 
 class SearchRequest(BaseModel):
@@ -38,6 +76,16 @@ class ParsedQuery(BaseModel):
     router: Literal["suffix", "bang", "default"] = "default"
     # 查询扩展命中的同义词（M9）；没有扩展时为空数组
     expanded: list[str] = Field(default_factory=list)
+    custom_code: str | None = None
+    open_url: str | None = None
+
+    @model_serializer(mode="wrap")
+    def omit_unused_shortcut_fields(self, serialize):
+        data = serialize(self)
+        for key in ("custom_code", "open_url"):
+            if data.get(key) is None:
+                data.pop(key, None)
+        return data
 
 
 class Result(BaseModel):
@@ -94,6 +142,15 @@ class FilteredCounts(BaseModel):
     risk: int = 0
 
 
+class SearchFilters(BaseModel):
+    """回显本次生效的筛选条件；未启用时字段为 None/默认。"""
+
+    time_range: str | None = None
+    language: str | None = None
+    site: str | None = None
+    dedupe: str = "normal"
+
+
 class SearchMeta(BaseModel):
     status: Literal["ok", "empty"]
     engines: list[str] = Field(default_factory=list)
@@ -106,6 +163,8 @@ class SearchMeta(BaseModel):
     filtered: FilteredCounts = Field(default_factory=FilteredCounts)
     official: int = 0
     directory: int = 0
+    # 本次生效的筛选条件（回显给前端做筛选条状态）
+    filters: SearchFilters = Field(default_factory=SearchFilters)
     sid: str
 
 
@@ -137,6 +196,7 @@ class HealthResponse(BaseModel):
     llm_provider: str = "stub"
     llm_model: str = ""
     bookmarks: int = 0
+    db_path: str = ""
     version: str
 
 

@@ -1,0 +1,21 @@
+{
+  "started_at": "2026-11-12T08:07:31.895Z",
+  "base": "http://127.0.0.1:8000",
+  "checks": [
+    {
+      "name": "home",
+      "status": 200,
+      "title": "CleanSearch"
+    },
+    {
+      "name": "api-search-from-browser",
+      "status": 422
+    }
+  ],
+  "browser_version": "156.0.8078.4",
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 422 (Unprocessable Content)"
+  ],
+  "after_search_url": "http://127.0.0.1:8000/?q=test",
+  "completed_at": "2026-11-12T08:07:35.910Z"
+}

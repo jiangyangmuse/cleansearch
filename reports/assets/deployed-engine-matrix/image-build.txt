@@ -1,0 +1,204 @@
+ Image llq-api Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 483B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 343B done
+#2 DONE 0.0s
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 4.2s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [1/6] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#6 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.0s done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 27.98kB 0.0s done
+#7 DONE 0.0s
+
+#8 [2/6] WORKDIR /app
+#8 CACHED
+
+#9 [3/6] COPY pyproject.toml ./
+#9 CACHED
+
+#10 [4/6] COPY app ./app
+#10 DONE 0.1s
+
+#11 [5/6] COPY fixtures ./fixtures
+#11 DONE 0.1s
+
+#12 [6/6] RUN pip install --no-cache-dir ".[content]"
+#12 1.338 Processing /app
+#12 1.341   Installing build dependencies: started
+#12 6.165   Installing build dependencies: finished with status 'done'
+#12 6.167   Getting requirements to build wheel: started
+#12 6.636   Getting requirements to build wheel: finished with status 'done'
+#12 6.638   Preparing metadata (pyproject.toml): started
+#12 7.064   Preparing metadata (pyproject.toml): finished with status 'done'
+#12 8.410 Collecting fastapi>=0.115 (from cleansearch-api==0.1.0)
+#12 9.840   Downloading fastapi-0.162.2-py3-none-any.whl.metadata (27 kB)
+#12 10.21 Collecting uvicorn>=0.34 (from uvicorn[standard]>=0.34->cleansearch-api==0.1.0)
+#12 10.68   Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+#12 11.16 Collecting httpx>=0.27 (from cleansearch-api==0.1.0)
+#12 11.64   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+#12 12.15 Collecting pydantic>=2.8 (from cleansearch-api==0.1.0)
+#12 12.60   Downloading pydantic-2.14.3-py3-none-any.whl.metadata (141 kB)
+#12 13.35 Collecting python-multipart>=0.0.9 (from cleansearch-api==0.1.0)
+#12 13.55   Downloading python_multipart-0.0.33-py3-none-any.whl.metadata (6.3 kB)
+#12 13.74 Collecting tld<1.0,>=0.13 (from cleansearch-api==0.1.0)
+#12 13.92   Downloading tld-0.13.2-py2.py3-none-any.whl.metadata (11 kB)
+#12 14.21 Collecting trafilatura>=2.0 (from cleansearch-api==0.1.0)
+#12 14.40   Downloading trafilatura-2.3.1-py3-none-any.whl.metadata (13 kB)
+#12 14.65 Collecting starlette>=0.46.0 (from fastapi>=0.115->cleansearch-api==0.1.0)
+#12 14.82   Downloading starlette-1.10.0-py3-none-any.whl.metadata (6.6 kB)
+#12 15.11 Collecting typing-extensions>=4.8.0 (from fastapi>=0.115->cleansearch-api==0.1.0)
+#12 15.29   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#12 15.46 Collecting typing-inspection>=0.4.2 (from fastapi>=0.115->cleansearch-api==0.1.0)
+#12 15.63   Downloading typing_inspection-0.4.5-py3-none-any.whl.metadata (2.6 kB)
+#12 15.80 Collecting annotated-doc>=0.0.2 (from fastapi>=0.115->cleansearch-api==0.1.0)
+#12 15.97   Downloading annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+#12 16.61 Collecting opentelemetry-api>=1.44.0 (from fastapi>=0.115->cleansearch-api==0.1.0)
+#12 16.79   Downloading opentelemetry_api-1.45.2-py3-none-any.whl.metadata (1.4 kB)
+#12 17.06 Collecting anyio (from httpx>=0.27->cleansearch-api==0.1.0)
+#12 17.25   Downloading anyio-4.16.0-py3-none-any.whl.metadata (4.7 kB)
+#12 17.44 Collecting certifi (from httpx>=0.27->cleansearch-api==0.1.0)
+#12 17.64   Downloading certifi-2026.10.23-py3-none-any.whl.metadata (2.5 kB)
+#12 17.84 Collecting httpcore==1.* (from httpx>=0.27->cleansearch-api==0.1.0)
+#12 18.02   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+#12 18.53 Collecting idna (from httpx>=0.27->cleansearch-api==0.1.0)
+#12 18.73   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+#12 19.18 Collecting h11>=0.16 (from httpcore==1.*->httpx>=0.27->cleansearch-api==0.1.0)
+#12 19.44   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#12 19.78 Collecting annotated-types>=0.6.0 (from pydantic>=2.8->cleansearch-api==0.1.0)
+#12 20.30   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#12 21.55 Collecting pydantic-core==2.50.4 (from pydantic>=2.8->cleansearch-api==0.1.0)
+#12 21.74   Downloading pydantic_core-2.50.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.6 kB)
+#12 22.19 Collecting charset_normalizer>=3.5.2 (from trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 22.38   Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (46 kB)
+#12 23.58 Collecting courlan>=1.4.0 (from trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 23.80   Downloading courlan-1.4.0-py3-none-any.whl.metadata (18 kB)
+#12 24.50 Collecting htmldate>=1.11.0 (from trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 24.71   Downloading htmldate-1.11.0-py3-none-any.whl.metadata (9.8 kB)
+#12 25.59 Collecting justext>=3.0.2 (from trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 25.76   Downloading justext-3.0.2-py2.py3-none-any.whl.metadata (7.3 kB)
+#12 26.27 Collecting lxml>=6.1.3 (from trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 26.49   Downloading lxml-6.1.3-cp312-cp312-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl.metadata (3.3 kB)
+#12 26.69 Collecting urllib3<3,>=2.8.0 (from trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 26.87   Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+#12 27.45 Collecting click>=7.0 (from uvicorn>=0.34->uvicorn[standard]>=0.34->cleansearch-api==0.1.0)
+#12 27.65   Downloading click-8.5.1-py3-none-any.whl.metadata (2.6 kB)
+#12 28.30 Collecting httptools>=0.8.0 (from uvicorn[standard]>=0.34->cleansearch-api==0.1.0)
+#12 28.51   Downloading httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+#12 28.69 Collecting python-dotenv>=0.13 (from uvicorn[standard]>=0.34->cleansearch-api==0.1.0)
+#12 28.87   Downloading python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)
+#12 29.33 Collecting pyyaml>=5.1 (from uvicorn[standard]>=0.34->cleansearch-api==0.1.0)
+#12 29.50   Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+#12 29.84 Collecting uvloop>=0.15.1 (from uvicorn[standard]>=0.34->cleansearch-api==0.1.0)
+#12 30.04   Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.1 kB)
+#12 31.55 Collecting watchfiles>=0.20 (from uvicorn[standard]>=0.34->cleansearch-api==0.1.0)
+#12 31.75   Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+#12 33.21 Collecting websockets>=13.0 (from uvicorn[standard]>=0.34->cleansearch-api==0.1.0)
+#12 33.39   Downloading websockets-17.4-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.3 kB)
+#12 33.62 Collecting babel>=2.16.0 (from courlan>=1.4.0->trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 33.82   Downloading babel-2.18.0-py3-none-any.whl.metadata (2.2 kB)
+#12 34.12 Collecting dateparser>=1.4.3 (from htmldate>=1.11.0->trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 34.30   Downloading dateparser-1.5.0-py3-none-any.whl.metadata (55 kB)
+#12 34.77 Collecting python-dateutil>=2.9.0.post0 (from htmldate>=1.11.0->trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 35.37   Downloading python_dateutil-4.0.0-py3-none-any.whl.metadata (7.3 kB)
+#12 36.01 Collecting pytz>=2024.2 (from dateparser>=1.4.3->htmldate>=1.11.0->trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 36.22   Downloading pytz-2026.6-py2.py3-none-any.whl.metadata (22 kB)
+#12 38.78 Collecting regex>=2024.9.11 (from dateparser>=1.4.3->htmldate>=1.11.0->trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 38.96   Downloading regex-2026.11.7-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (40 kB)
+#12 39.33 Collecting tzlocal>=0.2 (from dateparser>=1.4.3->htmldate>=1.11.0->trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 39.50   Downloading tzlocal-5.4.5-py3-none-any.whl.metadata (7.7 kB)
+#12 39.70 Collecting lxml_html_clean (from lxml[html_clean]>=4.4.2->justext>=3.0.2->trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 39.87   Downloading lxml_html_clean-0.4.6-py3-none-any.whl.metadata (2.4 kB)
+#12 40.34 Collecting tzdata (from python-dateutil>=2.9.0.post0->htmldate>=1.11.0->trafilatura>=2.0->cleansearch-api==0.1.0)
+#12 40.52   Downloading tzdata-2026.6-py2.py3-none-any.whl.metadata (1.4 kB)
+#12 40.70 Downloading fastapi-0.162.2-py3-none-any.whl (151 kB)
+#12 41.51 Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+#12 41.81 Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+#12 42.24 Downloading pydantic-2.14.3-py3-none-any.whl (494 kB)
+#12 43.74 Downloading pydantic_core-2.50.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.3 MB)
+#12 45.83    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 1.3 MB/s eta 0:00:00
+#12 46.00 Downloading python_multipart-0.0.33-py3-none-any.whl (32 kB)
+#12 46.28 Downloading tld-0.13.2-py2.py3-none-any.whl (296 kB)
+#12 46.54 Downloading trafilatura-2.3.1-py3-none-any.whl (158 kB)
+#12 46.99 Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)
+#12 47.21 Downloading annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+#12 47.40 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+#12 47.60 Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (257 kB)
+#12 48.20 Downloading click-8.5.1-py3-none-any.whl (126 kB)
+#12 48.44 Downloading courlan-1.4.0-py3-none-any.whl (34 kB)
+#12 48.62 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+#12 48.80 Downloading htmldate-1.11.0-py3-none-any.whl (33 kB)
+#12 49.00 Downloading httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (552 kB)
+#12 49.23    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 552.8/552.8 kB 2.8 MB/s eta 0:00:00
+#12 49.41 Downloading justext-3.0.2-py2.py3-none-any.whl (837 kB)
+#12 49.75    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 837.9/837.9 kB 2.3 MB/s eta 0:00:00
+#12 49.92 Downloading lxml-6.1.3-cp312-cp312-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (5.2 MB)
+#12 50.84    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.2/5.2 MB 6.1 MB/s eta 0:00:00
+#12 51.02 Downloading opentelemetry_api-1.45.2-py3-none-any.whl (60 kB)
+#12 51.21 Downloading python_dotenv-1.2.4-py3-none-any.whl (23 kB)
+#12 51.40 Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+#12 51.49    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 12.8 MB/s eta 0:00:00
+#12 51.67 Downloading starlette-1.10.0-py3-none-any.whl (80 kB)
+#12 51.84 Downloading anyio-4.16.0-py3-none-any.whl (134 kB)
+#12 52.12 Downloading idna-3.20-py3-none-any.whl (69 kB)
+#12 52.31 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#12 52.49 Downloading typing_inspection-0.4.5-py3-none-any.whl (14 kB)
+#12 52.69 Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+#12 52.89 Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.5 MB)
+#12 53.32    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 12.0 MB/s eta 0:00:00
+#12 53.50 Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (458 kB)
+#12 53.80 Downloading websockets-17.4-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (226 kB)
+#12 54.08 Downloading certifi-2026.10.23-py3-none-any.whl (135 kB)
+#12 54.29 Downloading babel-2.18.0-py3-none-any.whl (10.2 MB)
+#12 55.43    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.2/10.2 MB 9.1 MB/s eta 0:00:00
+#12 55.60 Downloading dateparser-1.5.0-py3-none-any.whl (373 kB)
+#12 55.92 Downloading python_dateutil-4.0.0-py3-none-any.whl (92 kB)
+#12 56.11 Downloading pytz-2026.6-py2.py3-none-any.whl (506 kB)
+#12 56.44 Downloading regex-2026.11.7-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (808 kB)
+#12 56.52    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 808.4/808.4 kB 12.0 MB/s eta 0:00:00
+#12 56.69 Downloading tzlocal-5.4.5-py3-none-any.whl (18 kB)
+#12 56.86 Downloading lxml_html_clean-0.4.6-py3-none-any.whl (14 kB)
+#12 57.04 Downloading tzdata-2026.6-py2.py3-none-any.whl (348 kB)
+#12 57.14 Building wheels for collected packages: cleansearch-api
+#12 57.14   Building wheel for cleansearch-api (pyproject.toml): started
+#12 57.61   Building wheel for cleansearch-api (pyproject.toml): finished with status 'done'
+#12 57.61   Created wheel for cleansearch-api: filename=cleansearch_api-0.1.0-py3-none-any.whl size=88587 sha256=ba30ba5144ed498b6dcc9b1399bf444613c75071a4b4423e3fb7a72402d86abe
+#12 57.61   Stored in directory: /tmp/pip-ephem-wheel-cache-1dusz7ja/wheels/54/1b/b7/aa63e25c8f14f4f2ae7b04e6097bdecb770e455c5c1ee0a600
+#12 57.61 Successfully built cleansearch-api
+#12 57.67 Installing collected packages: pytz, websockets, uvloop, urllib3, tzlocal, tzdata, typing-extensions, tld, regex, pyyaml, python-multipart, python-dotenv, lxml, idna, httptools, h11, click, charset_normalizer, certifi, babel, annotated-types, annotated-doc, uvicorn, typing-inspection, python-dateutil, pydantic-core, opentelemetry-api, lxml_html_clean, httpcore, courlan, anyio, watchfiles, starlette, pydantic, httpx, dateparser, justext, htmldate, fastapi, trafilatura, cleansearch-api
+#12 59.98 Successfully installed annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.16.0 babel-2.18.0 certifi-2026.10.23 charset_normalizer-3.5.2 cleansearch-api-0.1.0 click-8.5.1 courlan-1.4.0 dateparser-1.5.0 fastapi-0.162.2 h11-0.16.0 htmldate-1.11.0 httpcore-1.0.9 httptools-0.9.0 httpx-0.28.1 idna-3.20 justext-3.0.2 lxml-6.1.3 lxml_html_clean-0.4.6 opentelemetry-api-1.45.2 pydantic-2.14.3 pydantic-core-2.50.4 python-dateutil-4.0.0 python-dotenv-1.2.4 python-multipart-0.0.33 pytz-2026.6 pyyaml-6.0.3 regex-2026.11.7 starlette-1.10.0 tld-0.13.2 trafilatura-2.3.1 typing-extensions-4.16.0 typing-inspection-0.4.5 tzdata-2026.6 tzlocal-5.4.5 urllib3-2.8.0 uvicorn-0.54.0 uvloop-0.23.0 watchfiles-1.3.0 websockets-17.4
+#12 59.98 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#12 61.25 
+#12 61.25 [notice] A new release of pip is available: 25.0.1 -> 26.3
+#12 61.25 [notice] To update, run: pip install --upgrade pip
+#12 DONE 61.6s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 3.6s done
+#13 exporting manifest sha256:ca5981a56fbc7eb2a41ae3c87aab13e3c992d5ddbcd4844297cedf26af2b63e9 0.0s done
+#13 exporting config sha256:5240bf4c35eff7a7f39786e7f4b252eca430062ae0d52b9c9f7bc44aaf0d2f8f done
+#13 exporting attestation manifest sha256:91279ca2324213eaa5b74c4824314c05001fdf5a9c74aa9a632a949a17b571cb 0.0s done
+#13 exporting manifest list sha256:41646bd7e2f6c22ba80cacf743178f97c87fe057224cd295a67973cc1cc81d9f done
+#13 naming to docker.io/library/llq-api:latest done
+#13 unpacking to docker.io/library/llq-api:latest
+#13 unpacking to docker.io/library/llq-api:latest 0.9s done
+#13 DONE 4.6s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.1s
+ Image llq-api Built 

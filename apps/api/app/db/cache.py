@@ -48,10 +48,12 @@ def search_key(
     safe: bool = True,
     fixture: str | None = None,
     *,
+    filters: tuple[str | None, str | None, str | None, str] = (None, None, None, "normal"),
     namespace: tuple[str, ...] = (),
 ) -> str:
+    """缓存键：筛选条件（时间/语言/站点/去重）必须参与，否则不同筛选会互相污染。"""
     raw = json.dumps(
-        ["search-v6", namespace, q, engine, region, page, safe, fixture],
+        ["search-v9", namespace, q, engine, region, page, safe, fixture, list(filters)],
         ensure_ascii=False,
         sort_keys=True,
     )

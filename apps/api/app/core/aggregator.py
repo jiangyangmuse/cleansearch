@@ -8,7 +8,8 @@ from functools import lru_cache
 
 from app.config import Settings, get_settings
 from app.core.breaker import UPSTREAM_KEY, EngineHealthStore, engine_name
-from app.core.engine_catalog import engine_candidates, searx_engine_name
+from app.core.engine_catalog import ENGINE_SPECS, engine_candidates, searx_engine_name
+from app.core.engine_preferences import NoSelectedEngines
 from app.core.errors import (
     EngineUnavailable,
     EnginesUnresponsive,
@@ -17,7 +18,7 @@ from app.core.errors import (
 )
 from app.core.fixture_provider import FixtureProvider
 from app.core.paid import build_paid_search
-from app.core.searxng import SearxngClient
+from app.core.searxng import SearxngClient, restrict_results
 from app.schemas import Result
 
 
@@ -59,6 +60,11 @@ class Aggregator:
     def paid_capabilities(self) -> str:
         return ",".join(self._paid.engines) if self._paid is not None and self.provider_name == "searxng" else ""
 
+    async def configured_engines(self) -> dict[str, bool]:
+        if self.provider_name == "fixture":
+            return {spec.searx_engine: spec.code in {"b", "g", "d", "br"} for spec in ENGINE_SPECS}
+        return await self._searxng.configured_engines()
+
     async def search(
         self,
         q: str,
@@ -68,10 +74,18 @@ class Aggregator:
         engine: str = "default",
         fixture: str | None = None,
         allow_paid: bool = True,
+        selected_engines: tuple[str, ...] | None = None,
+        time_range: str | None = None,
+        language: str | None = None,
+        site: str | None = None,
     ) -> Aggregated:
         started = time.perf_counter()
         health = self._health_store()
         provider = self._settings.provider
+        # 现有商用客户端不支持时间和语言，避免把未筛选的付费结果混进来。
+        allow_paid = allow_paid and not (time_range or language)
+        if selected_engines == ():
+            raise NoSelectedEngines("默认搜索引擎已全部关闭，请在设置中开启引擎或使用指定引擎的后缀")
 
         # 显式引擎：主引擎失败时按目录里的回退链继续，最后才考虑商用接口。
         # fixture 模式保持单次调用，测试与自检不接真实上游。
@@ -85,9 +99,15 @@ class Aggregator:
                 fixture=fixture,
                 started=started,
                 health=health,
+                time_range=time_range,
+                language=language,
+                site=site,
+                allow_paid=allow_paid,
             )
 
-        paid_search = self._paid if allow_paid and provider == "searxng" and page == 1 and engine == "default" else None
+        paid_search = self._paid if (
+            allow_paid and selected_engines is None and provider == "searxng" and page == 1 and engine == "default"
+        ) else None
 
         routed_engine = searx_engine_name(engine)
         if health is not None and engine != "default" and health.is_open(routed_engine):
@@ -111,9 +131,13 @@ class Aggregator:
                     results, engines, unresponsive = self._fixture.search(
                         q, page, region, safe, engine=engine, fixture=fixture
                     )
+                    if selected_engines is not None:
+                        results, engines = restrict_results(results, selected_engines)
                 else:
+                    selection = {} if selected_engines is None else {"selected_engines": selected_engines}
                     results, engines, unresponsive = await self._searxng.search(
-                        q, page, region, safe, engine=engine, fixture=fixture
+                        q, page, region, safe, engine=engine, fixture=fixture,
+                        time_range=time_range, language=language, site=site, **selection
                     )
             except EnginesUnresponsive as exc:
                 primary_error = exc
@@ -146,7 +170,7 @@ class Aggregator:
             if health is not None and health.is_open(paid_engine):
                 unresponsive.append(f"{paid_engine}(熔断冷却中)")
             else:
-                paid = await paid_search.search(q, page, region)
+                paid = await paid_search.search(f"{q} site:{site}" if site else q, page, region)
                 if paid.error:
                     unresponsive.append(f"{paid.engine}({paid.error})")
                     if health is not None:
@@ -181,6 +205,10 @@ class Aggregator:
         fixture: str | None,
         started: float,
         health: EngineHealthStore | None,
+        time_range: str | None = None,
+        language: str | None = None,
+        site: str | None = None,
+        allow_paid: bool = True,
     ) -> Aggregated:
         """显式引擎：主引擎 → 回退链 → 商用接口，任一成功即返回。"""
         candidates = engine_candidates(engine)
@@ -207,7 +235,8 @@ class Aggregator:
             attempted.append(candidate)
             try:
                 results, engines, extra = await self._searxng.search(
-                    q, page, region, safe, engine=candidate, fixture=fixture
+                    q, page, region, safe, engine=candidate, fixture=fixture,
+                    time_range=time_range, language=language, site=site,
                 )
             except EnginesUnresponsive as exc:
                 last_error = exc
@@ -245,11 +274,11 @@ class Aggregator:
 
         # 商用兜底只补「显式引擎」这一路，且每个引擎有独立路由；
         # 没有可用 key / 不是该引擎对应的接口时直接跳过。
-        paid_provider = self._paid.provider_for_engine(engine) if self._paid is not None and page == 1 else ""
+        paid_provider = self._paid.provider_for_engine(engine) if allow_paid and self._paid is not None and page == 1 else ""
         if paid_provider and health is not None and health.is_open(paid_provider):
             unresponsive.append(f"{paid_provider}(熔断冷却中)")
         elif paid_provider:
-            paid = await self._paid.search_for_engine(engine, q, page, region)
+            paid = await self._paid.search_for_engine(engine, f"{q} site:{site}" if site else q, page, region)
             if paid is not None:
                 if paid.error:
                     unresponsive.append(f"{paid.engine}({paid.error})")

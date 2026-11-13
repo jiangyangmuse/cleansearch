@@ -1,0 +1,52 @@
+{
+  "query": "deepseek",
+  "browser": "156.0.8078.4",
+  "mocked": false,
+  "meta": {
+    "status": "ok",
+    "engines": [
+      "yahoo",
+      "duckduckgo web",
+      "duckduckgo",
+      "bing",
+      "yandex",
+      "360search",
+      "google cse",
+      "naver",
+      "swisscows",
+      "wikipedia",
+      "serper"
+    ],
+    "unresponsive": [
+      "mojeek(Suspended: access denied)",
+      "sogou(unexpected crash)"
+    ],
+    "provider": "searxng",
+    "cached": true,
+    "ms": 0,
+    "total": 16,
+    "upstream_total": 65,
+    "filtered": {
+      "dup": 7,
+      "risk": 0
+    }
+  },
+  "homepage_candidates": [
+    {
+      "url": "https://www.deepseek.com/",
+      "engine": [
+        "360search",
+        "google cse",
+        "swisscows"
+      ],
+      "title": "DeepSeek | Into the Unknown"
+    }
+  ],
+  "chat_candidates": [
+    "https://chat.deepseek.com/"
+  ],
+  "homepage_visible_by_default": true,
+  "nativeAndroid": false,
+  "mobile_horizontal_overflow": false,
+  "page_errors": []
+}

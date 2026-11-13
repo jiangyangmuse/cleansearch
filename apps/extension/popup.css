@@ -1,3 +1,4 @@
+:root { color-scheme: light dark; }
 body {
   width: 320px;
   margin: 0;
@@ -10,26 +11,35 @@ h1 { margin: 0 0 8px; font-size: 14px; }
 .url-input { margin-bottom: 8px; color: #66716c; }
 label { display: block; margin-bottom: 8px; color: #66716c; }
 input {
-  display: block;
-  width: 100%;
-  margin-top: 3px;
-  padding: 6px 8px;
-  font: inherit;
-  color: #1d2321;
-  border: 1px solid #e3e7e3;
-  border-radius: 6px;
+  display: block; width: 100%; margin-top: 3px; padding: 6px 8px;
+  font: inherit; color: #1d2321; background: #fff;
+  border: 1px solid #e3e7e3; border-radius: 6px;
 }
 button {
-  width: 100%;
-  padding: 7px;
-  font: inherit;
-  font-weight: 600;
-  color: #fff;
-  background: #2f6f4f;
-  border: 0;
-  border-radius: 6px;
-  cursor: pointer;
+  width: 100%; padding: 7px; font: inherit; font-weight: 600; color: #fff;
+  background: #2f6f4f; border: 0; border-radius: 6px; cursor: pointer;
+}
+button:focus-visible, input:focus-visible, a:focus-visible {
+  outline: 2px solid #2f6f4f; outline-offset: 2px;
 }
 #status { min-height: 18px; margin: 8px 0 0; color: #2f6f4f; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; font-size: 12px; }
+.links a { color: #2f6f4f; text-decoration: none; }
+.links a:hover { text-decoration: underline; }
+.link-button {
+  width: auto; padding: 0; background: none; color: #2f6f4f; font-weight: 600; font-size: 12px;
+}
+.hint { margin: 10px 0 0; color: #66716c; font-size: 11px; }
+kbd { padding: 0 3px; border: 1px solid #e3e7e3; border-radius: 3px; background: #fff; font-size: 10px; }
 details { margin-top: 10px; color: #66716c; }
 details button { margin-top: 6px; background: #eaf2ed; color: #2f6f4f; }
+@media (prefers-color-scheme: dark) {
+  :root { color-scheme: dark; }
+  body { color: #edf4ef; background: #141a18; }
+  .url-input, label, details, .hint { color: #adbbb2; }
+  input { color: #edf4ef; background: #1b2320; border-color: #303d36; }
+  .links a, .link-button { color: #a0d8b9; }
+  details button { background: #243b30; color: #a0d8b9; }
+  kbd { background: #1b2320; border-color: #303d36; }
+  button:focus-visible, input:focus-visible, a:focus-visible { outline-color: #a0d8b9; }
+}

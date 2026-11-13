@@ -28,6 +28,7 @@ const OUT = path.resolve(process.argv[3] || path.join(ROOT, "docs", "m9-evidence
       headless: process.env.CS_HEADLESS === "true",
       executablePath,
       channel: executablePath ? undefined : process.env.CS_BROWSER_CHANNEL || undefined,
+      ignoreDefaultArgs: ["--disable-extensions"],
       viewport: { width: 1280, height: 900 },
       args: ["--disable-extensions-except=" + path.join(ROOT, "apps", "extension"),
         "--load-extension=" + path.join(ROOT, "apps", "extension"), "--no-first-run"],
@@ -43,6 +44,27 @@ const OUT = path.resolve(process.argv[3] || path.join(ROOT, "docs", "m9-evidence
     check("extension service worker loaded", !!id, id);
     token = (await (await context.request.get(BASE + "/api/tools/bookmarklet")).json()).token;
     check("test URLs absent", !(await findBookmark(context.request, BASE, urls[0])) && !(await findBookmark(context.request, BASE, urls[1])), "fresh UUID URLs");
+    await page.goto(`chrome-extension://${id}/options.html`);
+    await page.fill("#api", BASE);
+    await page.fill("#token", token);
+    await page.getByRole("button", { name: "保存设置" }).click();
+    await page.getByText("设置已保存", { exact: true }).waitFor();
+    await page.fill("#token", "");
+    await page.getByRole("button", { name: "测试连接" }).click();
+    await page.getByText(/token 可用/).waitFor();
+    check("options saved settings and verified stored token", true, "checked using an invalid bookmark URL, no write");
+    await page.fill("#token", "deliberately-invalid");
+    await page.getByRole("button", { name: "测试连接" }).click();
+    await page.getByText("token 无效或没有添加权限").waitFor();
+    check("options rejected invalid token", true, "server rejected authorization");
+    await page.route(BASE + "/api/bookmarks", route => route.fulfill({ status: 500, json: { error: "test" } }));
+    await page.fill("#token", "");
+    await page.getByRole("button", { name: "测试连接" }).click();
+    await page.getByText(/HTTP 500.*无法确认/).waitFor();
+    await page.unroute(BASE + "/api/bookmarks");
+    check("options did not treat HTTP 500 as valid token", true, "mocked upstream failure");
+    const commands = await worker.evaluate(() => chrome.commands.getAll());
+    check("Chrome registered save-page command", commands.some(command => command.name === "save-page"), "runtime command registration");
     await page.goto(`chrome-extension://${id}/popup.html`, { waitUntil: "domcontentloaded" });
     await page.waitForSelector("#save");
     check("popup opened", true, "popup.html");

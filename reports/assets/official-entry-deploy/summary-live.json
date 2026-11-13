@@ -1,0 +1,1020 @@
+{
+  "events": [
+    {
+      "event": "meta",
+      "data": {
+        "model": "qwen3.5-4b-local:latest",
+        "sources": 10,
+        "mode": "fast",
+        "sid": "s_2999121f930f81cf86bbeb4fd5a2222c",
+        "query": "deepseek",
+        "fetched": 0,
+        "failed": 0,
+        "truncated": 0,
+        "degraded": false
+      }
+    },
+    {
+      "event": "cite",
+      "data": {
+        "i": 1,
+        "result_id": "r_2",
+        "title": "DeepSeek | Into the Unknown",
+        "url": "https://www.deepseek.com/",
+        "domain": "www.deepseek.com",
+        "material": "snippet"
+      }
+    },
+    {
+      "event": "cite",
+      "data": {
+        "i": 2,
+        "result_id": "r_1",
+        "title": "DeepSeek - 미지의 세계로",
+        "url": "https://chat.deepseek.com/",
+        "domain": "chat.deepseek.com",
+        "material": "snippet"
+      }
+    },
+    {
+      "event": "cite",
+      "data": {
+        "i": 3,
+        "result_id": "r_22",
+        "title": "Your First API Call | DeepSeek API Docs",
+        "url": "https://api-docs.deepseek.com/",
+        "domain": "api-docs.deepseek.com",
+        "material": "snippet"
+      }
+    },
+    {
+      "event": "cite",
+      "data": {
+        "i": 4,
+        "result_id": "r_10",
+        "title": "DeepSeek Platform",
+        "url": "https://platform.deepseek.com/",
+        "domain": "platform.deepseek.com",
+        "material": "snippet"
+      }
+    },
+    {
+      "event": "cite",
+      "data": {
+        "i": 5,
+        "result_id": "r_7",
+        "title": "DeepSeek - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/DeepSeek",
+        "domain": "en.wikipedia.org",
+        "material": "snippet"
+      }
+    },
+    {
+      "event": "cite",
+      "data": {
+        "i": 6,
+        "result_id": "r_4",
+        "title": "DeepSeek · GitHub",
+        "url": "https://github.com/deepseek-ai",
+        "domain": "github.com",
+        "material": "snippet"
+      }
+    },
+    {
+      "event": "cite",
+      "data": {
+        "i": 7,
+        "result_id": "r_69",
+        "title": "DeepSeek · GitHub",
+        "url": "https://github.com/",
+        "domain": "github.com",
+        "material": "snippet"
+      }
+    },
+    {
+      "event": "cite",
+      "data": {
+        "i": 8,
+        "result_id": "r_5",
+        "title": "DeepSeek - AI Assistant - App Store - Apple",
+        "url": "https://apps.apple.com/us/app/deepseek-ai-assistant/id6737597349",
+        "domain": "apps.apple.com",
+        "material": "snippet"
+      }
+    },
+    {
+      "event": "cite",
+      "data": {
+        "i": 9,
+        "result_id": "r_12",
+        "title": "DeepSeek - AI Assistant - Apps on Google Play",
+        "url": "https://play.google.com/store/apps/details?id=com.deepseek.chat",
+        "domain": "play.google.com",
+        "material": "snippet"
+      }
+    },
+    {
+      "event": "cite",
+      "data": {
+        "i": 10,
+        "result_id": "r_21",
+        "title": "DeepSeek AI: R1 Reasoning, API & Local Deployment 2026",
+        "url": "https://deepseek.ai/",
+        "domain": "deepseek.ai",
+        "material": "snippet"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "Deep"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "Seek"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " "
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "是一家"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "位于"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "中国"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "杭州"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "的人工智能"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "公司"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "，"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "专注于"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "开发"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "开源"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "的大"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "语言"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "模型"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "（"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "LL"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "Ms"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "）"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "和"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "前沿"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "人工智能"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "技术"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " ["
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "1"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "]["
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "5"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "]"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "。"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "其"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "核心"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "产品"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "包括"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "支持"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "编程"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "、"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "内容"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "创作"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "及"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "文件"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "处理的"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " AI"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " "
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "聊天"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "助手"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "，"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "提供"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "长"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "上下文"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "对话"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "能力"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " ["
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "2"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "]"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "。"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "该公司"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "通过"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " API"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " "
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "平台"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "向"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "开发者"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "开放"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "模型"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "访问"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "权限"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "，"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "API"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " "
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "格式"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "兼容"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " Open"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "AI"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "/"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "Anth"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "ropic"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " SDK"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " ["
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "3"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "]["
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "4"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "]"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "。"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "此外"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "，"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "Deep"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "Seek"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " "
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "在"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " GitHub"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " "
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "上"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "拥有"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " "
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "4"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "6"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " "
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "个"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "代码"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "仓库"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "，"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "并"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "发布了"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "包括"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "华为"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "昇"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "腾"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " N"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "PU"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " "
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "通信"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "库"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "在内的"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "开源"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "项目"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " ["
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "6"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "]["
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "7"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "]"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "。"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "目前"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "，"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "其"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "官方"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " AI"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " "
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "助手"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "应用"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "可在"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " Apple"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " App"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " Store"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " "
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "和"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " Google"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " Play"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " "
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "免费"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "获取"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": " ["
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "8"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "]["
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "9"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "]"
+      }
+    },
+    {
+      "event": "token",
+      "data": {
+        "t": "。"
+      }
+    },
+    {
+      "event": "done",
+      "data": {
+        "ms": 20105,
+        "tokens": 147,
+        "partial": false,
+        "mode": "fast"
+      }
+    }
+  ],
+  "seconds": 20.11
+}

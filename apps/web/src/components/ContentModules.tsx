@@ -14,13 +14,17 @@ export function contentModules(results: Result[]) {
   }));
 }
 
-export default function ContentModules({ results, selectedId, onSelect }: {
+export default function ContentModules({ results, selectedId, onSelect, query, saved, onBookmarkChange }: {
   results: Result[];
   selectedId: string | null;
   onSelect: (id: string) => void;
+  query?: string;
+  saved?: Record<string, number>;
+  onBookmarkChange?: (url: string, id: number | null) => void;
 }) {
   return contentModules(results).map(module => (
     <ResultList key={module.category} title={module.title} results={module.results}
+      query={query} saved={saved} onBookmarkChange={onBookmarkChange}
       selectedId={selectedId} onSelect={onSelect} />
   ));
 }

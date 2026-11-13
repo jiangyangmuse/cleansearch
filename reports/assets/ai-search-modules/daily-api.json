@@ -1,0 +1,26 @@
+[
+  {
+    "query": "明日方舟 !b",
+    "engines": [
+      "bing"
+    ],
+    "official": [
+      [
+        "https://ak.hypergryph.com/",
+        "search"
+      ]
+    ]
+  },
+  {
+    "query": "nexon !b",
+    "engines": [
+      "bing"
+    ],
+    "official": [
+      [
+        "https://www.nexon.com/main/en",
+        "directory"
+      ]
+    ]
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "message": "想从零学 Python，帮我分别找官方教程和中文视频",
+    "status": 503,
+    "response": {
+      "error": {
+        "code": "UPSTREAM_UNAVAILABLE",
+        "message": "所有搜索方向暂时不可用，请稍后重试",
+        "retryable": true
+      }
+    }
+  },
+  {
+    "message": "视频只要哔哩哔哩，再帮我找适合新手的练习",
+    "status": 503,
+    "response": {
+      "error": {
+        "code": "UPSTREAM_UNAVAILABLE",
+        "message": "所有搜索方向暂时不可用，请稍后重试",
+        "retryable": true
+      }
+    }
+  }
+]

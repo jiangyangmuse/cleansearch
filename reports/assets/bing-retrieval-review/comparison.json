@@ -1,0 +1,32 @@
+[
+  {
+    "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813",
+    "before": {
+      "score": 0.1,
+      "group": "weak"
+    },
+    "after": {
+      "score": 0.3543,
+      "group": "related"
+    }
+  },
+  {
+    "url": "https://www.deepseek.com/en/platform/",
+    "before": {
+      "score": 0.3222,
+      "group": "related"
+    },
+    "after": {
+      "role": "console",
+      "origin": "search"
+    }
+  },
+  {
+    "url": "https://www.deepseek.com/",
+    "before": null,
+    "after": {
+      "role": "home",
+      "origin": "directory"
+    }
+  }
+]

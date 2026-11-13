@@ -1,25 +1,40 @@
 {
+  "id": "/",
   "name": "CleanSearch",
   "short_name": "CleanSearch",
   "description": "本机干净搜索：多引擎聚合、三档分组、AI 总结与书签启动台",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
   "background_color": "#fbfbf9",
   "theme_color": "#2f6f4f",
   "lang": "zh-CN",
+  "dir": "ltr",
+  "categories": ["search", "productivity", "utilities"],
   "icons": [
-    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "搜索", "short_name": "搜索", "url": "/?q=", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "书签启动台", "short_name": "书签", "url": "/bookmarks", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "单页总结", "short_name": "总结", "url": "/s", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "设置", "short_name": "设置", "url": "/settings", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] }
   ],
   "share_target": {
-    "action": "/bookmarks",
-    "method": "GET",
-    "enctype": "application/x-www-form-urlencoded",
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
     "params": {
       "title": "title",
       "text": "text",
-      "url": "url"
+      "url": "url",
+      "files": [
+        { "name": "files", "accept": ["image/*"] }
+      ]
     }
   }
 }

@@ -1,0 +1,12 @@
+{
+  "old_pid": 8692,
+  "new_pid": 592,
+  "model": "qwen3.5-4b-local:latest",
+  "changed_settings": [
+    "LLM_BASE_URL"
+  ],
+  "endpoint": "http://127.0.0.1:11434/v1",
+  "other_environment_preserved": true,
+  "dotenv_only_change": "LLM_BASE_URL: empty -> local Ollama",
+  "backup": "D:\\agent\\llq\\data\\official-deploy-backup-20261108-1620\\.env-before-ollama"
+}

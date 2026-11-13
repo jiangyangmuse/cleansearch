@@ -1,0 +1,15 @@
+{
+  "browser": "156.0.8078.4",
+  "upstream": "seeded fixture",
+  "keyboard_navigation_and_bookmark": true,
+  "summary_citation_target": "r_1",
+  "no_overflow_widths": [
+    390,
+    320
+  ],
+  "cache_keeps_ids": true,
+  "content_query_uses_normal_results": true,
+  "page_errors": [],
+  "search_summary_bookmark_mocked": false,
+  "favicon_mocked": true
+}

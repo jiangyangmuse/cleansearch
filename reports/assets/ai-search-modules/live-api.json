@@ -1,0 +1,140 @@
+[
+  {
+    "q": "明日方舟 ds",
+    "path": "/api/ai-search",
+    "status": 200,
+    "provider": "DeepSeek",
+    "cached": false,
+    "results": [
+      {
+        "url": "https://a.4399.cn/mobile/116047.html#1",
+        "category": null
+      },
+      {
+        "url": "https://a.4399.cn/game-id-116047.html",
+        "category": null
+      },
+      {
+        "url": "https://baike.baidu.com/item/%E3%80%8A%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F%E3%80%8B/22748729?bst=1793853663.aecfa08ce38cb89f#4",
+        "category": "encyclopedia"
+      },
+      {
+        "url": "https://baike.baidu.com/item/%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F/22748729?anchor=1&fragment=1&bst=1793890185.0a0c7cdfdc11f17d#sup-73#1",
+        "category": "encyclopedia"
+      },
+      {
+        "url": "https://wapbaike.baidu.com/item/%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F/22748729?structureClickId=22748729&structureId=5c3a2427d2759d2dca712561&lemmaFrom=starMapTop&fromModule=lemma_starMap-top#1",
+        "category": null
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?id=tw.txwy.and.arknights&hl=zh_TW",
+        "category": "download"
+      },
+      {
+        "url": "https://ak.hypergryph.com/news/4915",
+        "category": null
+      },
+      {
+        "url": "https://www.4399.com/pcgame/game/116047.html",
+        "category": null
+      },
+      {
+        "url": "https://ak.hypergryph.com/special/thankyou-celebration-2022/index-bd.html",
+        "category": null
+      },
+      {
+        "url": "https://apps.apple.com/cn/app/%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F/id1454663939?l=en-GB#1",
+        "category": "download"
+      }
+    ],
+    "error": null
+  },
+  {
+    "q": "明日方舟 ds",
+    "path": "/api/search",
+    "status": 200,
+    "official": [
+      [
+        "https://ak.hypergryph.com/",
+        "search"
+      ]
+    ],
+    "total": 16,
+    "categories": [
+      "encyclopedia",
+      "encyclopedia",
+      "encyclopedia",
+      "download",
+      "encyclopedia",
+      "encyclopedia"
+    ],
+    "error": null
+  },
+  {
+    "q": "nexon",
+    "path": "/api/search",
+    "status": 200,
+    "official": [
+      [
+        "https://www.nexon.com/main/en",
+        "search"
+      ]
+    ],
+    "total": 16,
+    "categories": [
+      "encyclopedia",
+      "encyclopedia"
+    ],
+    "error": null
+  },
+  {
+    "q": "明日方舟 !ds",
+    "path": "/api/ai-search",
+    "status": 200,
+    "provider": "DeepSeek",
+    "cached": true,
+    "results": [
+      {
+        "url": "https://a.4399.cn/mobile/116047.html#1",
+        "category": null
+      },
+      {
+        "url": "https://a.4399.cn/game-id-116047.html",
+        "category": null
+      },
+      {
+        "url": "https://baike.baidu.com/item/%E3%80%8A%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F%E3%80%8B/22748729?bst=1793853663.aecfa08ce38cb89f#4",
+        "category": "encyclopedia"
+      },
+      {
+        "url": "https://baike.baidu.com/item/%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F/22748729?anchor=1&fragment=1&bst=1793890185.0a0c7cdfdc11f17d#sup-73#1",
+        "category": "encyclopedia"
+      },
+      {
+        "url": "https://wapbaike.baidu.com/item/%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F/22748729?structureClickId=22748729&structureId=5c3a2427d2759d2dca712561&lemmaFrom=starMapTop&fromModule=lemma_starMap-top#1",
+        "category": null
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?id=tw.txwy.and.arknights&hl=zh_TW",
+        "category": "download"
+      },
+      {
+        "url": "https://ak.hypergryph.com/news/4915",
+        "category": null
+      },
+      {
+        "url": "https://www.4399.com/pcgame/game/116047.html",
+        "category": null
+      },
+      {
+        "url": "https://ak.hypergryph.com/special/thankyou-celebration-2022/index-bd.html",
+        "category": null
+      },
+      {
+        "url": "https://apps.apple.com/cn/app/%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F/id1454663939?l=en-GB#1",
+        "category": "download"
+      }
+    ],
+    "error": null
+  }
+]

@@ -1,0 +1,877 @@
+[
+  {
+    "original_query": "VLC",
+    "original_upstream": {
+      "status": 200,
+      "bing_count": 10,
+      "landing_matches": [
+        {
+          "position": 1,
+          "url": "https://www.videolan.org/vlc/index.zh_CN.html"
+        },
+        {
+          "position": 3,
+          "url": "https://www.videolan.org/vlc/index.en.html"
+        }
+      ]
+    },
+    "model_seconds": 1.864,
+    "mode": "bing",
+    "query": "VLC media player official website",
+    "category": "software",
+    "host": "videolan.org",
+    "paths": [
+      "/",
+      "/vlc",
+      "/vlc/index.html",
+      "/vlc/index.zh_cn.html",
+      "/vlc/index.en.html"
+    ],
+    "status": 200,
+    "seconds": 0.006,
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "bing"
+      ],
+      "unresponsive": [],
+      "provider": "searxng",
+      "cached": true,
+      "ms": 1,
+      "total": 8,
+      "upstream_total": 10,
+      "filtered": {
+        "dup": 0,
+        "risk": 0
+      },
+      "official": 0,
+      "directory": 0,
+      "sid": "s_4f1e3843a1cea9a447417cf8b9ab0b4d"
+    },
+    "error": null,
+    "results": [
+      {
+        "section": "related",
+        "position": 1,
+        "id": "r_5",
+        "url": "https://github.com/videolan/vlc",
+        "title": "GitHub - videolan/vlc: VLC media player - plays everything, runs ...",
+        "snippet": "May 26, 2026 · VLC is a libre and open source media player and multimedia engine, focused on playing everything, and running …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "related",
+        "position": 2,
+        "id": "r_8",
+        "url": "http://images.videolan.org/vlc/download-windows.html",
+        "title": "Download official VLC media player for Windows - VideoLAN",
+        "snippet": "VLC is a free and open source cross-platform multimedia player and framework that plays most multimedia files as well as DVDs, …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "related",
+        "position": 3,
+        "id": "r_3",
+        "url": "https://www.videolan.org/vlc/index.en.html",
+        "title": "Official download of VLC media player, the best Open Source …",
+        "snippet": "1 day ago · VLC is a free and open source cross-platform multimedia player and framework that plays most multimedia files as well …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "weak",
+        "position": 1,
+        "id": "r_10",
+        "url": "https://zhuanlan.zhihu.com/p/2090900084938617318",
+        "title": "【VLC播放器】VLC Media Player免费下载、安装、使用 ...",
+        "snippet": "Oct 6, 2026 · VLC media player （VLC播放器）是 VideoLAN 出品的免费开源播放器，可以播放视频、音频，无广告、无捆绑，支持 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 2,
+        "id": "r_1",
+        "url": "https://www.videolan.org/vlc/index.zh_CN.html",
+        "title": "官方下载：VLC media player，最棒的开源播放器 - VideoLAN",
+        "snippet": "1 day ago · VLC media player VLC 是一款自由、开源的跨平台多媒体播放器及框架，可播放大多数多媒体文件，以及 DVD、音频 CD …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "weak",
+        "position": 3,
+        "id": "r_7",
+        "url": "https://xiazai.zol.com.cn/detail/35/341813.shtml",
+        "title": "【VLC官方播放器下载】VLC Media Player 3.0.24-ZOL软件下载",
+        "snippet": "Oct 14, 2026 · VLC Media Player 播放器是VideoLAN计划的多媒体播放器，vlc播放器支持众多音频与视频解码器及文件格式，并支 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 4,
+        "id": "r_6",
+        "url": "https://www.52pojie.cn/thread-2041638-1-1.html",
+        "title": "VLC Media Player 3.0.21 开源版 - 吾爱破解 - 52pojie.cn",
+        "snippet": "Jun 26, 2025 · VLC Media是一款多平台的视频播放软件，功能强大，无广告，性能出色。 VLC 是一款自由、开源的跨平台多媒体播 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 5,
+        "id": "r_2",
+        "url": "https://apps.microsoft.com/detail/xpdm1zw6815mqm?hl=zh-CN&gl=CN",
+        "title": "VLC - Windows官方下载 | 微软应用商店 | Microsoft Store",
+        "snippet": "VLC media player (previously the VideoLAN Client and commonly known as simply VLC) is a free and open-source, portable, cross …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ]
+  },
+  {
+    "original_query": "東京大学",
+    "original_upstream": {
+      "status": 200,
+      "bing_count": 10,
+      "landing_matches": []
+    },
+    "model_seconds": 1.781,
+    "mode": "bing",
+    "query": "東京大学 公式サイト",
+    "category": "university",
+    "host": "u-tokyo.ac.jp",
+    "paths": [
+      "/",
+      "/ja",
+      "/ja/index.html",
+      "/en",
+      "/en/index.html"
+    ],
+    "status": 200,
+    "seconds": 0.022,
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "bing"
+      ],
+      "unresponsive": [],
+      "provider": "searxng",
+      "cached": true,
+      "ms": 17,
+      "total": 5,
+      "upstream_total": 8,
+      "filtered": {
+        "dup": 0,
+        "risk": 0
+      },
+      "official": 0,
+      "directory": 0,
+      "sid": "s_79cb7bb963a7779875afbb13fcd46c39"
+    },
+    "error": null,
+    "results": [
+      {
+        "section": "weak",
+        "position": 1,
+        "id": "r_1",
+        "url": "https://apps.microsoft.com/detail/9nblggh5l9xt?hl=zh-Hans-CN&gl=US",
+        "title": "Instagram - Windows官方下载 | 微软应用商店 | Microsoft Store",
+        "snippet": "拉近您与自己深爱的这个世界之间的距离 — Instagram from Meta。 与好友联系、分享近况或了解世界各地的新鲜事。探索各类社 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 2,
+        "id": "r_2",
+        "url": "https://inschs.com/post/instagram-web-version/",
+        "title": "Instagram网页版入口（官方网站登录与使用） | INSCHS",
+        "snippet": "Aug 3, 2026 · Instagram 网页版入口是 instagram.com。本文说明网页版能做什么、和 App 的差异，以及电脑端管理账号的方法。",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 3,
+        "id": "r_3",
+        "url": "https://apps.apple.com/cn/app/instagram/id389801252",
+        "title": "‎Instagram App - App Store",
+        "snippet": "Jul 16, 2020 · 在 App Store 下载“Instagram, Inc.”的“Instagram”。查看截屏、评分及评论、用户提示以及更多类似“Instagram”的 App。",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 4,
+        "id": "r_4",
+        "url": "https://baike.baidu.com/item/Instagram/8550544",
+        "title": "Instagram（Meta公司旗下的社交应用）_百度百科",
+        "snippet": "Oct 6, 2010 · Instagram（照片墙，简称ins）是Meta平台公司（原Facebook）旗下的图片与短视频分享社交应用，2010年10月6日首 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 5,
+        "id": "r_6",
+        "url": "https://blog.csdn.net/u012692537/article/details/79358029",
+        "title": "惯导IMU，INS，AGV的区别 - CSDN博客",
+        "snippet": "Feb 24, 2018 · INS惯导系统 惯性导航系统是一种利用安装在运载体上的陀螺仪和加速度计来测定运载体位置的一个系统。 通过陀螺 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ],
+    "japan_original": {
+      "mode": "bing",
+      "query": "東京大学",
+      "category": "university",
+      "host": "u-tokyo.ac.jp",
+      "paths": [
+        "/",
+        "/ja",
+        "/ja/index.html",
+        "/en",
+        "/en/index.html"
+      ],
+      "status": 200,
+      "seconds": 0.379,
+      "meta": {
+        "status": "empty",
+        "engines": [],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 373,
+        "total": 0,
+        "upstream_total": 0,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        },
+        "official": 0,
+        "directory": 0,
+        "sid": "s_8360c3f7e6fd876e94ac7949fc37b2b5"
+      },
+      "error": null,
+      "results": []
+    },
+    "japan_rewrite": {
+      "mode": "bing",
+      "query": "東京大学 公式サイト",
+      "category": "university",
+      "host": "u-tokyo.ac.jp",
+      "paths": [
+        "/",
+        "/ja",
+        "/ja/index.html",
+        "/en",
+        "/en/index.html"
+      ],
+      "status": 200,
+      "seconds": 0.347,
+      "meta": {
+        "status": "empty",
+        "engines": [],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 341,
+        "total": 0,
+        "upstream_total": 0,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        },
+        "official": 0,
+        "directory": 0,
+        "sid": "s_1ae47339e4007f0b8df50cb310763d99"
+      },
+      "error": null,
+      "results": []
+    }
+  },
+  {
+    "original_query": "日本気象庁",
+    "original_upstream": {
+      "status": 200,
+      "bing_count": 10,
+      "landing_matches": []
+    },
+    "model_seconds": 1.976,
+    "mode": "bing",
+    "query": "日本気象庁 公式ホームページ",
+    "category": "government agency",
+    "host": "jma.go.jp",
+    "paths": [
+      "/",
+      "/jma/index.html",
+      "/bosai",
+      "/jma/indexe.html"
+    ],
+    "status": 200,
+    "seconds": 0.005,
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "bing"
+      ],
+      "unresponsive": [],
+      "provider": "searxng",
+      "cached": true,
+      "ms": 1,
+      "total": 5,
+      "upstream_total": 10,
+      "filtered": {
+        "dup": 1,
+        "risk": 0
+      },
+      "official": 0,
+      "directory": 0,
+      "sid": "s_1d9da0e6ac334560cefcf1d03b2a55d9"
+    },
+    "error": null,
+    "results": [
+      {
+        "section": "weak",
+        "position": 1,
+        "id": "r_2",
+        "url": "https://www.toutiao.com/article/7660746084482630163/",
+        "title": "大额存单怎么存最划算？2026手把手利息计算+最优存法全攻略",
+        "snippet": "Jul 10, 2026 · 本文手把手教你精准算利息、选最优期限、拿捏省钱存法、避开所有坑，让每一分闲置资金都拿到足额最高收益。 一、 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 2,
+        "id": "r_4",
+        "url": "https://www.zhihu.com/question/613692707?write",
+        "title": "大额存单转让这个规则有些看不明白？ - 知乎",
+        "snippet": "Aug 1, 2023 · 首先明确一个概念，对于受让让，计算收时本金是以转让价格来计算的。 对于图一，受让方的本金是202263元。 我用 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 3,
+        "id": "r_5",
+        "url": "http://focustax.cn/ueditor/php/upload/file/20260622/1782099086663292.pdf",
+        "title": "大额存单管理办法（征求意见稿）",
+        "snippet": "Jun 12, 2026 · 第一条 为规范大额存单业务发展,根据《中华人民共和国中国人民银行法》等法律法规,制定本办法。 第二条 本办法所 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 4,
+        "id": "r_6",
+        "url": "https://www.zhihu.com/question/498101950",
+        "title": "大额存单列报及其利息收入应如何进行会计核算？ - 知乎",
+        "snippet": "本文讲解：根据新金融工具准则，大额存单及定期存款在财务报表上的列报。 大额存单应当依据业务模式，分类为以摊余成本计量（ …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 5,
+        "id": "r_7",
+        "url": "https://xueqiu.com/8188497048/276974471",
+        "title": "交易大额存单的小技巧 最近市场波动加剧，有没有什么低风险 ...",
+        "snippet": "Jan 30, 2024 · 最近市场波动加剧，有没有什么低风险又能跑赢存款利率的理财方法呢？ 本文基于各大银行App里都有的大额存单转让 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ],
+    "japan_original": {
+      "mode": "bing",
+      "query": "日本気象庁",
+      "category": "government agency",
+      "host": "jma.go.jp",
+      "paths": [
+        "/",
+        "/jma/index.html",
+        "/bosai",
+        "/jma/indexe.html"
+      ],
+      "status": 200,
+      "seconds": 0.395,
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "bing"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 387,
+        "total": 7,
+        "upstream_total": 10,
+        "filtered": {
+          "dup": 1,
+          "risk": 0
+        },
+        "official": 0,
+        "directory": 0,
+        "sid": "s_edecf56584eaea7806f110c3d47a07ee"
+      },
+      "error": null,
+      "results": [
+        {
+          "section": "related",
+          "position": 1,
+          "id": "r_8",
+          "url": "https://zh-classical.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC",
+          "title": "日本 - 維基大典",
+          "snippet": "6 日前 · ↑ 日本大百科全書 - 下関条約 コトバンク - 訪於二〇二六年十月二十五日。 ↑ 山川日本史小辭典 - 北清事変 コトバンク - 訪於 …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 2,
+          "id": "r_3",
+          "url": "https://www.mfa.gov.cn/web/gjhdq_676201/gj_676203/yz_676205/1206_676836/1206x0_676838/",
+          "title": "国家概况_中华人民共和国外交部",
+          "snippet": "著名的国立综合大学有东京大学、京都大学等，著名的私立大学有早稻田大学、庆应义塾大学等。 日本重视社会教育，函授、夜校、 …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 1,
+          "id": "r_1",
+          "url": "https://baike.baidu.com/item/%E6%97%A5%E6%9C%AC/111617",
+          "title": "日本（日本国）_百度百科",
+          "snippet": "日本国（Japan），简称日本，首都 东京都 [171]，是位于 太平洋 西岸由东北向西南延伸的弧形 岛国。 陆地面积约37.8万平方公里， …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 2,
+          "id": "r_2",
+          "url": "https://www.japan-travel.cn/",
+          "title": "【官方】日本国家旅游局 (JNTO)｜日本旅游",
+          "snippet": "2026年9月9日 · JNTO的官方网站是您的终极日本指南，其中包含东京，京都，大阪，广岛，北海道和其他日本顶级度假胜地的旅游信 …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 3,
+          "id": "r_7",
+          "url": "https://zhuanlan.zhihu.com/p/634903284",
+          "title": "日本，是一个怎样的国家？ - 知乎",
+          "snippet": "2023年6月5日 · 日本，官方称为 \"日本国\"，是位于东亚的一个岛国。 从北到南延伸了3000多公里，由四个主要岛屿组成： 北海道、 …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 4,
+          "id": "r_4",
+          "url": "https://baike.baidu.com/item/%E6%97%A5%E6%9C%AC/14895771",
+          "title": "日本（日本）_百度百科",
+          "snippet": "百度百科是一部内容开放、自由的网络百科全书，旨在创造一个涵盖所有领域知识，服务所有互联网用户的中文知识性百科全书。在 …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 5,
+          "id": "r_9",
+          "url": "https://www.japan-travel.cn/destinations/",
+          "title": "目的地｜【官方】日本国家旅游局(JNTO)",
+          "snippet": "2022年5月31日 · 关西 关西是日本反差最大的地区，既有灯光明亮闪烁的大阪与神户，也有文化宝库京都和奈良。 关西是日本反差最 …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        }
+      ]
+    },
+    "japan_rewrite": {
+      "mode": "bing",
+      "query": "日本気象庁 公式ホームページ",
+      "category": "government agency",
+      "host": "jma.go.jp",
+      "paths": [
+        "/",
+        "/jma/index.html",
+        "/bosai",
+        "/jma/indexe.html"
+      ],
+      "status": 200,
+      "seconds": 0.442,
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "bing"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 433,
+        "total": 7,
+        "upstream_total": 10,
+        "filtered": {
+          "dup": 1,
+          "risk": 0
+        },
+        "official": 0,
+        "directory": 0,
+        "sid": "s_8a97618135a65645c78f5fa55702da82"
+      },
+      "error": null,
+      "results": [
+        {
+          "section": "related",
+          "position": 1,
+          "id": "r_8",
+          "url": "https://zh-classical.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC",
+          "title": "日本 - 維基大典",
+          "snippet": "6 日前 · ↑ 日本大百科全書 - 下関条約 コトバンク - 訪於二〇二六年十月二十五日。 ↑ 山川日本史小辭典 - 北清事変 コトバンク - 訪於 …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 2,
+          "id": "r_3",
+          "url": "https://www.mfa.gov.cn/web/gjhdq_676201/gj_676203/yz_676205/1206_676836/1206x0_676838/",
+          "title": "国家概况_中华人民共和国外交部",
+          "snippet": "著名的国立综合大学有东京大学、京都大学等，著名的私立大学有早稻田大学、庆应义塾大学等。 日本重视社会教育，函授、夜校、 …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 1,
+          "id": "r_1",
+          "url": "https://baike.baidu.com/item/%E6%97%A5%E6%9C%AC/111617",
+          "title": "日本（日本国）_百度百科",
+          "snippet": "日本国（Japan），简称日本，首都 东京都 [171]，是位于 太平洋 西岸由东北向西南延伸的弧形 岛国。 陆地面积约37.8万平方公里， …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 2,
+          "id": "r_2",
+          "url": "https://www.japan-travel.cn/",
+          "title": "【官方】日本国家旅游局 (JNTO)｜日本旅游",
+          "snippet": "2026年9月9日 · JNTO的官方网站是您的终极日本指南，其中包含东京，京都，大阪，广岛，北海道和其他日本顶级度假胜地的旅游信 …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 3,
+          "id": "r_7",
+          "url": "https://zhuanlan.zhihu.com/p/634903284",
+          "title": "日本，是一个怎样的国家？ - 知乎",
+          "snippet": "2023年6月5日 · 日本，官方称为 \"日本国\"，是位于东亚的一个岛国。 从北到南延伸了3000多公里，由四个主要岛屿组成： 北海道、 …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 4,
+          "id": "r_4",
+          "url": "https://baike.baidu.com/item/%E6%97%A5%E6%9C%AC/14895771",
+          "title": "日本（日本）_百度百科",
+          "snippet": "百度百科是一部内容开放、自由的网络百科全书，旨在创造一个涵盖所有领域知识，服务所有互联网用户的中文知识性百科全书。在 …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 5,
+          "id": "r_9",
+          "url": "https://www.japan-travel.cn/destinations/",
+          "title": "目的地｜【官方】日本国家旅游局(JNTO)",
+          "snippet": "2022年5月31日 · 关西 关西是日本反差最大的地区，既有灯光明亮闪烁的大阪与神户，也有文化宝库京都和奈良。 关西是日本反差最 …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        }
+      ]
+    }
+  },
+  {
+    "original_query": "空中客车",
+    "original_upstream": {
+      "status": 200,
+      "bing_count": 10,
+      "landing_matches": [
+        {
+          "position": 2,
+          "url": "https://www.airbus.com/zh-hans"
+        }
+      ]
+    },
+    "model_seconds": 1.778,
+    "mode": "bing",
+    "query": "空中客车官网",
+    "category": "industry",
+    "host": "airbus.com",
+    "paths": [
+      "/",
+      "/en",
+      "/cn",
+      "/zh",
+      "/zh-hans"
+    ],
+    "status": 200,
+    "seconds": 0.006,
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "bing"
+      ],
+      "unresponsive": [],
+      "provider": "searxng",
+      "cached": true,
+      "ms": 1,
+      "total": 7,
+      "upstream_total": 10,
+      "filtered": {
+        "dup": 0,
+        "risk": 0
+      },
+      "official": 0,
+      "directory": 0,
+      "sid": "s_bd26a6afd055b1fc35765adb80e4104d"
+    },
+    "error": null,
+    "results": [
+      {
+        "section": "related",
+        "position": 1,
+        "id": "r_2",
+        "url": "https://www.airbus.com/zh-hans/about-us/our-worldwide-presence/airbus-in-asia-pacific/airbus-in-china",
+        "title": "空中客车在中国 | Airbus",
+        "snippet": "1 day ago · 空中客车中国研发和创新中心包括位于苏州的空中客车中国研发中心，其使命是充分利用中国的工业生态系统优势，实现 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      },
+      {
+        "section": "related",
+        "position": 2,
+        "id": "r_6",
+        "url": "https://aerobus.com/zn/home.html",
+        "title": "空中客车国际公司",
+        "snippet": "Jun 2, 2016 · 空中客车工程已经安全可靠地拉载乘客运行了数百万英里，并受到美国交通部专家的高度评价。",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 1,
+        "id": "r_1",
+        "url": "https://www.airbus.com/en",
+        "title": "Pioneering sustainable aerospace | Airbus",
+        "snippet": "1 day ago · Airbus designs, manufactures and delivers industry-leading commercial aircraft, helicopters, military transports, satellites, …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "weak",
+        "position": 2,
+        "id": "r_3",
+        "url": "https://w3.airbus.com/",
+        "title": "Airbus Portal Navigation URL",
+        "snippet": "Apr 22, 2025 · Unexpected error ().",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 3,
+        "id": "r_4",
+        "url": "https://www.acj.airbus.com/en",
+        "title": "Airbus Corporate Jets | Airbus",
+        "snippet": "2 days ago · Our media centre brings together Airbus pictures, videos, infographics, brochures and more. ACJ (Airbus Corporate …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 4,
+        "id": "r_5",
+        "url": "https://www.aircraft.airbus.com/en",
+        "title": "Homepage | Aircraft & Services | Airbus",
+        "snippet": "1 day ago · Our purpose is to offer aircraft and services that meet your customer needs, while leading commercial aviation towards …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "weak",
+        "position": 5,
+        "id": "r_7",
+        "url": "https://www.airbus.com/en/about-us/our-worldwide-presence/airbus-in-asia-pacific/airbus-in-china",
+        "title": "Airbus in China | Airbus",
+        "snippet": "Apr 23, 2025 · Over the past decades, Airbus has been providing Chinese customers with the most modern and comprehensive …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      }
+    ]
+  }
+]

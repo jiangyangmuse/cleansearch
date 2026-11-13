@@ -4,6 +4,7 @@ param([string]$BaseUrl = "http://127.0.0.1:8000")
 
 $ErrorActionPreference = "Stop"
 $results = @()
+$skipped = 0
 function Check($name, $ok, $detail) {
     $script:results += [pscustomobject]@{ Check = $name; Pass = $ok; Detail = $detail }
 }
@@ -25,28 +26,30 @@ Check "三档分组" ($hit.groups.strong.Count -ge 1 -and $hit.groups.related.Co
 $cachedHit = Post '{"q":"python 文档"}'
 Check "缓存命中" ($cachedHit.meta.cached -eq $true) "cached=$($cachedHit.meta.cached) total=$($cachedHit.meta.total)"
 
-$routed = Post '{"q":"python 文档 g"}'
-Check "后缀路由" ($routed.parsed.engine -eq "google" -and $routed.parsed.router -eq "suffix") "engine=$($routed.parsed.engine) router=$($routed.parsed.router) q=$($routed.parsed.q)"
+try {
+    $routed = Post '{"q":"python 文档 g"}'
+    Check "后缀路由" ($routed.parsed.engine -eq "google" -and $routed.parsed.router -eq "suffix") "engine=$($routed.parsed.engine) router=$($routed.parsed.router) q=$($routed.parsed.q)"
+} catch {
+    $failure = $_.ErrorDetails.Message | ConvertFrom-Json -ErrorAction SilentlyContinue
+    Check "后缀路由" $false "code=$($failure.error.code) status=$([int]$_.Exception.Response.StatusCode)"
+}
 
 $guarded = Post '{"q":"C g"}'
 Check "C g 不误触发" ($guarded.parsed.router -eq "default") "router=$($guarded.parsed.router)"
 
-# 真实模式下这三项无法构造（上游不认 fixture 指令），记为 N/A 而不是失败。
-$skipNote = ""
-if (-not $fixtureMode) { $skipNote = "N/A(真实模式无固定样本) " }
-
-$risky = Post '{"q":"账号验证","opts":{"fixture":"risky"}}'
-$riskyOk = $fixtureMode -and ($risky.meta.filtered.risk -eq 1)
-Check "黑名单拦截" ((-not $fixtureMode) -or $riskyOk) "$skipNote filtered.risk=$($risky.meta.filtered.risk) upstream=$($risky.meta.upstream_total)"
-
-$empty = Post '{"q":"test","opts":{"fixture":"empty"}}'
-$emptyOk = $fixtureMode -and ($empty.meta.status -eq "empty") -and ($empty.meta.total -eq 0)
-Check "零结果" ((-not $fixtureMode) -or $emptyOk) "$skipNote total=$($empty.meta.total)"
-
-$failCode = $null
-try { Post '{"q":"test","opts":{"fixture":"error"}}' | Out-Null }
-catch { $failCode = ($_.ErrorDetails.Message | ConvertFrom-Json).error.code }
-Check "上游不可用" ((-not $fixtureMode) -or ($failCode -eq "UPSTREAM_UNAVAILABLE")) "$skipNote code=$failCode"
+if ($fixtureMode) {
+    $risky = Post '{"q":"账号验证","opts":{"fixture":"risky"}}'
+    Check "黑名单拦截" ($risky.meta.filtered.risk -eq 1) "filtered.risk=$($risky.meta.filtered.risk) upstream=$($risky.meta.upstream_total)"
+    $empty = Post '{"q":"test","opts":{"fixture":"empty"}}'
+    Check "零结果" ($empty.meta.status -eq "empty" -and $empty.meta.total -eq 0) "total=$($empty.meta.total)"
+    $failCode = $null
+    try { Post '{"q":"test","opts":{"fixture":"error"}}' | Out-Null }
+    catch { $failCode = ($_.ErrorDetails.Message | ConvertFrom-Json).error.code }
+    Check "上游不可用" ($failCode -eq "UPSTREAM_UNAVAILABLE") "code=$failCode"
+} else {
+    $skipped = 3
+    Write-Host "N/A 真实上游不执行三项固定样本测试（黑名单、零结果、上游不可用）"
+}
 
 # 两种模型模式都必须有正文、正确引用和正常结束。
 $sid = $hit.meta.sid
@@ -105,5 +108,6 @@ $page = Invoke-WebRequest "$BaseUrl/" -UseBasicParsing
 Check "同源首页" ($page.StatusCode -eq 200 -and $page.Content -match 'id="root"') "bytes=$($page.RawContentLength)"
 
 $results | Format-Table -AutoSize
-if ($results.Pass -contains $false) { Write-Host "冒烟失败" -ForegroundColor Red; exit 1 }
-Write-Host "冒烟通过" -ForegroundColor Green
+$passed = @($results | Where-Object Pass).Count
+if ($passed -ne $results.Count) { Write-Host "冒烟失败 $passed/$($results.Count)，跳过 $skipped" -ForegroundColor Red; exit 1 }
+Write-Host "冒烟通过 $($results.Count)/$($results.Count)，跳过 $skipped" -ForegroundColor Green

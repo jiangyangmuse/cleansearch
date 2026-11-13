@@ -1,0 +1,18 @@
+{
+  "old_pid": 23852,
+  "launcher_pid": 40792,
+  "health": {
+    "status": "ok",
+    "provider": "searxng",
+    "searxng_url": "http://127.0.0.1:8888",
+    "web_dist": "D:\\agent\\llq\\apps\\web\\dist",
+    "web_built": true,
+    "blocklist_rules": 3,
+    "llm_provider": "openai",
+    "llm_model": "qwen3.5-4b-local:latest",
+    "bookmarks": 0,
+    "version": "0.1.0"
+  },
+  "preserved_env": true,
+  "preserved_db_path": "D:\\agent\\llq\\data\\review-temp\\verify.db"
+}

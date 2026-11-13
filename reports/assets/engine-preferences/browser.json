@@ -1,0 +1,14 @@
+{
+  "settingsPersisted": true,
+  "defaultSources": [
+    "bing"
+  ],
+  "locale": "fr-FR",
+  "customEngine": "bing",
+  "website": "https://example.org/search?q=%E6%9C%BA%E5%99%A8+%E5%AD%A6%E4%B9%A0",
+  "paused": true,
+  "explicitWhilePaused": true,
+  "mainlandAndCustomGroups": true,
+  "narrowWidth": 390,
+  "browserErrors": []
+}

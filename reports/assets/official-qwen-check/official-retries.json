@@ -1,0 +1,1279 @@
+{
+  "catalog_size": 48,
+  "results": [
+    {
+      "mode": "free-default",
+      "query": "Apple",
+      "category": "tech",
+      "host": "apple.com",
+      "paths": [
+        "/",
+        "/cn",
+        "/jp"
+      ],
+      "status": 200,
+      "seconds": 4.805,
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "yahoo",
+          "duckduckgo web",
+          "google cse",
+          "360search",
+          "bing",
+          "naver",
+          "wikipedia",
+          "yandex"
+        ],
+        "unresponsive": [
+          "duckduckgo(CAPTCHA)",
+          "mojeek(Suspended: access denied)",
+          "sogou(unexpected crash)",
+          "swisscows(access denied)"
+        ],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 4786,
+        "total": 17,
+        "upstream_total": 47,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        },
+        "official": 3,
+        "directory": 1,
+        "sid": "s_2bdcbcd025cbe5b9e8ccbb09672055c3"
+      },
+      "error": null,
+      "results": [
+        {
+          "section": "official",
+          "position": 1,
+          "id": "r_1",
+          "url": "https://www.apple.com/",
+          "title": "Apple (대한민국)",
+          "snippet": "Discover the innovative world of Apple and shop everything iPhone, iPad, Apple Watch, Mac, and Apple TV, plus explore accessories, entertainment, and expert device support.",
+          "source": "search",
+          "engines": [
+            "yahoo",
+            "duckduckgo web",
+            "google cse",
+            "360search",
+            "bing",
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": "landing"
+        },
+        {
+          "section": "official",
+          "position": 2,
+          "id": "d_c6502dd343d62996",
+          "url": "https://developer.apple.com/",
+          "title": "Apple · 开发者",
+          "snippet": "",
+          "source": "directory",
+          "engines": [],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "official",
+          "position": 3,
+          "id": "r_9",
+          "url": "https://support.apple.com/",
+          "title": "Official Apple Support",
+          "snippet": "At Apple, we are always working to create the best experience for our customers, which is why we design products that last. Designing for longevity is a company-wide effort, informing our earliest decisions long before the first prototype is built and guided by historical customer-use data and predictions on future usage.",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "strong",
+          "position": 1,
+          "id": "r_5",
+          "url": "https://en.wikipedia.org/wiki/Apple_Inc.",
+          "title": "Apple Inc. - Wikipedia",
+          "snippet": "Apple Inc. is an American multinational technology company headquartered in Cupertino, California, in Silicon Valley, and known for consumer electronics, software and online services. Founded in 1976 as Apple Computer Company by Steve Jobs, Steve Wozniak and Ronald Wayne, the company was incorporated by Jobs and Wozniak as Apple Computer, Inc. the following year. Its current name was adopted ...",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo",
+            "google cse"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "strong",
+          "position": 2,
+          "id": "r_6",
+          "url": "https://en.wikipedia.org/wiki/Apple",
+          "title": "Apple - Wikipedia",
+          "snippet": "The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found. Apples have been grown for thousands of years in Eurasia before ...",
+          "source": "search",
+          "engines": [
+            "wikipedia",
+            "google cse"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 1,
+          "id": "r_2",
+          "url": "https://www.apple.com/store",
+          "title": "Apple Store Online",
+          "snippet": "10 hours ago · Lease a new Apple product with low monthly payments and terms that work for you with Apple Upgrade. Learn more",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo",
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": "subpage"
+        },
+        {
+          "section": "related",
+          "position": 2,
+          "id": "r_10",
+          "url": "https://music.apple.com/us/new",
+          "title": "Apple Music Web Player",
+          "snippet": "Listen to millions of songs, watch music videos, and experience live performances all on Apple Music. Play on web, in app, or on Android with your subscription.",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 3,
+          "id": "r_11",
+          "url": "https://finance.yahoo.com/quote/AAPL/",
+          "title": "Apple Inc. (AAPL) Stock Price, News, Quote & History - Yahoo Finance",
+          "snippet": "PROFITABILITY_AND_INCOME_STATEMENT · 27.60% · (TTM). 25.87% · (TTM). 142.26% · (TTM). 478.83B · (TTM). 132.18B · (TTM). 8.98. BALANCE_SHEET_AND_CASH_FLOW. (MRQ).",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "google cse"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 4,
+          "id": "r_7",
+          "url": "https://account.apple.com/sign-in",
+          "title": "account.apple.com",
+          "snippet": "",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 5,
+          "id": "r_20",
+          "url": "https://www.youtube.com/",
+          "title": "Apple 대한민국최신 콘텐츠",
+          "snippet": "약 46.2만 명의 구독자를 보유한 Apple 대한민국의 유튜브. 약 100 개의 동영상이 있습니다. Apple 공식 YouTube 채널에 오신 것을 환영합니다. 이곳에서 제품 출시 소식과 튜토리얼 등 유익한 콘텐츠를 만날 수 있습니다. Apple은 1984년 Macintosh를 선보이며 개인 기술에 혁명을 일으켰고, 현재 iPhone, iPad, Mac, Apple Watch 등의 제품으로...",
+          "source": "search",
+          "engines": [
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 6,
+          "id": "r_14",
+          "url": "https://twitter.com/",
+          "title": "@Apple - X",
+          "snippet": "@Apple의 최신 포스트를 확인하세요.",
+          "source": "search",
+          "engines": [
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 7,
+          "id": "r_30",
+          "url": "https://www.facebook.com/",
+          "title": "@apple - Facebook",
+          "snippet": "@apple의 최신 포스트를 확인하세요.",
+          "source": "search",
+          "engines": [
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 8,
+          "id": "r_33",
+          "url": "https://support.apple.com/zh-cn/apple-account",
+          "title": "Apple 账户 - 官方 Apple 支持",
+          "snippet": "3 days ago · Apple 账户支持 Apple 账户，以前叫作 Apple ID，可供你访问所有 Apple 服务，并使你的所有设备实现无缝协作。",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 9,
+          "id": "r_18",
+          "url": "https://namu.wiki/w/%EB%82%98%EB%AC%B4%EC%9C%84%ED%82%A4:%EB%8C%80%EB%AC%B8",
+          "title": "Apple - 나무위키",
+          "snippet": "미국의 전자기기 제조 및 소프트웨어·온라인 서비스 기업. 1976년 창립되어 2026년 4월 1일 창사 50주년을 맞이했다.스티브 잡스, 스티브 워즈니악, 로널드 웨인미국 ( 다국적기업 )",
+          "source": "search",
+          "engines": [
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 10,
+          "id": "r_22",
+          "url": "https://www.youtube.com/apple",
+          "title": "Apple - YouTube",
+          "snippet": "Apple Home · Devices that bring you integrated entertainment and effortless smart home management. · Welcome Apple HomeView: Designed for life at home. · The ...",
+          "source": "search",
+          "engines": [
+            "google cse"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 1,
+          "id": "r_3",
+          "url": "https://account.apple.com/",
+          "title": "Manage your Apple Account",
+          "snippet": "Your Apple Account is the account you use for all Apple services.",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo",
+            "bing",
+            "naver"
+          ],
+          "warning": "品牌近似域名，未匹配 Apple 已核验入口",
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 2,
+          "id": "r_4",
+          "url": "https://www.apple.com.cn/",
+          "title": "Apple (中国大陆) - 官方网站",
+          "snippet": "Jan 24, 2026 · 探索 Apple 充满创新的世界，选购各式 iPhone、iPad、Apple Watch 和 Mac，浏览各种配件、娱乐产品，并获得相关 …",
+          "source": "search",
+          "engines": [
+            "bing",
+            "360search"
+          ],
+          "warning": "自称官网，未匹配 Apple 已核验入口",
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 3,
+          "id": "r_12",
+          "url": "https://asw.apple.com/home",
+          "title": "Sign In - Apple",
+          "snippet": "Apple records certain data for security, support, and reporting purposes. If you agree, Apple may also use your Apple Account information to send you marketing emails and communications, including based on your use of Apple services.",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "bing"
+          ],
+          "warning": "品牌近似域名，未匹配 Apple 已核验入口",
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 4,
+          "id": "r_26",
+          "url": "https://appleinsider.com/",
+          "title": "AppleInsider: Apple News, Rumors, Reviews, Prices & Deals",
+          "snippet": "Top Story · Apple's 'Harbor' will make running local AI across multiple Macs trivial · Featured Stories · iPhone Duo photography: Great cameras that suffer in ...",
+          "source": "search",
+          "engines": [
+            "google cse"
+          ],
+          "warning": "品牌近似域名，未匹配 Apple 已核验入口",
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 5,
+          "id": "r_34",
+          "url": "https://tv.apple.com/",
+          "title": "Apple TV",
+          "snippet": "Browse all movies, TV shows, and more from Apple TV. Watch all Apple Originals here and on the Apple TV app across your devices.",
+          "source": "search",
+          "engines": [
+            "duckduckgo web"
+          ],
+          "warning": "品牌近似域名，未匹配 Apple 已核验入口",
+          "site_kind": null
+        }
+      ],
+      "catalog": "apple"
+    },
+    {
+      "mode": "free-default",
+      "query": "Mozilla",
+      "category": "software",
+      "host": "mozilla.org",
+      "paths": [
+        "/",
+        "/en-us",
+        "/zh-cn",
+        "/ja"
+      ],
+      "status": 200,
+      "seconds": 8.184,
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "wikipedia",
+          "duckduckgo web",
+          "yahoo",
+          "google cse",
+          "bing",
+          "360search",
+          "yandex",
+          "naver"
+        ],
+        "unresponsive": [
+          "duckduckgo(CAPTCHA)",
+          "mojeek(Suspended: access denied)",
+          "sogou(unexpected crash)",
+          "swisscows(Suspended: access denied)",
+          "wikidata(timeout)"
+        ],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 8169,
+        "total": 17,
+        "upstream_total": 61,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        },
+        "official": 3,
+        "directory": 1,
+        "sid": "s_4c6f007f7e5f14124fde5f6d4cad433d"
+      },
+      "error": null,
+      "results": [
+        {
+          "section": "official",
+          "position": 1,
+          "id": "r_3",
+          "url": "https://www.mozilla.org/en-US/",
+          "title": "Mozilla - Internet for people, not profit (US)",
+          "snippet": "Mozilla Foundation is building a future where technology is powered by people, and open by design. That's why we fuel community-centered tech through advocacy, education, funding, and innovation — to make sure that the future of tech is good for everyone. But that's only possible if we do it together. We're proudly non-profit. Will you donate to Mozilla today?",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo",
+            "google cse"
+          ],
+          "warning": null,
+          "site_kind": "landing"
+        },
+        {
+          "section": "official",
+          "position": 2,
+          "id": "r_6",
+          "url": "https://developer.mozilla.org/en-US/",
+          "title": "MDN Web Docs - developer.mozilla.org",
+          "snippet": "The MDN Web Docs site provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and progressive web apps.",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo",
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "official",
+          "position": 3,
+          "id": "d_6713d482e8d06a50",
+          "url": "https://github.com/mozilla",
+          "title": "Mozilla · 官方仓库",
+          "snippet": "",
+          "source": "directory",
+          "engines": [],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "strong",
+          "position": 1,
+          "id": "r_1",
+          "url": "https://en.wikipedia.org/wiki/Mozilla",
+          "title": "Mozilla - Wikipedia",
+          "snippet": "Mozilla is a free software community founded in 1998 by members of Netscape. The Mozilla community uses, develops, publishes, and supports Mozilla products, thereby promoting free software and open standards. [1] The community is supported institutionally by the non-profit Mozilla Foundation and its tax-paying subsidiary, the Mozilla Corporation. [2] Mozilla's current products include the ...",
+          "source": "search",
+          "engines": [
+            "wikipedia",
+            "duckduckgo web",
+            "yahoo",
+            "google cse"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "strong",
+          "position": 2,
+          "id": "r_4",
+          "url": "https://www.mozilla.org/",
+          "title": "Internet for people, not profit — Mozilla Global",
+          "snippet": "Mozilla is the not-for-profit behind the lightning fast Firefox browser. We put people over profit to give everyone more power online.",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo",
+            "bing",
+            "google cse"
+          ],
+          "warning": null,
+          "site_kind": "landing"
+        },
+        {
+          "section": "related",
+          "position": 1,
+          "id": "r_10",
+          "url": "https://www.mozilla.org/ko/",
+          "title": "Mozilla — 이익이 아닌 사람을 위한 인터넷",
+          "snippet": "저희는 인터넷을 사용하는 사람들에게 인터넷 제어권을 되돌려놓기 위해 노력하고 있습니다.",
+          "source": "search",
+          "engines": [
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": "subpage"
+        },
+        {
+          "section": "related",
+          "position": 2,
+          "id": "r_9",
+          "url": "https://www.mozilla.org/de/contribute/",
+          "title": "Möglichkeiten für Freiwillige bei Mozilla — Mozilla",
+          "snippet": "Mozilla ist eine gemeinnützige Organisation, die sich dafür einsetzt, dass das Internet für alle offen und einladend ist. Und wir brauchen deine Hilfe.",
+          "source": "search",
+          "engines": [
+            "yandex"
+          ],
+          "warning": null,
+          "site_kind": "subpage"
+        },
+        {
+          "section": "related",
+          "position": 3,
+          "id": "r_33",
+          "url": "https://wiki.mozilla.org/Main_Page",
+          "title": "MozillaWiki",
+          "snippet": "Contributing to Mozilla · Mozilla Events · Connect with Mozilla, submit ideas · Code, translate, document…How to use this wiki · Mozilla Community Participation Guidelines (CPG) · About MozillaWiki · Tips and tricks for MozillaWiki",
+          "source": "search",
+          "engines": [
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 4,
+          "id": "r_57",
+          "url": "https://www.mozilla.org/en-US/about/",
+          "title": "Learn about Mozilla",
+          "snippet": "About Mozilla. The Mozilla Project is a global community of people who believe that openness, innovation, and opportunity are key to the continued health of the ...",
+          "source": "search",
+          "engines": [
+            "google cse"
+          ],
+          "warning": null,
+          "site_kind": "subpage"
+        },
+        {
+          "section": "related",
+          "position": 5,
+          "id": "r_53",
+          "url": "https://en.wikipedia.org/wiki/Firefox",
+          "title": "Firefox - Wikipedia",
+          "snippet": "Mozilla Firefox, or simply Firefox, is a free and open-source web browser developed by the Mozilla Foundation and its subsidiary, the Mozilla Corporation.",
+          "source": "search",
+          "engines": [
+            "google cse"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 6,
+          "id": "r_30",
+          "url": "https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:%EB%8C%80%EB%AC%B8",
+          "title": "모질라 - 위키백과 한국어",
+          "snippet": "모질라 (Mozilla)는 1998년 미국 AOL의 넷스케이프 팀이 중심이 되어 구성한 자유 소프트웨어 커뮤니티이다. 파이어폭스 웹 브라우저, 썬더버드 이메일, 버그질라 오류 추적기 등을 개발했다. 로고는 일본의 괴물 영화에 나오는 고질라이다. 모질라는 모자이크 웹 브라우저와 고질라를 합성한 말이라는 설명도 있고, 모자이크 킬러의 줄임말이라는 설명도 있다. 2003년 모질라 커뮤니......1998년 2월 28일 (28년 전)넷스케이프 출신 개발자들",
+          "source": "search",
+          "engines": [
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 7,
+          "id": "r_31",
+          "url": "https://developer.mozilla.org/zh-CN/",
+          "title": "MDN Web Docs",
+          "snippet": "Apr 1, 2010 · developer.mozilla.org Under the hood of MDN's new frontend 7个月前 You may have spotted that MDN has a new …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 8,
+          "id": "r_5",
+          "url": "https://www.firefox.com/en-US/download/windows/",
+          "title": "Download Firefox for Windows — Firefox.com",
+          "snippet": "Powered by Mozilla · Ask us a question! Website Privacy Notice · Terms of Use · Cookie Policy · Community Participation Guidelines · Logo Trademark Licensing ...",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo",
+            "google cse"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 9,
+          "id": "r_38",
+          "url": "https://support.mozilla.org/en-US/topics/installation-and-updates",
+          "title": "Installation and updates - Mozilla Support",
+          "snippet": "Learn how to install your favorite Mozilla products and keep them updated.",
+          "source": "search",
+          "engines": [
+            "duckduckgo web"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 10,
+          "id": "r_7",
+          "url": "https://www.mozilla.org/zh-CN/products/",
+          "title": "Mozilla 产品 - Mozilla — Mozilla",
+          "snippet": "Mozilla 的客户控制内部企业浏览器平台。 旨在帮助组织更好地控制数据、IT 基础设施和浏览器环境来增强其数字自主权和运营弹性。 …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": "subpage"
+        },
+        {
+          "section": "weak",
+          "position": 1,
+          "id": "r_2",
+          "url": "https://www.firefox.com/en-US/",
+          "title": "Firefox: The fast, private browser that keeps you safe - Mozilla",
+          "snippet": "Powered by Mozilla · Ask us a question! Website Privacy Notice · Terms of Use · Cookie Policy · Community Participation Guidelines · Logo Trademark Licensing ...",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo",
+            "google cse"
+          ],
+          "warning": "品牌近似域名，未匹配 Mozilla 已核验入口",
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 2,
+          "id": "r_11",
+          "url": "https://login.mozilla.com/",
+          "title": "login.mozilla.com",
+          "snippet": "Mozilla Corporation Account Portal Portions of this content are ©1998-2026 by individual mozilla.org contributors. Content available under a Creative Commons license.",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo"
+          ],
+          "warning": "品牌近似域名，未匹配 Mozilla 已核验入口",
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 3,
+          "id": "r_21",
+          "url": "https://www.mozillafoundation.org/en/",
+          "title": "Welcome to Mozilla Foundation - Mozilla Foundation",
+          "snippet": "With over two decades of global impact, Mozilla Foundation continues to lead the movement for a better technology future—powered by people, open by design, and fueled by imagination.",
+          "source": "search",
+          "engines": [
+            "google cse",
+            "naver"
+          ],
+          "warning": "品牌近似域名，未匹配 Mozilla 已核验入口",
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 4,
+          "id": "r_12",
+          "url": "http://getfirefox.com/",
+          "title": "下载Firefox — 自由的网络浏览器— Mozilla",
+          "snippet": "下载自由的网络浏览器 Mozilla Firefox。Firefox由致力于让每个人都能自行控制网络生活的全球性非营利社区打造。立即下载用于 Windows、macOS、Linux、Android以及 iOS的 F...",
+          "source": "search",
+          "engines": [
+            "360search"
+          ],
+          "warning": "品牌近似域名，未匹配 Mozilla 已核验入口",
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 5,
+          "id": "r_16",
+          "url": "https://mozilla-firefox.de.unstore.io/",
+          "title": "Mozilla Firefox 149.0.2 für Windows herunterladen... | unstore.io",
+          "snippet": "Mozilla Firefox ist eine Open-Source-Alternative zu Chrome, die Ihnen die Kontrolle über Ihr Online-Erlebnis gibt, ohne auf Chromium-basierte Technologie angewiesen zu sein.",
+          "source": "search",
+          "engines": [
+            "yandex"
+          ],
+          "warning": "品牌近似域名，未匹配 Mozilla 已核验入口",
+          "site_kind": null
+        }
+      ],
+      "catalog": "mozilla"
+    },
+    {
+      "mode": "free-default",
+      "query": "原神",
+      "category": "game",
+      "host": "ys.mihoyo.com",
+      "paths": [
+        "/",
+        "/main",
+        "/main/home",
+        "/main/m"
+      ],
+      "status": 200,
+      "seconds": 4.094,
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "yahoo",
+          "duckduckgo web",
+          "google cse",
+          "360search",
+          "bing",
+          "naver",
+          "wikipedia",
+          "yandex"
+        ],
+        "unresponsive": [
+          "duckduckgo(CAPTCHA)",
+          "sogou(unexpected crash)",
+          "swisscows(Suspended: access denied)",
+          "wikidata(Suspended: timeout)"
+        ],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 4083,
+        "total": 15,
+        "upstream_total": 44,
+        "filtered": {
+          "dup": 1,
+          "risk": 0
+        },
+        "official": 0,
+        "directory": 0,
+        "sid": "s_0bca8613186f35b6794f27918ebe9157"
+      },
+      "error": null,
+      "results": [
+        {
+          "section": "related",
+          "position": 1,
+          "id": "r_6",
+          "url": "https://www.miyoushe.com/ys/",
+          "title": "原神社区-米游社",
+          "snippet": "米哈游官方社区. 打开APP. 原神. Please enable JavaScript to use this application.",
+          "source": "search",
+          "engines": [
+            "google cse",
+            "duckduckgo web",
+            "yahoo",
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 2,
+          "id": "r_3",
+          "url": "https://genshin.hoyoverse.com/ja",
+          "title": "原神——冒険に満ちたブランニューワールドへ",
+          "snippet": "オープンワールドRPG『原神』。 本作であなたは旅人となり「テイワット」という幻想世界を冒険していく。 この広大な世界を自由に旅し、個性も能力も豊かな仲間たちと共に強敵を打ち倒して、生き別れた兄妹を探そう。",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo",
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 3,
+          "id": "r_4",
+          "url": "https://ys.mihoyo.com/cloud/",
+          "title": "云·原神 - 米哈游",
+          "snippet": "云原神网页版是米哈游（miHoYo）旗下的原神云游戏版本。 通过实时云端技术，你无需下载完整原神包体，也可尽享低延迟、高画质、高帧率游戏体验。 《原神》是由米哈游自研的一款开放世界冒险RPG。 你将在游戏中探索一个被称作「提瓦特」的幻想世界。",
+          "source": "search",
+          "engines": [
+            "google cse",
+            "duckduckgo web",
+            "yahoo",
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": "subpage"
+        },
+        {
+          "section": "related",
+          "position": 4,
+          "id": "r_8",
+          "url": "https://wiki.biligame.com/ys/%E9%A6%96%E9%A1%B5",
+          "title": "首页 - 原神WIKI_BWIKI_哔哩哔哩",
+          "snippet": "Oct 26, 2025 ... WIKI功能 · 生日日历 · 原神WIKI六周年数据盘点 · 纳塔一期火神瞳收录 · 枫丹二期水神瞳收录 · 枫丹一期水神瞳收录 · 枫丹探索专题 · 枫丹情报展设定集.",
+          "source": "search",
+          "engines": [
+            "google cse",
+            "duckduckgo web",
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 5,
+          "id": "r_1",
+          "url": "https://ys.mihoyo.com/",
+          "title": "《原神》官方网站-全新「月之三」新版本「终北的夜行诗」上线!",
+          "snippet": "全新7.2版本「坏灭肇始之时」，现已推出!《原神》是由米哈游自研的一款开放世界冒险RPG。你将在游戏中探索一个被称作「提瓦特」的幻想世界。在这广阔的世界中，你可以踏遍七国，邂逅性格各异、能力独特的同伴，与他们一同对抗强敌，踏上寻回血亲之路；也可以不带目的地漫游，沉浸在充满 ...",
+          "source": "search",
+          "engines": [
+            "yahoo",
+            "duckduckgo web",
+            "google cse",
+            "360search",
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": "landing"
+        },
+        {
+          "section": "related",
+          "position": 6,
+          "id": "r_22",
+          "url": "https://zh.wikipedia.org/zh-hans/%E5%8E%9F%E7%A5%9E",
+          "title": "原神- 维基百科，自由的百科全书",
+          "snippet": "游戏剧情于虚构世界的提瓦特大陆上展开，该世界分成七个国家，每个国家分别以一种元素为主题，并由对应元素的神明所分管。游戏剧情的主角为“旅行者”，是一对在无数个世界中 ...",
+          "source": "search",
+          "engines": [
+            "google cse"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 7,
+          "id": "r_2",
+          "url": "https://www.yuanshen.com/",
+          "title": "《原神》官方网站-米哈游开放世界冒险RPG",
+          "snippet": "用户协议隐私政策儿童隐私政策自律公约成长关爱关于我们联系我们加入我们健康游戏忠告:抵制不良游戏,拒绝盗版游戏。注意自我保护,谨防受骗上当。适度游戏益脑,沉迷游戏伤身...",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo",
+            "bing",
+            "360search"
+          ],
+          "warning": null,
+          "site_kind": "landing"
+        },
+        {
+          "section": "related",
+          "position": 8,
+          "id": "r_5",
+          "url": "https://baike.baidu.com/item/%E5%8E%9F%E7%A5%9E/23583622",
+          "title": "原神（2020年米哈游开发的开放世界冒险游戏） - 百度百科",
+          "snippet": "《原神》是由上海米哈游网络科技股份有限公司制作发行的一款开放世界冒险游戏，于2017年1月底立项，原初测试于2019年6月21日开启，再临测试于2020年3月19日开启，启程测试于2020年6月11日开启，PC版技术性开放测试于9月15日开启，公测于2020年9月28日开启。在数据方面，同在官方服务器的情况下，iOS ...",
+          "source": "search",
+          "engines": [
+            "google cse",
+            "duckduckgo web",
+            "yahoo",
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 9,
+          "id": "r_21",
+          "url": "https://space.bilibili.com/401742377",
+          "title": "原神",
+          "snippet": "",
+          "source": "search",
+          "engines": [
+            "naver",
+            "google cse"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 10,
+          "id": "r_18",
+          "url": "https://news.4399.com/yssy/juese/103202-2.html",
+          "title": "原神角色_原神角色图鉴_角色资料-4399原神官网",
+          "snippet": "原神. 原神. 原神游戏资讯. 原神攻略心得.原神卡维角色介绍 原神卡维角色介绍.",
+          "source": "search",
+          "engines": [
+            "yandex"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 1,
+          "id": "r_9",
+          "url": "https://en.wikipedia.org/wiki/Genshin_Impact",
+          "title": "Genshin Impact",
+          "snippet": "2020 video game",
+          "source": "search",
+          "engines": [
+            "wikipedia"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 2,
+          "id": "r_7",
+          "url": "https://genshin.hoyoverse.com/en/",
+          "title": "Genshin Impact - Step Into a Vast Magical World of Adventure",
+          "snippet": "Genshin Impact is an open-world adventure RPG. In the game, set forth on a journey across a fantasy world called Teyvat. In this vast world, you can explore seven nations, meet a diverse cast of characters with unique personalities and abilities, and fight powerful enemies together with them, all on the way during your quest to find your lost sibling. You can also wander freely, immersing ...",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 3,
+          "id": "r_13",
+          "url": "https://namu.wiki/w/%EB%82%98%EB%AC%B4%EC%9C%84%ED%82%A4:%EB%8C%80%EB%AC%B8",
+          "title": "원신 - 나무위키",
+          "snippet": "에서 제작한 유니티 기반 오픈 월드액션 어드벤처 게임. 불, 물, 얼음, 바람, 번개, 바위, 풀 7가지의 원소 시스템을 기반으로 티바트 대륙을 포함한 원신 세계의 다양한 국가 및 지역을 여행하는 게임이다.오픈 월드 액션 어드벤처 RPGHoYoverse",
+          "source": "search",
+          "engines": [
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 4,
+          "id": "r_30",
+          "url": "https://genshin.hoyoverse.com/zh-cn/download",
+          "title": "Genshin Impact – Step into a Vast Magical World for Adventure",
+          "snippet": "Nov 3, 2026 · Genshin Impact is an open-world action RPG. In the game, set forth on a journey across a fantasy world called Teyvat. …",
+          "source": "search",
+          "engines": [
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 5,
+          "id": "r_36",
+          "url": "https://www.hoyoverse.com/",
+          "title": "Home | HoYoverse",
+          "snippet": "HoYoverse is committed to providing immersive virtual world experiences to players around the world. We have brought fans popular games including Genshin Impact, Honkai: Star Rail, Honkai Impact 3rd, Tears of Themis, and Zenless Zone Zero, as well as a wide range of entertainment content.Community is at the heart of everything we do. We are devoted to engaging fans and fostering an ...",
+          "source": "search",
+          "engines": [
+            "duckduckgo web"
+          ],
+          "warning": null,
+          "site_kind": null
+        }
+      ],
+      "catalog": null
+    },
+    {
+      "mode": "free-default",
+      "query": "UNESCO",
+      "category": "international organization",
+      "host": "unesco.org",
+      "paths": [
+        "/",
+        "/en",
+        "/zh"
+      ],
+      "status": 200,
+      "seconds": 4.126,
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "yahoo",
+          "duckduckgo web",
+          "google cse",
+          "360search",
+          "bing",
+          "naver",
+          "mojeek",
+          "wikipedia",
+          "yandex"
+        ],
+        "unresponsive": [
+          "duckduckgo(CAPTCHA)",
+          "sogou(unexpected crash)",
+          "swisscows(Suspended: access denied)",
+          "wikidata(Suspended: timeout)"
+        ],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 4113,
+        "total": 17,
+        "upstream_total": 64,
+        "filtered": {
+          "dup": 1,
+          "risk": 0
+        },
+        "official": 0,
+        "directory": 0,
+        "sid": "s_e3ffa81362cd64aa52cedc6271101477"
+      },
+      "error": null,
+      "results": [
+        {
+          "section": "strong",
+          "position": 1,
+          "id": "r_4",
+          "url": "https://en.wikipedia.org/wiki/UNESCO",
+          "title": "UNESCO - Wikipedia",
+          "snippet": "Origins. edit. UNESCO and its mandate for international cooperation can be traced to a League of Nations resolution on 21 September 1921, to elect a commission ...",
+          "source": "search",
+          "engines": [
+            "wikipedia",
+            "google cse",
+            "mojeek"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "strong",
+          "position": 2,
+          "id": "r_6",
+          "url": "https://en.wikipedia.org/wiki/Unesco",
+          "title": "UNESCO - Wikipedia",
+          "snippet": "UNESCO and its mandate for international cooperation can be traced to a League of Nations resolution on 21 September 1921, to elect a commission to study the feasibility of having nations freely share cultural, educational and scientific achievements. [16][17] This new body, the International Committee on Intellectual Cooperation (ICIC), was created in 1922 [10] and counted such figures as ...",
+          "source": "search",
+          "engines": [
+            "duckduckgo web",
+            "yahoo"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 1,
+          "id": "r_45",
+          "url": "https://de.wikipedia.org/wiki/UNESCO",
+          "title": "UNESCO – Wikipedia",
+          "snippet": "Die UNESCO-Nationalkommissionen sind keine Organe der UNESCO, jedoch bereits von der UNESCO-Verfassung vorgesehene Stellen in jedem Mitgliedstaat.",
+          "source": "search",
+          "engines": [
+            "mojeek"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 2,
+          "id": "r_3",
+          "url": "https://whc.unesco.org/en/list/",
+          "title": "UNESCO World Heritage Centre - World Heritage List",
+          "snippet": "UNESCO Sites Navigator The UNESCO Sites Navigator, supported by the Flanders UNESCO Trustfund (FUT), is an online geographic information system displaying georeferenced maps of UNESCO designated sites.",
+          "source": "search",
+          "engines": [
+            "yahoo",
+            "duckduckgo web",
+            "google cse",
+            "mojeek",
+            "bing"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 3,
+          "id": "r_50",
+          "url": "https://es.wikipedia.org/wiki/Unesco",
+          "title": "Unesco - Wikipedia, la enciclopedia libre",
+          "snippet": "Premio Unesco de Educación para la Paz , dotado con 60 000 dólares, tiene por objeto promover todas las formas de acción que traten de ...",
+          "source": "search",
+          "engines": [
+            "mojeek"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 4,
+          "id": "r_52",
+          "url": "https://simple.wikipedia.org/wiki/UNESCO",
+          "title": "UNESCO - Simple English Wikipedia, the free encyclopedia",
+          "snippet": "UNESCO says its purpose, as defined just after the end of World War II, is \"to build the defenses of peace in the minds of men and women\". It does this by ...",
+          "source": "search",
+          "engines": [
+            "google cse"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 5,
+          "id": "r_49",
+          "url": "https://ru.wikipedia.org/wiki/%D0%AE%D0%9D%D0%95%D0%A1%D0%9A%D0%9E",
+          "title": "ЮНЕСКО — Википедия",
+          "snippet": "ЮНЕСКО (акрон. англ. UNESCO, United Nations Educational, Scientific and Cultural Organization) — специализированное учреждение Организации Объединённых...",
+          "source": "search",
+          "engines": [
+            "yandex"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 6,
+          "id": "r_43",
+          "url": "https://it.wikipedia.org/wiki/UNESCO",
+          "title": "UNESCO - Wikipedia",
+          "snippet": "L 'Organizzazione delle Nazioni Unite per l'Educazione, la Scienza e la Cultura (in francese L'Organisation des Nations unies pour l'éducation, la science et la culture; [3] in inglese United Nations Educational, Scientific and Cultural Organization, [3] da cui l' acronimo UNESCO; [N 1] AFI: /uˈnɛsko/ o /uˈnesko/[5]) è un'agenzia specializzata delle Nazioni Unite creata con lo scopo [6 ...",
+          "source": "search",
+          "engines": [
+            "duckduckgo web"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 7,
+          "id": "r_1",
+          "url": "https://www.unesco.org/en",
+          "title": "UNESCO : Building Peace through Education, Science and Culture, communication and information",
+          "snippet": "UNESCO is the United Nations organization that promotes cooperation in education, science, culture and communication to foster peace worldwide. The Organization provides key services for its Member States, setting global norms and standards, developing tools for international cooperation, producing knowledge for public policies and building global networks of sites and institutions inscribed ...",
+          "source": "search",
+          "engines": [
+            "yahoo",
+            "duckduckgo web",
+            "google cse",
+            "360search",
+            "bing",
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": "landing"
+        },
+        {
+          "section": "related",
+          "position": 8,
+          "id": "r_40",
+          "url": "https://en.wikipedia.org/wiki/Education",
+          "title": "Education - Wikipedia",
+          "snippet": "International organizations also play a key role in education. For instance, UNESCO is an intergovernmental organization that promotes education in many ways.",
+          "source": "search",
+          "engines": [
+            "yandex"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 9,
+          "id": "r_2",
+          "url": "https://whc.unesco.org/",
+          "title": "UNESCO World Heritage Centre",
+          "snippet": "Heritage is our legacy from the past, what we live with today, and what we pass on to future generations. Our cultural and natural heritage are both irreplaceable sources of life and inspiration. What makes the concept of World Heritage exceptional is its universal application. World Heritage sites belong to all the peoples of the world, irrespective of the territory on which they are located.",
+          "source": "search",
+          "engines": [
+            "yahoo",
+            "duckduckgo web",
+            "mojeek",
+            "360search",
+            "bing",
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "related",
+          "position": 10,
+          "id": "r_48",
+          "url": "https://ja.wikipedia.org/wiki/%E5%9B%BD%E9%9A%9B%E9%80%A3%E5%90%88%E6%95%99%E8%82%B2%E7%A7%91%E5%AD%A6%E6%96%87%E5%8C%96%E6%A9%9F%E9%96%A2",
+          "title": "国際連合教育科学文化機関 - Wikipedia",
+          "snippet": "国際連合教育科学文化機関 （こくさいれんごうきょういくかがくぶんかきかん、 英: United Nations Educational, Scientific and Cultural Organization 、 仏: Organisation des Nations unies pour l'éducation, la science et la culture 、 略称: UNESCO 、 ユネスコ）は、 国際連合 の 経済社会理事 ...",
+          "source": "search",
+          "engines": [
+            "duckduckgo web"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 1,
+          "id": "r_9",
+          "url": "https://unesco.or.kr/",
+          "title": "유네스코한국위원회",
+          "snippet": "교육・과학・문화・커뮤니케이션 분야 국제협력을 주도하는 유네스코 국가위원회",
+          "source": "search",
+          "engines": [
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 2,
+          "id": "r_31",
+          "url": "https://www.unescoicm.org/ko/main",
+          "title": "유네스코국제무예센터",
+          "snippet": "유네스코 후원 청소년 발달과 참여를 위한 국제무예센터(ICM). 무예의 교육적 가치를 바탕으로 청소년 성장과 문화 다양성 보호, 국제 협력을 통해 건강하고 평화로운 인류의 삶에 기여합니다.",
+          "source": "search",
+          "engines": [
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 3,
+          "id": "r_34",
+          "url": "https://www.unescoicdh.org/home/main.php",
+          "title": "유네스코 국제기록유산센터",
+          "snippet": "전 세계 기록유산 분야 연구 및 국제협력을 선도하는 유네스코 산하 국제기구, 유네스코 국제기록유산센터.",
+          "source": "search",
+          "engines": [
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 4,
+          "id": "r_35",
+          "url": "https://www.milliyet.com.tr/",
+          "title": "Milliyet - Haberler, Son Dakika Haberleri ve Güncel Haber",
+          "snippet": "Türkiye gündeminden son dakika haberleri, Dünyadan flaş gelişmeler, Ekonomi dünyasından en yeni haberler, Günün en önemli gazete haber başlıkları ve daha fazlası Milliyet'te!",
+          "source": "search",
+          "engines": [
+            "yandex"
+          ],
+          "warning": null,
+          "site_kind": null
+        },
+        {
+          "section": "weak",
+          "position": 5,
+          "id": "r_46",
+          "url": "https://www.kr.unesco-whipic.org/",
+          "title": "유네스코 세계유산국제해석설명센터",
+          "snippet": "유네스코 세계유산 국제해석설명센터에 오신 것을 환영합니다.",
+          "source": "search",
+          "engines": [
+            "naver"
+          ],
+          "warning": null,
+          "site_kind": null
+        }
+      ],
+      "catalog": null
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "health": "ok",
+  "home": 200,
+  "settings": 200,
+  "modelSettings": 200,
+  "translation": 200,
+  "systemModel": "qwen3.5-4b-local:latest",
+  "browserErrors": []
+}

@@ -1,0 +1,589 @@
+{
+  "deepseek !b": {
+    "parsed": {
+      "q": "deepseek",
+      "engine": "bing",
+      "region": null,
+      "router": "bang",
+      "expanded": []
+    },
+    "groups": {
+      "strong": [],
+      "related": [
+        {
+          "id": "r_6",
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813",
+          "display_url": "huggingface.co › deepseek-ai › DeepSeek-V4-Pro-0813",
+          "title": "deepseek-ai/DeepSeek-V4-Pro-0813 · Hugging Face",
+          "snippet": "DeepSeek-V4 ... DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.3543,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://huggingface.co/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null
+        },
+        {
+          "id": "r_7",
+          "url": "https://openrouter.ai/deepseek/deepseek-v4-pro-0813",
+          "display_url": "openrouter.ai › deepseek › deepseek-v4-pro-0813",
+          "title": "DeepSeek V4 Pro 0813 - API Pricing & Benchmarks | OpenRouter",
+          "snippet": "2026年8月12日 · DeepSeek V4 Pro 0813 is a large-scale mixture-of-experts model from DeepSeek. This is the GA release of …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.3537,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://openrouter.ai/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null
+        },
+        {
+          "id": "r_5",
+          "url": "https://apps.apple.com/us/app/deepseek-ai-assistant/id6737597349",
+          "display_url": "apps.apple.com › deepseek-ai-assistant › id6737597349",
+          "title": "DeepSeek - AI Assistant - App Store",
+          "snippet": "As a free AI model, DeepSeek is quite robust and handles many of the same core tasks as other leading AI apps, making it a solid …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.3536,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://apps.apple.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null
+        },
+        {
+          "id": "r_9",
+          "url": "https://opencode.ai/data/deepseek/deepseek-v4-flash",
+          "display_url": "opencode.ai › deepseek › deepseek-v4-flash",
+          "title": "DeepSeek V4 Flash Usage, Cost & Rank | OpenCode Data",
+          "snippet": "5 天之前 · DeepSeek V4 Flash ranked #46 by tokens across OpenCode last week, with 3.6% of tokens over the past two months. …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.3535,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://opencode.ai/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null
+        },
+        {
+          "id": "r_8",
+          "url": "https://build.nvidia.com/deepseek-ai",
+          "display_url": "build.nvidia.com › deepseek-ai",
+          "title": "AI Models by DeepSeek AI | Try NVIDIA NIM APIs",
+          "snippet": "2026年9月18日 · deepseek-v4.1-flash 552B MoE, 8B active params with native multimodal support and lower API cost using smaller …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.3534,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://build.nvidia.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null
+        },
+        {
+          "id": "r_1",
+          "url": "https://baike.baidu.com/item/%E6%9D%AD%E5%B7%9E%E6%B7%B1%E5%BA%A6%E6%B1%82%E7%B4%A2%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/64541110",
+          "display_url": "baike.baidu.com › %E6%9D%AD%E5%B7%9E%E6%B7%B1%E5%BA%A6%E6%B1%82%E7%B4%A2%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8 › 64541110",
+          "title": "杭州深度求索人工智能基础技术研究有限公司_百度百科",
+          "snippet": "主要产品：公司推出DeepSeek系列大语言模型，包括2024年1月首个DeepSeek LLM、2024年5月DeepSeek-V2、2024年12 …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.3379,
+          "risk": 0.1,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "URL 过长"
+          ],
+          "favicon": "https://baike.baidu.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null
+        }
+      ],
+      "weak": []
+    },
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "bing"
+      ],
+      "unresponsive": [],
+      "provider": "searxng",
+      "cached": true,
+      "ms": 1,
+      "total": 6,
+      "upstream_total": 9,
+      "filtered": {
+        "dup": 0,
+        "risk": 0
+      },
+      "official": 6,
+      "directory": 3,
+      "sid": "s_109426286b68c88128b702847c2bc1e8"
+    },
+    "official": {
+      "key": "deepseek",
+      "brand": "DeepSeek",
+      "entries": [
+        {
+          "id": "d_bd62c0962c92f5ae",
+          "url": "https://www.deepseek.com/",
+          "display_url": "www.deepseek.com",
+          "title": "DeepSeek · 官网",
+          "snippet": "",
+          "engine": [],
+          "score": 0.0,
+          "risk": 0.0,
+          "reasons": [],
+          "favicon": null,
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null,
+          "role": "home",
+          "label": "官网",
+          "host": "www.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08",
+          "origin": "directory"
+        },
+        {
+          "id": "d_7ea330ae999c9e2b",
+          "url": "https://chat.deepseek.com/",
+          "display_url": "chat.deepseek.com",
+          "title": "DeepSeek · 聊天",
+          "snippet": "",
+          "engine": [],
+          "score": 0.0,
+          "risk": 0.0,
+          "reasons": [],
+          "favicon": null,
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null,
+          "role": "chat",
+          "label": "聊天",
+          "host": "chat.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08",
+          "origin": "directory"
+        },
+        {
+          "id": "d_94a4467bac50616d",
+          "url": "https://api-docs.deepseek.com/",
+          "display_url": "api-docs.deepseek.com",
+          "title": "DeepSeek · API 文档",
+          "snippet": "",
+          "engine": [],
+          "score": 0.0,
+          "risk": 0.0,
+          "reasons": [],
+          "favicon": null,
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null,
+          "role": "docs",
+          "label": "API 文档",
+          "host": "api-docs.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08",
+          "origin": "directory"
+        },
+        {
+          "id": "r_2",
+          "url": "https://www.deepseek.com/en/platform/",
+          "display_url": "www.deepseek.com › en › platform",
+          "title": "DeepSeek | API Platform",
+          "snippet": "2026年8月13日 · Build with DeepSeek API Build new products, experiences, and workflows with the DeepSeek V4 series Start …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.3541,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://www.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null,
+          "role": "console",
+          "label": "开放平台介绍",
+          "host": "www.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08",
+          "origin": "search"
+        },
+        {
+          "id": "r_3",
+          "url": "https://download.deepseek.com/",
+          "display_url": "download.deepseek.com",
+          "title": "DeepSeek App",
+          "snippet": "2026年9月2日 · 下载 DeepSeek 应用 - 您的智能助手，随时随地享受 AI 服务。 支持 iOS 和 Android 平台。 | Download DeepSeek …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.354,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://download.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null,
+          "role": "download",
+          "label": "应用下载",
+          "host": "download.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08",
+          "origin": "search"
+        },
+        {
+          "id": "r_4",
+          "url": "https://github.com/deepseek-ai",
+          "display_url": "github.com › deepseek-ai",
+          "title": "DeepSeek · GitHub",
+          "snippet": "2023年10月21日 · DeepInfer Public DeepInfer: High-performance, large-scale inference framework for DeepSeek models Python …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.5039,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://github.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null,
+          "role": "code",
+          "label": "官方仓库",
+          "host": "github.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08",
+          "origin": "search"
+        }
+      ]
+    }
+  },
+  "deepseek 官网 !b": {
+    "parsed": {
+      "q": "deepseek 官网",
+      "engine": "bing",
+      "region": null,
+      "router": "bang",
+      "expanded": []
+    },
+    "groups": {
+      "strong": [],
+      "related": [],
+      "weak": [
+        {
+          "id": "r_1",
+          "url": "https://cn.deepseek-ag.com.cn/index.html",
+          "display_url": "cn.deepseek-ag.com.cn › index.html",
+          "title": "DeepSeek | DeepSeek官网 - 从这里进入深度求索",
+          "snippet": "2026年10月12日 · DeepSeek官网入口：从这里进入深度求索。体验DeepSeek-R1满血推理模型、DeepSeek网页版在线免费对话通道 …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.29,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "自称官网，未匹配 DeepSeek 已核验入口"
+          ],
+          "favicon": "https://cn.deepseek-ag.com.cn/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": "自称官网，未匹配 DeepSeek 已核验入口"
+        },
+        {
+          "id": "r_3",
+          "url": "https://www.deekseep-ai.com.cn/",
+          "display_url": "www.deekseep-ai.com.cn",
+          "title": "DeepSeek | 深度求索 - 世界知识 - DeepSeek官网",
+          "snippet": "2026年10月8日 · DeepSeek官网双重曝光视觉版。 将人类智慧人像剪影与深邃海底叠印在同一帧，展现世界知识海量融合。 提 …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.29,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "自称官网，未匹配 DeepSeek 已核验入口"
+          ],
+          "favicon": "https://www.deekseep-ai.com.cn/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": "自称官网，未匹配 DeepSeek 已核验入口"
+        },
+        {
+          "id": "r_5",
+          "url": "https://www.deepseek-ot.com.cn/",
+          "display_url": "www.deepseek-ot.com.cn",
+          "title": "DeepSeek | 推理引擎 - 官方人工智能 | DeepSeek官网 ...",
+          "snippet": "2026年10月13日 · DeepSeek官网官方发布级总站。烟灰粉像素复古与废弃空间站美学，拉丝铝与陶瓷釉质感，胶囊悬浮导航与底部固 …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.29,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "自称官网，未匹配 DeepSeek 已核验入口"
+          ],
+          "favicon": "https://www.deepseek-ot.com.cn/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": "自称官网，未匹配 DeepSeek 已核验入口"
+        },
+        {
+          "id": "r_6",
+          "url": "https://deepseek-no.com.cn/index.html",
+          "display_url": "deepseek-no.com.cn › index.html",
+          "title": "DeepSeek | 未至可问 - 答案可核 | DeepSeek网页版",
+          "snippet": "2 天之前 · 呈现全新 DeepSeek-R1 纯强化学习深度推理大模型与 128K 超长上下文窗口。 直通 DeepSeek官网、DeepSeek网页版入 …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.29,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "品牌近似域名，未匹配 DeepSeek 已核验入口"
+          ],
+          "favicon": "https://deepseek-no.com.cn/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": "品牌近似域名，未匹配 DeepSeek 已核验入口"
+        },
+        {
+          "id": "r_7",
+          "url": "https://deepseek-client.net/",
+          "display_url": "deepseek-client.net",
+          "title": "DeepSeek | 探索未至之境 - DeepSeek官网",
+          "snippet": "DeepSeek 面向通用人工智能场景，提供网页版 AI 对话、移动端智能助手与开放 API 接入，帮助用户完成长文档理解、复杂推理和智 …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.29,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "自称官网，未匹配 DeepSeek 已核验入口"
+          ],
+          "favicon": "https://deepseek-client.net/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": "自称官网，未匹配 DeepSeek 已核验入口"
+        }
+      ]
+    },
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "bing"
+      ],
+      "unresponsive": [],
+      "provider": "searxng",
+      "cached": true,
+      "ms": 1,
+      "total": 5,
+      "upstream_total": 10,
+      "filtered": {
+        "dup": 0,
+        "risk": 0
+      },
+      "official": 6,
+      "directory": 5,
+      "sid": "s_83e5a586fe147741d2c6a3a4498b2845"
+    },
+    "official": {
+      "key": "deepseek",
+      "brand": "DeepSeek",
+      "entries": [
+        {
+          "id": "d_bd62c0962c92f5ae",
+          "url": "https://www.deepseek.com/",
+          "display_url": "www.deepseek.com",
+          "title": "DeepSeek · 官网",
+          "snippet": "",
+          "engine": [],
+          "score": 0.0,
+          "risk": 0.0,
+          "reasons": [],
+          "favicon": null,
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null,
+          "role": "home",
+          "label": "官网",
+          "host": "www.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08",
+          "origin": "directory"
+        },
+        {
+          "id": "d_7ea330ae999c9e2b",
+          "url": "https://chat.deepseek.com/",
+          "display_url": "chat.deepseek.com",
+          "title": "DeepSeek · 聊天",
+          "snippet": "",
+          "engine": [],
+          "score": 0.0,
+          "risk": 0.0,
+          "reasons": [],
+          "favicon": null,
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null,
+          "role": "chat",
+          "label": "聊天",
+          "host": "chat.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08",
+          "origin": "directory"
+        },
+        {
+          "id": "d_94a4467bac50616d",
+          "url": "https://api-docs.deepseek.com/",
+          "display_url": "api-docs.deepseek.com",
+          "title": "DeepSeek · API 文档",
+          "snippet": "",
+          "engine": [],
+          "score": 0.0,
+          "risk": 0.0,
+          "reasons": [],
+          "favicon": null,
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null,
+          "role": "docs",
+          "label": "API 文档",
+          "host": "api-docs.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08",
+          "origin": "directory"
+        },
+        {
+          "id": "r_2",
+          "url": "https://www.deepseek.com/platform/",
+          "display_url": "www.deepseek.com › platform",
+          "title": "DeepSeek | API 开放平台",
+          "snippet": "2026年8月13日 · DeepSeek-V4-Pro 百万 tokens 输入（缓存命中） 0.025 元 输入（缓存未命中） 3 元 输出 6 元 自动缓存，缓存命中 …",
+          "engine": [
+            "bing"
+          ],
+          "score": 0.2283,
+          "risk": 0.0,
+          "reasons": [
+            "仅弱匹配"
+          ],
+          "favicon": "https://www.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null,
+          "role": "console",
+          "label": "开放平台介绍",
+          "host": "www.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08",
+          "origin": "search"
+        },
+        {
+          "id": "d_0d4e1341d776bffd",
+          "url": "https://download.deepseek.com/",
+          "display_url": "download.deepseek.com",
+          "title": "DeepSeek · 应用下载",
+          "snippet": "",
+          "engine": [],
+          "score": 0.0,
+          "risk": 0.0,
+          "reasons": [],
+          "favicon": null,
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null,
+          "role": "download",
+          "label": "应用下载",
+          "host": "download.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08",
+          "origin": "directory"
+        },
+        {
+          "id": "d_fceb486df6ca59cf",
+          "url": "https://github.com/deepseek-ai",
+          "display_url": "github.com › deepseek-ai",
+          "title": "DeepSeek · 官方仓库",
+          "snippet": "",
+          "engine": [],
+          "score": 0.0,
+          "risk": 0.0,
+          "reasons": [],
+          "favicon": null,
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "brand_warning": null,
+          "role": "code",
+          "label": "官方仓库",
+          "host": "github.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08",
+          "origin": "directory"
+        }
+      ]
+    }
+  }
+}

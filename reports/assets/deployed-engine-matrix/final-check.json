@@ -1,0 +1,14 @@
+{
+  "missing_links": [],
+  "ledger_top": "| 20261108-1447 | 2026-11-08 14:47 | [部署更新与十三引擎在线复验](2026-11-08-1447-deployed-engine-matrix.md) | test | 部分完成 | `2026-11-08-1447-deployed-engine-matrix.md` |",
+  "matrix_summary": {
+    "first_with_results": 11,
+    "first_total": 13,
+    "direct_with_results": 9,
+    "fallback_with_results": 2,
+    "contract_failures": 0,
+    "paid_source_on_page2": false
+  },
+  "report_status": "部分完成",
+  "git_commit_push": false
+}

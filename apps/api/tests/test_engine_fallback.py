@@ -24,8 +24,11 @@ class FakeSearxng:
         self.responses = responses
         self.calls: list[str] = []
 
-    async def search(self, q, page, region, safe, engine="default", fixture=None):
+    async def search(self, q, page, region, safe, engine="default", fixture=None,
+                     selected_engines=None, time_range=None, language=None, site=None):
         self.calls.append(engine)
+        self.last_filters = {"time_range": time_range, "language": language, "site": site,
+                             "selected_engines": selected_engines, "q": q}
         outcome = self.responses.get(engine)
         if isinstance(outcome, Exception):
             raise outcome
@@ -99,6 +102,17 @@ def test_all_candidates_fail_without_paid_returns_engine_unavailable() -> None:
     with pytest.raises(EngineUnavailable) as caught:
         asyncio.run(aggregator.search("python", engine="google"))
     assert "google" in caught.value.message and "google cse" in caught.value.message
+
+
+def test_filters_do_not_use_paid_provider_that_cannot_honor_time_or_language() -> None:
+    aggregator = aggregator_module.Aggregator(_settings())
+    aggregator._searxng = _blocked_google()
+    paid = FakePaid(PaidResult([_result("https://paid.test/a", "serper")], "serper"))
+    aggregator._paid = paid
+    for filters in ({"time_range": "week"}, {"language": "en"}, {"allow_paid": False}):
+        with pytest.raises(EngineUnavailable):
+            asyncio.run(aggregator.search("python", engine="google", **filters))
+    assert paid.calls == []
 
 
 def test_empty_results_are_an_empty_state_not_an_engine_error() -> None:
@@ -210,3 +224,19 @@ def test_primary_cooldown_still_uses_free_fallback(health) -> None:
     result = asyncio.run(aggregator.search("python", engine="google"))
     assert result.engines == ["google cse"]
     assert aggregator._searxng.calls == ["google cse"]
+
+
+def test_filters_are_forwarded_to_upstream() -> None:
+    """时间范围/语言/站点限定必须原样传给上游客户端。"""
+    aggregator = aggregator_module.Aggregator(_settings())
+    fake = FakeSearxng({"google": ([_result("https://example.test/a", "google")], ["google"])})
+    aggregator._searxng = fake
+
+    result = asyncio.run(aggregator.search(
+        "python", engine="google", time_range="week", language="zh", site="example.test",
+    ))
+    assert result.results
+    assert fake.last_filters == {
+        "time_range": "week", "language": "zh", "site": "example.test",
+        "selected_engines": None, "q": "python",
+    }

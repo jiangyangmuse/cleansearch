@@ -1,0 +1,3533 @@
+{
+  "base_url": "http://127.0.0.1:8000",
+  "health": {
+    "status": "ok",
+    "provider": "searxng",
+    "searxng_url": "http://127.0.0.1:8888",
+    "web_dist": "D:\\agent\\llq\\apps\\web\\dist",
+    "web_built": true,
+    "blocklist_rules": 3,
+    "llm_provider": "openai",
+    "llm_model": "qwen3.5-4b-local:latest",
+    "bookmarks": 0,
+    "version": "0.1.0"
+  },
+  "catalog_before": {
+    "provider": "searxng",
+    "searxng_url": "http://127.0.0.1:8888",
+    "breaker": true,
+    "paid": {
+      "serper": true,
+      "brave": false
+    },
+    "engines": [
+      {
+        "code": "g",
+        "label": "Google",
+        "engine": "google",
+        "searx_engine": "google",
+        "fallbacks": [
+          "google cse"
+        ],
+        "paid": "search",
+        "aliases": [],
+        "note": "Google 直连常被 403；先回退 Google CSE，再按配置走 Serper",
+        "status": "unknown",
+        "available": null,
+        "fails": 1,
+        "avg_ms": null,
+        "last_error": "google(Suspended: access denied)",
+        "remaining_seconds": 0,
+        "can_fallback": true,
+        "selectable": true
+      },
+      {
+        "code": "b",
+        "label": "Bing",
+        "engine": "bing",
+        "searx_engine": "bing",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "SearXNG 用 cn.bing.com，避免 www.bing.com 的 302 被引擎丢弃",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "d",
+        "label": "DuckDuckGo",
+        "engine": "duckduckgo",
+        "searx_engine": "duckduckgo",
+        "fallbacks": [
+          "duckduckgo web"
+        ],
+        "paid": "",
+        "aliases": [
+          "ddg"
+        ],
+        "note": "间歇 CAPTCHA；失败时试 duckduckgo web",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": true,
+        "selectable": true
+      },
+      {
+        "code": "dw",
+        "label": "DuckDuckGo Web",
+        "engine": "duckduckgo web",
+        "searx_engine": "duckduckgo web",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "DuckDuckGo 的网页端备用入口",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "br",
+        "label": "Brave",
+        "engine": "brave",
+        "searx_engine": "brave",
+        "fallbacks": [],
+        "paid": "brave",
+        "aliases": [],
+        "note": "无 key 时网页端常限流；配置 BRAVE_API_KEY 后走官方接口",
+        "status": "unknown",
+        "available": null,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "yt",
+        "label": "YouTube",
+        "engine": "youtube",
+        "searx_engine": "youtube",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "",
+        "status": "unknown",
+        "available": null,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "gh",
+        "label": "GitHub",
+        "engine": "github",
+        "searx_engine": "github",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "",
+        "status": "unknown",
+        "available": null,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "ar",
+        "label": "arXiv",
+        "engine": "arxiv",
+        "searx_engine": "arxiv",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "",
+        "status": "unknown",
+        "available": null,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "sc",
+        "label": "Google Scholar",
+        "engine": "scholar",
+        "searx_engine": "google scholar",
+        "fallbacks": [],
+        "paid": "scholar",
+        "aliases": [],
+        "note": "网页端 access denied；配置 Serper 时走 /scholar",
+        "status": "unknown",
+        "available": null,
+        "fails": 1,
+        "avg_ms": null,
+        "last_error": "google scholar(Suspended: access denied)",
+        "remaining_seconds": 0,
+        "can_fallback": true,
+        "selectable": true
+      },
+      {
+        "code": "w",
+        "label": "Wikipedia",
+        "engine": "wikipedia",
+        "searx_engine": "wikipedia",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "需 display_type 含 list；默认配置已补",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "gc",
+        "label": "Google CSE",
+        "engine": "google cse",
+        "searx_engine": "google cse",
+        "fallbacks": [],
+        "paid": "search",
+        "aliases": [],
+        "note": "独立索引；偶发超时，失败时可按配置回退 Serper",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": true,
+        "selectable": true
+      },
+      {
+        "code": "sp",
+        "label": "Startpage",
+        "engine": "startpage",
+        "searx_engine": "startpage",
+        "fallbacks": [
+          "mojeek"
+        ],
+        "paid": "",
+        "aliases": [],
+        "note": "PoW CAPTCHA；失败回退 Mojeek",
+        "status": "unknown",
+        "available": null,
+        "fails": 1,
+        "avg_ms": null,
+        "last_error": "startpage(路由未生效)",
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "mj",
+        "label": "Mojeek",
+        "engine": "mojeek",
+        "searx_engine": "mojeek",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "需 inactive: false 才会被 SearXNG 加载",
+        "status": "cooldown",
+        "available": false,
+        "fails": 3,
+        "avg_ms": null,
+        "last_error": "mojeek(timeout)",
+        "remaining_seconds": 3363,
+        "can_fallback": false,
+        "selectable": false
+      },
+      {
+        "code": "y",
+        "label": "Yahoo",
+        "engine": "yahoo",
+        "searx_engine": "yahoo",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "sg",
+        "label": "Sogou",
+        "engine": "sogou",
+        "searx_engine": "sogou",
+        "fallbacks": [
+          "360search"
+        ],
+        "paid": "",
+        "aliases": [],
+        "note": "部分查询会触发 SearXNG 侧 crash；失败回退 360 搜索",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": true,
+        "selectable": true
+      },
+      {
+        "code": "so",
+        "label": "360 Search",
+        "engine": "360search",
+        "searx_engine": "360search",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "中文独立索引；Sogou 的回退目标",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "n",
+        "label": "Naver",
+        "engine": "naver",
+        "searx_engine": "naver",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "yd",
+        "label": "Yandex",
+        "engine": "yandex",
+        "searx_engine": "yandex",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "sw",
+        "label": "Swisscows",
+        "engine": "swisscows",
+        "searx_engine": "swisscows",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "需 inactive: false",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      }
+    ]
+  },
+  "checks": [
+    {
+      "phase": "first",
+      "code": "b",
+      "q": "python 文档 b",
+      "page": 1,
+      "expected_engine": "bing",
+      "allowed_sources": [
+        "bing"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "bing",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "bing"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 678,
+        "total": 10,
+        "upstream_total": 10,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://docs.python.org/zh-cn/3/tutorial/index.html",
+          "title": "Python 教程 — Python 3.15.2 文档",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/",
+          "title": "Python 3.15.2 documentation",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/3/index.html",
+          "title": "3.14.0 文档 - Python 文档",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/3/reference/index.html",
+          "title": "Python 语言参考 — Python 3.14.0 文档 - Python 文档",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://www.python.org/",
+          "title": "Welcome to Python.org",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://www.python.org/doc/",
+          "title": "Our Documentation | Python.org",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://www.w3school.com.cn/python/python_reference.asp",
+          "title": "Python 参考手册 - W3School.com.cn",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://pythonlang.cn/doc/",
+          "title": "官方文档 | Python - Python 编程语言",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://www.runoob.com/python/python-tutorial.html",
+          "title": "Python 基础教程 | 菜鸟教程",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://pythonlang.cn/",
+          "title": "欢迎来到 Python.org - Python 编程语言",
+          "engine": [
+            "bing"
+          ]
+        }
+      ],
+      "sources": [
+        "bing"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 691
+    },
+    {
+      "phase": "first",
+      "code": "d",
+      "q": "python 文档 d",
+      "page": 1,
+      "expected_engine": "duckduckgo",
+      "allowed_sources": [
+        "duckduckgo",
+        "duckduckgo web"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "duckduckgo",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "duckduckgo"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 2156,
+        "total": 10,
+        "upstream_total": 10,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://docs.python.org/zh-cn/3/tutorial/index.html",
+          "title": "Python 教程 — Python 3.15.2 文档",
+          "engine": [
+            "duckduckgo"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/",
+          "title": "Python 3.15.2 documentation",
+          "engine": [
+            "duckduckgo"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/3/index.html",
+          "title": "3.14.0 文档 - Python 文档",
+          "engine": [
+            "duckduckgo"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/3/reference/index.html",
+          "title": "Python 语言参考 — Python 3.14.0 文档 - Python 文档",
+          "engine": [
+            "duckduckgo"
+          ]
+        },
+        {
+          "url": "https://www.python.org/",
+          "title": "Welcome to Python.org",
+          "engine": [
+            "duckduckgo"
+          ]
+        },
+        {
+          "url": "https://zhuanlan.zhihu.com/p/2042196528119505043",
+          "title": "终于来了!Python 官方发布整套中文PDF文档（共27本）",
+          "engine": [
+            "duckduckgo"
+          ]
+        },
+        {
+          "url": "https://www.python.org/doc/",
+          "title": "Our Documentation | Python.org",
+          "engine": [
+            "duckduckgo"
+          ]
+        },
+        {
+          "url": "https://www.w3school.com.cn/python/python_reference.asp",
+          "title": "Python 参考手册 - W3School.com.cn",
+          "engine": [
+            "duckduckgo"
+          ]
+        },
+        {
+          "url": "https://pythonlang.cn/doc/",
+          "title": "官方文档 | Python - Python 编程语言",
+          "engine": [
+            "duckduckgo"
+          ]
+        },
+        {
+          "url": "https://www.runoob.com/python/python-tutorial.html",
+          "title": "Python 基础教程 | 菜鸟教程",
+          "engine": [
+            "duckduckgo"
+          ]
+        }
+      ],
+      "sources": [
+        "duckduckgo"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 2165
+    },
+    {
+      "phase": "first",
+      "code": "y",
+      "q": "python 文档 y",
+      "page": 1,
+      "expected_engine": "yahoo",
+      "allowed_sources": [
+        "yahoo"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "yahoo",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 2602,
+        "total": 7,
+        "upstream_total": 7,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://docs.python.org/zh-cn/3/tutorial/index.html",
+          "title": "Python 教程 — Python 3.15.2 文档",
+          "engine": [
+            "yahoo"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/3/index.html",
+          "title": "3.14.0 文档 - Python 文档",
+          "engine": [
+            "yahoo"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/",
+          "title": "Python 3.15.2 documentation",
+          "engine": [
+            "yahoo"
+          ]
+        },
+        {
+          "url": "https://www.python.org/",
+          "title": "Welcome to Python.org",
+          "engine": [
+            "yahoo"
+          ]
+        },
+        {
+          "url": "https://www.python.org/doc/",
+          "title": "Our Documentation | Python.org",
+          "engine": [
+            "yahoo"
+          ]
+        },
+        {
+          "url": "https://www.w3school.com.cn/python/python_reference.asp",
+          "title": "Python 参考手册 - W3School.com.cn",
+          "engine": [
+            "yahoo"
+          ]
+        },
+        {
+          "url": "https://www.runoob.com/python/python-tutorial.html",
+          "title": "Python 基础教程 | 菜鸟教程",
+          "engine": [
+            "yahoo"
+          ]
+        }
+      ],
+      "sources": [
+        "yahoo"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 2610
+    },
+    {
+      "phase": "first",
+      "code": "mj",
+      "q": "python 文档 mj",
+      "page": 1,
+      "expected_engine": "mojeek",
+      "allowed_sources": [
+        "mojeek"
+      ],
+      "http": 503,
+      "error": {
+        "code": "ENGINE_UNAVAILABLE",
+        "message": "引擎 mojeek 没有可用结果（没有可尝试的引擎）：mojeek(熔断冷却，约 56 分钟)",
+        "retryable": true
+      },
+      "has_results": false,
+      "route_ok": null,
+      "source_ok": null,
+      "contract_ok": true,
+      "elapsed_ms": 3
+    },
+    {
+      "phase": "first",
+      "code": "gc",
+      "q": "python 文档 gc",
+      "page": 1,
+      "expected_engine": "google cse",
+      "allowed_sources": [
+        "google cse",
+        "serper"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "google cse",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "google cse"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 1818,
+        "total": 13,
+        "upstream_total": 20,
+        "filtered": {
+          "dup": 1,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://github.com/jackfrued/python-100-days",
+          "title": "jackfrued/Python-100-Days: Python - 100天从新手到大师 - GitHub",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://developer.mozilla.org/zh-CN/docs/Glossary/Python",
+          "title": "Python - MDN Web 文档术语表：Web 相关术语的定义",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/",
+          "title": "Python 3.15.2 documentation",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/library/index.html",
+          "title": "Python 标准库— Python 3.15.2 文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/dev/tutorial/index.html",
+          "title": "Python 教程— Python 3.16.0a1 文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/",
+          "title": "Python 文档: Python 3.15.2 文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.cloud.google.com/python/docs?hl=zh-cn",
+          "title": "Python 文档 | Google Cloud Documentation",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://developers.google.com/edu/python/introduction?hl=zh-cn",
+          "title": "Python 简介| Python Education - Google for Developers",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://python3-cookbook.readthedocs.io/zh_CN/latest/",
+          "title": "Python Cookbook 3rd Edition Documentation — python3-cookbook ...",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.w3cschool.cn/python/dict",
+          "title": "Python 官方文档API中文手册 - W3Cschool",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-tutorial.html",
+          "title": "Python3 教程 - 菜鸟教程",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.runoob.com/python/python-tutorial.html",
+          "title": "Python 基础教程 - 菜鸟教程",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://zhuanlan.zhihu.com/p/697407863",
+          "title": "Documentation，一个超级厉害的Python 库！ - 知乎专栏",
+          "engine": [
+            "google cse"
+          ]
+        }
+      ],
+      "sources": [
+        "google cse"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 1828
+    },
+    {
+      "phase": "first",
+      "code": "n",
+      "q": "python 文档 n",
+      "page": 1,
+      "expected_engine": "naver",
+      "allowed_sources": [
+        "naver"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "naver",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "naver"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 2491,
+        "total": 16,
+        "upstream_total": 19,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://keras-cn.readthedocs.io/",
+          "title": "Keras:基于Python的深度学习库 - Keras中文文档",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "http://wechat-python-sdk.readthedocs.io/",
+          "title": "微信公众平台 Python 开发包文档 — wechat-python-sdk 0.5.9 文档",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://docs.cloud.google.com/?hl=ko",
+          "title": "Python 文档",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://docs.aspose.com/words/zh/python-net/document-builder-overview/",
+          "title": "Python 中的文档生成器概述|Python via .NET 格式的 Aspose.Words",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://nuwe-cmadaas-python.readthedocs.io/",
+          "title": "nuwe-cmadaas-python 文档 — nuwe-cmadaas",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://fabric-chs.readthedocs.io/",
+          "title": "欢迎访问 Fabric 中文文档 — Fabric 文档",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://weixin-python.readthedocs.io/",
+          "title": "微信SDK — weixin-python 0.5.7 文档",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://wiki.python.org/",
+          "title": "Python Books",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://python-docx.readthedocs.io/",
+          "title": "python-docx — python-docx 1.2.0 documentation",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://www.python.org/",
+          "title": "Our Documentation",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://qmt.ptradeapi.com/",
+          "title": "QMT Python API 接口文档",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://www.mrdoc.pro/",
+          "title": "MrDoc觅思文档 - 私有化部署的在线文档管理和知识库系统",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://pypi.org/",
+          "title": "说明文档 - PyPI",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://clickhouse.com/ko",
+          "title": "Introduction",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://doc.qt.io/qtforpython-6/",
+          "title": "Qt for Python",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://python.langchain.ac.cn/",
+          "title": "简介 | 🦜️🔗 LangChain 框架",
+          "engine": [
+            "naver"
+          ]
+        }
+      ],
+      "sources": [
+        "naver"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 2533
+    },
+    {
+      "phase": "first",
+      "code": "yd",
+      "q": "python 文档 yd",
+      "page": 1,
+      "expected_engine": "yandex",
+      "allowed_sources": [
+        "yandex"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "yandex",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "yandex"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 3214,
+        "total": 10,
+        "upstream_total": 10,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://docs.oldtimes.me/c.biancheng.net/python/pydoc_unittest/index.html",
+          "title": "Python文档（pydoc）和测试（unittest）",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/3/index.html",
+          "title": "3.15.2 Documentation",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://app.readthedocs.org/projects/sphinx-docx/downloads/pdf/latest/",
+          "title": "Documentation",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://cainiaojiaocheng.com/Python/docs/3.10/library/doctest",
+          "title": "doctest — 测试交互式 Python 示例 — Python 文档 - 菜鸟教程",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://m.runoob.com/python3/python-mongodb-query-document.html",
+          "title": "Python Mongodb 查询文档 | 菜鸟教程",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://www.e-iceblue.cn/doc_python_text/python-add-border-to-text-and-paragraphs-in-word.html",
+          "title": "Python 为 Word 文档段落和文本添加边框",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://py.33dai.wiki/about.html",
+          "title": "文档说明 — Python 3.8.14 文档",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://blog.csdn.net/chennai1101/article/details/121074057",
+          "title": "Python 文档（十三）_py spawn-CSDN博客",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://www.w3ccoo.com/python_text_processing/python_process_word_document.html",
+          "title": "Python - 处理 Word 文档 | Python 文本处理",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://www.yumpu.com/xx/document/view/65682574/python",
+          "title": "Read the latest magazines about python数据科学 and discover...",
+          "engine": [
+            "yandex"
+          ]
+        }
+      ],
+      "sources": [
+        "yandex"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 3224
+    },
+    {
+      "phase": "first",
+      "code": "sw",
+      "q": "python 文档 sw",
+      "page": 1,
+      "expected_engine": "swisscows",
+      "allowed_sources": [
+        "swisscows"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "swisscows",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "swisscows"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 2137,
+        "total": 10,
+        "upstream_total": 20,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://docs.python.org/zh-cn/3/",
+          "title": "Python 3.14.6 文档",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/download.html",
+          "title": "下载 — Python 3.15.2 文档",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/tutorial/",
+          "title": "Python 教程 — Python 3.15.2 文档",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/reference/",
+          "title": "Python 语言参考手册 — Python 3.14.6 文档",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3.13/tutorial/index.html",
+          "title": "Python 教程 — Python 3.13.16 文档",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/dev/tutorial/index.html",
+          "title": "Python 教程 — Python 3.16.0a1 文档",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/reference/index.html",
+          "title": "Python 语言参考手册 — Python 3.15.2 文档",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/library/index.html",
+          "title": "Python 标准库 — Python 3.15.2 文档",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://pythonguidecn.readthedocs.io/zh/latest/writing/documentation.html",
+          "title": "文档 — The Hitchhiker's Guide to Python",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/3/",
+          "title": "3.14.0 文档 - Python 文档",
+          "engine": [
+            "swisscows"
+          ]
+        }
+      ],
+      "sources": [
+        "swisscows"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 2146
+    },
+    {
+      "phase": "first",
+      "code": "w",
+      "q": "Python w",
+      "page": 1,
+      "expected_engine": "wikipedia",
+      "allowed_sources": [
+        "wikipedia"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "Python",
+        "engine": "wikipedia",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "wikipedia"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 1937,
+        "total": 1,
+        "upstream_total": 1,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://zh.wikipedia.org/wiki/Python",
+          "title": "Python",
+          "engine": [
+            "wikipedia"
+          ]
+        }
+      ],
+      "sources": [
+        "wikipedia"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 1956
+    },
+    {
+      "phase": "first",
+      "code": "g",
+      "q": "python 文档 g",
+      "page": 1,
+      "expected_engine": "google",
+      "allowed_sources": [
+        "google",
+        "google cse",
+        "serper"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "google",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "google cse"
+        ],
+        "unresponsive": [
+          "google(access denied)"
+        ],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 2927,
+        "total": 13,
+        "upstream_total": 20,
+        "filtered": {
+          "dup": 1,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://github.com/jackfrued/python-100-days",
+          "title": "jackfrued/Python-100-Days: Python - 100天从新手到大师 - GitHub",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://developer.mozilla.org/zh-CN/docs/Glossary/Python",
+          "title": "Python - MDN Web 文档术语表：Web 相关术语的定义",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/",
+          "title": "Python 3.15.2 documentation",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/library/index.html",
+          "title": "Python 标准库— Python 3.15.2 文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/dev/tutorial/index.html",
+          "title": "Python 教程— Python 3.16.0a1 文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/",
+          "title": "Python 文档: Python 3.15.2 文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.cloud.google.com/python/docs?hl=zh-cn",
+          "title": "Python 文档 | Google Cloud Documentation",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://developers.google.com/edu/python/introduction?hl=zh-cn",
+          "title": "Python 简介| Python Education - Google for Developers",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://python3-cookbook.readthedocs.io/zh_CN/latest/",
+          "title": "Python Cookbook 3rd Edition Documentation — python3-cookbook ...",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.w3cschool.cn/python/dict",
+          "title": "Python 官方文档API中文手册 - W3Cschool",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-tutorial.html",
+          "title": "Python3 教程 - 菜鸟教程",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.runoob.com/python/python-tutorial.html",
+          "title": "Python 基础教程 - 菜鸟教程",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://zhuanlan.zhihu.com/p/697407863",
+          "title": "Documentation，一个超级厉害的Python 库！ - 知乎专栏",
+          "engine": [
+            "google cse"
+          ]
+        }
+      ],
+      "sources": [
+        "google cse"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": false,
+      "no_paid_source": true,
+      "elapsed_ms": 2943
+    },
+    {
+      "phase": "first",
+      "code": "sc",
+      "q": "retrieval augmented generation sc",
+      "page": 1,
+      "expected_engine": "scholar",
+      "allowed_sources": [
+        "google scholar",
+        "serper"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "retrieval augmented generation",
+        "engine": "scholar",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "serper"
+        ],
+        "unresponsive": [
+          "google scholar(unexpected crash)"
+        ],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 5295,
+        "total": 9,
+        "upstream_total": 10,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://arxiv.org/abs/2312.10997",
+          "title": "Retrieval-augmented generation for large language models: A survey",
+          "engine": [
+            "serper"
+          ]
+        },
+        {
+          "url": "https://dl.acm.org/doi/abs/10.1145/3726302.3729957",
+          "title": "Parametric retrieval augmented generation",
+          "engine": [
+            "serper"
+          ]
+        },
+        {
+          "url": "https://aclanthology.org/2023.emnlp-main.495/",
+          "title": "Active retrieval augmented generation",
+          "engine": [
+            "serper"
+          ]
+        },
+        {
+          "url": "https://link.springer.com/article/10.1007/s41019-025-00335-5",
+          "title": "Retrieval-augmented generation for ai-generated content: A survey",
+          "engine": [
+            "serper"
+          ]
+        },
+        {
+          "url": "https://aclanthology.org/anthology-files/anthology-files/pdf/findings/2025.findings-emnlp.568.pdf",
+          "title": "LightRAG: Simple and Fast Retrieval-Augmented Generation.",
+          "engine": [
+            "serper"
+          ]
+        },
+        {
+          "url": "https://link.springer.com/chapter/10.1007/978-981-96-1024-2_8",
+          "title": "Evaluation of retrieval-augmented generation: A survey",
+          "engine": [
+            "serper"
+          ]
+        },
+        {
+          "url": "https://dl.acm.org/doi/abs/10.1145/3777378",
+          "title": "Graph retrieval-augmented generation: A survey",
+          "engine": [
+            "serper"
+          ]
+        },
+        {
+          "url": "https://link.springer.com/article/10.1007/s10462-026-11605-7",
+          "title": "Retrieval-augmented generation for natural language processing: A survey",
+          "engine": [
+            "serper"
+          ]
+        },
+        {
+          "url": "https://proceedings.neurips.cc/paper_files/paper/2020/hash/6b493230-Abstract.html",
+          "title": "Retrieval-augmented generation for knowledge-intensive nlp tasks",
+          "engine": [
+            "serper"
+          ]
+        }
+      ],
+      "sources": [
+        "serper"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": false,
+      "no_paid_source": false,
+      "elapsed_ms": 5303
+    },
+    {
+      "phase": "first",
+      "code": "sg",
+      "q": "python 文档 sg",
+      "page": 1,
+      "expected_engine": "sogou",
+      "allowed_sources": [
+        "360search",
+        "sogou"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "sogou",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "sogou"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 1123,
+        "total": 9,
+        "upstream_total": 9,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://docs.python.org/zh-cn/3.9/",
+          "title": "3.9.25 Documentation",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "http://docs.python.org/",
+          "title": "3.15.1 Documentation",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/3/library/struct.html",
+          "title": "struct — Interpret bytes as packed binary data — Python 3.15.0 ...",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "http://www.python.org/doc/",
+          "title": "Our Documentation | Python.org",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://www.cnblogs.com/cyj22/p/18401447",
+          "title": "Python 官方文档 - 开源侠 - 博客园",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://zhuanlan.zhihu.com/p/591596842",
+          "title": "终于来了！Python 官方发布整套中文PDF文档（共27本） - 知乎",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://blog.csdn.net/angnuan123/article/details/119603127",
+          "title": "python 文档的更多内容_CSDN技术社区",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "http://mp.weixin.qq.com/s?src=11&timestamp=1794117566&ver=7075&signature=Kk0PqzTLfVy0Jl3AhWBOZGddGWesqbCmxwQnreLqBQyarZPE6u8tb2*o*Z9CO0JVQS-r06rngBFqDuGTWHie6D4uHe1*KzmWP1X71VGtxgBjAEw40F*yg-tLFF2*IP0z&new=1",
+          "title": "Python官方发布整套中文PDF文档,足足27本,学习必备!",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://www.osgeo.cn/python-docx/index.html",
+          "title": "python文档 — python-docx 1.0.1 文档",
+          "engine": [
+            "sogou"
+          ]
+        }
+      ],
+      "sources": [
+        "sogou"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 4377
+    },
+    {
+      "phase": "first",
+      "code": "sp",
+      "q": "python 文档 sp",
+      "page": 1,
+      "expected_engine": "startpage",
+      "allowed_sources": [
+        "mojeek",
+        "startpage"
+      ],
+      "http": 503,
+      "error": {
+        "code": "ENGINE_UNAVAILABLE",
+        "message": "引擎 startpage 没有可用结果（已尝试 startpage）：startpage(路由未生效)；mojeek(熔断冷却，约 56 分钟)",
+        "retryable": true
+      },
+      "has_results": false,
+      "route_ok": null,
+      "source_ok": null,
+      "contract_ok": true,
+      "elapsed_ms": 4287
+    },
+    {
+      "phase": "repeat",
+      "code": "b",
+      "q": "python 文档 b",
+      "page": 1,
+      "expected_engine": "bing",
+      "allowed_sources": [
+        "bing"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "bing",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "bing"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": true,
+        "ms": 0,
+        "total": 10,
+        "upstream_total": 10,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://docs.python.org/zh-cn/3/tutorial/index.html",
+          "title": "Python 教程 — Python 3.15.2 文档",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/",
+          "title": "Python 3.15.2 documentation",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/3/index.html",
+          "title": "3.14.0 文档 - Python 文档",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/3/reference/index.html",
+          "title": "Python 语言参考 — Python 3.14.0 文档 - Python 文档",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://www.python.org/",
+          "title": "Welcome to Python.org",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://www.python.org/doc/",
+          "title": "Our Documentation | Python.org",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://www.w3school.com.cn/python/python_reference.asp",
+          "title": "Python 参考手册 - W3School.com.cn",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://pythonlang.cn/doc/",
+          "title": "官方文档 | Python - Python 编程语言",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://www.runoob.com/python/python-tutorial.html",
+          "title": "Python 基础教程 | 菜鸟教程",
+          "engine": [
+            "bing"
+          ]
+        },
+        {
+          "url": "https://pythonlang.cn/",
+          "title": "欢迎来到 Python.org - Python 编程语言",
+          "engine": [
+            "bing"
+          ]
+        }
+      ],
+      "sources": [
+        "bing"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 5
+    },
+    {
+      "phase": "repeat",
+      "code": "g",
+      "q": "python 文档 g",
+      "page": 1,
+      "expected_engine": "google",
+      "allowed_sources": [
+        "google",
+        "google cse",
+        "serper"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "google",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "google cse"
+        ],
+        "unresponsive": [
+          "google(access denied)"
+        ],
+        "provider": "searxng",
+        "cached": true,
+        "ms": 0,
+        "total": 13,
+        "upstream_total": 20,
+        "filtered": {
+          "dup": 1,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://github.com/jackfrued/python-100-days",
+          "title": "jackfrued/Python-100-Days: Python - 100天从新手到大师 - GitHub",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://developer.mozilla.org/zh-CN/docs/Glossary/Python",
+          "title": "Python - MDN Web 文档术语表：Web 相关术语的定义",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/",
+          "title": "Python 3.15.2 documentation",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/library/index.html",
+          "title": "Python 标准库— Python 3.15.2 文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/dev/tutorial/index.html",
+          "title": "Python 教程— Python 3.16.0a1 文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/",
+          "title": "Python 文档: Python 3.15.2 文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.cloud.google.com/python/docs?hl=zh-cn",
+          "title": "Python 文档 | Google Cloud Documentation",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://developers.google.com/edu/python/introduction?hl=zh-cn",
+          "title": "Python 简介| Python Education - Google for Developers",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://python3-cookbook.readthedocs.io/zh_CN/latest/",
+          "title": "Python Cookbook 3rd Edition Documentation — python3-cookbook ...",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.w3cschool.cn/python/dict",
+          "title": "Python 官方文档API中文手册 - W3Cschool",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.runoob.com/python3/python3-tutorial.html",
+          "title": "Python3 教程 - 菜鸟教程",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.runoob.com/python/python-tutorial.html",
+          "title": "Python 基础教程 - 菜鸟教程",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://zhuanlan.zhihu.com/p/697407863",
+          "title": "Documentation，一个超级厉害的Python 库！ - 知乎专栏",
+          "engine": [
+            "google cse"
+          ]
+        }
+      ],
+      "sources": [
+        "google cse"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": false,
+      "no_paid_source": true,
+      "elapsed_ms": 5
+    },
+    {
+      "phase": "page2",
+      "code": "b",
+      "q": "python 文档 b",
+      "page": 2,
+      "expected_engine": "bing",
+      "allowed_sources": [
+        "bing"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "bing",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "empty",
+        "engines": [],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 208,
+        "total": 0,
+        "upstream_total": 0,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [],
+      "sources": [],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": false,
+      "direct": false,
+      "no_paid_source": true,
+      "elapsed_ms": 212
+    },
+    {
+      "phase": "page2",
+      "code": "d",
+      "q": "python 文档 d",
+      "page": 2,
+      "expected_engine": "duckduckgo",
+      "allowed_sources": [
+        "duckduckgo",
+        "duckduckgo web"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "duckduckgo",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "duckduckgo web"
+        ],
+        "unresponsive": [
+          "duckduckgo(CAPTCHA)"
+        ],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 2408,
+        "total": 10,
+        "upstream_total": 15,
+        "filtered": {
+          "dup": 2,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://docs.python.org/zh-cn/3/download.html",
+          "title": "下载 — Python 3.15.2 文档",
+          "engine": [
+            "duckduckgo web"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/howto/index.html",
+          "title": "Python 指南 — Python 3.15.2 文档",
+          "engine": [
+            "duckduckgo web"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/contents.html",
+          "title": "Python 文档目录 — Python 3.15.2 文档",
+          "engine": [
+            "duckduckgo web"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/library/index.html",
+          "title": "Python 标准库 — Python 3.15.2 文档",
+          "engine": [
+            "duckduckgo web"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/reference/",
+          "title": "Python 语言参考手册 — Python 3.15.2 文档",
+          "engine": [
+            "duckduckgo web"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/tutorial/introduction.html",
+          "title": "3. Python 速览 — Python 3.15.2 文档",
+          "engine": [
+            "duckduckgo web"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/tutorial/index.html",
+          "title": "Python 教程 — Python 3.15.2 文档",
+          "engine": [
+            "duckduckgo web"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/",
+          "title": "Python 3.15.2 documentation",
+          "engine": [
+            "duckduckgo web"
+          ]
+        },
+        {
+          "url": "https://www.apiref.com/python-zh/index.html",
+          "title": "Python开发文档 - Python中文版 - API参考文档",
+          "engine": [
+            "duckduckgo web"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/",
+          "title": "Python 3.15.2 documentation",
+          "engine": [
+            "duckduckgo web"
+          ]
+        }
+      ],
+      "sources": [
+        "duckduckgo web"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": false,
+      "no_paid_source": true,
+      "elapsed_ms": 2417
+    },
+    {
+      "phase": "page2",
+      "code": "y",
+      "q": "python 文档 y",
+      "page": 2,
+      "expected_engine": "yahoo",
+      "allowed_sources": [
+        "yahoo"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "yahoo",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "yahoo"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 1060,
+        "total": 7,
+        "upstream_total": 7,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://docs.python.org/zh-cn/3/contents.html",
+          "title": "Python 文档目录 — Python 3.15.2 文档",
+          "engine": [
+            "yahoo"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/reference/",
+          "title": "Python 语言参考手册 — Python 3.15.2 文档",
+          "engine": [
+            "yahoo"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/tutorial/introduction.html",
+          "title": "3. Python 速览 — Python 3.15.2 文档",
+          "engine": [
+            "yahoo"
+          ]
+        },
+        {
+          "url": "https://www.apiref.com/python-zh/index.html",
+          "title": "Python开发文档 - Python中文版 - API参考文档",
+          "engine": [
+            "yahoo"
+          ]
+        },
+        {
+          "url": "https://pythonlang.cn/doc/",
+          "title": "官方文档 | Python - Python 编程语言",
+          "engine": [
+            "yahoo"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/3/contents.html",
+          "title": "Python Documentation contents — Python 3.15.2 documentation",
+          "engine": [
+            "yahoo"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/3/reference/index.html",
+          "title": "The Python Language Reference — Python 3.15.2 documentation",
+          "engine": [
+            "yahoo"
+          ]
+        }
+      ],
+      "sources": [
+        "yahoo"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 1067
+    },
+    {
+      "phase": "page2",
+      "code": "mj",
+      "q": "python 文档 mj",
+      "page": 2,
+      "expected_engine": "mojeek",
+      "allowed_sources": [
+        "mojeek"
+      ],
+      "http": 503,
+      "error": {
+        "code": "ENGINE_UNAVAILABLE",
+        "message": "引擎 mojeek 没有可用结果（没有可尝试的引擎）：mojeek(熔断冷却，约 56 分钟)",
+        "retryable": true
+      },
+      "has_results": false,
+      "route_ok": null,
+      "source_ok": null,
+      "contract_ok": true,
+      "elapsed_ms": 24
+    },
+    {
+      "phase": "page2",
+      "code": "gc",
+      "q": "python 文档 gc",
+      "page": 2,
+      "expected_engine": "google cse",
+      "allowed_sources": [
+        "google cse"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "google cse",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "google cse"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 627,
+        "total": 15,
+        "upstream_total": 20,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://developer.mozilla.org/zh-CN/docs/Glossary/Python",
+          "title": "Python - MDN Web 文档术语表：Web 相关术语的定义",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://pythonhowto.readthedocs.io/zh_CN/latest/",
+          "title": "放在这里方便笔者和他人学习和参考。文档中 ... - Python 从入门到深入",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/",
+          "title": "Python 文档: Python 3.15.2 文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.cloud.google.com/python/docs?hl=zh-cn",
+          "title": "Python 文档 | Google Cloud Documentation",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://zhuanlan.zhihu.com/p/60534725",
+          "title": "Python用不好？看官方中文文档啦 - 知乎专栏",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://help.aliyun.com/zh/maxcompute/python-sdk/",
+          "title": "MaxCompute Python SDK介绍 - 阿里云文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://open.feishu.cn/community/articles/7298446935350231044?lang=zh-CN",
+          "title": "飞书文档API使用入门——电子表格篇（python） - 开发者广场",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://python.p2hp.com/",
+          "title": "Python 语言学习指南中文网非官网",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://helpx.adobe.com/cn/knowledge-base/web/developer-guide-getting-started/python-demo.html",
+          "title": "开始使用知识库Python 演示 - Adobe Help Center",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.jetbrains.com/zh-cn/help/idea/plugin-overview.html",
+          "title": "Python | IntelliJ IDEA 文档 - JetBrains",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://devdocs.io/python~3.14/",
+          "title": "Python 3.14 documentation - DevDocs",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.runoob.com/python/python-tutorial.html",
+          "title": "Python 基础教程 - 菜鸟教程",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://learn.microsoft.com/zh-cn/windows/dev-environment/python",
+          "title": "初学者使用Windows上的Python",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "http://scikit-learn.org/",
+          "title": "scikit-learn: machine learning in Python — scikit-learn 1.9.1 ...",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.freecodecamp.org/chinese/news/the-python-handbook/",
+          "title": "Python 编程手册",
+          "engine": [
+            "google cse"
+          ]
+        }
+      ],
+      "sources": [
+        "google cse"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 4586
+    },
+    {
+      "phase": "page2",
+      "code": "n",
+      "q": "python 文档 n",
+      "page": 2,
+      "expected_engine": "naver",
+      "allowed_sources": [
+        "naver"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "naver",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "naver"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 1681,
+        "total": 16,
+        "upstream_total": 19,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://keras-cn.readthedocs.io/",
+          "title": "Keras:基于Python的深度学习库 - Keras中文文档",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "http://wechat-python-sdk.readthedocs.io/",
+          "title": "微信公众平台 Python 开发包文档 — wechat-python-sdk 0.5.9 文档",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://docs.cloud.google.com/?hl=ko",
+          "title": "Python 文档",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://docs.aspose.com/words/zh/python-net/document-builder-overview/",
+          "title": "Python 中的文档生成器概述|Python via .NET 格式的 Aspose.Words",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://nuwe-cmadaas-python.readthedocs.io/",
+          "title": "nuwe-cmadaas-python 文档 — nuwe-cmadaas",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://fabric-chs.readthedocs.io/",
+          "title": "欢迎访问 Fabric 中文文档 — Fabric 文档",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://weixin-python.readthedocs.io/",
+          "title": "微信SDK — weixin-python 0.5.7 文档",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://wiki.python.org/",
+          "title": "Python Books",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://python-docx.readthedocs.io/",
+          "title": "python-docx — python-docx 1.2.0 documentation",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://www.python.org/",
+          "title": "Our Documentation",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://qmt.ptradeapi.com/",
+          "title": "QMT Python API 接口文档",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://www.mrdoc.pro/",
+          "title": "MrDoc觅思文档 - 私有化部署的在线文档管理和知识库系统",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://pypi.org/",
+          "title": "说明文档 - PyPI",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://clickhouse.com/ko",
+          "title": "Introduction",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://doc.qt.io/qtforpython-6/",
+          "title": "Qt for Python",
+          "engine": [
+            "naver"
+          ]
+        },
+        {
+          "url": "https://python.langchain.ac.cn/",
+          "title": "简介 | 🦜️🔗 LangChain 框架",
+          "engine": [
+            "naver"
+          ]
+        }
+      ],
+      "sources": [
+        "naver"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 1691
+    },
+    {
+      "phase": "page2",
+      "code": "yd",
+      "q": "python 文档 yd",
+      "page": 2,
+      "expected_engine": "yandex",
+      "allowed_sources": [
+        "yandex"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "yandex",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "yandex"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 1028,
+        "total": 10,
+        "upstream_total": 10,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://m.w3school.org.cn/python/python_mongodb_insert.asp",
+          "title": "Python MongoDB 插入文档 - W3school 在线教程",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://sereni.casa/com/python-doc-ui-issue/",
+          "title": "Python 文档的一个 UI 问题 | SERENI·CASA",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://www.begtut.com/python/python-mongodb-insert.html",
+          "title": "Python MongoDB 插入数据 | 新手教程",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://cloud.tencent.com/developer/article/2568287",
+          "title": "用 LazyLLM 搭建一个代码注释 / 文档 Agent...",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://lstyxr.github.io/2020/01/09/%E5%B0%86%E4%BD%A0%E7%9A%84Docstring%E7%94%9F%E6%88%90%E5%9C%A8%E7%BA%BFHTML%E6%96%87%E6%A1%A3/",
+          "title": "将你的Docstring生成在线HTML文档 | Coding Python",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://www.cnblogs.com/apachecn/p/17313787.html",
+          "title": "Theano 中文文档 0.9 - 2. 发行说明 - 绝不原创的飞龙 - 博客园",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://blog.sina.com.cn/s/blog_5ff7f94f0100qr3c.html",
+          "title": "python urlparse详解_mmtogo_新浪博客",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://tutorialspoint.cn/python_mongodb/python_mongodb_insert_document.htm",
+          "title": "Python MongoDB - 插入文档",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://www.yumpu.com/xx/document/view/65682574/python",
+          "title": "Read the latest magazines about python数据科学 and discover...",
+          "engine": [
+            "yandex"
+          ]
+        },
+        {
+          "url": "https://routerpark.com/de/blog/langchain-rag-guide",
+          "title": "LangChain RAG bietet eine 65% API-Unterstützung",
+          "engine": [
+            "yandex"
+          ]
+        }
+      ],
+      "sources": [
+        "yandex"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 2437
+    },
+    {
+      "phase": "page2",
+      "code": "sw",
+      "q": "python 文档 sw",
+      "page": 2,
+      "expected_engine": "swisscows",
+      "allowed_sources": [
+        "swisscows"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "swisscows",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "swisscows"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 1270,
+        "total": 15,
+        "upstream_total": 16,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://docspy3zh.readthedocs.io/",
+          "title": "Python 3 文档(简体中文) 3.2.2 documentation - Read the Docs",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3.10/index.html",
+          "title": "Python 3.10.20 文档",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3.13/index.html",
+          "title": "Python 3.13.12 文档",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/using/index.html",
+          "title": "Python安装和使用 — Python 3.15.2 文档",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3.13/reference/index.html",
+          "title": "Python 语言参考手册 — Python 3.13.9 文档",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3.12//reference/index.html",
+          "title": "Python 语言参考手册 — Python 3.12.13 文档",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/3/tutorial/index.html",
+          "title": "Python 教程— Python 3.12.4 文档 - Python 编程语言",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://docs.pythonlang.cn/3/library/index.html",
+          "title": "Python 标准库— Python 3.13.1 文档 - Python 编程语言",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://zhuanlan.zhihu.com/p/697407863",
+          "title": "Documentation，一个超级厉害的 Python 库！ - 知乎",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://www.docs-python.com.cn/",
+          "title": "Python 官方下载 | 最新版Python安装包",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://www.w3school.com.cn/python/python_reference.asp",
+          "title": "Python 参考手册",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://www.w3school.com.cn/python/index.asp",
+          "title": "Python 教程",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://python.c-cpp.com/",
+          "title": "Welcome to Python.org",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://pythonlang.cn/",
+          "title": "欢迎来到 Python.org - Python 编程语言",
+          "engine": [
+            "swisscows"
+          ]
+        },
+        {
+          "url": "https://liaoxuefeng.com/books/python/index.html",
+          "title": "简介- Python教程- 廖雪峰的官方网站",
+          "engine": [
+            "swisscows"
+          ]
+        }
+      ],
+      "sources": [
+        "swisscows"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 1279
+    },
+    {
+      "phase": "page2",
+      "code": "w",
+      "q": "Python w",
+      "page": 2,
+      "expected_engine": "wikipedia",
+      "allowed_sources": [
+        "wikipedia"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "Python",
+        "engine": "wikipedia",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "empty",
+        "engines": [],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 202,
+        "total": 0,
+        "upstream_total": 0,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [],
+      "sources": [],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": false,
+      "direct": false,
+      "no_paid_source": true,
+      "elapsed_ms": 207
+    },
+    {
+      "phase": "page2",
+      "code": "g",
+      "q": "python 文档 g",
+      "page": 2,
+      "expected_engine": "google",
+      "allowed_sources": [
+        "google",
+        "google cse"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "google",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "google cse"
+        ],
+        "unresponsive": [
+          "google(Suspended: access denied)"
+        ],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 799,
+        "total": 15,
+        "upstream_total": 20,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://selenium-python-zh.readthedocs.io/",
+          "title": "Selenium with Python中文翻译文档— Selenium-Python中文文档2 ...",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.aws.amazon.com/zh_cn/sdk-for-python/?icmpid=docs_homepage_devtools",
+          "title": "适用于Python (Boto3) 的AWS SDK 文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://docs.python.org/zh-cn/3/howto/index.html",
+          "title": "Python 指南— Python 3.15.2 文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://blog.csdn.net/Castlehe/article/details/121394771",
+          "title": "Python的docstring规范（说明文档的规范写法） 原创 - CSDN博客",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://help.aliyun.com/zh/maxcompute/python-sdk/",
+          "title": "MaxCompute Python SDK介绍 - 阿里云文档",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://open.feishu.cn/community/articles/7298446935350231044?lang=zh-CN",
+          "title": "飞书文档API使用入门——电子表格篇（python） - 开发者广场",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://python.uihtm.com/",
+          "title": "Python中文官网",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.mongodb.com/zh-cn/docs/languages/python/",
+          "title": "使用Python的MongoDB",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://developers.google.com/workspace/docs/api/quickstart/python?hl=zh-cn",
+          "title": "Python 快速入门| Google Docs",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://www.reddit.com/r/learnpython/comments/mqfk25/is_there_a_way_i_can_access_python_documentation/?tl=zh-hans",
+          "title": "有没有办法可以在离线环境下访问Python 文档。 : r/learnpython",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://learn.microsoft.com/zh-cn/windows/dev-environment/python",
+          "title": "初学者使用Windows上的Python",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "http://scikit-learn.org/",
+          "title": "scikit-learn: machine learning in Python — scikit-learn 1.9.1 ...",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://daobook.github.io/cpython/reference/index.html",
+          "title": "Python 语言参考手册",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://pytorch.org/",
+          "title": "PyTorch Foundation - PyTorch",
+          "engine": [
+            "google cse"
+          ]
+        },
+        {
+          "url": "https://flask.palletsprojects.com/",
+          "title": "Welcome to Flask — Flask Documentation (3.1.x)",
+          "engine": [
+            "google cse"
+          ]
+        }
+      ],
+      "sources": [
+        "google cse"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": false,
+      "no_paid_source": true,
+      "elapsed_ms": 4042
+    },
+    {
+      "phase": "page2",
+      "code": "sc",
+      "q": "retrieval augmented generation sc",
+      "page": 2,
+      "expected_engine": "scholar",
+      "allowed_sources": [
+        "google scholar"
+      ],
+      "http": 503,
+      "error": {
+        "code": "ENGINE_UNAVAILABLE",
+        "message": "引擎 scholar 没有可用结果（已尝试 scholar）：google scholar(unexpected crash)",
+        "retryable": true
+      },
+      "has_results": false,
+      "route_ok": null,
+      "source_ok": null,
+      "contract_ok": true,
+      "elapsed_ms": 548
+    },
+    {
+      "phase": "page2",
+      "code": "sg",
+      "q": "python 文档 sg",
+      "page": 2,
+      "expected_engine": "sogou",
+      "allowed_sources": [
+        "360search",
+        "sogou"
+      ],
+      "http": 200,
+      "parsed": {
+        "q": "python 文档",
+        "engine": "sogou",
+        "region": null,
+        "router": "suffix",
+        "expanded": []
+      },
+      "meta": {
+        "status": "ok",
+        "engines": [
+          "sogou"
+        ],
+        "unresponsive": [],
+        "provider": "searxng",
+        "cached": false,
+        "ms": 723,
+        "total": 10,
+        "upstream_total": 10,
+        "filtered": {
+          "dup": 0,
+          "risk": 0
+        }
+      },
+      "results": [
+        {
+          "url": "https://docs.python.org/3/library/functions.html",
+          "title": "Built-in functions — Python 3.15.0 documentation",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://www.cnblogs.com/superhin/collections/3804",
+          "title": "Python项目文档- - 韩志超 - 博客园",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://www.jb51.net/article/235240.htm",
+          "title": "Python操作word文档的示例详解_python_脚本之家",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://www.cnblogs.com/catfeel/p/15806933.html",
+          "title": "python中文文档 - 菩提浪子 - 博客园",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://www.jb51.net/article/136941.htm",
+          "title": "python爬取各类文档方法归类汇总_python_脚本之家",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://www.cnblogs.com/hayden1106/p/7838056.html",
+          "title": "python学习--文档 - hayden__wang - 博客园",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://www.jb51.net/article/56028.htm",
+          "title": "跟老齐学Python之Python文档_python_脚本之家",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://airsheet.wps.cn/pydocs/db_table/insert_dbt.html",
+          "title": "Python文档 | Python文档",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://www.docs4dev.com/docs/zh/python/3.7.2rc1/all/tutorial-index.html",
+          "title": "Python 中文文档",
+          "engine": [
+            "sogou"
+          ]
+        },
+        {
+          "url": "https://www.jb51.net/article/212352.htm",
+          "title": "Python文件基本操作实用指南_python_脚本之家",
+          "engine": [
+            "sogou"
+          ]
+        }
+      ],
+      "sources": [
+        "sogou"
+      ],
+      "route_ok": true,
+      "source_ok": true,
+      "contract_ok": true,
+      "has_results": true,
+      "direct": true,
+      "no_paid_source": true,
+      "elapsed_ms": 746
+    },
+    {
+      "phase": "page2",
+      "code": "sp",
+      "q": "python 文档 sp",
+      "page": 2,
+      "expected_engine": "startpage",
+      "allowed_sources": [
+        "mojeek",
+        "startpage"
+      ],
+      "http": 503,
+      "error": {
+        "code": "ENGINE_UNAVAILABLE",
+        "message": "引擎 startpage 没有可用结果（已尝试 startpage）：startpage(路由未生效)；mojeek(熔断冷却，约 56 分钟)",
+        "retryable": true
+      },
+      "has_results": false,
+      "route_ok": null,
+      "source_ok": null,
+      "contract_ok": true,
+      "elapsed_ms": 2039
+    }
+  ],
+  "started_at": "2026-11-08T14:58:59+0900",
+  "scope": "真实线上搜索；仅公开测试查询；不写书签；付费可限于首屏 g/gc/sc",
+  "catalog_after": {
+    "provider": "searxng",
+    "searxng_url": "http://127.0.0.1:8888",
+    "breaker": true,
+    "paid": {
+      "serper": true,
+      "brave": false
+    },
+    "engines": [
+      {
+        "code": "g",
+        "label": "Google",
+        "engine": "google",
+        "searx_engine": "google",
+        "fallbacks": [
+          "google cse"
+        ],
+        "paid": "search",
+        "aliases": [],
+        "note": "Google 直连常被 403；先回退 Google CSE，再按配置走 Serper",
+        "status": "cooldown",
+        "available": false,
+        "fails": 3,
+        "avg_ms": null,
+        "last_error": "google(Suspended: access denied)",
+        "remaining_seconds": 3593,
+        "can_fallback": true,
+        "selectable": true
+      },
+      {
+        "code": "b",
+        "label": "Bing",
+        "engine": "bing",
+        "searx_engine": "bing",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "SearXNG 用 cn.bing.com，避免 www.bing.com 的 302 被引擎丢弃",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "d",
+        "label": "DuckDuckGo",
+        "engine": "duckduckgo",
+        "searx_engine": "duckduckgo",
+        "fallbacks": [
+          "duckduckgo web"
+        ],
+        "paid": "",
+        "aliases": [
+          "ddg"
+        ],
+        "note": "间歇 CAPTCHA；失败时试 duckduckgo web",
+        "status": "ok",
+        "available": true,
+        "fails": 1,
+        "avg_ms": null,
+        "last_error": "duckduckgo(CAPTCHA)",
+        "remaining_seconds": 0,
+        "can_fallback": true,
+        "selectable": true
+      },
+      {
+        "code": "dw",
+        "label": "DuckDuckGo Web",
+        "engine": "duckduckgo web",
+        "searx_engine": "duckduckgo web",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "DuckDuckGo 的网页端备用入口",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "br",
+        "label": "Brave",
+        "engine": "brave",
+        "searx_engine": "brave",
+        "fallbacks": [],
+        "paid": "brave",
+        "aliases": [],
+        "note": "无 key 时网页端常限流；配置 BRAVE_API_KEY 后走官方接口",
+        "status": "unknown",
+        "available": null,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "yt",
+        "label": "YouTube",
+        "engine": "youtube",
+        "searx_engine": "youtube",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "",
+        "status": "unknown",
+        "available": null,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "gh",
+        "label": "GitHub",
+        "engine": "github",
+        "searx_engine": "github",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "",
+        "status": "unknown",
+        "available": null,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "ar",
+        "label": "arXiv",
+        "engine": "arxiv",
+        "searx_engine": "arxiv",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "",
+        "status": "unknown",
+        "available": null,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "sc",
+        "label": "Google Scholar",
+        "engine": "scholar",
+        "searx_engine": "google scholar",
+        "fallbacks": [],
+        "paid": "scholar",
+        "aliases": [],
+        "note": "网页端 access denied；配置 Serper 时走 /scholar",
+        "status": "cooldown",
+        "available": false,
+        "fails": 3,
+        "avg_ms": null,
+        "last_error": "google scholar(unexpected crash)",
+        "remaining_seconds": 3597,
+        "can_fallback": true,
+        "selectable": true
+      },
+      {
+        "code": "w",
+        "label": "Wikipedia",
+        "engine": "wikipedia",
+        "searx_engine": "wikipedia",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "需 display_type 含 list；默认配置已补",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "gc",
+        "label": "Google CSE",
+        "engine": "google cse",
+        "searx_engine": "google cse",
+        "fallbacks": [],
+        "paid": "search",
+        "aliases": [],
+        "note": "独立索引；偶发超时，失败时可按配置回退 Serper",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": true,
+        "selectable": true
+      },
+      {
+        "code": "sp",
+        "label": "Startpage",
+        "engine": "startpage",
+        "searx_engine": "startpage",
+        "fallbacks": [
+          "mojeek"
+        ],
+        "paid": "",
+        "aliases": [],
+        "note": "PoW CAPTCHA；失败回退 Mojeek",
+        "status": "cooldown",
+        "available": false,
+        "fails": 3,
+        "avg_ms": null,
+        "last_error": "startpage(路由未生效)",
+        "remaining_seconds": 3600,
+        "can_fallback": false,
+        "selectable": false
+      },
+      {
+        "code": "mj",
+        "label": "Mojeek",
+        "engine": "mojeek",
+        "searx_engine": "mojeek",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "需 inactive: false 才会被 SearXNG 加载",
+        "status": "cooldown",
+        "available": false,
+        "fails": 3,
+        "avg_ms": null,
+        "last_error": "mojeek(timeout)",
+        "remaining_seconds": 3308,
+        "can_fallback": false,
+        "selectable": false
+      },
+      {
+        "code": "y",
+        "label": "Yahoo",
+        "engine": "yahoo",
+        "searx_engine": "yahoo",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "sg",
+        "label": "Sogou",
+        "engine": "sogou",
+        "searx_engine": "sogou",
+        "fallbacks": [
+          "360search"
+        ],
+        "paid": "",
+        "aliases": [],
+        "note": "部分查询会触发 SearXNG 侧 crash；失败回退 360 搜索",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": true,
+        "selectable": true
+      },
+      {
+        "code": "so",
+        "label": "360 Search",
+        "engine": "360search",
+        "searx_engine": "360search",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "中文独立索引；Sogou 的回退目标",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "n",
+        "label": "Naver",
+        "engine": "naver",
+        "searx_engine": "naver",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "yd",
+        "label": "Yandex",
+        "engine": "yandex",
+        "searx_engine": "yandex",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      },
+      {
+        "code": "sw",
+        "label": "Swisscows",
+        "engine": "swisscows",
+        "searx_engine": "swisscows",
+        "fallbacks": [],
+        "paid": "",
+        "aliases": [],
+        "note": "需 inactive: false",
+        "status": "ok",
+        "available": true,
+        "fails": 0,
+        "avg_ms": null,
+        "last_error": null,
+        "remaining_seconds": 0,
+        "can_fallback": false,
+        "selectable": true
+      }
+    ]
+  },
+  "summary": {
+    "first_with_results": 11,
+    "first_total": 13,
+    "direct_with_results": 9,
+    "fallback_with_results": 2,
+    "contract_failures": 0,
+    "paid_source_on_page2": false
+  },
+  "finished_at": "2026-11-08T14:59:54+0900"
+}

@@ -1,0 +1,31 @@
+{
+  "final_pid": 592,
+  "db_path": "D:\\agent\\llq\\data\\review-temp\\verify.db",
+  "tables": {
+    "bookmarks": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "bookmark_groups": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "bookmark_tags": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "tables_preserved": true,
+  "token_preserved": true,
+  "searxng_preserved": true,
+  "provider": "searxng",
+  "official_loaded": true,
+  "actual_summary_models": [
+    "qwen3.5-4b-local:latest"
+  ],
+  "configured_model": "qwen3.5-4b-local:latest",
+  "model_endpoint": "http://127.0.0.1:11434/v1",
+  "cache_enabled": "true",
+  "index_matches_build": true,
+  "review_sources_unchanged": true
+}

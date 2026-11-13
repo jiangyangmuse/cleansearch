@@ -376,3 +376,49 @@ def test_dead_link_check_honors_old_bookmark_ids_and_empty_selection(bclient: Te
     assert empty["checked"] == 0 and seen == ["old.test"]
     assert result["checked"] == result["dead"] == 1
     assert repo.get(old["id"])["dead"] == 1
+
+
+def test_status_batch_lookup(repo: BookmarkRepo, bclient: TestClient) -> None:
+    """结果卡初始状态：一次查询多个网址，返回已收藏的 id。"""
+    item, _ = repo.add("https://example.com/status-a", title="A")
+    repo.add("https://example.com/status-b", title="B")
+
+    response = bclient.get(
+        "/api/bookmarks/status",
+        params=[
+            ("urls", "https://example.com/status-a"),
+            ("urls", "https://example.com/status-a?utm_source=x"),
+            ("urls", "HTTPS://example.com/status-a#fragment"),
+            ("urls", "https://user@example.com/status-a"),
+            ("urls", "https://example.com/missing"),
+            ("urls", "javascript:alert(1)"),
+        ],
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload == {
+        "https://example.com/status-a": item["id"],
+        "https://example.com/status-a?utm_source=x": item["id"],
+        "HTTPS://example.com/status-a#fragment": item["id"],
+    }
+    assert response.headers["cache-control"] == "no-store"
+
+
+def test_status_empty_and_cap(bclient: TestClient) -> None:
+    assert bclient.get("/api/bookmarks/status").json() == {}
+    assert bclient.get("/api/bookmarks/status", params=[("urls", "not-a-url")]).json() == {}
+    assert bclient.get("/api/bookmarks/status", params={"urls": "https://example.com/" + "x" * 2048}).json() == {}
+    too_many = [("urls", f"https://example.com/{index}") for index in range(51)]
+    assert bclient.get("/api/bookmarks/status", params=too_many).status_code == 422
+
+
+def test_undo_does_not_delete_reused_bookmark_id(repo: BookmarkRepo, bclient: TestClient) -> None:
+    original, _ = repo.add("https://example.com/original")
+    assert repo.delete(original["id"])
+    replacement, _ = repo.add("https://example.com/replacement")
+    assert replacement["id"] == original["id"]
+
+    endpoint = f"/api/bookmarks/{original['id']}/result"
+    assert bclient.delete(endpoint, params={"url": original["url"]}).status_code == 409
+    assert repo.get(replacement["id"])["url"] == replacement["url"]
+    assert bclient.delete(endpoint, params={"url": replacement["url"] + "?utm_source=test"}).status_code == 204

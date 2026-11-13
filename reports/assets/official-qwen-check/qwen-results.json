@@ -1,0 +1,1441 @@
+[
+  {
+    "query": "Apple",
+    "case": "bing",
+    "candidate_count": 6,
+    "candidate_landing_rank": 1,
+    "http_status": 200,
+    "model": "qwen3.5-4b-local:latest",
+    "done": true,
+    "done_reason": "stop",
+    "seconds": 8.658,
+    "load_seconds": 5.15,
+    "prompt_tokens": 510,
+    "output_tokens": 13,
+    "selected": [
+      {
+        "candidate": "c1",
+        "section": "official",
+        "position": 1,
+        "id": "r_1",
+        "url": "https://www.apple.com/",
+        "title": "Apple",
+        "snippet": "Discover the innovative world of Apple and shop everything iPhone, iPad, Apple Watch, Mac, and Apple TV, plus explore …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c4",
+        "section": "related",
+        "position": 2,
+        "id": "r_3",
+        "url": "https://www.apple.com/store",
+        "title": "Apple Store Online",
+        "snippet": "10 hours ago · Lease a new Apple product with low monthly payments and terms that work for you with Apple Upgrade. Learn more",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      },
+      {
+        "candidate": "c5",
+        "section": "related",
+        "position": 3,
+        "id": "r_4",
+        "url": "https://www.apple.com.cn/iphone/",
+        "title": "iPhone - Apple (中国大陆)",
+        "snippet": "Feb 1, 2026 · 最新的 Apple Watch 表款能指出它所在的大致方位和距离 5。 控制 iPhone 自拍合影也很方便，只要站好位置，然后在 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ],
+    "returned": [
+      {
+        "section": "official",
+        "position": 1,
+        "id": "r_1",
+        "url": "https://www.apple.com/",
+        "title": "Apple",
+        "snippet": "Discover the innovative world of Apple and shop everything iPhone, iPad, Apple Watch, Mac, and Apple TV, plus explore …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "related",
+        "position": 2,
+        "id": "r_3",
+        "url": "https://www.apple.com/store",
+        "title": "Apple Store Online",
+        "snippet": "10 hours ago · Lease a new Apple product with low monthly payments and terms that work for you with Apple Upgrade. Learn more",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      },
+      {
+        "section": "related",
+        "position": 3,
+        "id": "r_4",
+        "url": "https://www.apple.com.cn/iphone/",
+        "title": "iPhone - Apple (中国大陆)",
+        "snippet": "Feb 1, 2026 · 最新的 Apple Watch 表款能指出它所在的大致方位和距离 5。 控制 iPhone 自拍合影也很方便，只要站好位置，然后在 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ]
+  },
+  {
+    "query": "微信",
+    "case": "free-default",
+    "candidate_count": 13,
+    "candidate_landing_rank": 1,
+    "http_status": 200,
+    "model": "qwen3.5-4b-local:latest",
+    "done": true,
+    "done_reason": "stop",
+    "seconds": 6.489,
+    "load_seconds": 0.046,
+    "prompt_tokens": 1267,
+    "output_tokens": 13,
+    "selected": [
+      {
+        "candidate": "c1",
+        "section": "official",
+        "position": 1,
+        "id": "r_1",
+        "url": "https://weixin.qq.com/",
+        "title": "微信,是一个生活方式官网",
+        "snippet": "微信输入法 4.0.1 for iOS / Android 发布 11-11 微信输入法 3.0.1 for Mac / Windows 发布 11-10 微信 8.0.23 for HarmonyOS 全新发布 11-02 更多日志 Android iOS HarmonyOS Windows macOS Linux 文件传输助手 网页版 儿童手表版 车载版 微信输入法 WeChat (繁体) WeChat (EN)",
+        "source": "search",
+        "engines": [
+          "yahoo",
+          "duckduckgo web",
+          "google cse",
+          "360search",
+          "bing",
+          "naver",
+          "sogou"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c5",
+        "section": "related",
+        "position": 2,
+        "id": "r_2",
+        "url": "https://wx.qq.com/",
+        "title": "微信网页版",
+        "snippet": "提示：网页版微信需要使用浏览器Cookie来帮助你登录，以便运行网页版应用程序。 详细信息 网页版微信需要配合手机使用 二维码失效，点击刷新 切换帐号",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo",
+          "bing",
+          "naver"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "candidate": "c2",
+        "section": "official",
+        "position": 2,
+        "id": "r_11",
+        "url": "https://mp.weixin.qq.com/",
+        "title": "微信公众平台",
+        "snippet": "微信公众平台，给个人、企业和组织提供业务服务与用户管理能力的全新服务平台。",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "naver"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ],
+    "returned": [
+      {
+        "section": "official",
+        "position": 1,
+        "id": "r_1",
+        "url": "https://weixin.qq.com/",
+        "title": "微信,是一个生活方式官网",
+        "snippet": "微信输入法 4.0.1 for iOS / Android 发布 11-11 微信输入法 3.0.1 for Mac / Windows 发布 11-10 微信 8.0.23 for HarmonyOS 全新发布 11-02 更多日志 Android iOS HarmonyOS Windows macOS Linux 文件传输助手 网页版 儿童手表版 车载版 微信输入法 WeChat (繁体) WeChat (EN)",
+        "source": "search",
+        "engines": [
+          "yahoo",
+          "duckduckgo web",
+          "google cse",
+          "360search",
+          "bing",
+          "naver",
+          "sogou"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "related",
+        "position": 2,
+        "id": "r_2",
+        "url": "https://wx.qq.com/",
+        "title": "微信网页版",
+        "snippet": "提示：网页版微信需要使用浏览器Cookie来帮助你登录，以便运行网页版应用程序。 详细信息 网页版微信需要配合手机使用 二维码失效，点击刷新 切换帐号",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo",
+          "bing",
+          "naver"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "official",
+        "position": 2,
+        "id": "r_11",
+        "url": "https://mp.weixin.qq.com/",
+        "title": "微信公众平台",
+        "snippet": "微信公众平台，给个人、企业和组织提供业务服务与用户管理能力的全新服务平台。",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "naver"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ]
+  },
+  {
+    "query": "Docker",
+    "case": "free-default",
+    "candidate_count": 16,
+    "candidate_landing_rank": 1,
+    "http_status": 200,
+    "model": "qwen3.5-4b-local:latest",
+    "done": true,
+    "done_reason": "stop",
+    "seconds": 6.553,
+    "load_seconds": 0.004,
+    "prompt_tokens": 1331,
+    "output_tokens": 13,
+    "selected": [
+      {
+        "candidate": "c1",
+        "section": "official",
+        "position": 1,
+        "id": "r_1",
+        "url": "https://www.docker.com/",
+        "title": "Docker: Accelerated Container Application Development",
+        "snippet": "Trust Docker for the Agents You Don't Docker securely contains autonomous agents so you can confidently build, ship, and run on trust. Get started Learn more Docker Sandboxes ...",
+        "source": "search",
+        "engines": [
+          "yahoo",
+          "duckduckgo web",
+          "google cse",
+          "mojeek",
+          "360search",
+          "bing",
+          "naver",
+          "sogou"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c3",
+        "section": "official",
+        "position": 3,
+        "id": "r_5",
+        "url": "https://hub.docker.com/",
+        "title": "Docker Hub Container Image Library | App Containerization",
+        "snippet": "Welcome to the world's largest container registry built for developers and open source contributors to find, use, and share their container images. Build, push and pull.",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo",
+          "mojeek",
+          "google cse"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "candidate": "c2",
+        "section": "official",
+        "position": 2,
+        "id": "r_6",
+        "url": "https://docs.docker.com/",
+        "title": "Docker Docs",
+        "snippet": "Sep 3 Docker Build Cloud Sep 3 Use Docker Build Cloud with standard Buildx Buildx 0.37.0 includes the cloud driver, so you can connect to Docker ...",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo",
+          "mojeek"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ],
+    "returned": [
+      {
+        "section": "official",
+        "position": 1,
+        "id": "r_1",
+        "url": "https://www.docker.com/",
+        "title": "Docker: Accelerated Container Application Development",
+        "snippet": "Trust Docker for the Agents You Don't Docker securely contains autonomous agents so you can confidently build, ship, and run on trust. Get started Learn more Docker Sandboxes ...",
+        "source": "search",
+        "engines": [
+          "yahoo",
+          "duckduckgo web",
+          "google cse",
+          "mojeek",
+          "360search",
+          "bing",
+          "naver",
+          "sogou"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "official",
+        "position": 3,
+        "id": "r_5",
+        "url": "https://hub.docker.com/",
+        "title": "Docker Hub Container Image Library | App Containerization",
+        "snippet": "Welcome to the world's largest container registry built for developers and open source contributors to find, use, and share their container images. Build, push and pull.",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo",
+          "mojeek",
+          "google cse"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "official",
+        "position": 2,
+        "id": "r_6",
+        "url": "https://docs.docker.com/",
+        "title": "Docker Docs",
+        "snippet": "Sep 3 Docker Build Cloud Sep 3 Use Docker Build Cloud with standard Buildx Buildx 0.37.0 includes the cloud driver, so you can connect to Docker ...",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo",
+          "mojeek"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ]
+  },
+  {
+    "query": "原神",
+    "case": "bing",
+    "candidate_count": 10,
+    "candidate_landing_rank": 5,
+    "http_status": 200,
+    "model": "qwen3.5-4b-local:latest",
+    "done": true,
+    "done_reason": "stop",
+    "seconds": 5.883,
+    "load_seconds": 0.004,
+    "prompt_tokens": 1104,
+    "output_tokens": 13,
+    "selected": [
+      {
+        "candidate": "c5",
+        "section": "related",
+        "position": 5,
+        "id": "r_1",
+        "url": "https://www.yuanshen.com/",
+        "title": "《原神》官方网站-米哈游开放世界冒险RPG",
+        "snippet": "Sep 5, 2025 · 《原神》是一款由米哈游开发的开放世界冒险RPG游戏，提供丰富的剧情和探索体验。",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c6",
+        "section": "related",
+        "position": 6,
+        "id": "r_2",
+        "url": "https://ys.mihoyo.com/",
+        "title": "《原神》官方网站-全新7.2版本「坏灭肇始之时」上线！",
+        "snippet": "Oct 24, 2026 · 全新7.2版本「坏灭肇始之时」，现已推出！《原神》是由米哈游自研的一款开放世界冒险RPG。你将在游戏中探索一 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c9",
+        "section": "related",
+        "position": 9,
+        "id": "r_7",
+        "url": "https://genshin.hoyoverse.com/zh-tw/home",
+        "title": "《原神》 - 前往未知的冒險旅程 - Genshin Impact",
+        "snippet": "最新 米提亞顧問的觀察紀錄 2026年11月08日 「聖土化」蔓延，七國代表齊聚至冬 2026年11月04日 「跟上米提亞！ 」——參與活動 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      }
+    ],
+    "returned": [
+      {
+        "section": "related",
+        "position": 5,
+        "id": "r_1",
+        "url": "https://www.yuanshen.com/",
+        "title": "《原神》官方网站-米哈游开放世界冒险RPG",
+        "snippet": "Sep 5, 2025 · 《原神》是一款由米哈游开发的开放世界冒险RPG游戏，提供丰富的剧情和探索体验。",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "related",
+        "position": 6,
+        "id": "r_2",
+        "url": "https://ys.mihoyo.com/",
+        "title": "《原神》官方网站-全新7.2版本「坏灭肇始之时」上线！",
+        "snippet": "Oct 24, 2026 · 全新7.2版本「坏灭肇始之时」，现已推出！《原神》是由米哈游自研的一款开放世界冒险RPG。你将在游戏中探索一 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "related",
+        "position": 9,
+        "id": "r_7",
+        "url": "https://genshin.hoyoverse.com/zh-tw/home",
+        "title": "《原神》 - 前往未知的冒險旅程 - Genshin Impact",
+        "snippet": "最新 米提亞顧問的觀察紀錄 2026年11月08日 「聖土化」蔓延，七國代表齊聚至冬 2026年11月04日 「跟上米提亞！ 」——參與活動 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      }
+    ]
+  },
+  {
+    "query": "崩坏星穹铁道",
+    "case": "free-default",
+    "candidate_count": 14,
+    "candidate_landing_rank": 5,
+    "http_status": 200,
+    "model": "qwen3.5-4b-local:latest",
+    "done": true,
+    "done_reason": "stop",
+    "seconds": 9.334,
+    "load_seconds": 0.007,
+    "prompt_tokens": 2078,
+    "output_tokens": 13,
+    "selected": [
+      {
+        "candidate": "c8",
+        "section": "related",
+        "position": 8,
+        "id": "r_10",
+        "url": "https://hsr.hoyoverse.com/zh-cn/home",
+        "title": "首页 | 《崩坏：星穹铁道》官方网站——愿此行，终抵群星",
+        "snippet": "这片银河中有名为「星神」的存在，祂们造就现实，抹消星辰，在无数「世界」中留下祂们的痕迹。 你——一名特殊的旅客，将与继承「开拓」意志的同伴一起，乘坐星穹列车穿越银河，沿着某位「星神」曾经所行之途前进。 你将由此探索新的文明，结识新的伙伴，在无数光怪陆离的「世界」与「 ...",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "yahoo",
+          "duckduckgo web",
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c5",
+        "section": "related",
+        "position": 5,
+        "id": "r_1",
+        "url": "https://sr.mihoyo.com/",
+        "title": "《崩坏：星穹铁道》官方网站-4.7全新版本「此刻，将群星付之一笑」正式上线!",
+        "snippet": "《崩坏：星穹铁道》全新4.7全新版本「此刻，将群星付之一笑」现已推出——疯狂的寂静中，有声音说：「笑吧，让祂听见你的存在。」于是，群星不再沉默，他们将所有的光明付于一声欢笑。",
+        "source": "search",
+        "engines": [
+          "yahoo",
+          "duckduckgo web",
+          "google cse",
+          "360search",
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c6",
+        "section": "related",
+        "position": 6,
+        "id": "r_2",
+        "url": "https://sr.mihoyo.com/cloud/",
+        "title": "云·星穹铁道 - miHoYo",
+        "snippet": "云星穹铁道网页版是米哈游（miHoYo）旗下的崩坏：星穹铁道云游戏版本。通过实时云端技术，你无需下载完整星穹铁道包体，也可尽享低延迟、高画质、高帧率游戏体验。这片银河中有名为「星神」的存在，祂们造就现实，抹消星辰，在无数「世界」中留下祂们的痕迹。你——一名特殊的旅客，将与 ...",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "yahoo",
+          "duckduckgo web",
+          "360search"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      }
+    ],
+    "returned": [
+      {
+        "section": "related",
+        "position": 8,
+        "id": "r_10",
+        "url": "https://hsr.hoyoverse.com/zh-cn/home",
+        "title": "首页 | 《崩坏：星穹铁道》官方网站——愿此行，终抵群星",
+        "snippet": "这片银河中有名为「星神」的存在，祂们造就现实，抹消星辰，在无数「世界」中留下祂们的痕迹。 你——一名特殊的旅客，将与继承「开拓」意志的同伴一起，乘坐星穹列车穿越银河，沿着某位「星神」曾经所行之途前进。 你将由此探索新的文明，结识新的伙伴，在无数光怪陆离的「世界」与「 ...",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "yahoo",
+          "duckduckgo web",
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "related",
+        "position": 5,
+        "id": "r_1",
+        "url": "https://sr.mihoyo.com/",
+        "title": "《崩坏：星穹铁道》官方网站-4.7全新版本「此刻，将群星付之一笑」正式上线!",
+        "snippet": "《崩坏：星穹铁道》全新4.7全新版本「此刻，将群星付之一笑」现已推出——疯狂的寂静中，有声音说：「笑吧，让祂听见你的存在。」于是，群星不再沉默，他们将所有的光明付于一声欢笑。",
+        "source": "search",
+        "engines": [
+          "yahoo",
+          "duckduckgo web",
+          "google cse",
+          "360search",
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "related",
+        "position": 6,
+        "id": "r_2",
+        "url": "https://sr.mihoyo.com/cloud/",
+        "title": "云·星穹铁道 - miHoYo",
+        "snippet": "云星穹铁道网页版是米哈游（miHoYo）旗下的崩坏：星穹铁道云游戏版本。通过实时云端技术，你无需下载完整星穹铁道包体，也可尽享低延迟、高画质、高帧率游戏体验。这片银河中有名为「星神」的存在，祂们造就现实，抹消星辰，在无数「世界」中留下祂们的痕迹。你——一名特殊的旅客，将与 ...",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "yahoo",
+          "duckduckgo web",
+          "360search"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      }
+    ]
+  },
+  {
+    "query": "Godot",
+    "case": "free-default",
+    "candidate_count": 14,
+    "candidate_landing_rank": 6,
+    "http_status": 200,
+    "model": "qwen3.5-4b-local:latest",
+    "done": true,
+    "done_reason": "stop",
+    "seconds": 8.023,
+    "load_seconds": 0.002,
+    "prompt_tokens": 1514,
+    "output_tokens": 16,
+    "selected": [
+      {
+        "candidate": "c6",
+        "section": "related",
+        "position": 2,
+        "id": "r_1",
+        "url": "https://godotengine.org/",
+        "title": "Godot Engine - Free and open source 2D and 3D game engine",
+        "snippet": "Your free, open‑source game engine. Develop your 2D & 3D games, cross-platform projects, or even XR ideas! ... Looking for Godot 3, our experimental releases, or ...",
+        "source": "search",
+        "engines": [
+          "yahoo",
+          "duckduckgo web",
+          "google cse",
+          "360search",
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c7",
+        "section": "related",
+        "position": 3,
+        "id": "r_2",
+        "url": "https://godotengine.org/download/windows/",
+        "title": "Download for Windows – Godot Engine",
+        "snippet": "Aug 18, 2026 · Preview builds Godot is continuously being developed with several minor releases being published every year. To ensure high quality and stability of each release, we also publish preview builds at various stages of development. Help test Godot's new features or be the first to benefit from upcoming improvements by downloading a preview build!",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo",
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      },
+      {
+        "candidate": "c3",
+        "section": "strong",
+        "position": 3,
+        "id": "r_10",
+        "url": "https://docs.godotengine.org/en/stable/",
+        "title": "Godot Docs – 4.7 branch — Godot Engine (stable) documentation ...",
+        "snippet": "Welcome to the official documentation of Godot Engine, the free and open source community-driven 2D and 3D game engine! If you are new to this documentation, we recommend that you read the introduc...",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo",
+          "naver"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ],
+    "returned": [
+      {
+        "section": "related",
+        "position": 2,
+        "id": "r_1",
+        "url": "https://godotengine.org/",
+        "title": "Godot Engine - Free and open source 2D and 3D game engine",
+        "snippet": "Your free, open‑source game engine. Develop your 2D & 3D games, cross-platform projects, or even XR ideas! ... Looking for Godot 3, our experimental releases, or ...",
+        "source": "search",
+        "engines": [
+          "yahoo",
+          "duckduckgo web",
+          "google cse",
+          "360search",
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "related",
+        "position": 3,
+        "id": "r_2",
+        "url": "https://godotengine.org/download/windows/",
+        "title": "Download for Windows – Godot Engine",
+        "snippet": "Aug 18, 2026 · Preview builds Godot is continuously being developed with several minor releases being published every year. To ensure high quality and stability of each release, we also publish preview builds at various stages of development. Help test Godot's new features or be the first to benefit from upcoming improvements by downloading a preview build!",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo",
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      },
+      {
+        "section": "strong",
+        "position": 3,
+        "id": "r_10",
+        "url": "https://docs.godotengine.org/en/stable/",
+        "title": "Godot Docs – 4.7 branch — Godot Engine (stable) documentation ...",
+        "snippet": "Welcome to the official documentation of Godot Engine, the free and open source community-driven 2D and 3D game engine! If you are new to this documentation, we recommend that you read the introduc...",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo",
+          "naver"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ]
+  },
+  {
+    "query": "VLC",
+    "case": "free-default",
+    "candidate_count": 13,
+    "candidate_landing_rank": 7,
+    "http_status": 200,
+    "model": "qwen3.5-4b-local:latest",
+    "done": true,
+    "done_reason": "stop",
+    "seconds": 6.554,
+    "load_seconds": 0.01,
+    "prompt_tokens": 1209,
+    "output_tokens": 14,
+    "selected": [
+      {
+        "candidate": "c7",
+        "section": "related",
+        "position": 5,
+        "id": "r_6",
+        "url": "https://www.videolan.org/",
+        "title": "VLC: Official site - Free multimedia solutions for all OS! - VideoLAN",
+        "snippet": "VLC is a free and open source cross-platform multimedia player and framework that plays most multimedia files, and various streaming protocols. Download VLC.",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "naver",
+          "360search"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c9",
+        "section": "related",
+        "position": 7,
+        "id": "r_1",
+        "url": "https://www.videolan.org/vlc/",
+        "title": "Official download of VLC media player, the best Open Source player ...",
+        "snippet": "Download VLC media player, the free and open source multimedia player for Windows, macOS, Linux, Android and iOS. Plays most video and audio files and streams.",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "yahoo",
+          "duckduckgo web"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c12",
+        "section": "related",
+        "position": 10,
+        "id": "r_10",
+        "url": "https://images.videolan.org/vlc",
+        "title": "Official download of VLC media player, the best Open Source ... - VideoLAN",
+        "snippet": "VLC is a free and open source cross-platform multimedia player and framework that plays most multimedia files as well as DVDs, Audio CDs, VCDs, and various streaming protocols.",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ],
+    "returned": [
+      {
+        "section": "related",
+        "position": 5,
+        "id": "r_6",
+        "url": "https://www.videolan.org/",
+        "title": "VLC: Official site - Free multimedia solutions for all OS! - VideoLAN",
+        "snippet": "VLC is a free and open source cross-platform multimedia player and framework that plays most multimedia files, and various streaming protocols. Download VLC.",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "naver",
+          "360search"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "related",
+        "position": 7,
+        "id": "r_1",
+        "url": "https://www.videolan.org/vlc/",
+        "title": "Official download of VLC media player, the best Open Source player ...",
+        "snippet": "Download VLC media player, the free and open source multimedia player for Windows, macOS, Linux, Android and iOS. Plays most video and audio files and streams.",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "yahoo",
+          "duckduckgo web"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "related",
+        "position": 10,
+        "id": "r_10",
+        "url": "https://images.videolan.org/vlc",
+        "title": "Official download of VLC media player, the best Open Source ... - VideoLAN",
+        "snippet": "VLC is a free and open source cross-platform multimedia player and framework that plays most multimedia files as well as DVDs, Audio CDs, VCDs, and various streaming protocols.",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ]
+  },
+  {
+    "query": "Krita",
+    "case": "free-default",
+    "candidate_count": 12,
+    "candidate_landing_rank": 6,
+    "http_status": 200,
+    "model": "qwen3.5-4b-local:latest",
+    "done": true,
+    "done_reason": "stop",
+    "seconds": 6.305,
+    "load_seconds": 0.003,
+    "prompt_tokens": 1215,
+    "output_tokens": 13,
+    "selected": [
+      {
+        "candidate": "c6",
+        "section": "related",
+        "position": 4,
+        "id": "r_1",
+        "url": "https://krita.org/en/",
+        "title": "Krita | Digital Painting. Creative Freedom.",
+        "snippet": "Krita is a professional FREE and open source painting program. It is made by artists that want to see affordable art tools for everyone. ... Animation on Androi...",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "yahoo",
+          "duckduckgo web",
+          "360search"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c4",
+        "section": "related",
+        "position": 2,
+        "id": "r_5",
+        "url": "https://krita.software/",
+        "title": "Krita | Creative Freedom for Digital Artists | Krita.software",
+        "snippet": "Free open-source Krita digital painting for Windows, macOS, Linux and Android. Pro brushes, animation, layers and CMYK support for artists.",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo",
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "candidate": "c3",
+        "section": "related",
+        "position": 1,
+        "id": "r_3",
+        "url": "https://krita.org/en/download/",
+        "title": "Download - Krita",
+        "snippet": "Krita is a free and open source application. You are free to study, modify, and distribute Krita under GNU GPL v3 license. tarball Git (KDE ...",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "yahoo",
+          "duckduckgo web"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      }
+    ],
+    "returned": [
+      {
+        "section": "related",
+        "position": 4,
+        "id": "r_1",
+        "url": "https://krita.org/en/",
+        "title": "Krita | Digital Painting. Creative Freedom.",
+        "snippet": "Krita is a professional FREE and open source painting program. It is made by artists that want to see affordable art tools for everyone. ... Animation on Androi...",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "yahoo",
+          "duckduckgo web",
+          "360search"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "related",
+        "position": 2,
+        "id": "r_5",
+        "url": "https://krita.software/",
+        "title": "Krita | Creative Freedom for Digital Artists | Krita.software",
+        "snippet": "Free open-source Krita digital painting for Windows, macOS, Linux and Android. Pro brushes, animation, layers and CMYK support for artists.",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo",
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      },
+      {
+        "section": "related",
+        "position": 1,
+        "id": "r_3",
+        "url": "https://krita.org/en/download/",
+        "title": "Download - Krita",
+        "snippet": "Krita is a free and open source application. You are free to study, modify, and distribute Krita under GNU GPL v3 license. tarball Git (KDE ...",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "yahoo",
+          "duckduckgo web"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      }
+    ]
+  },
+  {
+    "query": "Modrinth",
+    "case": "free-default",
+    "candidate_count": 13,
+    "candidate_landing_rank": 2,
+    "http_status": 200,
+    "model": "qwen3.5-4b-local:latest",
+    "done": true,
+    "done_reason": "stop",
+    "seconds": 5.679,
+    "load_seconds": 0.005,
+    "prompt_tokens": 1053,
+    "output_tokens": 13,
+    "selected": [
+      {
+        "candidate": "c2",
+        "section": "related",
+        "position": 1,
+        "id": "r_1",
+        "url": "https://modrinth.com/",
+        "title": "Modrinth",
+        "snippet": "Nov 2, 2026 · Download Minecraft mods, plugins, datapacks, shaders, resourcepacks, and modpacks on Modrinth. Discover and publish projects on Modrinth with a modern, easy to use interface and API.",
+        "source": "search",
+        "engines": [
+          "yahoo",
+          "duckduckgo web",
+          "google cse",
+          "yandex",
+          "bing",
+          "naver"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c4",
+        "section": "related",
+        "position": 3,
+        "id": "r_2",
+        "url": "https://modrinth.com/app",
+        "title": "Download Modrinth App!",
+        "snippet": "Download Modrinth App Modrinth App is a unique, open source launcher that allows you to play your favorite mods, and keep them up to date, all in one neat little package.",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "duckduckgo web",
+          "yahoo",
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      },
+      {
+        "candidate": "c5",
+        "section": "related",
+        "position": 4,
+        "id": "r_5",
+        "url": "https://support.modrinth.com/en/",
+        "title": "Home | Modrinth Help Center",
+        "snippet": "Modrinth Help Center For articles specific to Modrinth Hosting, our 24/7 Minecraft server hosting service.",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ],
+    "returned": [
+      {
+        "section": "related",
+        "position": 1,
+        "id": "r_1",
+        "url": "https://modrinth.com/",
+        "title": "Modrinth",
+        "snippet": "Nov 2, 2026 · Download Minecraft mods, plugins, datapacks, shaders, resourcepacks, and modpacks on Modrinth. Discover and publish projects on Modrinth with a modern, easy to use interface and API.",
+        "source": "search",
+        "engines": [
+          "yahoo",
+          "duckduckgo web",
+          "google cse",
+          "yandex",
+          "bing",
+          "naver"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "related",
+        "position": 3,
+        "id": "r_2",
+        "url": "https://modrinth.com/app",
+        "title": "Download Modrinth App!",
+        "snippet": "Download Modrinth App Modrinth App is a unique, open source launcher that allows you to play your favorite mods, and keep them up to date, all in one neat little package.",
+        "source": "search",
+        "engines": [
+          "google cse",
+          "duckduckgo web",
+          "yahoo",
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      },
+      {
+        "section": "related",
+        "position": 4,
+        "id": "r_5",
+        "url": "https://support.modrinth.com/en/",
+        "title": "Home | Modrinth Help Center",
+        "snippet": "Modrinth Help Center For articles specific to Modrinth Hosting, our 24/7 Minecraft server hosting service.",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ]
+  },
+  {
+    "query": "UNESCO",
+    "case": "bing",
+    "candidate_count": 10,
+    "candidate_landing_rank": 5,
+    "http_status": 200,
+    "model": "qwen3.5-4b-local:latest",
+    "done": true,
+    "done_reason": "stop",
+    "seconds": 5.234,
+    "load_seconds": 0.009,
+    "prompt_tokens": 907,
+    "output_tokens": 14,
+    "selected": [
+      {
+        "candidate": "c5",
+        "section": "related",
+        "position": 5,
+        "id": "r_1",
+        "url": "https://www.unesco.org/en",
+        "title": "UNESCO : Building Peace through Education, Science and Culture ...",
+        "snippet": "3 days ago · UNESCO in brief UNESCO is the United Nations organization that promotes cooperation in education, science, culture …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c10",
+        "section": "weak",
+        "position": 1,
+        "id": "r_2",
+        "url": "https://www.unesco.org/zh",
+        "title": "联合国教科文组织：通过教育、科学、文化、传播和信息 ...",
+        "snippet": "May 7, 2024 · 第31届联合国气候变化大会（COP31）于2026年11月9-20日在土耳其安塔利亚举行，主题为水和海洋韧性。联合国教科 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c4",
+        "section": "related",
+        "position": 4,
+        "id": "r_6",
+        "url": "https://media.unesco.org/zh",
+        "title": "Home | UNESCO",
+        "snippet": "1 day ago · Biodiversity All key challenges Where we work UNESCO lists and designations Creative Cities Biosphere Reserves …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ],
+    "returned": [
+      {
+        "section": "related",
+        "position": 5,
+        "id": "r_1",
+        "url": "https://www.unesco.org/en",
+        "title": "UNESCO : Building Peace through Education, Science and Culture ...",
+        "snippet": "3 days ago · UNESCO in brief UNESCO is the United Nations organization that promotes cooperation in education, science, culture …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "weak",
+        "position": 1,
+        "id": "r_2",
+        "url": "https://www.unesco.org/zh",
+        "title": "联合国教科文组织：通过教育、科学、文化、传播和信息 ...",
+        "snippet": "May 7, 2024 · 第31届联合国气候变化大会（COP31）于2026年11月9-20日在土耳其安塔利亚举行，主题为水和海洋韧性。联合国教科 …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "related",
+        "position": 4,
+        "id": "r_6",
+        "url": "https://media.unesco.org/zh",
+        "title": "Home | UNESCO",
+        "snippet": "1 day ago · Biodiversity All key challenges Where we work UNESCO lists and designations Creative Cities Biosphere Reserves …",
+        "source": "search",
+        "engines": [
+          "bing"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ]
+  },
+  {
+    "query": "東京大学",
+    "case": "free-default",
+    "candidate_count": 16,
+    "candidate_landing_rank": 3,
+    "http_status": 200,
+    "model": "qwen3.5-4b-local:latest",
+    "done": true,
+    "done_reason": "stop",
+    "seconds": 8.575,
+    "load_seconds": 0.005,
+    "prompt_tokens": 1846,
+    "output_tokens": 16,
+    "selected": [
+      {
+        "candidate": "c3",
+        "section": "strong",
+        "position": 3,
+        "id": "r_4",
+        "url": "https://www.u-tokyo.ac.jp/ja/",
+        "title": "東京大学",
+        "snippet": "東京大学の宝物 東京大学は、2027年4月に創立150周年を迎えます。その歴史で培われてきた東大の「宝」を、ご紹介していき ...",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c4",
+        "section": "strong",
+        "position": 4,
+        "id": "r_3",
+        "url": "https://www.u-tokyo.ac.jp/ja/index.html",
+        "title": "東京大学",
+        "snippet": "東京大学のオフィシャルサイトです。大学案内、学部・大学院等の紹介、研究活動、国際活動、入学案内等、東京大学の情報をご覧いただけます。 総長航海日誌 — UTok...",
+        "source": "search",
+        "engines": [
+          "naver",
+          "360search"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "candidate": "c6",
+        "section": "strong",
+        "position": 6,
+        "id": "r_11",
+        "url": "http://www.u-tokyo.ac.jp/",
+        "title": "東京大学",
+        "snippet": "東京大学の宝物東京大学は、2027年4月に創立150周年を迎えます。その歴史で培われてきた東大の「宝」を、ご紹介していきます。",
+        "source": "search",
+        "engines": [
+          "google cse"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      }
+    ],
+    "returned": [
+      {
+        "section": "strong",
+        "position": 3,
+        "id": "r_4",
+        "url": "https://www.u-tokyo.ac.jp/ja/",
+        "title": "東京大学",
+        "snippet": "東京大学の宝物 東京大学は、2027年4月に創立150周年を迎えます。その歴史で培われてきた東大の「宝」を、ご紹介していき ...",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "strong",
+        "position": 4,
+        "id": "r_3",
+        "url": "https://www.u-tokyo.ac.jp/ja/index.html",
+        "title": "東京大学",
+        "snippet": "東京大学のオフィシャルサイトです。大学案内、学部・大学院等の紹介、研究活動、国際活動、入学案内等、東京大学の情報をご覧いただけます。 総長航海日誌 — UTok...",
+        "source": "search",
+        "engines": [
+          "naver",
+          "360search"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      },
+      {
+        "section": "strong",
+        "position": 6,
+        "id": "r_11",
+        "url": "http://www.u-tokyo.ac.jp/",
+        "title": "東京大学",
+        "snippet": "東京大学の宝物東京大学は、2027年4月に創立150周年を迎えます。その歴史で培われてきた東大の「宝」を、ご紹介していきます。",
+        "source": "search",
+        "engines": [
+          "google cse"
+        ],
+        "warning": null,
+        "site_kind": "landing"
+      }
+    ]
+  },
+  {
+    "query": "日本気象庁",
+    "case": "free-default",
+    "candidate_count": 16,
+    "candidate_landing_rank": null,
+    "http_status": 200,
+    "model": "qwen3.5-4b-local:latest",
+    "done": true,
+    "done_reason": "stop",
+    "seconds": 9.732,
+    "load_seconds": 0.004,
+    "prompt_tokens": 2136,
+    "output_tokens": 14,
+    "selected": [
+      {
+        "candidate": "c7",
+        "section": "related",
+        "position": 6,
+        "id": "r_8",
+        "url": "https://www.jma.go.jp/jma/menu/menureport.html",
+        "title": "各種データ・資料 - 気象庁",
+        "snippet": "気候変動 気候変動ポータル 日本の気候変動2025 異常気象 日本の異常気象 世界の異常気象 天候の特徴や見通し 気候系の監視・診断 日本の天候の特徴と見通し 年・季節・各月の天候 エルニーニョ／ラニーニャ現象の実況と見通し 地球環境・気候の観測・解析データ 気温・降水量の長期変化 ...",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      },
+      {
+        "candidate": "c9",
+        "section": "related",
+        "position": 8,
+        "id": "r_7",
+        "url": "https://www.jma.go.jp/bosai/weather_map/",
+        "title": "天気図 - 気象庁",
+        "snippet": "「日本周辺域天気図」の実況天気図は3時間おきに観測時刻の約2時間10分後、 「アジア太平洋域天気図」の実況天気図は6時間おきに観測時刻の約2時間30分後に発表しています。",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      },
+      {
+        "candidate": "c15",
+        "section": "weak",
+        "position": 4,
+        "id": "r_34",
+        "url": "https://www.jma-net.go.jp/tokyo/",
+        "title": "東京管区気象台 - 気象庁",
+        "snippet": "気象庁は、アメダスの観測値のほか、気象衛星ひまわりや気象レーダー等の観測成果を組み合わせて、全国の降水量や気温、天気などを格子状に分割して隙間なく解析（推定） ...",
+        "source": "search",
+        "engines": [
+          "google cse"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ],
+    "returned": [
+      {
+        "section": "related",
+        "position": 6,
+        "id": "r_8",
+        "url": "https://www.jma.go.jp/jma/menu/menureport.html",
+        "title": "各種データ・資料 - 気象庁",
+        "snippet": "気候変動 気候変動ポータル 日本の気候変動2025 異常気象 日本の異常気象 世界の異常気象 天候の特徴や見通し 気候系の監視・診断 日本の天候の特徴と見通し 年・季節・各月の天候 エルニーニョ／ラニーニャ現象の実況と見通し 地球環境・気候の観測・解析データ 気温・降水量の長期変化 ...",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      },
+      {
+        "section": "related",
+        "position": 8,
+        "id": "r_7",
+        "url": "https://www.jma.go.jp/bosai/weather_map/",
+        "title": "天気図 - 気象庁",
+        "snippet": "「日本周辺域天気図」の実況天気図は3時間おきに観測時刻の約2時間10分後、 「アジア太平洋域天気図」の実況天気図は6時間おきに観測時刻の約2時間30分後に発表しています。",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo"
+        ],
+        "warning": null,
+        "site_kind": "subpage"
+      },
+      {
+        "section": "weak",
+        "position": 4,
+        "id": "r_34",
+        "url": "https://www.jma-net.go.jp/tokyo/",
+        "title": "東京管区気象台 - 気象庁",
+        "snippet": "気象庁は、アメダスの観測値のほか、気象衛星ひまわりや気象レーダー等の観測成果を組み合わせて、全国の降水量や気温、天気などを格子状に分割して隙間なく解析（推定） ...",
+        "source": "search",
+        "engines": [
+          "google cse"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ]
+  },
+  {
+    "query": "Modrinth",
+    "case": "no-source",
+    "candidate_count": 5,
+    "candidate_landing_rank": null,
+    "http_status": 200,
+    "model": "qwen3.5-4b-local:latest",
+    "done": true,
+    "done_reason": "stop",
+    "seconds": 3.229,
+    "load_seconds": 0.006,
+    "prompt_tokens": 478,
+    "output_tokens": 8,
+    "selected": [
+      {
+        "candidate": "c4",
+        "section": "related",
+        "position": 7,
+        "id": "r_12",
+        "url": "https://www.youtube.com/@modrinth",
+        "title": "Modrinth - YouTube",
+        "snippet": "Modrinth is an open source video game modding platform. Discover and publish projects on Modrinth with a modern, easy to use interface and API.",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ],
+    "returned": [
+      {
+        "section": "related",
+        "position": 7,
+        "id": "r_12",
+        "url": "https://www.youtube.com/@modrinth",
+        "title": "Modrinth - YouTube",
+        "snippet": "Modrinth is an open source video game modding platform. Discover and publish projects on Modrinth with a modern, easy to use interface and API.",
+        "source": "search",
+        "engines": [
+          "duckduckgo web",
+          "yahoo"
+        ],
+        "warning": null,
+        "site_kind": null
+      }
+    ]
+  }
+]

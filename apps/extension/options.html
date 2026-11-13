@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="options.css" />
+    <title>CleanSearch 扩展设置</title>
+  </head>
+  <body>
+    <main>
+      <h1>CleanSearch 扩展设置</h1>
+      <p class="lead">扩展只把链接写到本机服务，不经过任何云端。API 地址必须是本机 HTTP 地址。</p>
+      <form id="form">
+        <label>API 地址
+          <input id="api" type="text" placeholder="http://127.0.0.1:8000" required />
+        </label>
+        <label>访问 token
+          <input id="token" type="password" placeholder="在 CleanSearch 的「一键添加」页面获取" />
+          <small>token 只保存在本机浏览器；留空表示沿用已保存的值。</small>
+        </label>
+        <div class="actions">
+          <button type="submit">保存设置</button>
+          <button id="test" type="button" class="ghost">测试连接</button>
+          <a class="ghost" id="open-tools" href="http://127.0.0.1:8000/tools" target="_blank" rel="noreferrer">打开发 token 的页面</a>
+        </div>
+      </form>
+      <p id="status" role="status"></p>
+      <section class="help">
+        <h2>快捷键与入口</h2>
+        <ul>
+          <li><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> 收藏当前页（macOS 为 <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd>）</li>
+          <li>地址栏输入 <kbd>cs</kbd> 加空格，回车用本机 CleanSearch 搜索</li>
+          <li>页面/链接/选中文本的右键菜单都能收藏</li>
+        </ul>
+      </section>
+    </main>
+    <script src="connection.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>

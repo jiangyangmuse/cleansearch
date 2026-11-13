@@ -145,3 +145,81 @@ def test_batch_reports_failed_url_and_uses_same_model_as_search_summary(client, 
     assert sse.status_code == 200 and '"model": "backup"' in sse.text and "event: done" in sse.text
     page = client.post("/api/page/summarize", json={"url": payload["urls"][0]})
     assert page.status_code == 200 and page.json()["model"] == "backup"
+
+
+def test_model_connection_test_reports_unknown_and_unreachable(client, registry, monkeypatch):
+    """设置页的「测试连接」：未知模型 404，连不上时返回 ok=false 而不是 500。"""
+    initial = {"revision": 0, "models": [entry("offline", ["search"], base_url="http://127.0.0.1:9/v1")]}
+    assert client.put("/api/settings/models", json=initial).status_code == 200
+
+    assert client.post("/api/settings/models/test", json={"id": "missing"}).status_code == 404
+
+    def refuse(request):
+        raise httpx.ConnectError("refused", request=request)
+
+    transport = httpx.MockTransport(refuse)
+    original = httpx.AsyncClient
+
+    class Patched(original):
+        def __init__(self, *args, **kwargs):
+            kwargs["transport"] = transport
+            super().__init__(*args, **kwargs)
+
+    monkeypatch.setattr(ai_tools.httpx, "AsyncClient", Patched)
+    body = client.post("/api/settings/models/test", json={"id": "offline"}).json()
+    assert body["ok"] is False and body["status"] == 0 and "连接失败" in body["message"]
+    assert body["model"] == "offline"
+
+
+def test_model_connection_test_reports_http_error(client, registry, monkeypatch):
+    initial = {"revision": 0, "models": [entry("denied", ["search"], api_key="bad-token")]}
+    assert client.put("/api/settings/models", json=initial).status_code == 200
+
+    transport = httpx.MockTransport(lambda request: httpx.Response(401, json={"error": "unauthorized"}))
+    original = httpx.AsyncClient
+
+    class Patched(original):
+        def __init__(self, *args, **kwargs):
+            kwargs["transport"] = transport
+            super().__init__(*args, **kwargs)
+
+    monkeypatch.setattr(ai_tools.httpx, "AsyncClient", Patched)
+    body = client.post("/api/settings/models/test", json={"id": "denied"}).json()
+    assert body["ok"] is False and body["status"] == 401 and "401" in body["message"]
+
+
+@pytest.mark.parametrize(("status", "content", "ok", "listed"), [
+    (302, b"", False, None),
+    (200, b"<html>Login</html>", False, None),
+    (200, b'{"data":[{}]}', False, None),
+    (200, b'{"data":[{"id":"different"}]}', True, False),
+    (200, b'{"data":[{"id":"configured"}]}', True, True),
+])
+def test_connection_validates_model_list_and_revision(client, registry, monkeypatch, status, content, ok, listed):
+    saved = client.put("/api/settings/models", json={
+        "revision": 0, "models": [entry("configured", [], api_key="test-token")],
+    }).json()
+    requests = []
+
+    def upstream(request):
+        requests.append(request)
+        return httpx.Response(status, headers={"Location": "https://example.test/redirect"}, content=content)
+
+    original = httpx.AsyncClient
+
+    class Patched(original):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, transport=httpx.MockTransport(upstream), **kwargs)
+
+    monkeypatch.setattr(ai_tools.httpx, "AsyncClient", Patched)
+    path = "/api/settings/models/test"
+    assert client.post(path, json={"id": "configured", "revision": 0}).status_code == 409
+    assert not requests
+    result = client.post(path, json={"id": "configured", "revision": saved["revision"]})
+    assert result.headers["cache-control"] == "no-store"
+    assert result.json()["ok"] is ok
+    assert result.json().get("model_listed") is listed
+    assert [(req.method, req.url.path, req.headers["authorization"]) for req in requests] == [
+        ("GET", "/v1/models", "Bearer test-token"),
+    ]
+    assert client.get("/api/settings/models").json() == saved

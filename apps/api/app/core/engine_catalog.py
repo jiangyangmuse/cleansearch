@@ -27,6 +27,7 @@ class EngineSpec:
     paid: str = ""
     aliases: tuple[str, ...] = ()
     note: str = ""
+    mainland: bool = False
 
 
 ENGINE_SPECS: tuple[EngineSpec, ...] = (
@@ -37,7 +38,7 @@ ENGINE_SPECS: tuple[EngineSpec, ...] = (
     ),
     EngineSpec(
         "b", "Bing", "bing", "bing",
-        note="SearXNG 用 cn.bing.com，避免 www.bing.com 的 302 被引擎丢弃",
+        note="SearXNG 用 cn.bing.com，避免 www.bing.com 的 302 被引擎丢弃", mainland=True,
     ),
     EngineSpec(
         "d", "DuckDuckGo", "duckduckgo", "duckduckgo",
@@ -71,10 +72,11 @@ ENGINE_SPECS: tuple[EngineSpec, ...] = (
     EngineSpec("mj", "Mojeek", "mojeek", "mojeek", note="需 inactive: false 才会被 SearXNG 加载"),
     EngineSpec("y", "Yahoo", "yahoo", "yahoo"),
     EngineSpec(
-        "sg", "Sogou", "sogou", "sogou",
-        fallbacks=("360search",), note="部分查询会触发 SearXNG 侧 crash；失败回退 360 搜索",
+        "sg", "搜狗", "sogou", "sogou",
+        fallbacks=("360search",), note="部分查询会触发 SearXNG 侧 crash；失败回退 360 搜索", mainland=True,
     ),
-    EngineSpec("so", "360 Search", "360search", "360search", note="中文独立索引；Sogou 的回退目标"),
+    EngineSpec("so", "360 搜索", "360search", "360search", note="中文独立索引；Sogou 的回退目标", mainland=True),
+    EngineSpec("bd", "百度", "baidu", "baidu", mainland=True),
     EngineSpec("n", "Naver", "naver", "naver"),
     EngineSpec("yd", "Yandex", "yandex", "yandex"),
     EngineSpec("sw", "Swisscows", "swisscows", "swisscows", note="需 inactive: false"),
@@ -96,6 +98,7 @@ SEARX_ENGINE_NAMES: dict[str, str] = {
     spec.engine: spec.searx_engine for spec in ENGINE_SPECS
 }
 SPEC_BY_ENGINE: dict[str, EngineSpec] = {spec.engine: spec for spec in ENGINE_SPECS}
+SPEC_BY_CODE: dict[str, EngineSpec] = {spec.code: spec for spec in ENGINE_SPECS}
 
 
 def engine_candidates(engine: str) -> list[str]:
@@ -139,6 +142,8 @@ def catalog_rows() -> list[dict]:
                 "paid": spec.paid,
                 "aliases": list(spec.aliases),
                 "note": spec.note,
+                "kind": "engine",
+                "section": "mainland" if spec.mainland else None,
             }
         )
     return rows

@@ -1,0 +1,79 @@
+{
+  "started_at": "2026-11-12T08:16:21.925Z",
+  "mode": "system-proxy-off, TUN transparent",
+  "checks": [
+    {
+      "url": "https://www.google.com",
+      "ok": true,
+      "status": 200,
+      "title": "Google",
+      "ms": 10011
+    },
+    {
+      "url": "https://github.com",
+      "ok": true,
+      "status": 200,
+      "title": "GitHub · Change is constant. GitHub keeps you ahead. · GitHu",
+      "ms": 3743
+    },
+    {
+      "url": "https://duckduckgo.com/?q=test",
+      "ok": true,
+      "status": 200,
+      "title": "DuckDuckGo - Protection. Privacy. Peace of mind.",
+      "ms": 3473
+    },
+    {
+      "url": "https://search.brave.com/search?q=test",
+      "ok": false,
+      "status": 429,
+      "title": "Captcha - Brave Search",
+      "ms": 12575
+    },
+    {
+      "url": "https://www.youtube.com",
+      "ok": true,
+      "status": 200,
+      "title": "YouTube",
+      "ms": 8429
+    },
+    {
+      "url": "https://zh.wikipedia.org/wiki/Wikipedia",
+      "ok": true,
+      "status": 200,
+      "title": "维基百科 - 维基百科，自由的百科全书",
+      "ms": 2734
+    },
+    {
+      "url": "https://www.startpage.com/sp/search?query=test",
+      "ok": true,
+      "status": 200,
+      "title": "Access Denied - Startpage",
+      "ms": 4762
+    },
+    {
+      "url": "https://www.mojeek.com/search?q=test",
+      "ok": false,
+      "status": 403,
+      "title": "403 - Forbidden",
+      "ms": 2344
+    },
+    {
+      "url": "https://www.baidu.com",
+      "ok": true,
+      "status": 200,
+      "title": "百度一下，你就知道",
+      "ms": 1217
+    },
+    {
+      "url": "https://www.bing.com",
+      "ok": true,
+      "status": 200,
+      "title": "搜索 - Microsoft 必应",
+      "ms": 650
+    }
+  ],
+  "browser_version": "156.0.8078.4",
+  "exit_ip": "当前 IP：223.104.195.35 来自于：中国 山东 烟台 移动",
+  "completed_at": "2026-11-12T08:17:12.912Z"
+}

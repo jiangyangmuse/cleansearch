@@ -15,6 +15,7 @@ from starlette.concurrency import run_in_threadpool
 
 from app.config import get_settings
 from app.core.fetch import FetchError, SafeFetcher
+from app.core.normalize import is_renderable_url
 from app.db.repo import BookmarkError, BookmarkRepo
 from app.deps import get_fetcher
 from app.schemas import (
@@ -61,6 +62,18 @@ def list_bookmarks(
         total=total,
         fts=repo.fts_enabled,
     )
+
+
+@router.get("/bookmarks/status")
+def bookmark_status(
+    response: Response,
+    urls: Annotated[list[str], Query(max_length=50, description="要查询的网址，最多 50 个")] = [],
+    repo: BookmarkRepo = Depends(get_repo),
+) -> dict[str, int]:
+    """批量查询这些网址是否已收藏，返回 {网址: 书签 id}；用于结果卡初始状态。"""
+    response.headers["Cache-Control"] = "no-store"
+    cleaned = [url for url in urls if is_renderable_url(url)]
+    return repo.ids_for_urls(cleaned)
 
 
 @router.post("/bookmarks", response_model=BookmarkSaveResult | BookmarkCaptureResult, status_code=201)
@@ -110,6 +123,19 @@ def update_bookmark(
 def delete_bookmark(bookmark_id: int, repo: BookmarkRepo = Depends(get_repo)) -> Response:
     if not repo.delete(bookmark_id):
         raise HTTPException(status_code=404, detail="书签不存在")
+    return Response(status_code=204)
+
+
+@router.delete("/bookmarks/{bookmark_id}/result", status_code=204)
+def remove_result_bookmark(
+    bookmark_id: int,
+    url: Annotated[str, Query(max_length=2048)],
+    repo: BookmarkRepo = Depends(get_repo),
+) -> Response:
+    if not is_renderable_url(url):
+        raise HTTPException(status_code=422, detail="只支持 http(s) 链接")
+    if not repo.delete(bookmark_id, url):
+        raise HTTPException(status_code=409, detail="书签状态已变更")
     return Response(status_code=204)
 
 

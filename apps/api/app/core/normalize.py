@@ -145,6 +145,38 @@ def normalise_result(raw: dict, index: int) -> Result | None:
     )
 
 
+def apply_dedupe(results: list[Result], mode: str = "normal", *, assign_ids: bool = True) -> tuple[list[Result], int]:
+    """按去重强度处理：off 全部保留，normal 按 canonical URL，strict 再合并同名标题。"""
+    if mode == "off":
+        kept = list(results)
+        for index, item in enumerate(kept, 1):
+            item.id = f"r_{index}"
+        return kept, 0
+    if mode == "strict":
+        unique: list[Result] = []
+        seen_urls: set[str] = set()
+        seen_titles: set[str] = set()
+        removed = 0
+        for item in results:
+            key = canonical_url(item.url)
+            if not key:
+                removed += 1
+                continue
+            title = " ".join(item.title.casefold().split())
+            if key in seen_urls or (title and title in seen_titles):
+                removed += 1
+                continue
+            seen_urls.add(key)
+            if title:
+                seen_titles.add(title)
+            unique.append(item)
+        if assign_ids:
+            for index, item in enumerate(unique, 1):
+                item.id = f"r_{index}"
+        return unique, removed
+    return dedupe_results(results)
+
+
 def dedupe_results(results: list[Result]) -> tuple[list[Result], int]:
     """按 canonical URL 去重，保留首次出现（上游按相关度排序），合并引擎列表。"""
     seen: dict[str, Result] = {}

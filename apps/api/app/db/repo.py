@@ -260,9 +260,14 @@ class BookmarkRepo:
             )
             return self.get(bookmark_id) if cursor.rowcount else None
 
-    def delete(self, bookmark_id: int) -> bool:
+    def delete(self, bookmark_id: int, url: str | None = None) -> bool:
         with self._lock, self._conn:
-            cursor = self._conn.execute("DELETE FROM bookmarks WHERE id = ?", (bookmark_id,))
+            if url is None:
+                cursor = self._conn.execute("DELETE FROM bookmarks WHERE id = ?", (bookmark_id,))
+            else:
+                cursor = self._conn.execute(
+                    "DELETE FROM bookmarks WHERE id = ? AND url_key = ?", (bookmark_id, canonical_url(url))
+                )
         return bool(cursor.rowcount)
 
     def save_link_checks(self, changes: list[tuple[int | None, int, str, int | None, int]]) -> None:
@@ -330,6 +335,25 @@ class BookmarkRepo:
         with self._lock:
             row = self._conn.execute("SELECT * FROM bookmarks WHERE url_key = ?", (key,)).fetchone()
         return self._row_to_dict(row) if row else None
+
+    def ids_for_urls(self, urls: list[str]) -> dict[str, int]:
+        """按 canonical url 批量查已收藏项，返回 {传入的原始 url: bookmark_id}。"""
+        keys: dict[str, str] = {}
+        for url in urls:
+            key = canonical_url(url)
+            if key:
+                keys[url] = key
+        if not keys:
+            return {}
+        unique = list(dict.fromkeys(keys.values()))
+        placeholders = ",".join("?" for _ in unique)
+        with self._lock:
+            rows = self._conn.execute(
+                f"SELECT id, url_key FROM bookmarks WHERE url_key IN ({placeholders})",
+                unique,
+            ).fetchall()
+        by_key = {row["url_key"]: row["id"] for row in rows}
+        return {url: by_key[key] for url, key in keys.items() if key in by_key}
 
     def _group_exists(self, group_id: int) -> bool:
         row = self._conn.execute(

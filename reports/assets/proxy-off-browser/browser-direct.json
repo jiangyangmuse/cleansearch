@@ -1,0 +1,76 @@
+{
+  "started_at": "2026-11-12T08:00:06.018Z",
+  "proxy_env": {
+    "HTTP_PROXY": null,
+    "HTTPS_PROXY": null,
+    "ALL_PROXY": null,
+    "NO_PROXY": null
+  },
+  "checks": [
+    {
+      "name": "baidu",
+      "url": "https://www.baidu.com",
+      "ok": true,
+      "status": 200,
+      "server_ip": {},
+      "title": "百度一下，你就知道",
+      "body_head": "新闻 hao123 地图 贴吧 视频 图片 网盘 库库AI 文心 百度搭子 更多 设置登录 百度一下 复杂问题就找文心助手，深入思考回答更优   换一换 ",
+      "ms": 552,
+      "request_failed": []
+    },
+    {
+      "name": "bing",
+      "url": "https://www.bing.com",
+      "ok": true,
+      "status": 200,
+      "server_ip": {},
+      "title": "搜索 - Microsoft 必应",
+      "body_head": "© 2026 Microsoft 增值电信业务经营许可证：合字B2-20090007 京ICP备10036305号-7 京公网安备11010802047360号",
+      "ms": 982,
+      "request_failed": []
+    },
+    {
+      "name": "github",
+      "url": "https://github.com",
+      "ok": false,
+      "error": "page.goto: Timeout 20000ms exceeded.",
+      "ms": 20028,
+      "request_failed": []
+    },
+    {
+      "name": "google",
+      "url": "https://www.google.com",
+      "ok": false,
+      "error": "page.goto: Timeout 20000ms exceeded.",
+      "ms": 20003,
+      "request_failed": []
+    },
+    {
+      "name": "ip-echo-http",
+      "url": "http://ip.3322.net",
+      "ok": true,
+      "status": 200,
+      "server_ip": {},
+      "title": "",
+      "body_head": "111.15.79.78",
+      "ms": 84,
+      "request_failed": []
+    },
+    {
+      "name": "ip-echo-ipip",
+      "url": "https://myip.ipip.net",
+      "ok": true,
+      "status": 200,
+      "server_ip": {},
+      "title": "",
+      "body_head": "当前 IP：111.15.79.78 来自于：中国 山东 烟台 移动",
+      "ms": 533,
+      "request_failed": []
+    }
+  ],
+  "browser": {
+    "version": "156.0.8078.4",
+    "executablePath": "C:\\Users\\HUAWEI\\AppData\\Local\\ms-playwright\\chromium-1248\\chrome-win64\\chrome.exe"
+  },
+  "completed_at": "2026-11-12T08:00:49.966Z"
+}

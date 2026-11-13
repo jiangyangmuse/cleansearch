@@ -1,0 +1,290 @@
+{
+  "query": "deepseek 官网",
+  "results": [
+    {
+      "url": "https://cn.deepseek-ag.com.cn/index.html",
+      "title": "DeepSeek | DeepSeek官网 - 从这里进入深度求索",
+      "content": "2026年10月12日 · DeepSeek官网入口：从这里进入深度求索。体验DeepSeek-R1满血推理模型、DeepSeek网页版在线免费对话通道 …",
+      "engine": "bing",
+      "template": "default.html",
+      "parsed_url": [
+        "https",
+        "cn.deepseek-ag.com.cn",
+        "/index.html",
+        "",
+        "",
+        ""
+      ],
+      "img_src": "",
+      "thumbnail": "",
+      "priority": "",
+      "engines": [
+        "bing"
+      ],
+      "positions": [
+        1
+      ],
+      "score": 1.0,
+      "category": "general",
+      "publishedDate": null,
+      "iframe_src": null
+    },
+    {
+      "url": "https://www.deepseek.com/platform/",
+      "title": "DeepSeek | API 开放平台",
+      "content": "2026年8月13日 · DeepSeek-V4-Pro 百万 tokens 输入（缓存命中） 0.025 元 输入（缓存未命中） 3 元 输出 6 元 自动缓存，缓存命中 …",
+      "engine": "bing",
+      "template": "default.html",
+      "parsed_url": [
+        "https",
+        "www.deepseek.com",
+        "/platform/",
+        "",
+        "",
+        ""
+      ],
+      "img_src": "",
+      "thumbnail": "",
+      "priority": "",
+      "engines": [
+        "bing"
+      ],
+      "positions": [
+        2
+      ],
+      "score": 0.5,
+      "category": "general",
+      "publishedDate": null,
+      "iframe_src": null
+    },
+    {
+      "url": "https://www.deekseep-ai.com.cn/",
+      "title": "DeepSeek | 深度求索 - 世界知识 - DeepSeek官网",
+      "content": "2026年10月8日 · DeepSeek官网双重曝光视觉版。 将人类智慧人像剪影与深邃海底叠印在同一帧，展现世界知识海量融合。 提 …",
+      "engine": "bing",
+      "template": "default.html",
+      "parsed_url": [
+        "https",
+        "www.deekseep-ai.com.cn",
+        "/",
+        "",
+        "",
+        ""
+      ],
+      "img_src": "",
+      "thumbnail": "",
+      "priority": "",
+      "engines": [
+        "bing"
+      ],
+      "positions": [
+        3
+      ],
+      "score": 0.3333333333333333,
+      "category": "general",
+      "publishedDate": null,
+      "iframe_src": null
+    },
+    {
+      "url": "https://www.deepseek.com/harness/",
+      "title": "DeepSeek Harness | Explore the limits of intelligence",
+      "content": "2026年8月12日 · DeepSeek Harness is in preview, with evolving core plugins and APIs. We invite users and developers worldwide to …",
+      "engine": "bing",
+      "template": "default.html",
+      "parsed_url": [
+        "https",
+        "www.deepseek.com",
+        "/harness/",
+        "",
+        "",
+        ""
+      ],
+      "img_src": "",
+      "thumbnail": "",
+      "priority": "",
+      "engines": [
+        "bing"
+      ],
+      "positions": [
+        4
+      ],
+      "score": 0.25,
+      "category": "general",
+      "publishedDate": null,
+      "iframe_src": null
+    },
+    {
+      "url": "https://www.deepseek-ot.com.cn/",
+      "title": "DeepSeek | 推理引擎 - 官方人工智能 | DeepSeek官网 ...",
+      "content": "2026年10月13日 · DeepSeek官网官方发布级总站。烟灰粉像素复古与废弃空间站美学，拉丝铝与陶瓷釉质感，胶囊悬浮导航与底部固 …",
+      "engine": "bing",
+      "template": "default.html",
+      "parsed_url": [
+        "https",
+        "www.deepseek-ot.com.cn",
+        "/",
+        "",
+        "",
+        ""
+      ],
+      "img_src": "",
+      "thumbnail": "",
+      "priority": "",
+      "engines": [
+        "bing"
+      ],
+      "positions": [
+        5
+      ],
+      "score": 0.2,
+      "category": "general",
+      "publishedDate": null,
+      "iframe_src": null
+    },
+    {
+      "url": "https://deepseek-no.com.cn/index.html",
+      "title": "DeepSeek | 未至可问 - 答案可核 | DeepSeek网页版",
+      "content": "2 天之前 · 呈现全新 DeepSeek-R1 纯强化学习深度推理大模型与 128K 超长上下文窗口。 直通 DeepSeek官网、DeepSeek网页版入 …",
+      "engine": "bing",
+      "template": "default.html",
+      "parsed_url": [
+        "https",
+        "deepseek-no.com.cn",
+        "/index.html",
+        "",
+        "",
+        ""
+      ],
+      "img_src": "",
+      "thumbnail": "",
+      "priority": "",
+      "engines": [
+        "bing"
+      ],
+      "positions": [
+        6
+      ],
+      "score": 0.16666666666666666,
+      "category": "general",
+      "publishedDate": null,
+      "iframe_src": null
+    },
+    {
+      "url": "https://deepseek-client.net/",
+      "title": "DeepSeek | 探索未至之境 - DeepSeek官网",
+      "content": "DeepSeek 面向通用人工智能场景，提供网页版 AI 对话、移动端智能助手与开放 API 接入，帮助用户完成长文档理解、复杂推理和智 …",
+      "engine": "bing",
+      "template": "default.html",
+      "parsed_url": [
+        "https",
+        "deepseek-client.net",
+        "/",
+        "",
+        "",
+        ""
+      ],
+      "img_src": "",
+      "thumbnail": "",
+      "priority": "",
+      "engines": [
+        "bing"
+      ],
+      "positions": [
+        7
+      ],
+      "score": 0.14285714285714285,
+      "category": "general",
+      "publishedDate": null,
+      "iframe_src": null
+    },
+    {
+      "url": "https://deepseek-ts.com.cn/",
+      "title": "DeepSeek - 探索未至之境门户 | DeepSeek官网",
+      "content": "6 天之前 · DeepSeek 探索未至之境门户，提供 R1 深度推理、网页版入口、API 开放平台与 Harness 工作流指南。 探索认知未至之境 …",
+      "engine": "bing",
+      "template": "default.html",
+      "parsed_url": [
+        "https",
+        "deepseek-ts.com.cn",
+        "/",
+        "",
+        "",
+        ""
+      ],
+      "img_src": "",
+      "thumbnail": "",
+      "priority": "",
+      "engines": [
+        "bing"
+      ],
+      "positions": [
+        8
+      ],
+      "score": 0.125,
+      "category": "general",
+      "publishedDate": null,
+      "iframe_src": null
+    },
+    {
+      "url": "https://deeposeek.com.cn/",
+      "title": "DeepSeek | 深度求索 - 模型开源 · 探索未至之境",
+      "content": "2026年10月18日 · DeepSeek 深度求索官方落地页，聚焦模型开源与推理效率突破。 了解 DeepSeek V4 系列、DSpark 推理加速框架 …",
+      "engine": "bing",
+      "template": "default.html",
+      "parsed_url": [
+        "https",
+        "deeposeek.com.cn",
+        "/",
+        "",
+        "",
+        ""
+      ],
+      "img_src": "",
+      "thumbnail": "",
+      "priority": "",
+      "engines": [
+        "bing"
+      ],
+      "positions": [
+        9
+      ],
+      "score": 0.1111111111111111,
+      "category": "general",
+      "publishedDate": null,
+      "iframe_src": null
+    },
+    {
+      "url": "https://www.deepseek.com/en/platform/",
+      "title": "DeepSeek | API Platform",
+      "content": "2026年8月13日 · For details, see the API docs.",
+      "engine": "bing",
+      "template": "default.html",
+      "parsed_url": [
+        "https",
+        "www.deepseek.com",
+        "/en/platform/",
+        "",
+        "",
+        ""
+      ],
+      "img_src": "",
+      "thumbnail": "",
+      "priority": "",
+      "engines": [
+        "bing"
+      ],
+      "positions": [
+        10
+      ],
+      "score": 0.1,
+      "category": "general",
+      "publishedDate": null,
+      "iframe_src": null
+    }
+  ],
+  "answers": [],
+  "corrections": [],
+  "infoboxes": [],
+  "suggestions": [],
+  "unresponsive_engines": []
+}

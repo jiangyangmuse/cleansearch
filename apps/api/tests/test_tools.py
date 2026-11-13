@@ -149,9 +149,10 @@ def test_pwa_manifest_has_share_target() -> None:
         (REPO_ROOT / "apps" / "web" / "public" / "manifest.webmanifest").read_text(encoding="utf-8")
     )
     target = manifest["share_target"]
-    assert target["action"] == "/bookmarks"
-    assert target["method"] == "GET"
-    assert set(target["params"]) >= {"title", "url"}
+    assert target["action"] == "/share"
+    assert target["method"] == "POST"
+    assert target["enctype"] == "multipart/form-data"
+    assert set(target["params"]) >= {"title", "text", "url"}
     sizes = set()
     for icon in manifest["icons"]:
         data = (REPO_ROOT / "apps" / "web" / "public" / icon["src"].lstrip("/")).read_bytes()
@@ -172,4 +173,5 @@ def test_extension_manifest_is_mv3() -> None:
     assert any("127.0.0.1" in host for host in manifest["host_permissions"])
     assert (directory / manifest["action"]["default_popup"]).is_file()
     assert (directory / "popup.js").is_file()
-    assert "X-CS-Token" in (directory / "popup.js").read_text(encoding="utf-8")
+    assert "X-CS-Token" in (directory / "connection.js").read_text(encoding="utf-8")
+    assert 'src="connection.js"' in (directory / manifest["action"]["default_popup"]).read_text(encoding="utf-8")

@@ -52,6 +52,7 @@ export interface SearchMeta {
   filtered: { dup: number; risk: number };
   official: number;
   directory: number;
+  filters?: { time_range: string | null; language: string | null; site: string | null; dedupe: string };
   sid: string;
 }
 
@@ -61,6 +62,8 @@ export interface ParsedQuery {
   region: string | null;
   router: "suffix" | "bang" | "default";
   expanded: string[];
+  custom_code?: string | null;
+  open_url?: string | null;
 }
 
 export interface SearchResponse {
@@ -69,6 +72,9 @@ export interface SearchResponse {
   meta: SearchMeta;
   official: OfficialSection | null;
 }
+
+export type EngineSection = "mainland" | "custom" | null;
+export type SearchEntryKind = "engine" | "region" | "website";
 
 export interface EngineInfo {
   code: string;
@@ -87,7 +93,17 @@ export interface EngineInfo {
   avg_ms: number | null;
   last_error: string | null;
   remaining_seconds: number;
+  section?: EngineSection;
+  kind?: SearchEntryKind;
 }
+
+export type CustomSearchEntry = { code: string; label: string; kind: SearchEntryKind; target: string };
+export type EnginePreferences = { revision: number; default_engines: string[] | null; custom: CustomSearchEntry[] };
+export type EngineSettings = {
+  preferences: EnginePreferences;
+  builtins: Pick<EngineInfo, "code" | "label" | "searx_engine" | "section" | "aliases">[];
+  sources: Record<string, boolean> | null;
+};
 
 export interface EnginesResponse {
   provider: string;

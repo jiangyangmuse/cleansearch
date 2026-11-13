@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import re
 import unicodedata
+from collections.abc import Collection
 from dataclasses import dataclass
 
 from app.core.engine_catalog import ENGINE_SUFFIXES
@@ -21,8 +22,8 @@ REGION_SUFFIXES: dict[str, str] = {
 
 MIN_BASE_LEN = 2
 
-_BANG_RE = re.compile(r"\s*!([A-Za-z]{1,3})$")
-_SUFFIX_RE = re.compile(r"\s+([A-Za-z]{1,3})$")
+_BANG_RE = re.compile(r"\s*!([A-Za-z][A-Za-z0-9]{0,7})$")
+_SUFFIX_RE = re.compile(r"\s+([A-Za-z][A-Za-z0-9]{0,7})$")
 _SINGLE_TOKEN_RE = re.compile(r"^[A-Za-z0-9]$")
 
 
@@ -32,6 +33,7 @@ class Parsed:
     engine: str = "default"
     region: str | None = None
     router: str = "default"
+    custom_code: str | None = None
 
 
 def _has_unbalanced_quotes(text: str) -> bool:
@@ -63,27 +65,25 @@ def _resolve(code: str) -> tuple[str, str | None, bool] | None:
     return None
 
 
-def parse_query(raw: str, *, literal: bool = False) -> Parsed:
+def parse_query(raw: str, *, literal: bool = False, custom_codes: Collection[str] = ()) -> Parsed:
     q = unicodedata.normalize("NFKC", raw or "").strip()
     if literal or not q or _has_unbalanced_quotes(q):
         return Parsed(q=q)
 
-    bang = _BANG_RE.search(q)
-    if bang:
-        target = _resolve(bang.group(1))
-        base = q[: bang.start()].strip()
-        if target and _base_ok(base):
+    for router, pattern in (("bang", _BANG_RE), ("suffix", _SUFFIX_RE)):
+        match = pattern.search(q)
+        if match is None:
+            continue
+        base = q[:match.start()].strip()
+        if not _base_ok(base):
+            continue
+        code = match.group(1).lower()
+        target = _resolve(code)
+        if target:
             engine, region, _ = target
-            return Parsed(q=base, engine=engine, region=region, router="bang")
-
-    suffix = _SUFFIX_RE.search(q)
-    if suffix:
-        target = _resolve(suffix.group(1))
-        base = q[: suffix.start()].strip()
-        if target and _base_ok(base):
-            engine, region, _ = target
-            return Parsed(q=base, engine=engine, region=region, router="suffix")
-
+            return Parsed(q=base, engine=engine, region=region, router=router)
+        if code in custom_codes:
+            return Parsed(q=base, router=router, custom_code=code)
     return Parsed(q=q)
 
 

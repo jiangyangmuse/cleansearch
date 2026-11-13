@@ -1,4 +1,5 @@
-import type { AISearchResponse, ApiErrorPayload, SearchResponse } from "./types";
+import type { AISearchResponse, ApiErrorPayload, EnginePreferences, EngineSettings, SearchResponse } from "./types";
+import { notifyBookmarksChanged } from "./bookmarkChanges";
 
 export class ApiError extends Error {
   code: string;
@@ -18,7 +19,18 @@ export interface SearchBody {
   q: string;
   page?: number;
   region?: string | null;
-  opts?: { safe?: boolean; exact?: boolean; summarize?: boolean; literal?: boolean; fixture?: string | null };
+  opts?: {
+    safe?: boolean;
+    exact?: boolean;
+    summarize?: boolean;
+    literal?: boolean;
+    fixture?: string | null;
+    /** 筛选：时间范围 / 语言 / 站点限定 / 去重强度 */
+    time_range?: "day" | "week" | "month" | "year" | null;
+    language?: string | null;
+    site?: string | null;
+    dedupe?: "off" | "normal" | "strict";
+  };
 }
 
 async function requestSearch<T>(path: string, body: SearchBody, signal?: AbortSignal): Promise<T> {
@@ -44,7 +56,7 @@ async function requestSearch<T>(path: string, body: SearchBody, signal?: AbortSi
     }
     const message = payload?.error?.message ?? `请求失败（HTTP ${response.status}）`;
     const code = payload?.error?.code ?? "HTTP_" + response.status;
-    const retryable = payload?.error?.retryable ?? true;
+    const retryable = payload?.error?.retryable ?? (response.status >= 500 || response.status === 408 || response.status === 429);
     throw new ApiError(message, code, response.status, retryable);
   }
 
@@ -129,6 +141,7 @@ export async function streamSummary(
   let terminated = false;
 
   const dispatch = (block: string) => {
+    signal?.throwIfAborted();
     let event = "message";
     let data = "";
     for (const line of block.split("\n")) {
@@ -206,6 +219,20 @@ function writeJSON<T>(path: string, method: "POST" | "PUT", body: unknown, signa
   });
 }
 
+export const loadEngineSettings = (signal?: AbortSignal) =>
+  jsonRequest<EngineSettings>("/api/settings/engines", { signal, cache: "no-store" });
+
+export const saveEngineSettings = (preferences: EnginePreferences) =>
+  writeJSON<EnginePreferences>("/api/settings/engines", "PUT", preferences);
+
+export type ConversationReply = {
+  model: string;
+  groups: { label: string; query: string; results: import("./types").Result[]; error: string | null }[];
+};
+
+export const searchConversation = (message: string, history: { message: string; directions: string[] }[], signal?: AbortSignal) =>
+  writeJSON<ConversationReply>("/api/conversation-search", "POST", { message, history }, signal);
+
 export const loadModelSettings = (signal?: AbortSignal) =>
   jsonRequest<ModelSettings>("/api/settings/models", { signal, cache: "no-store" });
 
@@ -235,7 +262,7 @@ export async function listBookmarks(
   if (params.limit != null) search.set("limit", String(params.limit));
   if (params.offset != null) search.set("offset", String(params.offset));
   const suffix = search.toString();
-  return jsonRequest<import("./types").BookmarkListResponse>(`/api/bookmarks${suffix ? "?" + suffix : ""}`, { signal });
+  return jsonRequest<import("./types").BookmarkListResponse>(`/api/bookmarks${suffix ? "?" + suffix : ""}`, { signal, cache: "no-store" });
 }
 
 export async function saveBookmark(body: {
@@ -244,15 +271,64 @@ export async function saveBookmark(body: {
   group_id?: number | null;
   tags?: string[];
 }) {
-  return jsonRequest<import("./types").BookmarkSaveResponse>("/api/bookmarks", {
+  const result = await jsonRequest<import("./types").BookmarkSaveResponse>("/api/bookmarks", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
+  notifyBookmarksChanged();
+  return result;
+}
+
+export interface HealthInfo {
+  status: string;
+  provider: string;
+  web_built: boolean;
+  bookmarks: number;
+  db_path: string;
+  version: string;
+}
+
+/** 设置页数据管理用：本机库路径、书签数、版本。 */
+export function readHealth(signal?: AbortSignal) {
+  return jsonRequest<HealthInfo>("/api/health", { signal, cache: "no-store" });
+}
+
+export interface ModelTestResult {
+  ok: boolean;
+  status: number;
+  models?: number;
+  model?: string;
+  model_listed?: boolean;
+  message?: string;
+}
+
+/** 测试模型连通性：只请求 /models，不消耗 token、不改配置。 */
+export function testModelConnection(id: string, revision: number, signal: AbortSignal) {
+  return jsonRequest<ModelTestResult>("/api/settings/models/test", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, revision }),
+    signal,
+  });
+}
+
+/** 批量查询哪些网址已收藏；返回 {网址: 书签 id}。 */
+export async function bookmarkStatus(urls: string[], signal?: AbortSignal): Promise<Record<string, number>> {
+  if (urls.length === 0) return {};
+  const params = new URLSearchParams();
+  urls.slice(0, 40).forEach(url => params.append("urls", url));
+  return jsonRequest<Record<string, number>>(`/api/bookmarks/status?${params.toString()}`, { signal });
 }
 
 export async function deleteBookmark(id: number) {
-  return jsonRequest<void>(`/api/bookmarks/${id}`, { method: "DELETE" });
+  await jsonRequest<void>(`/api/bookmarks/${id}`, { method: "DELETE" });
+  notifyBookmarksChanged();
+}
+
+export async function removeResultBookmark(id: number, url: string) {
+  await jsonRequest<void>(`/api/bookmarks/${id}/result?${new URLSearchParams({ url })}`, { method: "DELETE" });
+  notifyBookmarksChanged();
 }
 
 export async function moveBookmark(id: number, groupId: number | null) {
@@ -269,7 +345,7 @@ export async function getSearchProvider(signal: AbortSignal): Promise<string> {
 }
 
 export async function getEngines(signal?: AbortSignal) {
-  return jsonRequest<import("./types").EnginesResponse>("/api/engines", { signal });
+  return jsonRequest<import("./types").EnginesResponse>("/api/engines", { signal, cache: "no-store" });
 }
 
 export async function createGroup(name: string) {
@@ -298,11 +374,12 @@ export interface PageSummary {
   model: string;
 }
 
-export async function summarizePage(url: string) {
+export async function summarizePage(url: string, signal?: AbortSignal) {
   return jsonRequest<PageSummary>("/api/page/summarize", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ url }),
+    signal,
   });
 }
 
@@ -353,8 +430,10 @@ export async function importJobStatus(id: string): Promise<ImportJob> {
 export async function importBookmarks(file: File) {
   const form = new FormData();
   form.append("file", file);
-  return jsonRequest<import("./types").ImportResult>("/api/bookmarks/import", {
+  const result = await jsonRequest<import("./types").ImportResult>("/api/bookmarks/import", {
     method: "POST",
     body: form,
   });
+  notifyBookmarksChanged();
+  return result;
 }

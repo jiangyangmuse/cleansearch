@@ -1,0 +1,12 @@
+{
+  "home": 200,
+  "settings": 200,
+  "bookmarks": 200,
+  "engine": "bing",
+  "source": [
+    "bing"
+  ],
+  "official": true,
+  "aiRequests": 0,
+  "errors": []
+}

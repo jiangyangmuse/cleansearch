@@ -3,6 +3,9 @@ import type { Result } from "../types";
 
 interface Props {
   title: string;
+  query?: string;
+  saved?: Record<string, number>;
+  onBookmarkChange?: (url: string, id: number | null) => void;
   results: Result[];
   hint?: string;
   collapsible?: boolean;
@@ -13,6 +16,9 @@ interface Props {
 
 export default function ResultList({
   title,
+  query,
+  saved,
+  onBookmarkChange,
   results,
   hint,
   collapsible,
@@ -36,8 +42,11 @@ export default function ResultList({
           key={result.id}
           result={result}
           index={offset + 1}
+          query={query}
+          bookmarkId={saved?.[result.url]}
+          onBookmarkChange={onBookmarkChange}
           selected={selectedId === result.id}
-          onSelect={() => onSelect?.(result.id)}
+          onSelectId={onSelect}
         />
       ))}
     </div>

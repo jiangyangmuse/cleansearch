@@ -1,0 +1,17 @@
+{
+  "tables": {
+    "bookmarks": {
+      "count": 2,
+      "sha256": "caee0b618ad65745411f56aeb80f9ff579af8297a5fe5f7b12b5ec5671c9ef7f"
+    },
+    "bookmark_groups": {
+      "count": 1,
+      "sha256": "f518a96d94b760e55d3e5fd440c1b011d67478c49331f60011f34572a299311a"
+    },
+    "bookmark_tags": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "token_sha256": "58ecc697e9d4409b84981e10530b048b694923a538d68aaf1d7e42b8b52066b5"
+}

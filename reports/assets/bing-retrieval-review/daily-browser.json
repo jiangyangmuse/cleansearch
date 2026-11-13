@@ -1,0 +1,90 @@
+{
+  "base": "http://127.0.0.1:8000",
+  "browser": "156.0.8078.4",
+  "search_mocked": false,
+  "favicon_mocked": true,
+  "bookmark_writes": false,
+  "bing": {
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "bing"
+      ],
+      "unresponsive": [],
+      "provider": "searxng",
+      "cached": false,
+      "ms": 427,
+      "total": 6,
+      "upstream_total": 9,
+      "filtered": {
+        "dup": 0,
+        "risk": 0
+      },
+      "official": 6,
+      "directory": 3,
+      "sid": "s_fae746550d187abeb5f373632167292e"
+    },
+    "official": [
+      {
+        "url": "https://www.deepseek.com/",
+        "role": "home",
+        "origin": "directory"
+      },
+      {
+        "url": "https://chat.deepseek.com/",
+        "role": "chat",
+        "origin": "directory"
+      },
+      {
+        "url": "https://api-docs.deepseek.com/",
+        "role": "docs",
+        "origin": "directory"
+      },
+      {
+        "url": "https://www.deepseek.com/en/platform/",
+        "role": "console",
+        "origin": "search"
+      },
+      {
+        "url": "https://download.deepseek.com/",
+        "role": "download",
+        "origin": "search"
+      },
+      {
+        "url": "https://github.com/deepseek-ai",
+        "role": "code",
+        "origin": "search"
+      }
+    ]
+  },
+  "cache": true,
+  "warnings": [
+    {
+      "url": "https://cn.deepseek-ag.com.cn/index.html",
+      "brand_warning": "自称官网，未匹配 DeepSeek 已核验入口",
+      "risk": 0
+    },
+    {
+      "url": "https://www.deekseep-ai.com.cn/",
+      "brand_warning": "自称官网，未匹配 DeepSeek 已核验入口",
+      "risk": 0
+    },
+    {
+      "url": "https://www.deepseek-ot.com.cn/",
+      "brand_warning": "自称官网，未匹配 DeepSeek 已核验入口",
+      "risk": 0
+    },
+    {
+      "url": "https://deepseek-no.com.cn/index.html",
+      "brand_warning": "品牌近似域名，未匹配 DeepSeek 已核验入口",
+      "risk": 0
+    },
+    {
+      "url": "https://deepseek-client.net/",
+      "brand_warning": "自称官网，未匹配 DeepSeek 已核验入口",
+      "risk": 0
+    }
+  ],
+  "mobile_no_overflow": true,
+  "page_errors": []
+}

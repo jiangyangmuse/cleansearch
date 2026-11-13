@@ -1,0 +1,23 @@
+{
+  "pid": 22608,
+  "db_preserved": true,
+  "token_preserved": true,
+  "upstream_preserved": true,
+  "model": "qwen3.5-4b-local:latest",
+  "model_endpoint": "http://127.0.0.1:11434/v1",
+  "cache_enabled": "true",
+  "source_checks": [
+    {
+      "query": "deepseek !b",
+      "summary_sources": 9,
+      "directory_excluded": true,
+      "warning_excluded": true
+    },
+    {
+      "query": "deepseek 官网 !b",
+      "summary_sources": 1,
+      "directory_excluded": true,
+      "warning_excluded": true
+    }
+  ]
+}

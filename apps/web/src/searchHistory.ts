@@ -1,11 +1,11 @@
-const KEY = "cs-search-history";
+export const HISTORY_KEY = "cs-search-history";
 export const HISTORY_CHANGED = "cs:search-history";
 
 export type HistoryEntry = { query: string; literal: boolean };
 
 export function readSearchHistory(): HistoryEntry[] {
   try {
-    const items: unknown = JSON.parse(localStorage.getItem(KEY) ?? "[]");
+    const items: unknown = JSON.parse(localStorage.getItem(HISTORY_KEY) ?? "[]");
     if (!Array.isArray(items)) return [];
     return items.flatMap((item: unknown) => {
       if (typeof item === "string") return [{ query: item, literal: false }];
@@ -21,10 +21,12 @@ export function readSearchHistory(): HistoryEntry[] {
 
 function writeHistory(items: HistoryEntry[]) {
   try {
-    localStorage.setItem(KEY, JSON.stringify(items));
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(items));
     window.dispatchEvent(new Event(HISTORY_CHANGED));
+    return true;
   } catch {
     // 搜索在浏览器限制本地存储时仍可使用。
+    return false;
   }
 }
 
@@ -39,5 +41,5 @@ export function historySearchHref({ query, literal }: HistoryEntry) {
 }
 
 export function clearSearchHistory() {
-  writeHistory([]);
+  return writeHistory([]);
 }

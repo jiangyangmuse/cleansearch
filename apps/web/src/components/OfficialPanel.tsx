@@ -10,9 +10,11 @@ interface Props {
   section: OfficialSection | null;
   selectedId?: string | null;
   onSelect?: (id: string) => void;
+  saved?: Record<string, number>;
+  onBookmarkChange?: (url: string, id: number | null) => void;
 }
 
-export default function OfficialPanel({ section, selectedId, onSelect }: Props) {
+export default function OfficialPanel({ section, selectedId, onSelect, saved, onBookmarkChange }: Props) {
   if (!section || section.entries.length === 0) return null;
   const verified = section.entries[0]?.verified;
 
@@ -47,7 +49,8 @@ export default function OfficialPanel({ section, selectedId, onSelect }: Props) 
               ) : (
                 <span className="official__name">{entry.title}</span>
               )}
-              <BookmarkButton result={entry} />
+              <BookmarkButton result={entry} bookmarkId={saved?.[entry.url]}
+                onChange={onBookmarkChange} />
             </li>
           );
         })}

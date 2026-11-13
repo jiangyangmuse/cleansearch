@@ -1,0 +1,65 @@
+{
+  "base": "http://127.0.0.1:18177",
+  "browser": "156.0.8078.4",
+  "search_mocked": false,
+  "favicon_mocked": true,
+  "bookmark_writes": false,
+  "bing": {
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "bing"
+      ],
+      "unresponsive": [],
+      "provider": "searxng",
+      "cached": true,
+      "ms": 1,
+      "total": 6,
+      "upstream_total": 9,
+      "filtered": {
+        "dup": 0,
+        "risk": 0
+      },
+      "official": 6,
+      "directory": 3,
+      "sid": "s_f4d3ff952508043808d40a3b997018ac"
+    },
+    "official": [
+      {
+        "url": "https://www.deepseek.com/",
+        "role": "home",
+        "origin": "directory"
+      },
+      {
+        "url": "https://chat.deepseek.com/",
+        "role": "chat",
+        "origin": "directory"
+      },
+      {
+        "url": "https://api-docs.deepseek.com/",
+        "role": "docs",
+        "origin": "directory"
+      },
+      {
+        "url": "https://www.deepseek.com/en/platform/",
+        "role": "console",
+        "origin": "search"
+      },
+      {
+        "url": "https://download.deepseek.com/",
+        "role": "download",
+        "origin": "search"
+      },
+      {
+        "url": "https://github.com/deepseek-ai",
+        "role": "code",
+        "origin": "search"
+      }
+    ]
+  },
+  "cache": true,
+  "warning_candidates_present": false,
+  "warnings": [],
+  "mobile_no_overflow": true,
+  "page_errors": []
+}

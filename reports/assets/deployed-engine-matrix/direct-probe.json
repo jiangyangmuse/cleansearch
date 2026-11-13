@@ -1,0 +1,302 @@
+[
+  {
+    "engine": "bing",
+    "ok": 2,
+    "attempts": 2,
+    "median_ms": 363,
+    "counts": [
+      10,
+      10
+    ],
+    "sources": [
+      "bing"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "duckduckgo",
+    "ok": 2,
+    "attempts": 2,
+    "median_ms": 1366,
+    "counts": [
+      10,
+      10
+    ],
+    "sources": [
+      "duckduckgo"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "yahoo",
+    "ok": 2,
+    "attempts": 2,
+    "median_ms": 2408,
+    "counts": [
+      7,
+      7
+    ],
+    "sources": [
+      "yahoo"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "mojeek",
+    "ok": 2,
+    "attempts": 2,
+    "median_ms": 1707,
+    "counts": [
+      10,
+      10
+    ],
+    "sources": [
+      "mojeek"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "google cse",
+    "ok": 2,
+    "attempts": 2,
+    "median_ms": 1173,
+    "counts": [
+      20,
+      20
+    ],
+    "sources": [
+      "google cse"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "naver",
+    "ok": 2,
+    "attempts": 2,
+    "median_ms": 1219,
+    "counts": [
+      19,
+      14
+    ],
+    "sources": [
+      "naver"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "yandex",
+    "ok": 2,
+    "attempts": 2,
+    "median_ms": 1677,
+    "counts": [
+      10,
+      15
+    ],
+    "sources": [
+      "yandex"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "swisscows",
+    "ok": 2,
+    "attempts": 2,
+    "median_ms": 2117,
+    "counts": [
+      20,
+      9
+    ],
+    "sources": [
+      "swisscows"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "wikipedia",
+    "ok": 0,
+    "attempts": 2,
+    "median_ms": 1344,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "google",
+    "ok": 0,
+    "attempts": 2,
+    "median_ms": 920,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": [
+      "google:Suspended: access denied",
+      "google:access denied"
+    ]
+  },
+  {
+    "engine": "google scholar",
+    "ok": 0,
+    "attempts": 2,
+    "median_ms": 1242,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": [
+      "google scholar:Suspended: unexpected crash",
+      "google scholar:unexpected crash"
+    ]
+  },
+  {
+    "engine": "sogou",
+    "ok": 2,
+    "attempts": 2,
+    "median_ms": 1072,
+    "counts": [
+      9,
+      10
+    ],
+    "sources": [
+      "sogou"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "360search",
+    "ok": 2,
+    "attempts": 2,
+    "median_ms": 623,
+    "counts": [
+      4,
+      6
+    ],
+    "sources": [
+      "360search"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "startpage",
+    "ok": 0,
+    "attempts": 2,
+    "median_ms": 2893,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [
+      "360search",
+      "bing",
+      "duckduckgo",
+      "duckduckgo web",
+      "google cse",
+      "mojeek",
+      "naver",
+      "sogou",
+      "swisscows",
+      "yahoo",
+      "yandex"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "marginalia",
+    "ok": 0,
+    "attempts": 2,
+    "median_ms": 1235,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [
+      "360search",
+      "bing",
+      "duckduckgo",
+      "duckduckgo web",
+      "google cse",
+      "mojeek",
+      "naver",
+      "swisscows",
+      "yahoo",
+      "yandex"
+    ],
+    "errors": [],
+    "unresponsive": [
+      "duckduckgo:CAPTCHA",
+      "sogou:unexpected crash"
+    ]
+  },
+  {
+    "engine": "dogpile",
+    "ok": 0,
+    "attempts": 2,
+    "median_ms": 1278,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [
+      "360search",
+      "bing",
+      "duckduckgo web",
+      "google cse",
+      "mojeek",
+      "naver",
+      "swisscows",
+      "yahoo",
+      "yandex"
+    ],
+    "errors": [],
+    "unresponsive": [
+      "duckduckgo:CAPTCHA",
+      "sogou:unexpected crash"
+    ]
+  },
+  {
+    "engine": "yandex api",
+    "ok": 0,
+    "attempts": 2,
+    "median_ms": 2204,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [
+      "360search",
+      "bing",
+      "duckduckgo",
+      "duckduckgo web",
+      "google cse",
+      "mojeek",
+      "naver",
+      "swisscows",
+      "yahoo",
+      "yandex"
+    ],
+    "errors": [],
+    "unresponsive": [
+      "duckduckgo:CAPTCHA",
+      "sogou:unexpected crash"
+    ]
+  }
+]

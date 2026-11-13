@@ -8,11 +8,13 @@ interface Props {
   sid: string | null;
   query: string;
   revealResult?: (id: string) => void;
+  /** 面板收起时也要能提示「后台生成中」，因此把流状态报给外层 */
+  onBusyChange?: (busy: boolean) => void;
 }
 
 const FLASH_MS = 1500;
 
-export default function SummaryPanel({ sid, query, revealResult }: Props) {
+export default function SummaryPanel({ sid, query, revealResult, onBusyChange }: Props) {
   const [status, setStatus] = useState<Status>("idle");
   const [text, setText] = useState("");
   const [citations, setCitations] = useState<Citation[]>([]);
@@ -23,6 +25,7 @@ export default function SummaryPanel({ sid, query, revealResult }: Props) {
 
   const controller = useRef<AbortController | null>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const generateButton = useRef<HTMLButtonElement>(null);
 
   // 组件卸载（切查询 / 重排）时中止旧流，避免把上一轮的文本接到新查询上
   useEffect(() => {
@@ -80,13 +83,31 @@ export default function SummaryPanel({ sid, query, revealResult }: Props) {
     }
   }, [sid]);
 
-  const stop = () => {
+  const stop = useCallback(() => {
     controller.current?.abort();
+    controller.current = null;
     setStatus("idle");
     setText("");
     setCitations([]);
     setDoneInfo(null);
-  };
+    setMeta(null);
+    setError(null);
+  }, []);
+
+  // 流状态同步给外层：面板收起后仍能显示「后台生成中」与停止入口
+  useEffect(() => {
+    onBusyChange?.(status === "streaming");
+  }, [onBusyChange, status]);
+  useEffect(() => () => onBusyChange?.(false), [onBusyChange]);
+
+  // 面板收起后，外层的「停止」按钮通过事件收口
+  useEffect(() => {
+    const handler = () => {
+      if (status === "streaming") stop();
+    };
+    window.addEventListener("cs:summary-stop", handler);
+    return () => window.removeEventListener("cs:summary-stop", handler);
+  }, [status, stop]);
 
   // 快捷键 s：由 App 派发，侧栏自己决定按当前模式跑
   useEffect(() => {
@@ -105,7 +126,9 @@ export default function SummaryPanel({ sid, query, revealResult }: Props) {
     if (!target) return;
     const group = target.closest("details");
     if (group) group.open = true;
-    target.scrollIntoView({ block: "center", behavior: "smooth" });
+    target.focus({ preventScroll: true });
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({ block: "center", behavior: reduceMotion ? "instant" : "smooth" });
     target.classList.add("card--flash");
     window.setTimeout(() => target.classList.remove("card--flash"), FLASH_MS);
   };
@@ -150,13 +173,17 @@ export default function SummaryPanel({ sid, query, revealResult }: Props) {
         <h2 className="summary__title">AI 总结</h2>
         <div className="summary__actions">
           {status === "streaming" ? (
-            <button className="button button--ghost" type="button" onClick={stop}>
+            <button className="button button--ghost" type="button" onClick={() => {
+              stop();
+              requestAnimationFrame(() => generateButton.current?.focus({ preventScroll: true }));
+            }}>
               停止
             </button>
           ) : null}
           <button
             className="button"
             type="button"
+            ref={generateButton}
             onClick={() => void run(mode === "full" ? "full" : "fast")}
             disabled={!sid || status === "streaming"}
           >

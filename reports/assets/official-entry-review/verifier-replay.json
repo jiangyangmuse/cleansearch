@@ -1,0 +1,10 @@
+{
+  "mode": "offline replay; no new network verification",
+  "source": "reports\\assets\\official-entries\\verified.json",
+  "counts": {
+    "ok": 107,
+    "blocked": 5,
+    "fail": 0
+  },
+  "changed": []
+}

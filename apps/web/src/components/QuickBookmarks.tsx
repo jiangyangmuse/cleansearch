@@ -1,24 +1,30 @@
 import { useEffect, useState } from "react";
 import { listBookmarks } from "../api";
+import { BOOKMARKS_CHANGED } from "../bookmarkChanges";
 import type { Bookmark } from "../types";
 import { safeHref } from "../url";
 
 const PREFERENCE = "cs-quick-bookmarks-open";
 
 function initiallyOpen() {
-  const saved = localStorage.getItem(PREFERENCE);
-  return saved === null ? matchMedia("(min-width: 901px)").matches : saved === "true";
+  try {
+    const saved = localStorage.getItem(PREFERENCE);
+    if (saved === "true" || saved === "false") return saved === "true";
+  } catch { /* 存储不可用时使用布局默认值 */ }
+  return matchMedia("(min-width: 901px)").matches;
 }
 
-export default function QuickBookmarks() {
+export default function QuickBookmarks({ active = true }: { active?: boolean }) {
   const [open, setOpen] = useState(initiallyOpen);
   const [items, setItems] = useState<Bookmark[] | null>(null);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open || !active) return;
     let controller: AbortController | undefined;
+    let refreshTimer: number | undefined;
     const refresh = () => {
+      if (document.visibilityState !== "visible") return;
       controller?.abort();
       const request = new AbortController();
       controller = request;
@@ -29,20 +35,38 @@ export default function QuickBookmarks() {
         if (!request.signal.aborted) setFailed(true);
       });
     };
-    refresh();
-    window.addEventListener("cs:bookmark-saved", refresh);
-    return () => {
-      controller?.abort();
-      window.removeEventListener("cs:bookmark-saved", refresh);
+    const scheduleRefresh = () => {
+      if (document.visibilityState !== "visible") return;
+      window.clearTimeout(refreshTimer);
+      refreshTimer = window.setTimeout(refresh, 50);
     };
-  }, [open]);
+    const onPageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) scheduleRefresh();
+    };
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === BOOKMARKS_CHANGED) scheduleRefresh();
+    };
+    scheduleRefresh();
+    window.addEventListener(BOOKMARKS_CHANGED, scheduleRefresh);
+    window.addEventListener("pageshow", onPageShow);
+    window.addEventListener("storage", onStorage);
+    document.addEventListener("visibilitychange", scheduleRefresh);
+    return () => {
+      window.clearTimeout(refreshTimer);
+      controller?.abort();
+      window.removeEventListener(BOOKMARKS_CHANGED, scheduleRefresh);
+      window.removeEventListener("pageshow", onPageShow);
+      window.removeEventListener("storage", onStorage);
+      document.removeEventListener("visibilitychange", scheduleRefresh);
+    };
+  }, [open, active]);
 
   return (
     <section className="quick-bookmarks" aria-labelledby="quick-bookmarks-title">
       <h2 id="quick-bookmarks-title">
         <button type="button" className="quick-bookmarks__toggle" aria-expanded={open}
           aria-controls="quick-bookmarks-items" onClick={() => {
-            localStorage.setItem(PREFERENCE, String(!open));
+            try { localStorage.setItem(PREFERENCE, String(!open)); } catch { /* 保留当前页面状态 */ }
             setOpen(!open);
           }}>
           <span className="quick-bookmarks__icon"><i className="ws-icon ws-icon--bookmark" aria-hidden="true" /></span>

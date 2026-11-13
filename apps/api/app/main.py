@@ -5,15 +5,18 @@ from __future__ import annotations
 import re
 from pathlib import Path
 from urllib.parse import urlsplit
+from xml.sax.saxutils import escape
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse, Response
+from pydantic import BaseModel, Field
 from starlette.concurrency import run_in_threadpool
 
 from app import __version__
 from app.config import REPO_ROOT, Settings, get_settings, reload_settings
 from app.core.errors import SearchError
 from app.core.metrics import RequestMetricsMiddleware, get_metrics
+from app.core.vitals import record_vitals, vitals_snapshot
 from app.core.tokens import read_api_token, token_matches
 from app.routers import assets as assets_router
 from app.routers import ai_tools as ai_tools_router
@@ -84,9 +87,34 @@ def _cross_origin_denied(code: str, message: str, status: int, *, cors: bool = F
 app.add_middleware(RequestMetricsMiddleware)
 
 
+class VitalsSample(BaseModel):
+    """前端上报的性能样本；字段都可缺省，单位统一为毫秒（CLS 为无量纲分数）。"""
+
+    path: str = Field(default="/", max_length=200)
+    lcp: float | None = Field(default=None, ge=0, le=600_000)
+    cls: float | None = Field(default=None, ge=0, le=100)
+    inp: float | None = Field(default=None, ge=0, le=600_000)
+    ttfb: float | None = Field(default=None, ge=0, le=600_000)
+    search_ms: float | None = Field(default=None, ge=0, le=600_000)
+    panel_ms: float | None = Field(default=None, ge=0, le=600_000)
+
+
 @app.get("/api/metrics")
 def metrics_snapshot() -> dict:
-    return get_metrics().snapshot()
+    return {**get_metrics().snapshot(), "vitals": vitals_snapshot()}
+
+
+@app.post("/api/metrics/vitals", status_code=204, include_in_schema=False)
+def post_vitals(payload: VitalsSample) -> Response:
+    """接收 Web Vitals 与搜索/面板耗时；只在内存留最近样本，不落盘。"""
+    sample = payload.model_dump(exclude_none=True)
+    path = sample.pop("path").split("?", 1)[0].split("#", 1)[0].rstrip("/") or "/"
+    if not sample:
+        raise HTTPException(status_code=422, detail="至少提供一项性能指标")
+    if path not in {"/", "/r", "/bookmarks", "/settings", "/s", "/tools"}:
+        path = "/"
+    record_vitals({"path": path, **sample})
+    return Response(status_code=204)
 
 
 @app.middleware("http")
@@ -162,6 +190,7 @@ async def health() -> HealthResponse:
         llm_provider=current.llm_provider,
         llm_model="stub-extractive" if current.llm_provider == "stub" else current.llm_model,
         bookmarks=_bookmark_count(current.db_path),
+        db_path=str(current.db_path),
         version=__version__,
     )
 
@@ -192,6 +221,22 @@ def _blocklist_rules(path: Path, feed_path: Path | None = None) -> int:
     return total
 
 
+@app.get("/opensearch.xml", include_in_schema=False)
+def opensearch(request: Request) -> Response:
+    origin = escape(str(request.base_url).rstrip("/"))
+    return Response(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">\n'
+        '  <ShortName>CleanSearch</ShortName>\n'
+        '  <Description>本机搜索与书签</Description>\n'
+        '  <InputEncoding>UTF-8</InputEncoding>\n'
+        f'  <Url type="text/html" template="{origin}/?q={{searchTerms}}"/>\n'
+        '</OpenSearchDescription>\n',
+        media_type="application/opensearchdescription+xml",
+        headers={"Cache-Control": "no-store"},
+    )
+
+
 def _mount_web() -> None:
     """发布形态：FastAPI 同源提供 Vite 产物，并支持前端路由直接刷新。"""
     dist = get_settings().web_dist
@@ -211,7 +256,7 @@ def _mount_web() -> None:
 
     @app.get("/{full_path:path}", include_in_schema=False, response_model=None)
     async def _spa(full_path: str) -> Response:
-        if full_path.startswith(("api/", "go/")):
+        if full_path in ("api", "go") or full_path.startswith(("api/", "go/")):
             return JSONResponse(status_code=404, content={"error": {"code": "NOT_FOUND"}})
         candidate = (dist / full_path).resolve()
         try:
@@ -219,7 +264,13 @@ def _mount_web() -> None:
         except ValueError:
             return JSONResponse(status_code=404, content={"error": {"code": "NOT_FOUND"}})
         if full_path and candidate.is_file():
-            return FileResponse(candidate)
+            headers = {"Cache-Control": "no-cache"} if full_path == "sw.js" else None
+            return FileResponse(candidate, headers=headers)
+        if full_path.startswith("assets/") or full_path in {
+            "sw.js", "offline.html", "manifest.webmanifest", "favicon.svg",
+            "icon-192.png", "icon-512.png", "icon-maskable-512.png",
+        }:
+            return JSONResponse(status_code=404, content={"error": {"code": "NOT_FOUND"}})
         return FileResponse(index, headers={"Referrer-Policy": "no-referrer", "X-Frame-Options": "DENY"})
 
 

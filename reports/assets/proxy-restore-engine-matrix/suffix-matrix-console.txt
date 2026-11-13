@@ -1,0 +1,21 @@
+{"suffix": "default", "q": "Python �ĵ�", "http": 200, "status": "ok", "total": 20, "provider": "searxng", "ms": 2666, "unresponsive": ["duckduckgo(CAPTCHA)", "swisscows(Suspended: access denied)"], "sources": ["360search", "bing", "duckduckgo web", "google cse", "mojeek", "naver", "sogou", "yahoo", "yandex"], "elapsed_ms": 6695}
+{"suffix": "g", "q": "Python �ĵ� g", "http": 200, "status": "ok", "total": 15, "provider": "searxng", "ms": 3614, "unresponsive": ["google(access denied)"], "sources": ["google cse"], "elapsed_ms": 3624}
+{"suffix": "b", "q": "Python �ĵ� b", "http": 200, "status": "ok", "total": 9, "provider": "searxng", "ms": 362, "unresponsive": [], "sources": ["bing"], "elapsed_ms": 383}
+{"suffix": "d", "q": "Python �ĵ� d", "http": 200, "status": "ok", "total": 9, "provider": "searxng", "ms": 2262, "unresponsive": ["duckduckgo(CAPTCHA)"], "sources": ["duckduckgo web"], "elapsed_ms": 2271}
+{"suffix": "dw", "q": "Python �ĵ� dw", "http": 200, "status": "ok", "total": 8, "provider": "searxng", "ms": 1459, "unresponsive": [], "sources": ["duckduckgo web"], "elapsed_ms": 1467}
+{"suffix": "br", "q": "Python �ĵ� br", "http": 503, "status": "http_error", "error": {"code": "ENGINE_UNAVAILABLE", "message": "���� brave û�п��ý�����ѳ��� brave����brave(Suspended: too many requests)", "retryable": true}, "elapsed_ms": 179}
+{"suffix": "yt", "q": "Python �ĵ� yt", "http": 200, "status": "ok", "total": 14, "provider": "searxng", "ms": 1209, "unresponsive": [], "sources": ["youtube"], "elapsed_ms": 1223}
+{"suffix": "gh", "q": "Python �ĵ� gh", "http": 200, "status": "ok", "total": 12, "provider": "searxng", "ms": 3526, "unresponsive": [], "sources": ["github"], "elapsed_ms": 7552}
+{"suffix": "ar", "q": "Python �ĵ� ar", "http": 200, "status": "ok", "total": 10, "provider": "searxng", "ms": 1010, "unresponsive": [], "sources": ["arxiv"], "elapsed_ms": 1021}
+{"suffix": "sc", "q": "Python �ĵ� sc", "http": 200, "status": "ok", "total": 9, "provider": "searxng", "ms": 5649, "unresponsive": ["google scholar(unexpected crash)"], "sources": ["serper"], "elapsed_ms": 7136}
+{"suffix": "w", "q": "Python �ĵ� w", "http": 200, "status": "ok", "total": 0, "provider": "searxng", "ms": 887, "unresponsive": [], "sources": [], "elapsed_ms": 892}
+{"suffix": "gc", "q": "Python �ĵ� gc", "http": 200, "status": "ok", "total": 15, "provider": "searxng", "ms": 874, "unresponsive": [], "sources": ["google cse"], "elapsed_ms": 888}
+{"suffix": "sp", "q": "Python �ĵ� sp", "http": 200, "status": "ok", "total": 10, "provider": "searxng", "ms": 3499, "unresponsive": ["startpage(·��δ��Ч)"], "sources": ["mojeek"], "elapsed_ms": 3512}
+{"suffix": "mj", "q": "Python �ĵ� mj", "http": 200, "status": "ok", "total": 10, "provider": "searxng", "ms": 1125, "unresponsive": [], "sources": ["mojeek"], "elapsed_ms": 1141}
+{"suffix": "y", "q": "Python �ĵ� y", "http": 200, "status": "ok", "total": 6, "provider": "searxng", "ms": 1280, "unresponsive": [], "sources": ["yahoo"], "elapsed_ms": 1288}
+{"suffix": "sg", "q": "Python �ĵ� sg", "http": 200, "status": "ok", "total": 10, "provider": "searxng", "ms": 894, "unresponsive": [], "sources": ["sogou"], "elapsed_ms": 903}
+{"suffix": "so", "q": "Python �ĵ� so", "http": 200, "status": "ok", "total": 5, "provider": "searxng", "ms": 612, "unresponsive": [], "sources": ["360search"], "elapsed_ms": 622}
+{"suffix": "n", "q": "Python �ĵ� n", "http": 200, "status": "ok", "total": 12, "provider": "searxng", "ms": 902, "unresponsive": [], "sources": ["naver"], "elapsed_ms": 3417}
+{"suffix": "yd", "q": "Python �ĵ� yd", "http": 200, "status": "ok", "total": 10, "provider": "searxng", "ms": 1201, "unresponsive": [], "sources": ["yandex"], "elapsed_ms": 1212}
+{"suffix": "sw", "q": "Python �ĵ� sw", "http": 503, "status": "http_error", "error": {"code": "ENGINE_UNAVAILABLE", "message": "���� swisscows û�п��ý����û�пɳ��Ե����棩��swisscows(�۶���ȴ��Լ 60 ����)", "retryable": true}, "elapsed_ms": 7}
+WROTE suffix-matrix.json

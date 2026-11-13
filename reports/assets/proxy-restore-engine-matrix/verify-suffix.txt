@@ -1,0 +1,13 @@
+PASS '�ձ� �׶� b'  393 ms  ���=10 ��Դ=['bing'] ʧ������=[]
+PASS 'Python documentation b'  359 ms  ���=8 ��Դ=['bing'] ʧ������=[]
+PASS 'HTTP b'  4386 ms  ���=10 ��Դ=['bing'] ʧ������=[]
+PASS '�ձ� �׶� y'  1439 ms  ���=6 ��Դ=['yahoo'] ʧ������=[]
+PASS 'Python documentation y'  1273 ms  ���=6 ��Դ=['yahoo'] ʧ������=[]
+PASS 'HTTP y'  1315 ms  ���=7 ��Դ=['yahoo'] ʧ������=[]
+FAIL '�ձ� �׶� mj'  3214 ms  �޿�չʾ����ʵ�����empty
+PASS 'Python documentation mj'  1160 ms  ���=10 ��Դ=['mojeek'] ʧ������=[]
+PASS 'HTTP mj'  4758 ms  ���=10 ��Դ=['mojeek'] ʧ������=[]
+PASS 'Python !b'  388 ms  ���=8 ��Դ=['bing'] ʧ������=[]
+PASS '�ձ� �׶� jp'  12207 ms  ���=17 ��Դ=['360search', 'bing', 'duckduckgo', 'google cse', 'naver', 'yahoo', 'yandex'] ʧ������=['duckduckgo web(timeout)', 'swisscows(Suspended: access denied)']
+PASS 'C g'  7196 ms  ���=15 ��Դ=['bing', 'google cse', 'mojeek', 'naver', 'yahoo', 'yandex'] ʧ������=['duckduckgo(CAPTCHA)', 'duckduckgo web(Suspended: timeout)', 'swisscows(Suspended: access denied)']
+��ʵ�������գ�11/12 (92%)

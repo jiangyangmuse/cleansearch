@@ -1,0 +1,318 @@
+{
+  "base": "http://127.0.0.1:18185",
+  "started_at": "2026-11-13T06:20:17.947Z",
+  "checks": [
+    {
+      "name": "后退回到上一次查询",
+      "ok": true,
+      "detail": "url=?q=python input=python 期望=python"
+    },
+    {
+      "name": "结果页标题含查询词",
+      "ok": true,
+      "detail": "title=python · CleanSearch"
+    },
+    {
+      "name": "第二次查询后标题跟着换",
+      "ok": true,
+      "detail": "title=linux 内核 · CleanSearch 期望含 linux 内核"
+    },
+    {
+      "name": "从分类重搜历史词只新增一条历史",
+      "ok": true,
+      "detail": "q=python&category=encyclopedia"
+    },
+    {
+      "name": "前进恢复重搜关键词",
+      "ok": true,
+      "detail": "http://127.0.0.1:18185/?q=linux+%E5%86%85%E6%A0%B8"
+    },
+    {
+      "name": "第 2 页刷新后仍在第 2 页",
+      "ok": true,
+      "detail": "url=?q=python&page=2 label=第 2 页"
+    },
+    {
+      "name": "翻页后标题标注页码",
+      "ok": true,
+      "detail": "title=第 2 页 · python · CleanSearch"
+    },
+    {
+      "name": "结果页只有一个 h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "结果卡标题降为 h3",
+      "ok": true,
+      "detail": "H3,H3,H3"
+    },
+    {
+      "name": "存在 skip link 与 main#main",
+      "ok": true,
+      "detail": "skip=true main=true"
+    },
+    {
+      "name": "搜索结果有 aria-live 播报",
+      "ok": true,
+      "detail": "live=找到 13 条结果"
+    },
+    {
+      "name": "axe serious/critical 为 0（结果页）",
+      "ok": true,
+      "detail": "violations=0"
+    },
+    {
+      "name": "引擎菜单点外部即关闭",
+      "ok": true,
+      "detail": "open=true closed=true"
+    },
+    {
+      "name": "Google 不在「中国大陆可直连」分组",
+      "ok": true,
+      "detail": "b,sg,so,bd"
+    },
+    {
+      "name": "未分组引擎有「其他引擎」标题",
+      "ok": true,
+      "detail": "g,d,dw,br,yt"
+    },
+    {
+      "name": "引擎状态是文字标签",
+      "ok": true,
+      "detail": "可用/未知"
+    },
+    {
+      "name": "AI 对话页只保留一个主标题且更新标签页标题",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "键盘可展开和收起工具面板",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "后退至空首页清空 AI 检索结果",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "前进恢复普通结果时不重发 AI 检索",
+      "ok": true,
+      "detail": "requests=1"
+    },
+    {
+      "name": "继承默认时有说明文案",
+      "ok": true,
+      "detail": "继承 SearXNG 默认（4 个）。开启自选模式后可单独勾选引擎。"
+    },
+    {
+      "name": "继承默认时逐项开关禁用且不显示为已选",
+      "ok": true,
+      "detail": "disabled=20/20 checkedDisabled=0"
+    },
+    {
+      "name": "禁用开关视觉降透明（≠1）",
+      "ok": true,
+      "detail": "opacity=0.4"
+    },
+    {
+      "name": "禁用原因可被读屏（aria-describedby）",
+      "ok": true,
+      "detail": "described=20/20"
+    },
+    {
+      "name": "提供「恢复默认」入口",
+      "ok": true,
+      "detail": "reset=true"
+    },
+    {
+      "name": "axe serious/critical 为 0（设置页）",
+      "ok": true,
+      "detail": "violations=0"
+    },
+    {
+      "name": "书签页 header 与正文左边缘对齐",
+      "ok": true,
+      "detail": "brand=188 main=188"
+    },
+    {
+      "name": "书签页只有一个当前导航项",
+      "ok": true,
+      "detail": "current=1"
+    },
+    {
+      "name": "书签页有 h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "一键添加页 header 与正文左边缘对齐",
+      "ok": true,
+      "detail": "brand=308 main=308"
+    },
+    {
+      "name": "一键添加页只有一个当前导航项",
+      "ok": true,
+      "detail": "current=1"
+    },
+    {
+      "name": "一键添加页有 h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "单页总结页 header 与正文左边缘对齐",
+      "ok": true,
+      "detail": "brand=308 main=308"
+    },
+    {
+      "name": "单页总结页只有一个当前导航项",
+      "ok": true,
+      "detail": "current=1"
+    },
+    {
+      "name": "单页总结页有 h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "设置页 header 与正文左边缘对齐",
+      "ok": true,
+      "detail": "brand=308 main=308"
+    },
+    {
+      "name": "设置页只有一个当前导航项",
+      "ok": true,
+      "detail": "current=1"
+    },
+    {
+      "name": "设置页有 h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "令牌和含令牌的书签代码默认收起",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "工具页 320px 无横向滚动",
+      "ok": true,
+      "detail": "page=320/320 pre=244/244"
+    },
+    {
+      "name": "工具页代码块自身可换行",
+      "ok": true,
+      "detail": "pre=244/244"
+    },
+    {
+      "name": "390×844 首屏能看到第一条结果",
+      "ok": true,
+      "detail": "首条结果 y=580.546875"
+    },
+    {
+      "name": "390×844 没有常驻书签/工具区",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "打开工具抽屉后结果区位置不变",
+      "ok": true,
+      "detail": "before=351 after=351"
+    },
+    {
+      "name": "抽屉是底部面板",
+      "ok": true,
+      "detail": "sheet top=583.786376953125"
+    },
+    {
+      "name": "点遮罩关闭抽屉",
+      "ok": true,
+      "detail": "closed=true"
+    },
+    {
+      "name": "关闭抽屉后焦点回到触发按钮",
+      "ok": true,
+      "detail": "activeElement=workspace-drawer-fab"
+    },
+    {
+      "name": "移动端 s 打开总结抽屉并启动请求",
+      "ok": true,
+      "detail": "requests=1"
+    },
+    {
+      "name": "移动抽屉引用关闭抽屉并聚焦结果",
+      "ok": true,
+      "detail": "focus=result-d_3a612d3b0026605c"
+    },
+    {
+      "name": "Esc 关闭抽屉并归还焦点",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "缺少 closedBy 接口时可点击遮罩关闭",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "移动端译文转搜关闭抽屉，末尾短码按字面搜索",
+      "ok": true,
+      "detail": "q=Python+ds&literal=1"
+    },
+    {
+      "name": "译文转搜一次后退回到原分类",
+      "ok": true,
+      "detail": "http://127.0.0.1:18185/?q=python&category=encyclopedia"
+    },
+    {
+      "name": "粗指针下主要控件 ≥44×44",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "开关 ≥44×24",
+      "ok": true,
+      "detail": "46×28"
+    },
+    {
+      "name": "320px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "320/320"
+    },
+    {
+      "name": "768px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "768/768"
+    },
+    {
+      "name": "900px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "900/900"
+    },
+    {
+      "name": "901px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "901/901"
+    },
+    {
+      "name": "1024px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "1024/1024"
+    },
+    {
+      "name": "1920px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "1920/1920"
+    }
+  ],
+  "screenshots": [
+    "reports\\assets\\browser-ui-review\\chrome\\mobile-drawer.png",
+    "reports\\assets\\browser-ui-review\\chrome\\desktop-light-search.png",
+    "reports\\assets\\browser-ui-review\\chrome\\mobile-dark-search.png"
+  ],
+  "completed_at": "2026-11-13T06:20:29.145Z",
+  "passed": true
+}

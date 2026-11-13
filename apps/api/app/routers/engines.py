@@ -4,11 +4,17 @@ from __future__ import annotations
 
 import sqlite3
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import ValidationError
 
 from app.config import get_settings
+from app.core.aggregator import Aggregator, get_aggregator
 from app.core.breaker import UPSTREAM_KEY, EngineHealthStore, get_health_store
 from app.core.engine_catalog import catalog_rows, engine_candidates, searx_engine_name
+from app.core.engine_preferences import (
+    EnginePreferences, EnginePreferencesStore, get_engine_preferences_store, read_engine_preferences,
+)
+from app.core.errors import SearchError
 from app.core.paid import build_paid_search
 
 router = APIRouter(prefix="/api", tags=["engines"])
@@ -25,7 +31,7 @@ def _health_store() -> EngineHealthStore | None:
 
 
 @router.get("/engines")
-def engines() -> dict:
+def engines(preferences: EnginePreferences = Depends(read_engine_preferences)) -> dict:
     settings = get_settings()
     health = _health_store()
     paid = build_paid_search(settings) if settings.provider == "searxng" else None
@@ -77,6 +83,15 @@ def engines() -> dict:
         row["selectable"] = bool(free) or paid_ready
         rows.append(row)
 
+    rows.extend({
+        "code": entry.code, "label": entry.label, "engine": entry.target if entry.kind == "engine" else "default",
+        "searx_engine": entry.target if entry.kind == "engine" else "",
+        "fallbacks": [], "paid": "", "aliases": [], "note": "",
+        "kind": entry.kind, "section": "custom", "status": "unknown", "available": None,
+        "can_fallback": False, "selectable": True, "fails": 0, "avg_ms": None,
+        "last_error": None, "remaining_seconds": 0,
+    } for entry in preferences.custom)
+
     return {
         "provider": settings.provider,
         "searxng_url": settings.searxng_url,
@@ -87,3 +102,25 @@ def engines() -> dict:
         },
         "engines": rows,
     }
+
+
+@router.get("/settings/engines")
+async def engine_settings(
+    preferences: EnginePreferences = Depends(read_engine_preferences),
+    aggregator: Aggregator = Depends(get_aggregator),
+) -> dict:
+    try:
+        sources = await aggregator.configured_engines()
+    except SearchError:
+        sources = None
+    return {"preferences": preferences, "builtins": catalog_rows(), "sources": sources}
+
+
+@router.put("/settings/engines", response_model=EnginePreferences)
+def save_engine_settings(payload: dict, store: EnginePreferencesStore = Depends(get_engine_preferences_store)) -> EnginePreferences:
+    try:
+        preferences = EnginePreferences.model_validate(payload)
+    except ValidationError as exc:
+        message = exc.errors(include_input=False, include_context=False, include_url=False)[0]["msg"]
+        raise HTTPException(422, message) from exc
+    return store.save(preferences)

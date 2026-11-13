@@ -1,0 +1,92 @@
+{
+  "scope": "unpacked-extension-automation",
+  "stable_chrome_manual": "not-tested",
+  "os_context_menu_click": "not-tested",
+  "headless": true,
+  "checks": [
+    {
+      "name": "extension service worker loaded",
+      "ok": true,
+      "detail": "kjifckenhomjkomhbpjllmdcahhgphki"
+    },
+    {
+      "name": "test URLs absent",
+      "ok": true,
+      "detail": "fresh UUID URLs"
+    },
+    {
+      "name": "options saved settings and verified stored token",
+      "ok": true,
+      "detail": "checked using an invalid bookmark URL, no write"
+    },
+    {
+      "name": "options rejected invalid token",
+      "ok": true,
+      "detail": "server rejected authorization"
+    },
+    {
+      "name": "options did not treat HTTP 500 as valid token",
+      "ok": true,
+      "detail": "mocked upstream failure"
+    },
+    {
+      "name": "Chrome registered save-page command",
+      "ok": true,
+      "detail": "runtime command registration"
+    },
+    {
+      "name": "popup opened",
+      "ok": true,
+      "detail": "popup.html"
+    },
+    {
+      "name": "popup save succeeded",
+      "ok": true,
+      "detail": "status checked"
+    },
+    {
+      "name": "popup exact bookmark persisted",
+      "ok": true,
+      "detail": "exact match"
+    },
+    {
+      "name": "background save function succeeded",
+      "ok": true,
+      "detail": "shared save function, not OS menu click"
+    },
+    {
+      "name": "background exact bookmark persisted",
+      "ok": true,
+      "detail": "exact match"
+    },
+    {
+      "name": "manifest and CDP installability",
+      "ok": true,
+      "detail": "nonempty errors fail"
+    },
+    {
+      "name": "no runtime errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "test bookmarks cleaned",
+      "ok": true,
+      "detail": "exact UUID URLs removed"
+    }
+  ],
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/156.0.8078.4",
+    "revision": "@f842f52ef39fd97b449eb27cff414bf05a98ddce",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "jsVersion": "15.6.75"
+  },
+  "selected_browser": "chromium",
+  "installability": {
+    "installabilityErrors": []
+  },
+  "manifest_errors": [],
+  "completed_at": "2026-11-13T13:23:39.548Z",
+  "passed": true
+}

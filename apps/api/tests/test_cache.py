@@ -363,3 +363,13 @@ def test_partial_engine_failure_is_still_cached(cached_client: TestClient, cache
     assert first["meta"]["cached"] is False
     assert second["meta"]["cached"] is True
     assert second["meta"]["unresponsive"] == ["duckduckgo(CAPTCHA)"]
+
+
+def test_cache_isolated_by_search_filters(cached_client: TestClient) -> None:
+    """同一查询换筛选条件不能命中上一次的缓存。"""
+    payload = {'q': 'filter-cache', 'opts': {'time_range': 'week'}}
+    assert cached_client.post('/api/search', json=payload).json()['meta']['cached'] is False
+    assert cached_client.post('/api/search', json=payload).json()['meta']['cached'] is True
+    other = cached_client.post('/api/search', json={'q': 'filter-cache', 'opts': {'time_range': 'month'}}).json()
+    assert other['meta']['cached'] is False
+    assert other['meta']['filters']['time_range'] == 'month'

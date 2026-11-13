@@ -1,0 +1,25 @@
+{
+  "sources": 263,
+  "cases": [
+    {
+      "q": "明日方舟",
+      "status": 200,
+      "engines": [
+        "bing"
+      ],
+      "custom": null,
+      "error": null,
+      "count": 9
+    },
+    {
+      "q": "明日方舟 !localb",
+      "status": 200,
+      "engines": [
+        "bing"
+      ],
+      "custom": "localb",
+      "error": null,
+      "count": 9
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+[
+  {
+    "query": "Godot",
+    "status": 503,
+    "model": null,
+    "sources": [],
+    "result_count": 0,
+    "error": "UPSTREAM_TIMEOUT"
+  },
+  {
+    "query": "Python",
+    "status": 200,
+    "model": "本地千问",
+    "sources": [
+      "360search",
+      "bing",
+      "duckduckgo web",
+      "google cse",
+      "mojeek",
+      "naver",
+      "sogou",
+      "yahoo",
+      "yandex"
+    ],
+    "result_count": 5,
+    "error": null
+  }
+]

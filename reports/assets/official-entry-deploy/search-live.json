@@ -1,0 +1,1903 @@
+{
+  "brand_first": {
+    "parsed": {
+      "q": "deepseek",
+      "engine": "default",
+      "region": null,
+      "router": "default",
+      "expanded": []
+    },
+    "groups": {
+      "strong": [
+        {
+          "id": "r_7",
+          "url": "https://en.wikipedia.org/wiki/DeepSeek",
+          "display_url": "en.wikipedia.org › wiki › DeepSeek",
+          "title": "DeepSeek - Wikipedia",
+          "snippet": "Hangzhou DeepSeek Artificial Intelligence Basic Technology Research Co., Ltd., doing business as DeepSeek, is a Chinese artificial intelligence (AI) company that develops open weights large language models (LLMs). Based in Hangzhou, Zhejiang, DeepSeek is owned and funded by High-Flyer, a Chinese ...",
+          "engine": [
+            "yahoo",
+            "swisscows",
+            "serper"
+          ],
+          "score": 0.6566,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识",
+            "权威域名",
+            "来源 3 个引擎"
+          ],
+          "favicon": "https://en.wikipedia.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_4",
+          "url": "https://github.com/deepseek-ai",
+          "display_url": "github.com › deepseek-ai",
+          "title": "DeepSeek · GitHub",
+          "snippet": "Oct 21, 2023 · A high-performance communication library for machine learning training and inference on Huawei Ascend NPUs. DeepSeek has 46 repositories available. Follow their code on GitHub.",
+          "engine": [
+            "yahoo",
+            "swisscows",
+            "bing",
+            "google cse"
+          ],
+          "score": 0.6562,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "4 引擎共识",
+            "权威域名"
+          ],
+          "favicon": "https://github.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        }
+      ],
+      "related": [
+        {
+          "id": "r_69",
+          "url": "https://github.com/",
+          "display_url": "github.com",
+          "title": "DeepSeek · GitHub",
+          "snippet": "DeepSeek has 46 repositories available. Follow their code on GitHub.",
+          "engine": [
+            "naver"
+          ],
+          "score": 0.5069,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://github.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_5",
+          "url": "https://apps.apple.com/us/app/deepseek-ai-assistant/id6737597349",
+          "display_url": "apps.apple.com › deepseek-ai-assistant › id6737597349",
+          "title": "DeepSeek - AI Assistant - App Store - Apple",
+          "snippet": "Experience seamless interaction with DeepSeek's official AI assistant for free! Powered by DeepSeek’s latest flagship model, it delivers faster responses and more powerful features to help you solve problems and live more efficiently.",
+          "engine": [
+            "yahoo",
+            "swisscows",
+            "bing",
+            "google cse"
+          ],
+          "score": 0.5061,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "4 引擎共识"
+          ],
+          "favicon": "https://apps.apple.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_12",
+          "url": "https://play.google.com/store/apps/details?id=com.deepseek.chat",
+          "display_url": "play.google.com › apps › details",
+          "title": "DeepSeek - AI Assistant - Apps on Google Play",
+          "snippet": "Experience seamless interaction with DeepSeek's official AI assistant for free! Powered by DeepSeek’s latest flagship model, it delivers faster responses and more powerful features to help you solve problems and live more efficiently.",
+          "engine": [
+            "swisscows",
+            "yahoo",
+            "serper"
+          ],
+          "score": 0.5061,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识"
+          ],
+          "favicon": "https://play.google.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_21",
+          "url": "https://deepseek.ai/",
+          "display_url": "deepseek.ai",
+          "title": "DeepSeek AI: R1 Reasoning, API & Local Deployment 2026",
+          "snippet": "What DeepSeek is, how to use the official chat, and independent guides to the V4 models, API pricing and login — with a cross-provider cost comparator. Reviewed 9 September 2026.",
+          "engine": [
+            "naver",
+            "duckduckgo web",
+            "mojeek"
+          ],
+          "score": 0.5057,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识"
+          ],
+          "favicon": "https://deepseek.ai/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_50",
+          "url": "https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:%EB%8C%80%EB%AC%B8",
+          "display_url": "ko.wikipedia.org › wiki › %EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:%EB%8C%80%EB%AC%B8",
+          "title": "딥시크 - 위키백과 한국어",
+          "snippet": "딥시크 (DeepSeek, 중국어 간체자: 深度求索 , 병음: Shēndù Qiúsuǒ , Hangzhou DeepSeek Artificial Intelligence Basic Technology Research Co., Ltd.)는 대형 언어 모델 (LLM)을 개발하는 중국의 인공지능 회사이다. 저장성 항저우시에 본사를 둔 딥시크는 중국 헤지펀드 하이플라이어가 소유하고 자금을 지원한다. 딥시크는 2023년 7월 하이플라이어의 공동 창립자이자 양사의 CEO를 겸하고 있는 량원펑에 의....2023년 7월 17일 (3년 전)량원펑 (CEO)",
+          "engine": [
+            "naver"
+          ],
+          "score": 0.5056,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://ko.wikipedia.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_59",
+          "url": "https://github.com/deepseek-ai/DeepSeek-V3",
+          "display_url": "github.com › deepseek-ai › DeepSeek-V3",
+          "title": "GitHub - deepseek-ai/DeepSeek-V3 · GitHub",
+          "snippet": "... an innovative methodology to distill reasoning capabilities from the long-Chain-of-Thought (CoT) model, specifically from one of the DeepSeek R1 ...",
+          "engine": [
+            "mojeek"
+          ],
+          "score": 0.5042,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://github.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_48",
+          "url": "https://zh.wikipedia.org/wiki/%E6%B7%B1%E5%BA%A6%E6%B1%82%E7%B4%A2",
+          "display_url": "zh.wikipedia.org › wiki › %E6%B7%B1%E5%BA%A6%E6%B1%82%E7%B4%A2",
+          "title": "深度求索- 維基百科，自由的百科全書",
+          "snippet": "杭州深度求索人工智慧基礎技術研究有限公司（英語：Hangzhou DeepSeek Artificial Intelligence Basic Technology Research Co., Ltd.），簡稱深度求索（ ...",
+          "engine": [
+            "google cse"
+          ],
+          "score": 0.503,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://zh.wikipedia.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_9",
+          "url": "https://zh.wikipedia.org/wiki/DeepSeek",
+          "display_url": "zh.wikipedia.org › wiki › DeepSeek",
+          "title": "DeepSeek",
+          "snippet": "深度求索开发的生成式人工智能聊天机器人",
+          "engine": [
+            "wikipedia"
+          ],
+          "score": 0.4859,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://zh.wikipedia.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_3",
+          "url": "https://www.deepseek.com/en/platform/",
+          "display_url": "www.deepseek.com › en › platform",
+          "title": "DeepSeek | API Platform",
+          "snippet": "DeepSeek is an AI research company focused on building world-leading general artificial intelligence. We develop and open-source frontier LLMs including DeepSeek-V4, DeepSeek-R1, and DeepSeek-Coder. Chat with DeepSeek AI or integrate via API.",
+          "engine": [
+            "yahoo",
+            "duckduckgo web",
+            "bing"
+          ],
+          "score": 0.4664,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识"
+          ],
+          "favicon": "https://www.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_14",
+          "url": "https://huggingface.co/deepseek-ai",
+          "display_url": "huggingface.co › deepseek-ai",
+          "title": "DeepSeek - Hugging Face",
+          "snippet": "Collections 19 · deepseek-ai/DeepSeek-V4-Flash-Base. 292B • Updated Apr 26 • 33.3k • 354 · deepseek-ai/DeepSeek-V4-Flash. Text Generation • 291B • Updated Jun ...",
+          "engine": [
+            "swisscows",
+            "google cse",
+            "serper"
+          ],
+          "score": 0.4658,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识",
+            "来源 3 个引擎"
+          ],
+          "favicon": "https://huggingface.co/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        }
+      ],
+      "weak": [
+        {
+          "id": "r_63",
+          "url": "https://arxiv.org/abs/2412.19437",
+          "display_url": "arxiv.org › abs › 2412.19437",
+          "title": "[2412.19437] DeepSeek-V3 Technical Report",
+          "snippet": "Authors: DeepSeek-AI , Aixin Liu , Bei Feng , Bing Xue , Bingxuan Wang , Bochao Wu , Chengda Lu , Chenggang Zhao , Chengqi Deng , Chenyu Zhang ...",
+          "engine": [
+            "mojeek"
+          ],
+          "score": 0.25,
+          "risk": 0.0,
+          "reasons": [
+            "权威域名"
+          ],
+          "favicon": "https://arxiv.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_23",
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813",
+          "display_url": "huggingface.co › deepseek-ai › DeepSeek-V4-Pro-0813",
+          "title": "deepseek-ai/DeepSeek-V4-Pro-0813 · Hugging Face",
+          "snippet": "DeepSeek-V4-Pro-0813 is the official release of DeepSeek-V4-Pro, superseding the preview version, with greatly enhanced agentic capabilities and performance improvements that are especially pronounced in production environments. It is built on the DeepSeek-V4-Pro (Preview) model structure, with a DSpark speculative decoding module attached.",
+          "engine": [
+            "yahoo",
+            "bing"
+          ],
+          "score": 0.2,
+          "risk": 0.0,
+          "reasons": [
+            "2 引擎共识"
+          ],
+          "favicon": "https://huggingface.co/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_32",
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-R1",
+          "display_url": "huggingface.co › deepseek-ai › DeepSeek-R1",
+          "title": "deepseek-ai/DeepSeek-R1 · Hugging Face",
+          "snippet": "DeepSeek-R1-Zero, a model trained via large-scale reinforcement learning (RL) without supervised fine-tuning (SFT) as a preliminary step ...",
+          "engine": [
+            "mojeek"
+          ],
+          "score": 0.1,
+          "risk": 0.0,
+          "reasons": [
+            "仅弱匹配"
+          ],
+          "favicon": "https://huggingface.co/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_55",
+          "url": "https://dipseek.kr/",
+          "display_url": "dipseek.kr",
+          "title": "딥시크 홈페이지 - AI 인공지능 챗봇대화",
+          "snippet": "딥시크 홈페이지에서 다양한 AI챗봇과 자연스러운 대화를 딥시크 홈페이지에서 경험하세요. 뛰어난 인공지능 기술로 검열없이 맞춤형 답변을 제공하는 AI챗봇 서비스 딥시크는 고객 경험을 혁신하는 스마트한 AI대화 솔루션입니다.",
+          "engine": [
+            "naver"
+          ],
+          "score": 0.1,
+          "risk": 0.0,
+          "reasons": [
+            "仅弱匹配"
+          ],
+          "favicon": "https://dipseek.kr/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_15",
+          "url": "https://www.qcc.com/firm/6da99c0b1dd76dc3d5f782199da29173.html?utm_source=sogoulxkp",
+          "display_url": "www.qcc.com › firm › 6da99c0b1dd76dc3d5f782199da29173.html",
+          "title": "杭州深度求索人工智能基础技术研究有限公司",
+          "snippet": "裴湉2023-07-17存续1644.7496万元人民币浙江省杭州市拱墅区环城北路169号汇金国际大厦西1幢1201室一般项目:工程和技术研究和试验发展;技术服务、技术...",
+          "engine": [
+            "sogou"
+          ],
+          "score": 0.085,
+          "risk": 0.1,
+          "reasons": [
+            "仅弱匹配",
+            "路径含长随机串"
+          ],
+          "favicon": "https://www.qcc.com/favicon.ico",
+          "published": "2026-11-08T00:00:00",
+          "read_minutes": null,
+          "go_url": null
+        }
+      ]
+    },
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "mojeek",
+        "naver",
+        "yandex",
+        "360search",
+        "google cse",
+        "swisscows",
+        "yahoo",
+        "duckduckgo web",
+        "bing",
+        "wikipedia",
+        "sogou",
+        "serper"
+      ],
+      "unresponsive": [
+        "duckduckgo(CAPTCHA)"
+      ],
+      "provider": "searxng",
+      "cached": true,
+      "ms": 1,
+      "total": 17,
+      "upstream_total": 85,
+      "filtered": {
+        "dup": 6,
+        "risk": 0
+      },
+      "official": 4,
+      "sid": "s_f402282d3219ec47f5c755a64a83b936"
+    },
+    "official": {
+      "key": "deepseek",
+      "brand": "DeepSeek",
+      "entries": [
+        {
+          "id": "r_2",
+          "url": "https://www.deepseek.com/",
+          "display_url": "www.deepseek.com",
+          "title": "DeepSeek | Into the Unknown",
+          "snippet": "DeepSeek is an AI research company focused on building world-leading general artificial intelligence. We develop and open-source frontier LLMs including ...",
+          "engine": [
+            "360search",
+            "google cse",
+            "swisscows"
+          ],
+          "score": 0.5063,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识"
+          ],
+          "favicon": "https://www.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "role": "home",
+          "label": "官网",
+          "host": "www.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08"
+        },
+        {
+          "id": "r_1",
+          "url": "https://chat.deepseek.com/",
+          "display_url": "chat.deepseek.com",
+          "title": "DeepSeek - 미지의 세계로",
+          "snippet": "Chat with DeepSeek AI – your intelligent assistant for coding, content creation, file reading, and more. Upload documents, engage in long-context conversations, and get expert help in AI, natural language processing, and beyond. | 深度求索（DeepSeek）助力编程代码开发、创意写作、文件处理等任务，支持文件上传及长文本对话，随时为您提供高效的AI支持。",
+          "engine": [
+            "mojeek",
+            "naver",
+            "yandex",
+            "360search",
+            "google cse"
+          ],
+          "score": 0.5054,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "5 引擎共识"
+          ],
+          "favicon": "https://chat.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "role": "chat",
+          "label": "聊天",
+          "host": "chat.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08"
+        },
+        {
+          "id": "r_22",
+          "url": "https://api-docs.deepseek.com/",
+          "display_url": "api-docs.deepseek.com",
+          "title": "Your First API Call | DeepSeek API Docs",
+          "snippet": "The DeepSeek API uses an API format compatible with OpenAI/Anthropic. By modifying the configuration, you can use the OpenAI/Anthropic SDK or softwares compatible with the OpenAI/Anthropic API to access the DeepSeek API.",
+          "engine": [
+            "naver",
+            "mojeek"
+          ],
+          "score": 0.4561,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "2 引擎共识"
+          ],
+          "favicon": "https://api-docs.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "role": "docs",
+          "label": "API 文档",
+          "host": "api-docs.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08"
+        },
+        {
+          "id": "r_10",
+          "url": "https://platform.deepseek.com/",
+          "display_url": "platform.deepseek.com",
+          "title": "DeepSeek Platform",
+          "snippet": "Join DeepSeek API platform to access our AI models, developer resources and API documentation.",
+          "engine": [
+            "naver",
+            "mojeek",
+            "google cse"
+          ],
+          "score": 0.5067,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识"
+          ],
+          "favicon": "https://platform.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "role": "console",
+          "label": "开放平台",
+          "host": "platform.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08"
+        }
+      ]
+    }
+  },
+  "brand_cached": {
+    "parsed": {
+      "q": "deepseek",
+      "engine": "default",
+      "region": null,
+      "router": "default",
+      "expanded": []
+    },
+    "groups": {
+      "strong": [
+        {
+          "id": "r_7",
+          "url": "https://en.wikipedia.org/wiki/DeepSeek",
+          "display_url": "en.wikipedia.org › wiki › DeepSeek",
+          "title": "DeepSeek - Wikipedia",
+          "snippet": "Hangzhou DeepSeek Artificial Intelligence Basic Technology Research Co., Ltd., doing business as DeepSeek, is a Chinese artificial intelligence (AI) company that develops open weights large language models (LLMs). Based in Hangzhou, Zhejiang, DeepSeek is owned and funded by High-Flyer, a Chinese ...",
+          "engine": [
+            "yahoo",
+            "swisscows",
+            "serper"
+          ],
+          "score": 0.6566,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识",
+            "权威域名",
+            "来源 3 个引擎"
+          ],
+          "favicon": "https://en.wikipedia.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_4",
+          "url": "https://github.com/deepseek-ai",
+          "display_url": "github.com › deepseek-ai",
+          "title": "DeepSeek · GitHub",
+          "snippet": "Oct 21, 2023 · A high-performance communication library for machine learning training and inference on Huawei Ascend NPUs. DeepSeek has 46 repositories available. Follow their code on GitHub.",
+          "engine": [
+            "yahoo",
+            "swisscows",
+            "bing",
+            "google cse"
+          ],
+          "score": 0.6562,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "4 引擎共识",
+            "权威域名"
+          ],
+          "favicon": "https://github.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        }
+      ],
+      "related": [
+        {
+          "id": "r_69",
+          "url": "https://github.com/",
+          "display_url": "github.com",
+          "title": "DeepSeek · GitHub",
+          "snippet": "DeepSeek has 46 repositories available. Follow their code on GitHub.",
+          "engine": [
+            "naver"
+          ],
+          "score": 0.5069,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://github.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_5",
+          "url": "https://apps.apple.com/us/app/deepseek-ai-assistant/id6737597349",
+          "display_url": "apps.apple.com › deepseek-ai-assistant › id6737597349",
+          "title": "DeepSeek - AI Assistant - App Store - Apple",
+          "snippet": "Experience seamless interaction with DeepSeek's official AI assistant for free! Powered by DeepSeek’s latest flagship model, it delivers faster responses and more powerful features to help you solve problems and live more efficiently.",
+          "engine": [
+            "yahoo",
+            "swisscows",
+            "bing",
+            "google cse"
+          ],
+          "score": 0.5061,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "4 引擎共识"
+          ],
+          "favicon": "https://apps.apple.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_12",
+          "url": "https://play.google.com/store/apps/details?id=com.deepseek.chat",
+          "display_url": "play.google.com › apps › details",
+          "title": "DeepSeek - AI Assistant - Apps on Google Play",
+          "snippet": "Experience seamless interaction with DeepSeek's official AI assistant for free! Powered by DeepSeek’s latest flagship model, it delivers faster responses and more powerful features to help you solve problems and live more efficiently.",
+          "engine": [
+            "swisscows",
+            "yahoo",
+            "serper"
+          ],
+          "score": 0.5061,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识"
+          ],
+          "favicon": "https://play.google.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_21",
+          "url": "https://deepseek.ai/",
+          "display_url": "deepseek.ai",
+          "title": "DeepSeek AI: R1 Reasoning, API & Local Deployment 2026",
+          "snippet": "What DeepSeek is, how to use the official chat, and independent guides to the V4 models, API pricing and login — with a cross-provider cost comparator. Reviewed 9 September 2026.",
+          "engine": [
+            "naver",
+            "duckduckgo web",
+            "mojeek"
+          ],
+          "score": 0.5057,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识"
+          ],
+          "favicon": "https://deepseek.ai/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_50",
+          "url": "https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:%EB%8C%80%EB%AC%B8",
+          "display_url": "ko.wikipedia.org › wiki › %EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:%EB%8C%80%EB%AC%B8",
+          "title": "딥시크 - 위키백과 한국어",
+          "snippet": "딥시크 (DeepSeek, 중국어 간체자: 深度求索 , 병음: Shēndù Qiúsuǒ , Hangzhou DeepSeek Artificial Intelligence Basic Technology Research Co., Ltd.)는 대형 언어 모델 (LLM)을 개발하는 중국의 인공지능 회사이다. 저장성 항저우시에 본사를 둔 딥시크는 중국 헤지펀드 하이플라이어가 소유하고 자금을 지원한다. 딥시크는 2023년 7월 하이플라이어의 공동 창립자이자 양사의 CEO를 겸하고 있는 량원펑에 의....2023년 7월 17일 (3년 전)량원펑 (CEO)",
+          "engine": [
+            "naver"
+          ],
+          "score": 0.5056,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://ko.wikipedia.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_59",
+          "url": "https://github.com/deepseek-ai/DeepSeek-V3",
+          "display_url": "github.com › deepseek-ai › DeepSeek-V3",
+          "title": "GitHub - deepseek-ai/DeepSeek-V3 · GitHub",
+          "snippet": "... an innovative methodology to distill reasoning capabilities from the long-Chain-of-Thought (CoT) model, specifically from one of the DeepSeek R1 ...",
+          "engine": [
+            "mojeek"
+          ],
+          "score": 0.5042,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://github.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_48",
+          "url": "https://zh.wikipedia.org/wiki/%E6%B7%B1%E5%BA%A6%E6%B1%82%E7%B4%A2",
+          "display_url": "zh.wikipedia.org › wiki › %E6%B7%B1%E5%BA%A6%E6%B1%82%E7%B4%A2",
+          "title": "深度求索- 維基百科，自由的百科全書",
+          "snippet": "杭州深度求索人工智慧基礎技術研究有限公司（英語：Hangzhou DeepSeek Artificial Intelligence Basic Technology Research Co., Ltd.），簡稱深度求索（ ...",
+          "engine": [
+            "google cse"
+          ],
+          "score": 0.503,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://zh.wikipedia.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_9",
+          "url": "https://zh.wikipedia.org/wiki/DeepSeek",
+          "display_url": "zh.wikipedia.org › wiki › DeepSeek",
+          "title": "DeepSeek",
+          "snippet": "深度求索开发的生成式人工智能聊天机器人",
+          "engine": [
+            "wikipedia"
+          ],
+          "score": 0.4859,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://zh.wikipedia.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_3",
+          "url": "https://www.deepseek.com/en/platform/",
+          "display_url": "www.deepseek.com › en › platform",
+          "title": "DeepSeek | API Platform",
+          "snippet": "DeepSeek is an AI research company focused on building world-leading general artificial intelligence. We develop and open-source frontier LLMs including DeepSeek-V4, DeepSeek-R1, and DeepSeek-Coder. Chat with DeepSeek AI or integrate via API.",
+          "engine": [
+            "yahoo",
+            "duckduckgo web",
+            "bing"
+          ],
+          "score": 0.4664,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识"
+          ],
+          "favicon": "https://www.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_14",
+          "url": "https://huggingface.co/deepseek-ai",
+          "display_url": "huggingface.co › deepseek-ai",
+          "title": "DeepSeek - Hugging Face",
+          "snippet": "Collections 19 · deepseek-ai/DeepSeek-V4-Flash-Base. 292B • Updated Apr 26 • 33.3k • 354 · deepseek-ai/DeepSeek-V4-Flash. Text Generation • 291B • Updated Jun ...",
+          "engine": [
+            "swisscows",
+            "google cse",
+            "serper"
+          ],
+          "score": 0.4658,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识",
+            "来源 3 个引擎"
+          ],
+          "favicon": "https://huggingface.co/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        }
+      ],
+      "weak": [
+        {
+          "id": "r_63",
+          "url": "https://arxiv.org/abs/2412.19437",
+          "display_url": "arxiv.org › abs › 2412.19437",
+          "title": "[2412.19437] DeepSeek-V3 Technical Report",
+          "snippet": "Authors: DeepSeek-AI , Aixin Liu , Bei Feng , Bing Xue , Bingxuan Wang , Bochao Wu , Chengda Lu , Chenggang Zhao , Chengqi Deng , Chenyu Zhang ...",
+          "engine": [
+            "mojeek"
+          ],
+          "score": 0.25,
+          "risk": 0.0,
+          "reasons": [
+            "权威域名"
+          ],
+          "favicon": "https://arxiv.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_23",
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813",
+          "display_url": "huggingface.co › deepseek-ai › DeepSeek-V4-Pro-0813",
+          "title": "deepseek-ai/DeepSeek-V4-Pro-0813 · Hugging Face",
+          "snippet": "DeepSeek-V4-Pro-0813 is the official release of DeepSeek-V4-Pro, superseding the preview version, with greatly enhanced agentic capabilities and performance improvements that are especially pronounced in production environments. It is built on the DeepSeek-V4-Pro (Preview) model structure, with a DSpark speculative decoding module attached.",
+          "engine": [
+            "yahoo",
+            "bing"
+          ],
+          "score": 0.2,
+          "risk": 0.0,
+          "reasons": [
+            "2 引擎共识"
+          ],
+          "favicon": "https://huggingface.co/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_32",
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-R1",
+          "display_url": "huggingface.co › deepseek-ai › DeepSeek-R1",
+          "title": "deepseek-ai/DeepSeek-R1 · Hugging Face",
+          "snippet": "DeepSeek-R1-Zero, a model trained via large-scale reinforcement learning (RL) without supervised fine-tuning (SFT) as a preliminary step ...",
+          "engine": [
+            "mojeek"
+          ],
+          "score": 0.1,
+          "risk": 0.0,
+          "reasons": [
+            "仅弱匹配"
+          ],
+          "favicon": "https://huggingface.co/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_55",
+          "url": "https://dipseek.kr/",
+          "display_url": "dipseek.kr",
+          "title": "딥시크 홈페이지 - AI 인공지능 챗봇대화",
+          "snippet": "딥시크 홈페이지에서 다양한 AI챗봇과 자연스러운 대화를 딥시크 홈페이지에서 경험하세요. 뛰어난 인공지능 기술로 검열없이 맞춤형 답변을 제공하는 AI챗봇 서비스 딥시크는 고객 경험을 혁신하는 스마트한 AI대화 솔루션입니다.",
+          "engine": [
+            "naver"
+          ],
+          "score": 0.1,
+          "risk": 0.0,
+          "reasons": [
+            "仅弱匹配"
+          ],
+          "favicon": "https://dipseek.kr/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_15",
+          "url": "https://www.qcc.com/firm/6da99c0b1dd76dc3d5f782199da29173.html?utm_source=sogoulxkp",
+          "display_url": "www.qcc.com › firm › 6da99c0b1dd76dc3d5f782199da29173.html",
+          "title": "杭州深度求索人工智能基础技术研究有限公司",
+          "snippet": "裴湉2023-07-17存续1644.7496万元人民币浙江省杭州市拱墅区环城北路169号汇金国际大厦西1幢1201室一般项目:工程和技术研究和试验发展;技术服务、技术...",
+          "engine": [
+            "sogou"
+          ],
+          "score": 0.085,
+          "risk": 0.1,
+          "reasons": [
+            "仅弱匹配",
+            "路径含长随机串"
+          ],
+          "favicon": "https://www.qcc.com/favicon.ico",
+          "published": "2026-11-08T00:00:00",
+          "read_minutes": null,
+          "go_url": null
+        }
+      ]
+    },
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "mojeek",
+        "naver",
+        "yandex",
+        "360search",
+        "google cse",
+        "swisscows",
+        "yahoo",
+        "duckduckgo web",
+        "bing",
+        "wikipedia",
+        "sogou",
+        "serper"
+      ],
+      "unresponsive": [
+        "duckduckgo(CAPTCHA)"
+      ],
+      "provider": "searxng",
+      "cached": true,
+      "ms": 1,
+      "total": 17,
+      "upstream_total": 85,
+      "filtered": {
+        "dup": 6,
+        "risk": 0
+      },
+      "official": 4,
+      "sid": "s_2999121f930f81cf86bbeb4fd5a2222c"
+    },
+    "official": {
+      "key": "deepseek",
+      "brand": "DeepSeek",
+      "entries": [
+        {
+          "id": "r_2",
+          "url": "https://www.deepseek.com/",
+          "display_url": "www.deepseek.com",
+          "title": "DeepSeek | Into the Unknown",
+          "snippet": "DeepSeek is an AI research company focused on building world-leading general artificial intelligence. We develop and open-source frontier LLMs including ...",
+          "engine": [
+            "360search",
+            "google cse",
+            "swisscows"
+          ],
+          "score": 0.5063,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识"
+          ],
+          "favicon": "https://www.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "role": "home",
+          "label": "官网",
+          "host": "www.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08"
+        },
+        {
+          "id": "r_1",
+          "url": "https://chat.deepseek.com/",
+          "display_url": "chat.deepseek.com",
+          "title": "DeepSeek - 미지의 세계로",
+          "snippet": "Chat with DeepSeek AI – your intelligent assistant for coding, content creation, file reading, and more. Upload documents, engage in long-context conversations, and get expert help in AI, natural language processing, and beyond. | 深度求索（DeepSeek）助力编程代码开发、创意写作、文件处理等任务，支持文件上传及长文本对话，随时为您提供高效的AI支持。",
+          "engine": [
+            "mojeek",
+            "naver",
+            "yandex",
+            "360search",
+            "google cse"
+          ],
+          "score": 0.5054,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "5 引擎共识"
+          ],
+          "favicon": "https://chat.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "role": "chat",
+          "label": "聊天",
+          "host": "chat.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08"
+        },
+        {
+          "id": "r_22",
+          "url": "https://api-docs.deepseek.com/",
+          "display_url": "api-docs.deepseek.com",
+          "title": "Your First API Call | DeepSeek API Docs",
+          "snippet": "The DeepSeek API uses an API format compatible with OpenAI/Anthropic. By modifying the configuration, you can use the OpenAI/Anthropic SDK or softwares compatible with the OpenAI/Anthropic API to access the DeepSeek API.",
+          "engine": [
+            "naver",
+            "mojeek"
+          ],
+          "score": 0.4561,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "2 引擎共识"
+          ],
+          "favicon": "https://api-docs.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "role": "docs",
+          "label": "API 文档",
+          "host": "api-docs.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08"
+        },
+        {
+          "id": "r_10",
+          "url": "https://platform.deepseek.com/",
+          "display_url": "platform.deepseek.com",
+          "title": "DeepSeek Platform",
+          "snippet": "Join DeepSeek API platform to access our AI models, developer resources and API documentation.",
+          "engine": [
+            "naver",
+            "mojeek",
+            "google cse"
+          ],
+          "score": 0.5067,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识"
+          ],
+          "favicon": "https://platform.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "role": "console",
+          "label": "开放平台",
+          "host": "platform.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08"
+        }
+      ]
+    }
+  },
+  "docs": {
+    "parsed": {
+      "q": "deepseek documentation",
+      "engine": "default",
+      "region": null,
+      "router": "default",
+      "expanded": []
+    },
+    "groups": {
+      "strong": [
+        {
+          "id": "r_3",
+          "url": "https://github.com/TMHSDigital/DeepSeek-Wrapper/blob/main/docs/deepseek-docs.md",
+          "display_url": "github.com › docs › deepseek-docs.md",
+          "title": "DeepSeek-Wrapper/docs/deepseek-docs.md at main · TMHSDigital/DeepSeek-Wrapper · GitHub",
+          "snippet": "This documentation provides a comprehensive overview of the DeepSeek API, including its endpoints, authentication methods, request formats, supported models, error codes, and example implementations.",
+          "engine": [
+            "swisscows",
+            "google cse",
+            "serper"
+          ],
+          "score": 0.6951,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识",
+            "权威域名",
+            "来源 3 个引擎"
+          ],
+          "favicon": "https://github.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_12",
+          "url": "https://platform.deepseek.com/docs/api-reference",
+          "display_url": "platform.deepseek.com › docs › api-reference",
+          "title": "DeepSeek Platform",
+          "snippet": "Join DeepSeek API platform to access our AI models, developer resources and API documentation.",
+          "engine": [
+            "duckduckgo",
+            "duckduckgo web",
+            "yahoo"
+          ],
+          "score": 0.5581,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识"
+          ],
+          "favicon": "https://platform.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        }
+      ],
+      "related": [
+        {
+          "id": "r_10",
+          "url": "https://deepseek.ai/docs",
+          "display_url": "deepseek.ai › docs",
+          "title": "DeepSeek API Docs 2026 — Quickstart & Examples",
+          "snippet": "Documentation Resources. Getting Started. Quick start guide for DeepSeek API. Learn how to set up your account, get an API key, and make your first API call in minutes.",
+          "engine": [
+            "naver",
+            "yandex",
+            "duckduckgo",
+            "yahoo",
+            "duckduckgo web"
+          ],
+          "score": 0.5474,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "5 引擎共识"
+          ],
+          "favicon": "https://deepseek.ai/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_35",
+          "url": "https://github.com/deepseek-ai/DeepSeek-V3",
+          "display_url": "github.com › deepseek-ai › DeepSeek-V3",
+          "title": "GitHub - deepseek-ai/DeepSeek-V3 · GitHub",
+          "snippet": "Contribute to deepseek-ai/DeepSeek-V3 development by creating an account on GitHub.Enhance documentation and update .gitignore for model conversion scripts.",
+          "engine": [
+            "yandex",
+            "swisscows"
+          ],
+          "score": 0.5211,
+          "risk": 0.0,
+          "reasons": [
+            "2 引擎共识",
+            "权威域名"
+          ],
+          "favicon": "https://github.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_75",
+          "url": "https://docs.langflow.org/1.8.0/bundles-deepseek",
+          "display_url": "docs.langflow.org › 1.8.0 › bundles-deepseek",
+          "title": "DeepSeek | Langflow Documentation",
+          "snippet": "For more information about DeepSeek features and functionality used by DeepSeek components, see the DeepSeek documentation .",
+          "engine": [
+            "mojeek"
+          ],
+          "score": 0.5175,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://docs.langflow.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_78",
+          "url": "https://docs.langflow.org/bundles-deepseek",
+          "display_url": "docs.langflow.org › bundles-deepseek",
+          "title": "DeepSeek | Langflow Documentation",
+          "snippet": "For more information about DeepSeek features and functionality used by DeepSeek components, see the DeepSeek documentation .",
+          "engine": [
+            "mojeek"
+          ],
+          "score": 0.5175,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名"
+          ],
+          "favicon": "https://docs.langflow.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_13",
+          "url": "https://deepseekv4pro.com/documents",
+          "display_url": "deepseekv4pro.com › documents",
+          "title": "DeepSeek API Documentation",
+          "snippet": "1 day ago · DeepSeek official docs cover first API calls, model and pricing details, thinking mode, tool usage, and the API reference. Start from the API key and base URL, then send your first chat/completions request. Review DeepSeek V4 Pro and Flash model routes, current context limits, and pricing guidance.",
+          "engine": [
+            "duckduckgo",
+            "duckduckgo web",
+            "swisscows",
+            "yahoo"
+          ],
+          "score": 0.5155,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "4 引擎共识"
+          ],
+          "favicon": "https://deepseekv4pro.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_44",
+          "url": "https://api-docs.deepseek.com/updates/",
+          "display_url": "api-docs.deepseek.com › updates",
+          "title": "Change Log | DeepSeek API Docs",
+          "snippet": "For more details, please refer to this documentation. The official release of the DeepSeek-V4-Flash API is now in public beta. The API calling method remains unchanged — simply set the model name to deepseek-v4-flash to use the latest version.",
+          "engine": [
+            "swisscows",
+            "serper"
+          ],
+          "score": 0.4939,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "2 引擎共识",
+            "来源 2 个引擎"
+          ],
+          "favicon": "https://api-docs.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_4",
+          "url": "https://deepseekai.guide/api/deepseek-api-documentation/",
+          "display_url": "deepseekai.guide › api › deepseek-api-documentation",
+          "title": "DeepSeek API Documentation: V4 Reference Guide",
+          "snippet": "DeepSeek API documentation guide for deepseek-flash and deepseek-v4-pro: endpoints, thinking mode, peak and off-peak pricing, limits and code samples.",
+          "engine": [
+            "duckduckgo web",
+            "swisscows"
+          ],
+          "score": 0.464,
+          "risk": 0.1,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "2 引擎共识",
+            "路径含长随机串"
+          ],
+          "favicon": "https://deepseekai.guide/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_51",
+          "url": "https://news.ycombinator.com/item?id=43950087",
+          "display_url": "news.ycombinator.com › item",
+          "title": "DeepSeek's documentation has a different problem, which is",
+          "snippet": "DeepSeek s documentation has a different problem, which is that there are spelling errors and weird grammatical constructions everywhere:",
+          "engine": [
+            "mojeek"
+          ],
+          "score": 0.4172,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://news.ycombinator.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_16",
+          "url": "https://platform.deepseek.com/sign_in",
+          "display_url": "platform.deepseek.com › sign_in",
+          "title": "DeepSeek",
+          "snippet": "Join DeepSeek API platform to access our AI models, developer resources and API documentation...",
+          "engine": [
+            "360search"
+          ],
+          "score": 0.4093,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://platform.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_64",
+          "url": "https://www.firecrawl.dev/blog/deepseek-rag-documentation-assistant",
+          "display_url": "www.firecrawl.dev › blog › deepseek-rag-documentation-assistant",
+          "title": "Building an Intelligent Code Documentation RAG Assistant with DeepSeek and Firecrawl",
+          "snippet": "A guide to building a documentation assistant that uses DeepSeek and RAG to intelligently answer questions about any documentation website.",
+          "engine": [
+            "naver"
+          ],
+          "score": 0.4045,
+          "risk": 0.1,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "路径含长随机串"
+          ],
+          "favicon": "https://www.firecrawl.dev/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        }
+      ],
+      "weak": [
+        {
+          "id": "r_77",
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V3/blob/main/README_WEIGHTS.md",
+          "display_url": "huggingface.co › main › README_WEIGHTS.md",
+          "title": "README_WEIGHTS.md · deepseek-ai/DeepSeek-V3 at main",
+          "snippet": "Instructions to use deepseek-ai/DeepSeek-V3 with libraries, inference providers, notebooks, and local apps.DeepSeek-V3 Weight File Documentation. New Fields in config.json.",
+          "engine": [
+            "yandex"
+          ],
+          "score": 0.2697,
+          "risk": 0.0,
+          "reasons": [
+            "仅弱匹配"
+          ],
+          "favicon": "https://huggingface.co/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_47",
+          "url": "https://github.com/",
+          "display_url": "github.com",
+          "title": "DeepSeek-R1/DeepSeek_R1.pdf at main · deepseek-ai/DeepSeek-R1 · GitHub",
+          "snippet": "deepseek-ai DeepSeek-R1 Code Code Issues Issues 21 Pull requests Pull requests 24 Actions Actions Projects Projects Security and quality Security and quality Insights Insights DeepSeek-R1 / DeepSeek_R1.pdf stack-heap-overflow Update README.md & DeepSeek_R1.pdf last year e06298d · last yearHistory 1.27 MB",
+          "engine": [
+            "naver"
+          ],
+          "score": 0.25,
+          "risk": 0.0,
+          "reasons": [
+            "权威域名"
+          ],
+          "favicon": "https://github.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_66",
+          "url": "https://arxiv.org/pdf/2412.19437",
+          "display_url": "arxiv.org › pdf › 2412.19437",
+          "title": "DeepSeek-V3 Technical Report - arXiv",
+          "snippet": "2025年2月18日 ... (2024), we implement the document packing method for data integrity but do not incorporate cross-sample attention masking during training.",
+          "engine": [
+            "google cse"
+          ],
+          "score": 0.25,
+          "risk": 0.0,
+          "reasons": [
+            "权威域名"
+          ],
+          "favicon": "https://arxiv.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_62",
+          "url": "https://www.DeepSeek.org/",
+          "display_url": "www.deepseek.org",
+          "title": "DEEPSEEK",
+          "snippet": "DEEPSEEK pulls and formats document information for accurate review, citation and auditability. ... DEEPSEEK remembers the location of the ...",
+          "engine": [
+            "mojeek"
+          ],
+          "score": 0.237,
+          "risk": 0.0,
+          "reasons": [
+            "仅弱匹配"
+          ],
+          "favicon": "https://www.deepseek.org/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_89",
+          "url": "https://milvus.io/ko",
+          "display_url": "milvus.io › ko",
+          "title": "DeepSeek - Milvus 문서화",
+          "snippet": "개발자는DeepSeek를 통해 고성능 언어 모델을 사용해 AI 애플리케이션을 구축하고 확장할 수 있습니다. 강력한 추론 및 검색 작업을 위한 효율적인 추론, 유연한 API, 고급 전문가 혼합(MoE) 아키텍처를 제공합니다. 이 튜토리얼에서는 Milvus와 DeepSeek를 사용해 검색 증강 생성(RAG) 파이프라인을 구축하는 방법을 보여드립니다. ! pip install --upgrade pymilvus[model] milvus-lite openai requests tqdm Goog....",
+          "engine": [
+            "naver"
+          ],
+          "score": 0.2369,
+          "risk": 0.0,
+          "reasons": [
+            "仅弱匹配"
+          ],
+          "favicon": "https://milvus.io/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        }
+      ]
+    },
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "mojeek",
+        "naver",
+        "duckduckgo",
+        "yandex",
+        "yahoo",
+        "google cse",
+        "swisscows",
+        "duckduckgo web",
+        "sogou",
+        "bing",
+        "360search",
+        "serper"
+      ],
+      "unresponsive": [],
+      "provider": "searxng",
+      "cached": true,
+      "ms": 1,
+      "total": 17,
+      "upstream_total": 101,
+      "filtered": {
+        "dup": 11,
+        "risk": 0
+      },
+      "official": 3,
+      "sid": "s_73437ca1dc623c8217f605d96918ab29"
+    },
+    "official": {
+      "key": "deepseek",
+      "brand": "DeepSeek",
+      "entries": [
+        {
+          "id": "r_45",
+          "url": "https://www.deepseek.com/",
+          "display_url": "www.deepseek.com",
+          "title": "DeepSeek | Into the Unknown",
+          "snippet": "DeepSeek is an AI research company focused on building world-leading general artificial intelligence. We develop and open-source frontier LLMs including ...",
+          "engine": [
+            "google cse"
+          ],
+          "score": 0.2358,
+          "risk": 0.0,
+          "reasons": [
+            "仅弱匹配"
+          ],
+          "favicon": "https://www.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "role": "home",
+          "label": "官网",
+          "host": "www.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08"
+        },
+        {
+          "id": "r_1",
+          "url": "https://api-docs.deepseek.com/",
+          "display_url": "api-docs.deepseek.com",
+          "title": "Your First API Call | DeepSeek API Docs",
+          "snippet": "Your First API Call The DeepSeek API uses an API format compatible with OpenAI/Anthropic. By modifying the configuration, you can use the OpenAI/Anthropic SDK or softwares compatible with the OpenAI/Anthropic API to access the DeepSeek API.",
+          "engine": [
+            "mojeek",
+            "naver",
+            "duckduckgo",
+            "yandex",
+            "yahoo",
+            "google cse",
+            "swisscows",
+            "duckduckgo web",
+            "sogou"
+          ],
+          "score": 0.3853,
+          "risk": 0.0,
+          "reasons": [
+            "9 引擎共识"
+          ],
+          "favicon": "https://api-docs.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "role": "docs",
+          "label": "API 文档",
+          "host": "api-docs.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08"
+        },
+        {
+          "id": "r_2",
+          "url": "https://platform.deepseek.com/",
+          "display_url": "platform.deepseek.com",
+          "title": "DeepSeek Platform",
+          "snippet": "Join DeepSeek API platform to access our AI models, developer resources and API documentation.",
+          "engine": [
+            "naver",
+            "swisscows",
+            "google cse",
+            "serper"
+          ],
+          "score": 0.5581,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "4 引擎共识",
+            "来源 4 个引擎"
+          ],
+          "favicon": "https://platform.deepseek.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null,
+          "role": "console",
+          "label": "开放平台",
+          "host": "platform.deepseek.com",
+          "source": "https://www.deepseek.com/",
+          "verified": "2026-11-08"
+        }
+      ]
+    }
+  },
+  "tutorial": {
+    "parsed": {
+      "q": "deepseek how to use",
+      "engine": "default",
+      "region": null,
+      "router": "default",
+      "expanded": []
+    },
+    "groups": {
+      "strong": [],
+      "related": [
+        {
+          "id": "r_11",
+          "url": "https://chat-deepai.com/blog/how-to-use-deepseek",
+          "display_url": "chat-deepai.com › blog › how-to-use-deepseek",
+          "title": "The Complete Guide to DeepSeek: How to Use DeepSeek | Blog",
+          "snippet": "Discover DeepSeek AI, the leading open-source large language model. Explore DeepSeek-V3 and DeepSeek Coder features, learn how to use the chat interface, and access the ultimate guide to this powerful ChatGPT alternative. Start your AI journey here.",
+          "engine": [
+            "duckduckgo",
+            "duckduckgo web",
+            "yahoo"
+          ],
+          "score": 0.5254,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识"
+          ],
+          "favicon": "https://chat-deepai.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_1",
+          "url": "https://techjacksolutions.com/ai-tools/deepseek/how-to-use-deepseek/",
+          "display_url": "techjacksolutions.com › deepseek › how-to-use-deepseek",
+          "title": "How to Use DeepSeek: Complete Guide (2026) - techjacksolutions.com",
+          "snippet": "2026年5月7日 ... How to Use DeepSeek: Complete Guide (2026) · Step 1: Access the Free Web App · Step 2: Set Up API Access · Step 3: Choose the Right Reasoning ...",
+          "engine": [
+            "duckduckgo",
+            "duckduckgo web",
+            "yahoo",
+            "google cse"
+          ],
+          "score": 0.5248,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "4 引擎共识"
+          ],
+          "favicon": "https://techjacksolutions.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_3",
+          "url": "https://www.youtube.com/watch?v=_8tcA9-14JQ",
+          "display_url": "www.youtube.com › watch",
+          "title": "DeepSeek Tutorial: How to Use Deep Seek For Beginners - YouTube",
+          "snippet": "In this video, I'm giving you a complete crash course on how to use DeepSeek AI, a free AI tool as powerful as ChatGPT's paid version. We'll go into 15 mind-...",
+          "engine": [
+            "duckduckgo",
+            "duckduckgo web",
+            "google cse",
+            "serper"
+          ],
+          "score": 0.5234,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "4 引擎共识",
+            "来源 4 个引擎"
+          ],
+          "favicon": "https://www.youtube.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_2",
+          "url": "https://www.larksuite.com/en_us/blog/how-to-use-deepseek-ai",
+          "display_url": "www.larksuite.com › blog › how-to-use-deepseek-ai",
+          "title": "How to Use DeepSeek AI: A Comprehensive Guide - Lark",
+          "snippet": "DeepSeek AI is an open-source large language model (LLM) designed to assist with a variety of tasks, from code completion to document generation. Unlike many AI tools that require subscriptions or constant internet connectivity, DeepSeek is free to use and can operate offline, making it a versatile option for users who value privacy and cost-effectiveness. There are also paid Deepseek models ...",
+          "engine": [
+            "duckduckgo",
+            "yahoo",
+            "google cse",
+            "swisscows",
+            "duckduckgo web",
+            "serper"
+          ],
+          "score": 0.5178,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "6 引擎共识",
+            "来源 6 个引擎"
+          ],
+          "favicon": "https://www.larksuite.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_10",
+          "url": "https://deepseekai.guide/tutorials/how-to-use-deepseek/",
+          "display_url": "deepseekai.guide › tutorials › how-to-use-deepseek",
+          "title": "How to Use DeepSeek in 2026: Chat, App and API Walkthrough",
+          "snippet": "Sign in at platform.deepseek.com and create a key on its API keys page (the link DeepSeek’s own docs use). Store the key somewhere safe as soon as you create it, and keep it out of source code.",
+          "engine": [
+            "duckduckgo",
+            "duckduckgo web",
+            "swisscows",
+            "yahoo"
+          ],
+          "score": 0.5177,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "4 引擎共识"
+          ],
+          "favicon": "https://deepseekai.guide/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_16",
+          "url": "https://www.layer3labs.io/guides/how-to-use-deepseek",
+          "display_url": "www.layer3labs.io › guides › how-to-use-deepseek",
+          "title": "How to Use DeepSeek R1: Web, App, API and Local",
+          "snippet": "Sep 7, 2026 · DeepSeek is a family of AI models developed by a Chinese lab. You can use it for free in a browser or mobile app, connect through an API, or run it on your own computer. Each option serves a different need. This guide explains each approach in plain language.",
+          "engine": [
+            "yahoo",
+            "duckduckgo web",
+            "serper"
+          ],
+          "score": 0.515,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识",
+            "来源 3 个引擎"
+          ],
+          "favicon": "https://www.layer3labs.io/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_12",
+          "url": "https://www.reddit.com/r/DeepSeek/comments/1u3jlv6/how_do_you_personally_use_deepseek/",
+          "display_url": "www.reddit.com › 1u3jlv6 › how_do_you_personally_use_deepseek",
+          "title": "r/DeepSeek on Reddit: How do YOU personally use DeepSeek?",
+          "snippet": "How do you enable deepseeks to do that? That sounds really interesting. ... Depends on the game, stuff like Minecraft is super easy, you literally point your ide to a directory and say \"I want to make mod for xyz here is a .MD for the design of it\" the design you work in a different context. Spin up your favorite chatbot and say \"I want to make a markdown file design document to pass on to another llm to make a mod for xyz game\" ... I use for it work and personal coding.",
+          "engine": [
+            "swisscows",
+            "google cse",
+            "serper"
+          ],
+          "score": 0.5012,
+          "risk": 0.1,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "3 引擎共识",
+            "来源 3 个引擎"
+          ],
+          "favicon": "https://www.reddit.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_54",
+          "url": "https://www.youtube.com/watch?v=deaIOkGYopg",
+          "display_url": "www.youtube.com › watch",
+          "title": "How to Use DeepSeek - YouTube",
+          "snippet": "2025年1月30日 ... the question must have an answer in under 100 words\" the AI will offer you a question. then, you ask each AI that question, and ask the AI to ...",
+          "engine": [
+            "google cse",
+            "serper"
+          ],
+          "score": 0.4704,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "2 引擎共识",
+            "来源 2 个引擎"
+          ],
+          "favicon": "https://www.youtube.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_5",
+          "url": "https://www.youtube.com/watch?v=ExhKoFKEvh8",
+          "display_url": "www.youtube.com › watch",
+          "title": "How To Use DeepSeek For Beginners - YouTube",
+          "snippet": "2025年1月29日 ... subscribe for more ▻ https://bit.ly/3zlUmiS Turn your AI coding agent into a senior engineer (boost os): https://boostmyagent.com tech news ...",
+          "engine": [
+            "yandex",
+            "google cse"
+          ],
+          "score": 0.47,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "2 引擎共识"
+          ],
+          "favicon": "https://www.youtube.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_56",
+          "url": "https://ai.nd.edu/news/deepseek-explained-what-is-it-and-is-it-safe-to-use/",
+          "display_url": "ai.nd.edu › news › deepseek-explained-what-is-it-and-is-it-safe-to-use",
+          "title": "DeepSeek Explained: What Is It and Is It Safe To Use? | News | AI@ND",
+          "snippet": "2025年1月31日 ... Domestic chat services like San Francisco-based Perplexity have started to offer DeepSeek as a search option, presumably running it in their own ...",
+          "engine": [
+            "google cse"
+          ],
+          "score": 0.4637,
+          "risk": 0.1,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "权威域名",
+            "路径含长随机串"
+          ],
+          "favicon": "https://ai.nd.edu/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        }
+      ],
+      "weak": [
+        {
+          "id": "r_38",
+          "url": "https://www.360kuai.com/pc/906ad1e5ccb381398?cota=3&kuai_so=1&sign=360_57c3bbd1&refer_scene=so_1",
+          "display_url": "www.360kuai.com › pc › 906ad1e5ccb381398",
+          "title": "Yiwu, China: Merchants Use AI Tools like DeepSeek to Do Business",
+          "snippet": "Fu Jiangyan, a merchant in Yiwu International Trade City, Zhejiang, used tools such as DeepSeek and Xiaoshang AI Video Creation to g...",
+          "engine": [
+            "360search"
+          ],
+          "score": 0.2911,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://www.360kuai.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_42",
+          "url": "https://www.modellix.ai/blog/deepseek-harness",
+          "display_url": "www.modellix.ai › blog › deepseek-harness",
+          "title": "DeepSeek Harness: What It Is, How to Run It",
+          "snippet": "This guide covers what dsh is, how to run it, and the question almost every tutorial skips — where its models come from. If you have used Claude Code or Codex, the first five minutes with DeepSeek Harness will feel wrong, and that feeling is the point.",
+          "engine": [
+            "yandex"
+          ],
+          "score": 0.2897,
+          "risk": 0.0,
+          "reasons": [
+            "标题与摘要命中查询词"
+          ],
+          "favicon": "https://www.modellix.ai/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_47",
+          "url": "https://www.layer3labs.io/guides/how-to-run-deepseek-locally",
+          "display_url": "www.layer3labs.io › guides › how-to-run-deepseek-locally",
+          "title": "How to Run DeepSeek Locally: Complete Setup Guide (2026)",
+          "snippet": "Learn how to run DeepSeek locally: pick the right size from distilled 7B to the full 671B MoE, set up quantization, choose Ollama or vLLM, and self-host...",
+          "engine": [
+            "duckduckgo web"
+          ],
+          "score": 0.2792,
+          "risk": 0.1,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "路径含长随机串"
+          ],
+          "favicon": "https://www.layer3labs.io/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_74",
+          "url": "https://www.remogrid.com/blog/ai-tools/how-to-run-deepseek-r1-locally-on-laptop",
+          "display_url": "www.remogrid.com › ai-tools › how-to-run-deepseek-r1-locally-on-laptop",
+          "title": "How to Run DeepSeek R1 Locally on Laptop: Complete Guide",
+          "snippet": "Run DeepSeek R1 locally on your laptop with zero cloud fees. Step-by-step install using Ollama and LM Studio for 1.5B to 14B models.",
+          "engine": [
+            "yandex"
+          ],
+          "score": 0.2755,
+          "risk": 0.1,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "路径含长随机串"
+          ],
+          "favicon": "https://www.remogrid.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        },
+        {
+          "id": "r_72",
+          "url": "https://www.analyticsvidhya.com/blog/2025/01/how-deepseek-trained-ai-30-times-cheaper/",
+          "display_url": "www.analyticsvidhya.com › 01 › how-deepseek-trained-ai-30-times-cheaper",
+          "title": "How DeepSeek Trained AI 30 Times Cheaper?",
+          "snippet": "DeepSeek found a way to compress these key-value pairs efficiently, reducing storage without sacrificing performance. How it Works? The model compresses key and value vectors using a down-projection matrix, reducing their size while preserving essential information.",
+          "engine": [
+            "yandex"
+          ],
+          "score": 0.2715,
+          "risk": 0.1,
+          "reasons": [
+            "标题与摘要命中查询词",
+            "路径含长随机串"
+          ],
+          "favicon": "https://www.analyticsvidhya.com/favicon.ico",
+          "published": null,
+          "read_minutes": null,
+          "go_url": null
+        }
+      ]
+    },
+    "meta": {
+      "status": "ok",
+      "engines": [
+        "duckduckgo",
+        "duckduckgo web",
+        "yahoo",
+        "google cse",
+        "swisscows",
+        "yandex",
+        "360search",
+        "naver",
+        "bing",
+        "mojeek",
+        "serper"
+      ],
+      "unresponsive": [
+        "sogou(unexpected crash)"
+      ],
+      "provider": "searxng",
+      "cached": true,
+      "ms": 1,
+      "total": 15,
+      "upstream_total": 90,
+      "filtered": {
+        "dup": 6,
+        "risk": 0
+      },
+      "official": 0,
+      "sid": "s_afb8e78d8653af8d0818b10c944a9335"
+    },
+    "official": null
+  }
+}

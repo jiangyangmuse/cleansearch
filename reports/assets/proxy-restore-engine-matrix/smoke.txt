@@ -1,0 +1,21 @@
+
+Check            Pass Detail
+-----            ---- ------
+health 200       True provider=searxng web_built=True blocklist=3
+有结果           True total=20 upstream=80
+三档分组         True strong/related/weak=5/10/5
+缓存命中         True cached=True total=20
+后缀路由         True engine=google router=suffix q=python 文档
+C g 不误触发     True router=default
+黑名单拦截      False filtered.risk=0 upstream=71
+零结果          False total=16
+上游不可用      False code=
+侧栏总结 SSE    False provider=openai model=qwen3.5-4b-local:latest cites=10 chunks=203
+过期快照 404     True status=404
+书签接口         True total=1 returned=1 groups=0 fts=True
+书签导出         True bytes=325
+内网地址拦截     True status=403
+跨域 token 拦截  True status=401
+同源首页         True bytes=568
+
+冒烟失败

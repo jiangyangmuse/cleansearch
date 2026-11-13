@@ -1,3 +1,4 @@
+import asyncio
 import json
 
 import httpx
@@ -72,6 +73,44 @@ def test_literal_query_preserves_translated_suffix_in_both_routes(client, monkey
     assert (parsed["q"], parsed["engine"], parsed["router"]) == ("Nintendo ds", "default", "default")
     assert client.post("/api/ai-search", json=query).status_code == 200
     assert received == ["Nintendo ds"]
+
+
+@pytest.mark.asyncio
+async def test_ai_search_disconnect_cancels_running_provider(monkeypatch):
+    started = asyncio.Event()
+    cancelled = asyncio.Event()
+
+    class SlowProvider:
+        name = "slow"
+
+        async def search(self, query):
+            started.set()
+            try:
+                await asyncio.Future()
+            finally:
+                cancelled.set()
+
+    monkeypatch.setitem(app.dependency_overrides, get_ai_search_provider, SlowProvider)
+    messages = []
+
+    async def receive():
+        if not messages:
+            messages.append("body")
+            return {"type": "http.request", "body": b'{"q":"python ds"}', "more_body": False}
+        await started.wait()
+        return {"type": "http.disconnect"}
+
+    async def send(message):
+        pass
+
+    scope = {
+        "type": "http", "asgi": {"version": "3.0", "spec_version": "2.4"},
+        "http_version": "1.1", "method": "POST", "scheme": "http", "path": "/api/ai-search",
+        "root_path": "", "query_string": b"", "server": ("127.0.0.1", 80),
+        "headers": [(b"host", b"127.0.0.1"), (b"content-type", b"application/json")],
+    }
+    await asyncio.wait_for(app(scope, receive, send), timeout=5)
+    assert started.is_set() and cancelled.is_set()
 
 
 @pytest.mark.parametrize("url", [

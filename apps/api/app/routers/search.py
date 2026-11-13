@@ -11,22 +11,28 @@ import sqlite3
 import time
 from functools import lru_cache
 from pathlib import Path
+from urllib.parse import urlsplit
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import ValidationError
 from starlette.concurrency import run_in_threadpool
 
 from app.config import get_settings
 from app.core.aggregator import Aggregator, get_aggregator
 from app.core.ai_search import WebSearchProvider, get_ai_search_provider, rank_candidates
+from app.core.conversation_search import (
+    ConversationGroup, ConversationRequest, ConversationResponse, plan_search,
+)
+from app.core.engine_preferences import EnginePreferences, NoSelectedEngines, read_engine_preferences
+from app.core.errors import SearchError, UpstreamUnavailable
 from app.core.llm import LLMError
-from app.core.model_routing import ModelActionError, route_model
+from app.core.model_routing import ModelActionError, ModelRouteError, configured_client, imported_client, route_model
 from app.core.model_settings import ModelEntry, ModelSettings, read_model_settings
-from app.core.normalize import dedupe_results, dedupe_similar_titles
+from app.core.normalize import apply_dedupe, canonical_url, dedupe_results, dedupe_similar_titles
+from app.core.query_parser import Parsed
 from app.core.expand import expand_aliases, upstream_query
 from app.core.official import (collect_official, brand_for_query, catalog_revision,
                                directory_links, unverified_home_claim, ROLE_ORDER)
-from app.core.query_parser import parse_query
 from app.core.redirect import build_go_path
 from app.core.fetch import SafeFetcher
 from app.core.rdap import DomainAgeStore, enrich as enrich_domain_age
@@ -44,12 +50,34 @@ from app.schemas import (
     OfficialSection,
     ParsedQuery,
     Result,
+    SearchFilters,
     SearchMeta,
     SearchRequest,
     SearchResponse,
 )
 
 router = APIRouter(prefix="/api", tags=["search"])
+
+
+def _filters(payload: SearchRequest) -> SearchFilters:
+    """把请求里的筛选条件回显到 meta，前端切页/刷新时可直接还原。"""
+    return SearchFilters(
+        time_range=payload.opts.time_range,
+        language=payload.opts.language,
+        site=payload.opts.site,
+        dedupe=payload.opts.dedupe,
+    )
+
+
+def _matches_site(url: str, target: str | None) -> bool:
+    if target is None:
+        return True
+    try:
+        host = urlsplit(url).hostname or ""
+    except ValueError:
+        return False
+    host = host.lower().removesuffix(".")
+    return host == target or host.endswith("." + target)
 
 
 def _sid() -> str:
@@ -114,17 +142,98 @@ async def _attach_go_links(results: list[Result], token_path: Path) -> None:
         item.go_url = build_go_path(item.url, secret)
 
 
+def _safe_ai_results(items: list[Result], query: str, safety: SafetyScorer) -> list[Result]:
+    brand = brand_for_query(query)
+    results = []
+    for item in items:
+        report = safety.evaluate(item.url)
+        if report.blocked or (brand is not None and unverified_home_claim(brand, item)):
+            continue
+        results.append(item.model_copy(update={"risk": report.risk, "reasons": [*item.reasons, *report.reasons]}))
+    return dedupe_results(results)[0]
+
+
+@router.post("/conversation-search", response_model=ConversationResponse)
+async def conversation_search(
+    payload: ConversationRequest,
+    aggregator: Aggregator = Depends(get_aggregator),
+    safety: SafetyScorer = Depends(get_safety),
+    model_settings: ModelSettings = Depends(read_model_settings),
+    engine_preferences: EnginePreferences = Depends(read_engine_preferences),
+) -> ConversationResponse:
+    selected = engine_preferences.selected(Parsed(q=payload.message), None)
+    if selected == ():
+        raise NoSelectedEngines("默认搜索引擎已全部关闭，请先在设置中开启引擎")
+
+    async def builtin():
+        client = configured_client()
+        if client is None:
+            raise ModelRouteError("CONVERSATION_MODEL_REQUIRED", "请在设置的「模型填写」中分配 AI 检索模型")
+        return await plan_search(client, payload), client.model
+
+    async def imported(model: ModelEntry):
+        return await plan_search(imported_client(model), payload)
+
+    try:
+        directions, model = await route_model(model_settings, "search", imported, builtin)
+    except LLMError as exc:
+        raise ModelActionError(exc) from exc
+
+    async def retrieve(query: str) -> list[Result] | SearchError:
+        selection = {} if selected is None else {"selected_engines": selected}
+        try:
+            outcome = await aggregator.search(q=query, allow_paid=False, **selection)
+        except SearchError as exc:
+            return exc
+        items = _safe_ai_results(outcome.results, query, safety)
+        reports = {item.id: item.reasons for item in items}
+        score_results(query, items)
+        for item in items:
+            item.reasons = list(dict.fromkeys([*item.reasons, *reports[item.id]]))
+        return sorted(items, key=lambda item: item.score, reverse=True)
+
+    outcomes = await asyncio.gather(*(retrieve(direction.query) for direction in directions))
+    if outcomes and all(isinstance(outcome, SearchError) for outcome in outcomes):
+        raise UpstreamUnavailable("所有搜索方向暂时不可用，请稍后重试") from outcomes[0]
+
+    seen = set()
+    groups = []
+    for index, (direction, outcome) in enumerate(zip(directions, outcomes, strict=True), 1):
+        results = []
+        error = None
+        if isinstance(outcome, SearchError):
+            error = outcome.message
+        else:
+            for item in outcome:
+                key = canonical_url(item.url)
+                if key in seen:
+                    continue
+                seen.add(key)
+                item.id = f"conversation_{index}_{len(results) + 1}"
+                results.append(item)
+                if len(results) == 5:
+                    break
+        groups.append(ConversationGroup(**direction.model_dump(), results=results, error=error))
+    await _attach_go_links([item for group in groups for item in group.results], get_settings().api_token_path)
+    return ConversationResponse(model=model, groups=groups)
+
+
 @router.post("/ai-search", response_model=AISearchResponse)
 async def ai_search(
     payload: SearchRequest,
+    request: Request,
     provider: WebSearchProvider = Depends(get_ai_search_provider),
     safety: SafetyScorer = Depends(get_safety),
     cache: Cache | None = Depends(get_cache),
     model_settings: ModelSettings = Depends(read_model_settings),
     aggregator: Aggregator = Depends(get_aggregator),
+    engine_preferences: EnginePreferences = Depends(read_engine_preferences),
 ) -> AISearchResponse:
     settings = get_settings()
-    parsed = parse_query(payload.q, literal=payload.opts.literal)
+    parsed, shortcut = engine_preferences.parse(payload.q, literal=payload.opts.literal)
+    if shortcut and shortcut.kind == "website":
+        return AISearchResponse(provider="网页直达", results=[])
+    selected = engine_preferences.selected(parsed, shortcut)
     query = parsed.q
     if model_settings.routed("search"):
         cache = None
@@ -145,26 +254,16 @@ async def ai_search(
             await _attach_go_links(response.results, settings.api_token_path)
             return response
 
-    brand = brand_for_query(query)
-
-    def filtered(items: list[Result]) -> list[Result]:
-        results = []
-        for item in items:
-            report = safety.evaluate(item.url)
-            if report.blocked or (brand is not None and unverified_home_claim(brand, item)):
-                continue
-            results.append(item.model_copy(update={"risk": report.risk, "reasons": [*item.reasons, *report.reasons]}))
-        return dedupe_results(results)[0]
-
     async def builtin() -> tuple[list[Result], str]:
-        return filtered(await provider.search(query)), provider.name
+        return _safe_ai_results(await provider.search(query), query, safety), provider.name
 
     async def retrieve() -> list[Result]:
+        selection = {} if selected is None else {"selected_engines": selected}
         response = await aggregator.search(
             q=query, region=parsed.region or payload.region, safe=payload.opts.safe,
-            fixture=payload.opts.fixture, allow_paid=False,
+            fixture=payload.opts.fixture, allow_paid=False, **selection,
         )
-        return filtered(response.results)
+        return _safe_ai_results(response.results, query, safety)
 
     candidates: asyncio.Task[list[Result]] | None = None
 
@@ -174,10 +273,25 @@ async def ai_search(
             candidates = asyncio.create_task(retrieve())
         return await rank_candidates(model, query, await candidates)
 
+    async def wait_for_disconnect() -> None:
+        while (await request.receive())["type"] != "http.disconnect":
+            pass
+
+    # JSON 响应不会自动取消处理函数，客户端停止时同时结束上游等待。
+    search_task = asyncio.create_task(route_model(model_settings, "search", imported, builtin))
+    disconnect_task = asyncio.create_task(wait_for_disconnect())
     try:
-        results, used = await route_model(model_settings, "search", imported, builtin)
+        done, _ = await asyncio.wait((search_task, disconnect_task), return_when=asyncio.FIRST_COMPLETED)
+        if disconnect_task in done:
+            disconnect_task.result()
+            raise HTTPException(status_code=499, detail="客户端已停止 AI 检索")
+        results, used = search_task.result()
     except LLMError as exc:
         raise ModelActionError(exc) from exc
+    finally:
+        search_task.cancel()
+        disconnect_task.cancel()
+        await asyncio.gather(search_task, disconnect_task, return_exceptions=True)
     for item in results:
         item.id = f"ai_{item.id}"
     response = AISearchResponse(provider=used, results=results)
@@ -196,22 +310,32 @@ async def search(
     cache: Cache | None = Depends(get_cache),
     age_store: DomainAgeStore | None = Depends(get_age_store),
     fetcher: SafeFetcher = Depends(get_fetcher),
+    engine_preferences: EnginePreferences = Depends(read_engine_preferences),
 ) -> SearchResponse:
     settings = get_settings()
     started = time.perf_counter()
-    parsed = parse_query(payload.q, literal=payload.opts.literal)
+    parsed, shortcut = engine_preferences.parse(payload.q, literal=payload.opts.literal)
     region = parsed.region or (payload.region or "").strip() or None
     mode = settings.expansion_mode if settings.expansion_mode in ("off", "rank", "rewrite") else "rank"
     aliases = [] if mode == "off" else expand_aliases(parsed.q)
     query_for_upstream = upstream_query(parsed.q, aliases, mode)
     parsed_response = ParsedQuery(
         q=parsed.q,
-        engine=parsed.engine,
+        engine=shortcut.target if shortcut and shortcut.kind == "engine" else parsed.engine,
         region=region,
         router=parsed.router,
         expanded=aliases,
+        custom_code=parsed.custom_code,
     )
     provider = aggregator.provider_name
+    if shortcut and shortcut.kind == "website":
+        parsed_response.open_url = shortcut.website_url(parsed.q)
+        return SearchResponse(
+            parsed=parsed_response, groups=Groups(),
+            meta=SearchMeta(status="empty", provider=provider, filters=_filters(payload), sid=_sid()),
+        )
+    selected = engine_preferences.selected(parsed, shortcut)
+    selection = {} if selected is None else {"selected_engines": selected}
 
     qkey = None
     revision = ""
@@ -224,6 +348,7 @@ async def search(
             payload.page,
             payload.opts.safe,
             payload.opts.fixture,
+            filters=(payload.opts.time_range, payload.opts.language, payload.opts.site, payload.opts.dedupe),
             namespace=(
                 provider, settings.searxng_url if provider == "searxng" else "", revision,
                 mode, getattr(aggregator, "paid_provider", ""),
@@ -231,6 +356,7 @@ async def search(
                 "rdap-v2" if settings.rdap_enabled else "rdap-off",
                 catalog_revision(),
                 "result-category-v2",
+                *(("selected-engines:" + ",".join(selected),) if selected is not None else ()),
             ),
         )
         cached = await run_in_threadpool(cache.get_search, qkey)
@@ -249,7 +375,8 @@ async def search(
                     engines=cached["engines"], unresponsive=cached["unresponsive"], provider=provider,
                     cached=True, ms=int((time.perf_counter() - started) * 1000), total=len(results),
                     upstream_total=cached["upstream_total"], filtered=cached["filtered"],
-                    official=len(entries), directory=sum(entry.origin == "directory" for entry in entries), sid=_sid(),
+                    official=len(entries), directory=sum(entry.origin == "directory" for entry in entries),
+                    filters=_filters(payload), sid=_sid(),
                 )
             except (KeyError, ValidationError):
                 pass  # 可丢弃的缓存，损坏时重新检索
@@ -269,11 +396,17 @@ async def search(
         safe=payload.opts.safe,
         engine=parsed.engine,
         fixture=payload.opts.fixture,
+        time_range=payload.opts.time_range,
+        language=payload.opts.language,
+        site=payload.opts.site,
+        **selection,
     )
 
     kept = []
     blocked = 0
     for item in outcome.results:
+        if not _matches_site(item.url, payload.opts.site):
+            continue
         report = safety.evaluate(item.url)
         item.risk = report.risk
         item.reasons = list(report.reasons)
@@ -294,7 +427,7 @@ async def search(
                     survivors.append(item)
             kept = survivors
 
-    deduped, url_duplicates = dedupe_results(kept)
+    deduped, url_duplicates = apply_dedupe(kept, "off" if payload.opts.dedupe == "off" else "normal")
     # 身份精确匹配先于标题相似合并，避免第三方长标题吞掉已核验入口。
     brand = brand_for_query(parsed.q)
     official = None
@@ -303,7 +436,12 @@ async def search(
         official, official_results = collect_official(brand, deduped)
         taken = {item.id for item in official_results}
         deduped = [item for item in deduped if item.id not in taken]
-    deduped, title_duplicates = dedupe_similar_titles(deduped)
+    title_duplicates = 0
+    if payload.opts.dedupe == "strict":
+        # 官方身份识别先于按标题合并，避免站外同名页吞掉已核验入口。
+        deduped, exact_duplicates = apply_dedupe(deduped, "strict", assign_ids=False)
+        deduped, near_duplicates = dedupe_similar_titles(deduped)
+        title_duplicates = exact_duplicates + near_duplicates
     scoring_candidates = deduped + official_results
     risk_reasons = {item.id: list(item.reasons) for item in scoring_candidates}
     score_results(parsed.q, scoring_candidates, aliases)
@@ -316,9 +454,11 @@ async def search(
                 item.reasons.append(item.brand_warning)
     if official_results:
         official, _ = collect_official(brand, official_results)
-    if brand is not None and payload.page == 1:
+    if brand is not None and payload.page == 1 and not (payload.opts.time_range or payload.opts.language):
         additions = []
         for link in directory_links(brand, official):
+            if not _matches_site(link.url, payload.opts.site):
+                continue
             report = safety.evaluate(link.url)
             if not report.blocked:
                 link.risk, link.reasons = report.risk, list(report.reasons)
@@ -377,6 +517,7 @@ async def search(
             filtered=filtered,
             official=len(official.entries) if official else 0,
             directory=sum(entry.origin == "directory" for entry in entries),
+            filters=_filters(payload),
             sid=sid,
         ),
         official=official,

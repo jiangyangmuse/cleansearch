@@ -1,0 +1,15 @@
+{
+  "docker_tables_and_token_unchanged": true,
+  "native_tables_unchanged": true,
+  "docker_counts": {
+    "bookmarks": 2,
+    "bookmark_groups": 1,
+    "bookmark_tags": 0
+  },
+  "native_counts": {
+    "bookmarks": 0,
+    "bookmark_groups": 0,
+    "bookmark_tags": 0
+  },
+  "native_token_unchanged": true
+}

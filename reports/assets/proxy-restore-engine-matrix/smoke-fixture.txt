@@ -1,0 +1,21 @@
+
+Check           Pass Detail
+-----           ---- ------
+health 200      True provider=fixture web_built=True blocklist=3
+有结果          True total=10 upstream=11
+三档分组        True strong/related/weak=3/6/1
+缓存命中        True cached=True total=10
+后缀路由        True engine=google router=suffix q=python 文档
+C g 不误触发    True router=default
+黑名单拦截      True filtered.risk=1 upstream=5
+零结果          True total=0
+上游不可用      True code=UPSTREAM_UNAVAILABLE
+侧栏总结 SSE    True provider=openai model=qwen3.5-4b-local:latest cites=10 chunks=321
+过期快照 404    True status=404
+书签接口        True total=1 returned=1 groups=0 fts=True
+书签导出        True bytes=325
+内网地址拦截    True status=403
+跨域 token 拦截 True status=401
+同源首页        True bytes=568
+
+冒烟通过

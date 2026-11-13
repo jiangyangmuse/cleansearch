@@ -1,0 +1,22 @@
+{
+  "history": true,
+  "registry": "batch import, persisted routing",
+  "translation": {
+    "denied": "MODEL_FALLBACK_DISABLED",
+    "selected": "本地千问",
+    "search": true
+  },
+  "ai": {
+    "selected": "本地千问",
+    "results": 2
+  },
+  "batch": {
+    "requested": 2,
+    "sources": 2,
+    "errors": [
+      null,
+      null
+    ]
+  },
+  "mobile": true
+}

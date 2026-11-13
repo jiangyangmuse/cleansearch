@@ -1,0 +1,32 @@
+{
+  "pid": 33148,
+  "create_time": 1794473837.1115427,
+  "db_path": "D:\\agent\\llq\\data\\cs.db",
+  "tables": {
+    "bookmarks": {
+      "count": 1,
+      "sha256": "d661dd00dcd77737ec39bf646aafb94527394cba97ca321fefbb76b15040a5b8"
+    },
+    "bookmark_groups": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "bookmark_tags": {
+      "count": 2,
+      "sha256": "d1c5d505598a61cf4aed2bc02b00446786ac000a4b1299a9502eed2a649a7b25"
+    }
+  },
+  "token_sha256": "fe23c4c0f433aa6f6a565a0a2d25839cae54a1b38b3aae36e5a53609d1c8e924",
+  "searxng_pid": 31012,
+  "official_loaded": true,
+  "source_hashes": {
+    "apps/api/app/core/model_settings.py": "3ea141641cd18fa0cee6bf447861e33bad222eb2ab0849ebde4182a8225d4bb7",
+    "apps/api/app/core/model_routing.py": "5aec4ba2cd85ae7df078b2cfa6adea1f3c6845539a8a07f8054343515a3391aa",
+    "apps/api/app/routers/search.py": "9c4382413a4f58402b070bb28a21ef4bc91afa4cb656a6312815d12d95b8e549",
+    "apps/api/app/routers/ai_tools.py": "ab3df18a5871bd8495250dce992694b66d2197d92b6ed1ae9c6d47e67377fe0f",
+    "apps/api/app/routers/page.py": "6653e86bd2ebe5d4a543792b6d60bd623f58e87669427c9a30ec4ff9a699de69",
+    "apps/web/dist/index.html": "7077b426a8660625a4a34087016858191350b1129d4b131efdc8765d5d1aad4e"
+  },
+  "model": "qwen3.5-4b-local:latest",
+  "provider": "searxng"
+}

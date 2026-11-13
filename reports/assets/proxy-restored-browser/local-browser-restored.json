@@ -1,0 +1,25 @@
+{
+  "started_at": "2026-11-12T08:17:23.766Z",
+  "checks": [
+    {
+      "name": "home",
+      "status": 200,
+      "title": "CleanSearch"
+    },
+    {
+      "name": "search",
+      "url": "http://127.0.0.1:8000/?q=test",
+      "cards": 8
+    },
+    {
+      "name": "google-search-page",
+      "status": null,
+      "title": ""
+    }
+  ],
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "completed_at": "2026-11-12T08:17:39.218Z"
+}

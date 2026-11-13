@@ -1,0 +1,32 @@
+{
+  "pid": 592,
+  "create_time": 1794122721.6739671,
+  "db_path": "D:\\agent\\llq\\data\\review-temp\\verify.db",
+  "tables": {
+    "bookmarks": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "bookmark_groups": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "bookmark_tags": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "token_sha256": "fe23c4c0f433aa6f6a565a0a2d25839cae54a1b38b3aae36e5a53609d1c8e924",
+  "searxng_pid": 36688,
+  "official_loaded": true,
+  "source_hashes": {
+    "apps/api/app/core/aggregator.py": "d2014004fa5d0e2d5d62f7e524ef6484010efd07f176b47370a2c3a35924e2dd",
+    "apps/api/app/core/scoring.py": "4dbc7ca78555ea85732b8884210b2a884bb760f1eec05150888d2a46708db25b",
+    "apps/api/app/core/official.py": "dc7fca0eb78bf1bbc4238d6db46d9ebf17128b22a212695adcc8c187635400f4",
+    "apps/api/app/routers/search.py": "7756d092067eec95849df90a6a336118e7bdb69cdc9ad4421c140b079ec39bf0",
+    "apps/api/app/schemas.py": "120374c7c59fc75baa3c7415e37f94da05c7ab6c7116fe5b4228eb5446ad1d72",
+    "apps/web/dist/index.html": "d7c4ec6127d00365b7b4bebf6a8988b8e4eb8baac59ad7c1ce79d77cb079bfed"
+  },
+  "model": "qwen3.5-4b-local:latest",
+  "provider": "searxng"
+}

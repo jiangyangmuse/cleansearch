@@ -1,0 +1,498 @@
+[
+  {
+    "engine": "google",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 4,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": [
+      "google:Suspended: access denied"
+    ]
+  },
+  {
+    "engine": "google cse",
+    "ok": 2,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 697,
+    "counts": [
+      20,
+      20
+    ],
+    "sources": [
+      "google cse"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "google scholar",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 3,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": [
+      "google scholar:Suspended: access denied"
+    ]
+  },
+  {
+    "engine": "bing",
+    "ok": 2,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 711,
+    "counts": [
+      10,
+      10
+    ],
+    "sources": [
+      "bing"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "duckduckgo",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 1238,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": [
+      "duckduckgo:CAPTCHA"
+    ]
+  },
+  {
+    "engine": "duckduckgo web",
+    "ok": 2,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 1407,
+    "counts": [
+      10,
+      10
+    ],
+    "sources": [
+      "duckduckgo web"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "yahoo",
+    "ok": 2,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 1250,
+    "counts": [
+      7,
+      7
+    ],
+    "sources": [
+      "yahoo"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "sogou",
+    "ok": 2,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 519,
+    "counts": [
+      10,
+      10
+    ],
+    "sources": [
+      "sogou"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "brave",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 14,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": [
+      "brave:Suspended: too many requests"
+    ]
+  },
+  {
+    "engine": "startpage",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 0,
+    "catalog_checked": true,
+    "skipped": "not_loaded",
+    "median_ms": 0,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "mojeek",
+    "ok": 2,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 1372,
+    "counts": [
+      10,
+      10
+    ],
+    "sources": [
+      "mojeek"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "qwant",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 5,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": [
+      "qwant:Suspended: access denied"
+    ]
+  },
+  {
+    "engine": "baidu",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 14,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": [
+      "baidu:Suspended: CAPTCHA"
+    ]
+  },
+  {
+    "engine": "naver",
+    "ok": 2,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 1683,
+    "counts": [
+      19,
+      16
+    ],
+    "sources": [
+      "naver"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "yep",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 391,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": [
+      "yep:HTTP error",
+      "yep:Suspended: HTTP error"
+    ]
+  },
+  {
+    "engine": "seznam",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 1510,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": [
+      "seznam:Suspended: timeout",
+      "seznam:timeout"
+    ]
+  },
+  {
+    "engine": "marginalia",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 0,
+    "catalog_checked": true,
+    "skipped": "not_loaded",
+    "median_ms": 0,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "dogpile",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 0,
+    "catalog_checked": true,
+    "skipped": "not_loaded",
+    "median_ms": 0,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "swisscows",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 13,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": [
+      "swisscows:Suspended: access denied"
+    ]
+  },
+  {
+    "engine": "yandex",
+    "ok": 2,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 1879,
+    "counts": [
+      10,
+      15
+    ],
+    "sources": [
+      "yandex"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "yandex api",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 0,
+    "catalog_checked": true,
+    "skipped": "not_loaded",
+    "median_ms": 0,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "360search",
+    "ok": 2,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 445,
+    "counts": [
+      5,
+      6
+    ],
+    "sources": [
+      "360search"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "quark",
+    "ok": 1,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 569,
+    "counts": [
+      6,
+      0
+    ],
+    "sources": [
+      "quark"
+    ],
+    "errors": [],
+    "unresponsive": [
+      "quark:CAPTCHA"
+    ]
+  },
+  {
+    "engine": "wikipedia",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 499,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "wikidata",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 1867,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "youtube",
+    "ok": 2,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 939,
+    "counts": [
+      16,
+      17
+    ],
+    "sources": [
+      "youtube"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "github",
+    "ok": 2,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 2151,
+    "counts": [
+      30,
+      30
+    ],
+    "sources": [
+      "github"
+    ],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "arxiv",
+    "ok": 2,
+    "attempts": 2,
+    "search_requests": 2,
+    "catalog_checked": true,
+    "skipped": "",
+    "median_ms": 290,
+    "counts": [
+      10,
+      10
+    ],
+    "sources": [
+      "arxiv"
+    ],
+    "errors": [],
+    "unresponsive": []
+  }
+]

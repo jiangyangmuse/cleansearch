@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "desktop": "left/center/right, bookmark collapse, saved state and re-open",
+    "categories": "three category views, reload, keyboard focus and save refresh",
+    "ai": "suffix, manual open does not bill, collapse preserves results, real fixture SSE citation",
+    "settings": "direct route, themes, persistent AI switch shared with search, bookmark route",
+    "responsive": "320, 390 and 920px with no horizontal overflow"
+  },
+  "errors": []
+}

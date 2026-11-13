@@ -1,0 +1,6 @@
+{
+  "native": true,
+  "route": "/",
+  "search": true,
+  "panel": true
+}

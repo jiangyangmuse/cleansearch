@@ -1,0 +1,38 @@
+{
+  "browser": "156.0.8078.4",
+  "base": "http://127.0.0.1:8000",
+  "search_summary_mocked": false,
+  "bookmark_writes": false,
+  "citation_target": {
+    "number": 1,
+    "result_id": "r_2",
+    "url": "https://www.deepseek.com/"
+  },
+  "official": [
+    {
+      "role": "home",
+      "url": "https://www.deepseek.com/",
+      "id": "r_2"
+    },
+    {
+      "role": "chat",
+      "url": "https://chat.deepseek.com/",
+      "id": "r_1"
+    },
+    {
+      "role": "docs",
+      "url": "https://api-docs.deepseek.com/",
+      "id": "r_22"
+    },
+    {
+      "role": "console",
+      "url": "https://platform.deepseek.com/",
+      "id": "r_10"
+    }
+  ],
+  "displayed": 21,
+  "summary_model": "模型 stub-extractive\n来源 10\n217 段 / 6769 ms\n摘要模式\nsid s_31c14d2baff0afb5460e41a6115bb1cb",
+  "mobile_no_overflow": true,
+  "tutorial_has_no_official_panel": true,
+  "page_errors": []
+}

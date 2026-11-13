@@ -12,7 +12,8 @@ import {
   saveBookmark,
   startImportJob,
 } from "./api";
-import ThemeToggle from "./components/ThemeToggle";
+import AppShell from "./components/AppShell";
+import { notifyBookmarksChanged } from "./bookmarkChanges";
 import type { Bookmark, BookmarkGroup } from "./types";
 import { safeHref } from "./url";
 
@@ -63,7 +64,11 @@ export default function BookmarkPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [importing, setImporting] = useState(false);
+  const [adding, setAdding] = useState(false);
+  const addRequest = useRef(false);
   const [moving, setMoving] = useState<Set<number>>(() => new Set());
+  // 窄屏默认收起添加表单，桌面保持展开
+  const [addOpen, setAddOpen] = useState(() => !window.matchMedia("(max-width: 900px)").matches);
 
   const [addUrl, setAddUrl] = useState("");
   const [addTitle, setAddTitle] = useState("");
@@ -78,18 +83,23 @@ export default function BookmarkPage() {
   // Android 分享的链接也可能藏在 text 的一段说明中。
   useEffect(() => {
     const pageUrl = new URL(window.location.href);
-    const params = pageUrl.searchParams;
-    if (!params.has("url") && !params.has("text") && !params.has("title")) return;
+    const fragment = new URLSearchParams(pageUrl.hash.slice(1));
+    const fromFragment = fragment.get("shared") === "1";
+    const params = fromFragment ? fragment : pageUrl.searchParams;
+    if (!["shared", "url", "text", "title", "files"].some(name => params.has(name))) return;
     const sharedUrl = findSharedUrl(params);
     const sharedTitle = [...(params.get("title") ?? "").trim()].slice(0, 512).join("");
-    for (const name of ["url", "text", "title"]) params.delete(name);
-    window.history.replaceState(null, "", pageUrl.pathname + pageUrl.search + pageUrl.hash);
+    const hasFiles = params.get("files") === "1";
+    if (fromFragment) pageUrl.hash = "";
+    for (const name of ["shared", "url", "text", "title", "files"]) pageUrl.searchParams.delete(name);
+    window.history.replaceState(window.history.state, "", pageUrl);
     if (!sharedUrl) {
-      setMessage("分享内容中没有可收藏的 HTTP(S) 链接");
+      setMessage(hasFiles ? "书签只保存网页链接。请分享或粘贴网页地址。" : "分享内容中没有可收藏的 HTTP(S) 链接");
       return;
     }
     setAddUrl(sharedUrl);
     setAddTitle(sharedTitle);
+    setAddOpen(true);
     setMessage("来自分享：确认标题和分组后点「收藏」");
   }, []);
 
@@ -139,7 +149,10 @@ export default function BookmarkPage() {
 
   const addBookmark = async (event: FormEvent) => {
     event.preventDefault();
-    if (!addUrl.trim()) return;
+    if (!addUrl.trim() || addRequest.current) return;
+    addRequest.current = true;
+    setAdding(true);
+    setError(null);
     try {
       const result = await saveBookmark({
         url: addUrl.trim(),
@@ -157,6 +170,9 @@ export default function BookmarkPage() {
       reload(true);
     } catch (caught) {
       setError(caught instanceof ApiError ? caught.message : "收藏失败");
+    } finally {
+      addRequest.current = false;
+      setAdding(false);
     }
   };
 
@@ -231,6 +247,7 @@ export default function BookmarkPage() {
         const job = await importJobStatus(id);
         setImportProgress({ processed: job.processed, total: job.total });
         if (job.state === "done") {
+          if (job.created > 0) notifyBookmarksChanged();
           setMessage(
             `导入 ${job.total} 条：新增 ${job.created}，跳过 ${job.skipped} 条，新建分组 ${job.groups_created}`,
           );
@@ -248,21 +265,9 @@ export default function BookmarkPage() {
   };
 
   return (
-    <div className="app">
-      <header className="header">
-        <div className="brand">
-          <span className="brand__mark" aria-hidden="true" />
-          <span className="brand__name">CleanSearch</span>
-          <span className="brand__tag">书签启动台</span>
-        </div>
-        <span className="header__links">
-          <ThemeToggle />
-          <a className="header__link" href="/tools">一键添加</a>
-          <a className="header__link header__link--active" href="/">返回搜索</a>
-        </span>
-      </header>
-
-      <main className="main main--wide">
+    <AppShell current="bookmarks" title="书签启动台 · CleanSearch" maxWidth={1120}>
+      <main id="main" tabIndex={-1} className="shell-main">
+        <h1 className="shell-title">书签启动台</h1>
         <section className="bm-toolbar">
           <form className="bm-search" onSubmit={submitSearch}>
             <input
@@ -368,15 +373,24 @@ export default function BookmarkPage() {
           </section>
         ) : null}
 
-        <form className="bm-add" onSubmit={addBookmark}>
+        <details className="bm-add-details" open={addOpen}
+          onToggle={event => setAddOpen(event.currentTarget.open)}>
+          <summary className="bm-add-details__summary">
+            <i className="ws-icon ws-icon--chevron" aria-hidden="true" />手动添加书签
+          </summary>
+          <form className="bm-add" onSubmit={addBookmark}>
           <input
             value={addUrl}
+            type="url"
+            required
+            maxLength={2048}
             placeholder="粘贴网址"
             onChange={(event) => setAddUrl(event.target.value)}
             aria-label="新书签网址"
           />
           <input
             value={addTitle}
+            maxLength={512}
             placeholder="标题（可选）"
             onChange={(event) => setAddTitle(event.target.value)}
             aria-label="新书签标题"
@@ -395,10 +409,11 @@ export default function BookmarkPage() {
               </option>
             ))}
           </select>
-          <button className="button" type="submit">
-            收藏
+          <button className="button" type="submit" disabled={adding}>
+            {adding ? "收藏中…" : "收藏"}
           </button>
-        </form>
+          </form>
+        </details>
 
         {message ? <p className="bm-message" role="status">{message}</p> : null}
         {error ? <p className="bm-message bm-message--error" role="alert">{error}</p> : null}
@@ -522,6 +537,6 @@ export default function BookmarkPage() {
       </main>
 
       <footer className="footer">CleanSearch · 书签存在本机 SQLite（data/cs.db），导入导出用 Netscape HTML</footer>
-    </div>
+    </AppShell>
   );
 }

@@ -120,6 +120,8 @@ def test_health(client: TestClient) -> None:
     assert body["status"] == "ok"
     assert body["provider"] == "fixture"
     assert body["web_built"] is True
+    # 设置页的数据管理要显示本机库路径
+    assert body["db_path"].endswith(".db")
 
 
 def test_same_origin_spa(client: TestClient) -> None:
@@ -129,6 +131,20 @@ def test_same_origin_spa(client: TestClient) -> None:
     missing = client.get("/api/nope")
     assert missing.status_code == 404
     assert missing.json()["error"]["code"] == "NOT_FOUND"
+    assert client.get("/assets/missing.js").status_code == 404
+    assert client.get("/sw.js").status_code == 404
+
+
+def test_opensearch_uses_the_deployment_origin(client: TestClient) -> None:
+    from xml.etree import ElementTree
+
+    response = client.get("http://localhost:18199/opensearch.xml")
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("application/opensearchdescription+xml")
+    root = ElementTree.fromstring(response.text)
+    url = root.find("{http://a9.com/-/spec/opensearch/1.1/}Url")
+    assert url is not None
+    assert url.get("template") == "http://localhost:18199/?q={searchTerms}"
 
 
 def test_normalize_helpers() -> None:
@@ -262,3 +278,93 @@ def test_display_count_never_exceeds_upstream(client: TestClient) -> None:
     body = _search(client, q="test").json()
     assert body["meta"]["total"] <= body["meta"]["upstream_total"]
     assert body["meta"]["total"] == len(flatten(body))
+
+
+def test_vitals_upload_and_snapshot(client: TestClient) -> None:
+    """前端性能样本：合法值 204 并进快照，非法值 422。"""
+    assert client.post("/api/metrics/vitals", json={
+        "path": "/", "lcp": 820.5, "cls": 0.05, "inp": 96, "search_ms": 41.2, "panel_ms": 18,
+    }).status_code == 204
+
+    snapshot = client.get("/api/metrics").json()
+    assert "vitals" in snapshot
+    assert snapshot["vitals"]["count"] >= 1
+    last = snapshot["vitals"]["recent"][-1]
+    assert last["path"] == "/" and last["lcp"] == 820.5
+
+    assert client.post("/api/metrics/vitals", json={"path": "/s?u=https://example.test/private#secret", "cls": 0}).status_code == 204
+    sanitized = client.get("/api/metrics").json()["vitals"]["recent"][-1]
+    assert sanitized["path"] == "/s" and sanitized["cls"] == 0
+    assert client.post("/api/metrics/vitals", json={"path": "/private-path", "ttfb": 10}).status_code == 204
+    assert client.get("/api/metrics").json()["vitals"]["recent"][-1]["path"] == "/"
+    assert client.post("/api/metrics/vitals", json={"path": "/s"}).status_code == 422
+
+    assert client.post("/api/metrics/vitals", json={"lcp": -1}).status_code == 422
+    assert client.post("/api/metrics/vitals", json={"cls": 1000}).status_code == 422
+    assert client.post("/api/metrics/vitals", json={"path": "x" * 500}).status_code == 422
+
+
+def test_search_filters_are_validated_and_echoed(client: TestClient) -> None:
+    """筛选条件：合法值回显在 meta.filters，非法值 422。"""
+    body = client.post('/api/search', json={
+        'q': 'python',
+        'opts': {'time_range': 'week', 'language': 'zh', 'site': 'https://example.com/path', 'dedupe': 'strict'},
+    }).json()
+    assert body['meta']['filters'] == {
+        'time_range': 'week', 'language': 'zh', 'site': 'example.com', 'dedupe': 'strict',
+    }
+
+    for opts in (
+        {'time_range': 'decade'},
+        {'language': 'zh_CN!'},
+        {'site': 'not a domain'},
+        {'site': 'https://exa mple.com'},
+        {'dedupe': 'aggressive'},
+    ):
+        response = client.post('/api/search', json={'q': 'python', 'opts': opts})
+        assert response.status_code == 422, opts
+
+
+def test_site_filter_drops_other_hosts(client: TestClient) -> None:
+    """站点限定必须最终只剩该域（含子域）的结果，即使上游忽略了 site: 语法。"""
+    body = client.post('/api/search', json={
+        'q': 'python', 'opts': {'site': 'python.org'},
+    }).json()
+    groups = body['groups']
+    urls = [item['url'] for key in ('strong', 'related', 'weak') for item in groups[key]]
+    assert body['meta']['filters']['site'] == 'python.org'
+    assert urls, '站点过滤后不应为空（fixture 含 python.org 样本）'
+    assert all('python.org' in url for url in urls), urls
+
+    empty = client.post('/api/search', json={
+        'q': 'python', 'opts': {'site': 'no-such-host.invalid'},
+    }).json()
+    assert empty['meta']['total'] == 0
+
+
+def test_site_filter_applies_to_official_directory_entries(client: TestClient) -> None:
+    from urllib.parse import urlsplit
+
+    base = _search(client, q="deepseek").json()
+    assert base["official"]["entries"]
+    filtered = client.post("/api/search", json={"q": "deepseek", "opts": {"site": "chat.deepseek.com"}}).json()
+    entries = (filtered.get("official") or {}).get("entries", [])
+    assert entries
+    assert all(urlsplit(entry["url"]).hostname == "chat.deepseek.com" for entry in entries)
+    empty = client.post("/api/search", json={"q": "deepseek", "opts": {"site": "no-match.invalid"}}).json()
+    assert empty["meta"]["status"] == "empty" and not empty.get("official")
+
+
+def test_search_dedupe_modes_against_the_same_candidates(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
+    from app.core.aggregator import get_aggregator
+
+    title = "Python tutorial installation configuration and examples"
+    monkeypatch.setattr(get_aggregator()._fixture, "_hit", {"results": [
+        {"url": "https://example.org/guides/python?utm_source=a", "title": title, "content": title, "engine": "google"},
+        {"url": "https://example.org/guides/python", "title": title, "content": title, "engine": "bing"},
+        {"url": "https://example.net/mirror/python", "title": title, "content": title, "engine": "bing"},
+    ]})
+    for mode, expected in (("off", 3), ("normal", 2), ("strict", 1)):
+        response = client.post("/api/search", json={"q": "python tutorial", "opts": {"dedupe": mode}})
+        assert response.status_code == 200
+        assert response.json()["meta"]["total"] == expected, mode

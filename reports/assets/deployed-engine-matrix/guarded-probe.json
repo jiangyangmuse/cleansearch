@@ -1,0 +1,66 @@
+[
+  {
+    "engine": "startpage",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 0,
+    "catalog_checked": true,
+    "skipped": "not_loaded",
+    "median_ms": 0,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "marginalia",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 0,
+    "catalog_checked": true,
+    "skipped": "not_loaded",
+    "median_ms": 0,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "dogpile",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 0,
+    "catalog_checked": true,
+    "skipped": "not_loaded",
+    "median_ms": 0,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": []
+  },
+  {
+    "engine": "yandex api",
+    "ok": 0,
+    "attempts": 2,
+    "search_requests": 0,
+    "catalog_checked": true,
+    "skipped": "not_loaded",
+    "median_ms": 0,
+    "counts": [
+      0,
+      0
+    ],
+    "sources": [],
+    "errors": [],
+    "unresponsive": []
+  }
+]

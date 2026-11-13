@@ -11,12 +11,19 @@
     <label>标题 <input id="title" type="text" /></label>
     <button id="save" disabled>收藏</button>
     <p id="status" role="status"></p>
+    <div class="links">
+      <a id="open-bookmarks" href="http://127.0.0.1:8000/bookmarks" target="_blank" rel="noreferrer">打开书签页</a>
+      <a id="open-search" href="http://127.0.0.1:8000/" target="_blank" rel="noreferrer">打开搜索</a>
+      <button id="open-options" type="button" class="link-button">扩展设置</button>
+    </div>
     <details>
       <summary>连接设置</summary>
       <label>API 地址 <input id="api" type="text" placeholder="http://127.0.0.1:8000" /></label>
       <label>访问 token <input id="token" type="password" placeholder="在 /tools 页面获取" /></label>
       <button id="save-settings" type="button" disabled>保存设置</button>
     </details>
+    <p class="hint"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> 收藏当前页 · 地址栏 <kbd>cs</kbd> 空格搜索</p>
+    <script src="connection.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>

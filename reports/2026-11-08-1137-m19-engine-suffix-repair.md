@@ -72,7 +72,7 @@
 
 | 命令 | 结果 | 说明 |
 | --- | --- | --- |
-| `python -m pytest apps/api -q -o "addopts="` | 通过 | **347 passed in 9.10s** |
+| `python -m pytest apps/api -q -o "addopts="` | 通过 | **363 passed in 9.77s**（含追加轮次的熔断读取回归用例） |
 | `npm --prefix apps/web run build` | 通过 | tsc + vite，**43 modules transformed** |
 | `pwsh -File scripts/smoke.ps1 -BaseUrl http://127.0.0.1:8001` | 通过 | fixture + stub 总结，**16/16** |
 | `python scripts/probe-engines.py --base-url http://127.0.0.1:8888` | 部分可用（符合预期） | 见下表；不可用引擎用于回退验证 |
@@ -180,3 +180,41 @@ sogou 0/0（SearXNG crash） · startpage 0/0（CAPTCHA） · brave 0/0（限流
 - Chromium 实际按钮检查：有回退的冷却主源可点、全部冷却后禁用、搜索后刷新、bang 切换与 `C g` 正文保护通过；1280×900 与 390×844 截图及无横向溢出证据见 `assets/engine-fallback-review/`。目录受控、查询解析走真实 fixture API；不等同 Android 真机或正式 Chrome 手动验收。
 - 隔离 API 受控断开 SearXNG 后，真实 Serper Google/Scholar 兜底返回 **7/9** 条；Google 重复查询缓存命中，第 2 页 **503 UPSTREAM_UNAVAILABLE**，禁付费计数另由 Mock 回归证明。来源及响应摘要见 [实测](assets/engine-fallback-review/live-api.json)。
 - 本轮未运行完整 13 引擎在线矩阵或 Docker 重建；原记录仅证明原时点结果。部署复验继续沿用 §7，须使用更新后的探测脚本核对指定来源。未执行提交/推送。
+
+## 9 追加轮次 2026-11-08 14:55 · `/api/engines` 偶发 500
+
+**触发**：后台 API 进程结束时回看日志，发现 `GET /api/engines` 出现过一次 500：
+
+```
+IndexError: tuple index out of range
+  File ".../app/core/breaker.py", line 85, in row
+    engine=found["engine"]
+```
+
+**根因**：`EngineHealthStore.row()` / `snapshot()` 按列名读取查询结果；并发连接上 `row_factory` 被还原为默认 tuple 时，列名索引失效。该接口是只读目录，单行异常不应让整个响应 500。
+
+**修复**：
+
+- `breaker.py` 的 `row()` / `snapshot()` / `record_success()` / `record_failure()` 改为位置索引读取，并给读路径加锁。
+- `routers/engines.py` 对单行健康读取与 `remaining()` 加 `sqlite3.Error / IndexError / TypeError` 兜底，异常行降级为 `unknown`。
+- `tests/test_breaker.py` 新增回归：把 `row_factory` 置回 `None` 后，`row()` 与 `snapshot()` 仍能正确返回。
+
+**验证**：
+
+| 命令 | 结果 | 说明 |
+| --- | --- | --- |
+| `python -m pytest apps/api -q -o "addopts="` | 通过 | **363 passed in 9.77s**（Codex §8 的 362 项 + 本轮 1 项熔断读取回归） |
+| 重启后连续 5 次 `GET /api/engines` | 通过 | 5/5 `200`，响应 5,655 bytes；19 个目录项 |
+| `GET /api/health` | 通过 | `provider=searxng`，`searxng_url=http://127.0.0.1:8888` |
+
+**边界**：§8 的复核结论仍然有效；本轮只修健康表读取健壮性与服务重启，不改回退/计费/前端逻辑。API 已用最新代码重启（8000），SearXNG 仍在 8888。
+
+## 10 追加轮次 2026-11-08 15:04 · Codex 部署在线复验
+
+- 已按用户选择等待 §9 执行体收口，再恢复项目缓存配置并重启实际原生 API；保留原库路径和 SearXNG，不覆盖 §9 实现。
+- 原 13 后缀完整跑完，本次 **11/13 有结果**：9 个主源，`g` 经 CSE、`sc` 经 Serper。`mj` 处于 Mojeek 超时冷却，`sp` 的 Mojeek 回退同样不可用，不计通过；并非所有源持续可用。
+- 另跑 13 条第二页、2 条缓存复查，成功响应未见错路由/来源，错误分类符合预期；第二页无付费来源，调用计数边界另由既有 Mock 契约覆盖。
+- 实际页面 `deepseek` 展示 16 条，官网根地址与聊天入口均保留，官网默认可见，冷热缓存及 390px 布局通过，无 API 打桩。
+- 新增探测预检：先读 `/config`，未加载的四源跳过搜索；真实验证 `search_requests=0`，减少静默默认聚合对其他上游的无效请求。
+- 独立复验 **365 passed in 8.98s**（§9 的 363 + 2 项探测预检）；前端 44 modules，新镜像源码指纹匹配，隔离镜像冒烟 16/16、15/15。原生和 Docker 两套书签/token 摘要均未变。
+- Compose 镜像已重建，但默认端口被现有原生服务占用，完整 Compose 启动未通过；原生 8000/8888 保持运行。报告保留“部分完成”，未提交/推送，详见 [本轮报告](2026-11-08-1447-deployed-engine-matrix.md) 与 `assets/deployed-engine-matrix/`。

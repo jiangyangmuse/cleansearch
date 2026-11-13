@@ -53,3 +53,10 @@ test("choosing an engine keeps suffix-like words in a literal query", () => {
   assert.equal(exports_.engineQuery("Nintendo ds", "b", engines, true), "Nintendo ds !b");
   assert.equal(exports_.engineQuery("listen en", "b", engines, true), "listen en !b");
 });
+
+test("engine switch replaces a registered custom suffix and keeps an unknown word", () => {
+  const configured = [...engines, { code: "video2", aliases: [] }];
+  assert.equal(exports_.engineQuery("教程 !video2", "b", configured), "教程 !b");
+  assert.equal(exports_.engineQuery("教程 video2", "b", configured), "教程 !b");
+  assert.equal(exports_.engineQuery("教程 video2", "b", engines), "教程 video2 !b");
+});
