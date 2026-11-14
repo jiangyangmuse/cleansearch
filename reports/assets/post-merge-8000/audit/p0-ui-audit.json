@@ -1,0 +1,1575 @@
+{
+  "base": "http://127.0.0.1:8000",
+  "started_at": "2026-11-14T09:43:13.126Z",
+  "checks": [
+    {
+      "name": "后退回到上一次查询",
+      "ok": true,
+      "detail": "url=?q=python input=python 期望=python"
+    },
+    {
+      "name": "结果页标题含查询词",
+      "ok": true,
+      "detail": "title=python · CleanSearch"
+    },
+    {
+      "name": "第二次查询后标题跟着换",
+      "ok": true,
+      "detail": "title=linux 内核 · CleanSearch 期望含 linux 内核"
+    },
+    {
+      "name": "从分类重搜历史词只新增一条历史",
+      "ok": true,
+      "detail": "q=python&category=encyclopedia"
+    },
+    {
+      "name": "前进恢复重搜关键词",
+      "ok": true,
+      "detail": "http://127.0.0.1:8000/?q=linux+%E5%86%85%E6%A0%B8"
+    },
+    {
+      "name": "第 2 页刷新后仍在第 2 页",
+      "ok": true,
+      "detail": "url=?q=python&page=2 label=第 2 页 · 本页无结果"
+    },
+    {
+      "name": "翻页后标题标注页码",
+      "ok": true,
+      "detail": "title=第 2 页 · python · CleanSearch"
+    },
+    {
+      "name": "结果页只有一个 h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "结果卡标题降为 h3",
+      "ok": true,
+      "detail": "H3,H3,H3"
+    },
+    {
+      "name": "存在 skip link 与 main#main",
+      "ok": true,
+      "detail": "skip=true main=true"
+    },
+    {
+      "name": "搜索结果有 aria-live 播报",
+      "ok": true,
+      "detail": "live=找到 13 条结果"
+    },
+    {
+      "name": "axe serious/critical 为 0（结果页）",
+      "ok": true,
+      "detail": "violations=0"
+    },
+    {
+      "name": "统计条压成一行",
+      "ok": true,
+      "detail": "h=44"
+    },
+    {
+      "name": "sid 默认收进「检索详情」",
+      "ok": true,
+      "detail": "open=false sidVisible=false text=展示 13 条 缓存 1 ms 检索详情"
+    },
+    {
+      "name": "检索详情含上游/去重/引擎/sid",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "展开检索详情后 sid 可见",
+      "ok": true,
+      "detail": "open=true sidVisible=true"
+    },
+    {
+      "name": "检索详情展开时按钮位置和焦点保持不变",
+      "ok": true,
+      "detail": "y=252→252"
+    },
+    {
+      "name": "检索详情可用 Space 收起",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "标题/摘要命中查询词并高亮",
+      "ok": true,
+      "detail": "titles=3 snippets=2 first=Python"
+    },
+    {
+      "name": "高亮词与查询一致（不区分大小写）",
+      "ok": true,
+      "detail": "mark=Python query=python"
+    },
+    {
+      "name": "高亮有可见底色",
+      "ok": true,
+      "detail": "bg=rgb(231, 242, 235)"
+    },
+    {
+      "name": "引擎标签最多 2 个 + N",
+      "ok": true,
+      "detail": "maxTags=2 more="
+    },
+    {
+      "name": "+N 数量与引擎总数一致",
+      "ok": true,
+      "detail": "badge= title="
+    },
+    {
+      "name": "域名显示为面包屑（无协议头）",
+      "ok": true,
+      "detail": "zh.wikipedia.org › wiki › Inverted_index ← https://zh.wikipedia.org/wiki/Inverted_index"
+    },
+    {
+      "name": "发布时间与风险提示同一行",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "操作收进卡片菜单且默认收起",
+      "ok": true,
+      "detail": "actions=10 cards=10 open=false"
+    },
+    {
+      "name": "卡片菜单含收藏/复制/打开",
+      "ok": true,
+      "detail": "收藏 | 复制链接 | 打开链接"
+    },
+    {
+      "name": "点外部收起卡片菜单",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "复制链接写入剪贴板",
+      "ok": true,
+      "detail": "https://zh.wikipedia.org/wiki/Inverted_index"
+    },
+    {
+      "name": "技术词高亮保留符号且避开词内命中",
+      "ok": true,
+      "detail": "C++|C#|Node.js"
+    },
+    {
+      "name": "面包屑使用实际域名和端口并保留双向控制符编码",
+      "ok": true,
+      "detail": "example.test:8443 › 文档 › %E2%80%AEexample"
+    },
+    {
+      "name": "引擎标签两项加准确的 +N",
+      "ok": true,
+      "detail": "google|bing|+2"
+    },
+    {
+      "name": "标题和操作入口均保留风险确认中转",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "键盘打开另一张卡片时只保留一个操作菜单",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Esc 从操作项关闭并归还焦点",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "取消分享保持静默并归还焦点",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "分享文案携带标题、换行和原链接",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "分享失败给出可见反馈",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "复制成功可见、可播报并归还焦点",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "剪贴板被拒时显示失败并保留焦点",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "b 快捷键显示收藏结果并发送原链接",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "桌面三行以内的摘要不显示展开入口",
+      "ok": true,
+      "detail": "chars=93"
+    },
+    {
+      "name": "长摘要默认 clamp 到 3 行",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "展开摘要后显示全文",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px 下 120 字以内的摘要截断也能展开",
+      "ok": true,
+      "detail": "chars=93 size=48×28"
+    },
+    {
+      "name": "窄屏展开恢复完整摘要",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "顶部与底部各有一组分页",
+      "ok": true,
+      "detail": "top=1 bottom=1"
+    },
+    {
+      "name": "分页显示当前页与本页条数",
+      "ok": true,
+      "detail": "top=第 1 页 · 本页 10 条 bottom=第 1 页 · 本页 10 条"
+    },
+    {
+      "name": "] 翻到下一页",
+      "ok": true,
+      "detail": "page=2 cards=1 label=第 2 页 · 本页 1 条"
+    },
+    {
+      "name": "翻页后滚回结果区顶部",
+      "ok": true,
+      "detail": "results top=252"
+    },
+    {
+      "name": "不等长的第 2 页只显示本页实际条数",
+      "ok": true,
+      "detail": "第 2 页 · 本页 1 条"
+    },
+    {
+      "name": "刷新直入第 2 页时条数一致",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "分类本页无匹配仍可继续翻页",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "空页显示真实状态并禁用下一页",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "空页的下一页快捷键与按钮一致",
+      "ok": true,
+      "detail": "http://127.0.0.1:8000/?q=python&page=3"
+    },
+    {
+      "name": "空页可用上一页快捷键恢复结果",
+      "ok": true,
+      "detail": "http://127.0.0.1:8000/?q=python&page=2"
+    },
+    {
+      "name": "[ 回到上一页",
+      "ok": true,
+      "detail": "http://127.0.0.1:8000/?q=python"
+    },
+    {
+      "name": "第 10 页的下一页按钮与快捷键均到达上限",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Ctrl/Cmd+K 聚焦搜索框",
+      "ok": true,
+      "detail": "active=q"
+    },
+    {
+      "name": "聚焦/输入时给出搜索建议",
+      "ok": true,
+      "detail": "options=5 first=python (历史)"
+    },
+    {
+      "name": "方向键选择建议（aria-activedescendant）",
+      "ok": true,
+      "detail": "id=_r_2_-0"
+    },
+    {
+      "name": "Enter 采纳建议并直接搜索",
+      "ok": true,
+      "detail": "q=python 期望含 python"
+    },
+    {
+      "name": "Esc 收起建议且不丢焦点",
+      "ok": true,
+      "detail": "closed=true focus=q"
+    },
+    {
+      "name": "空输入的建议没有孤立引擎后缀",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Esc 后方向键可重开并选中原建议",
+      "ok": true,
+      "detail": "Python ds历史 · 字面"
+    },
+    {
+      "name": "输入法组合期间 Enter 交由输入法处理",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "历史建议提交原查询并保留字面模式",
+      "ok": true,
+      "detail": "{\"safe\":true,\"literal\":true,\"time_range\":null,\"language\":null,\"site\":null,\"dedupe\":\"normal\"}"
+    },
+    {
+      "name": "点选引擎前缀补全保留查询正文",
+      "ok": true,
+      "detail": "http://127.0.0.1:8000/?q=python+%21b"
+    },
+    {
+      "name": "? 打开快捷键面板（模态）",
+      "ok": true,
+      "detail": "title=键盘快捷键 groups=3"
+    },
+    {
+      "name": "面板列出 g h / g b / [ ] / Ctrl K",
+      "ok": true,
+      "detail": "搜索 / 聚焦搜索框 Ctrl ⌘ K 聚焦搜索框，并重新展开建议 Enter 提交搜索或打开选中结果 Esc 关闭面板 / 取消当前选择 浏览结果 j k 下"
+    },
+    {
+      "name": "Esc 关闭面板并把焦点还给键盘调用处",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "快捷键面板打开时屏蔽背景导航和翻页",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "按钮关闭面板并归还调用按钮焦点",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "点击原生遮罩关闭快捷键面板",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "不支持 closedby 时仍可点击遮罩关闭",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "g b 打开书签页",
+      "ok": true,
+      "detail": "http://127.0.0.1:8000/bookmarks"
+    },
+    {
+      "name": "已收藏的结果卡启动即显示已在书签",
+      "ok": true,
+      "detail": "label=已在书签 pressed=true"
+    },
+    {
+      "name": "已收藏时给出撤销入口",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "批量状态查询只带 http(s) 且不超过 40 个",
+      "ok": true,
+      "detail": "urls=2"
+    },
+    {
+      "name": "撤销失败保留书签状态并允许重试",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "撤销后同步同一书签的两张卡并核对请求网址",
+      "ok": true,
+      "detail": "{\"label\":\"收藏\",\"undo\":false}"
+    },
+    {
+      "name": "键盘撤销后聚焦收藏按钮",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "收藏等待响应时乐观展示，禁止重复保存和提前撤销",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "重收藏后旧的空状态响应不能覆盖新状态",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "断网错误标题产品化",
+      "ok": true,
+      "detail": "本机搜索服务未连接"
+    },
+    {
+      "name": "错误态给出重试与打开设置",
+      "ok": true,
+      "detail": "actions=重试/打开设置 href=/settings#engine-settings"
+    },
+    {
+      "name": "非 debug 时不展示诊断详情",
+      "ok": true,
+      "detail": "details=false"
+    },
+    {
+      "name": "错误状态通过已挂载的状态区播报",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "网络恢复后重试成功并聚焦分页",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "?debug=1 才显示诊断详情且默认收起",
+      "ok": true,
+      "detail": "closed=false text=诊断详情 错误码 NETWORK_ERROR · 查询「python」 无法连接"
+    },
+    {
+      "name": "诊断详情含上游排查命令",
+      "ok": true,
+      "detail": "闭环 .\\scripts\\serve.ps1 -Provider fixture"
+    },
+    {
+      "name": "诊断开关在刷新后保留",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "关闭全部默认引擎时提供修改查询和设置",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "非诊断模式隐藏上游原始消息且窄屏无横向溢出",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "普通搜索失败后的重试不重复请求 AI 检索",
+      "ok": true,
+      "detail": "AI requests=1"
+    },
+    {
+      "name": "空结果给出换关键词",
+      "ok": true,
+      "detail": "换关键词"
+    },
+    {
+      "name": "换关键词直接把焦点放进搜索框",
+      "ok": true,
+      "detail": "active=q"
+    },
+    {
+      "name": "空结果可一键取消引擎后缀",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "取消后缀后按原词重搜并保留恢复后的焦点",
+      "ok": true,
+      "detail": "http://127.0.0.1:8000/?q=quiet&literal=1"
+    },
+    {
+      "name": "仅对实际引擎路由提供取消（quiet !g，字面）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "仅对实际引擎路由提供取消（quiet !unknown）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "仅对实际引擎路由提供取消（quiet g）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "分类页区分本页分类数和本页搜索结果数",
+      "ok": true,
+      "detail": "本页百科 1 条 · 本页搜索结果 3 条"
+    },
+    {
+      "name": "分类空态说明还有其它结果并可查看全部",
+      "ok": true,
+      "detail": "本页没有视频结果 · 换关键词/查看全部结果"
+    },
+    {
+      "name": "查看全部结果回到全部分类并交接焦点",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "仅有官方入口时分类空态单列入口",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "浅色主题写死 color-scheme: light",
+      "ok": true,
+      "detail": "scheme=light"
+    },
+    {
+      "name": "浅色主题同步 theme-color",
+      "ok": true,
+      "detail": "meta=#ffffff"
+    },
+    {
+      "name": "深色主题写死 color-scheme: dark",
+      "ok": true,
+      "detail": "theme=dark scheme=dark"
+    },
+    {
+      "name": "深色主题同步 theme-color",
+      "ok": true,
+      "detail": "meta=#1b2320"
+    },
+    {
+      "name": "切回自动后 theme-color 跟随系统",
+      "ok": true,
+      "detail": "choice=auto theme=light meta=#ffffff"
+    },
+    {
+      "name": "系统主题运行中切换时同步页面与浏览器色值",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "另一标签页的主题设置立即同步且保持手动深色",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "应用模块未加载时首屏已使用保存的主题",
+      "ok": true,
+      "detail": "{\"mounted\":0,\"scheme\":\"dark\",\"meta\":\"#1b2320\"}"
+    },
+    {
+      "name": "减少动态效果时关闭 spinner 动画",
+      "ok": true,
+      "detail": "reduce=true spinner=none"
+    },
+    {
+      "name": "减少动态效果时关闭总结光标动画",
+      "ok": true,
+      "detail": "cursor=none"
+    },
+    {
+      "name": "减少动态效果时不做平滑滚动",
+      "ok": true,
+      "detail": "scroll=auto"
+    },
+    {
+      "name": "减少动态效果时总结引用立即定位",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "常规动态效果下总结引用保持平滑滚动",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "快捷栏在 visibilitychange 后刷新",
+      "ok": true,
+      "detail": "条目 1 → 条目 2"
+    },
+    {
+      "name": "恢复时合并 pageshow 与 visibilitychange 为一次快捷栏读取",
+      "ok": true,
+      "detail": "calls 2 → 3"
+    },
+    {
+      "name": "快捷栏只取 6 条并保留管理入口",
+      "ok": true,
+      "detail": "?limit=6"
+    },
+    {
+      "name": "无关的存储事件不刷新书签快捷栏",
+      "ok": true,
+      "detail": "calls 3 → 3"
+    },
+    {
+      "name": "书签快捷栏折叠时跳过刷新",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "重新展开书签快捷栏时读取当前列表",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "收起总结面板后提示后台生成中",
+      "ok": true,
+      "detail": "AI 总结正在后台生成 查看 停止"
+    },
+    {
+      "name": "后台任务提供查看与停止",
+      "ok": true,
+      "detail": "查看/停止"
+    },
+    {
+      "name": "停止后后台提示与流都结束",
+      "ok": true,
+      "detail": "{\"pill\":false,\"live\":false}"
+    },
+    {
+      "name": "停止后台总结后焦点回到工具入口",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "AI 检索关闭后同样提示并可停止",
+      "ok": true,
+      "detail": "AI 检索仍在进行 查看 停止"
+    },
+    {
+      "name": "停止 AI 检索后提示消失",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "窄屏查看后台 AI 检索打开抽屉并聚焦对应工具",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "关闭移动抽屉后两项后台任务均可单独操作",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "进入对话搜索时仍可停止后台 AI 检索",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "分别停止时取消对应的 fetch 信号",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "引擎筛选接受感叹号后缀和别名",
+      "ok": true,
+      "detail": "20 → 3"
+    },
+    {
+      "name": "引擎列表可按名称/后缀筛选",
+      "ok": true,
+      "detail": "20 → 0"
+    },
+    {
+      "name": "刷新状态贴出可用/冷却/未知",
+      "ok": true,
+      "detail": "20 个 · 继承 SearXNG 默认（4 个）。开启自选模式后可单独勾选引擎。 引擎状态已"
+    },
+    {
+      "name": "模型测试绑定已保存版本并提示所填模型未列出",
+      "ok": true,
+      "detail": "可用（3 个模型），列表未列出所填模型"
+    },
+    {
+      "name": "修改未保存的模型基址后清除旧结果并禁用测试",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "数据管理显示本机库路径与书签数",
+      "ok": true,
+      "detail": "数据管理 本机数据库 D:\\agent\\llq\\data\\cs.db 书签 1 条 · 版本 0.1.0 · 搜索历史 "
+    },
+    {
+      "name": "设置导出默认省略历史、密钥、绝对路径和网址模板",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "显式勾选后导出搜索历史与字面模式",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "设置页同步另一标签页的搜索历史计数",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "清空搜索历史写入空列表",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "390 书签工具栏分成搜索与动作两行",
+      "ok": true,
+      "detail": "searchY=140 actionsY=196"
+    },
+    {
+      "name": "390 书签动作三等分",
+      "ok": true,
+      "detail": "114/114/114"
+    },
+    {
+      "name": "390 添加表单默认收起",
+      "ok": true,
+      "detail": "open=false visible=false"
+    },
+    {
+      "name": "展开后可填写添加表单",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390 卡片操作独占一行不挤压标题",
+      "ok": true,
+      "detail": "titleBottom=528 actionsTop=538 select=270/358"
+    },
+    {
+      "name": "390 书签页无横向滚动",
+      "ok": true,
+      "detail": "390/390"
+    },
+    {
+      "name": "320 书签页无横向滚动",
+      "ok": true,
+      "detail": "320/320"
+    },
+    {
+      "name": "窄屏书签主要操作至少 44px 高",
+      "ok": true,
+      "detail": "44px"
+    },
+    {
+      "name": "旧式 GET 分享在窄屏自动展开并清除地址栏参数",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "单页总结空态给出示例地址",
+      "ok": true,
+      "detail": "3 个"
+    },
+    {
+      "name": "点示例会填入地址并开始总结",
+      "ok": true,
+      "detail": "input=https://docs.python.org/3/tutorial/index.html body=https://docs.python.org/3/tutorial/index.html"
+    },
+    {
+      "name": "从键盘启动示例后焦点留在网址输入框",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "带网址打开单页总结时只发起一次请求",
+      "ok": true,
+      "detail": "calls=2"
+    },
+    {
+      "name": "首次激活已缓存 HTML、入口脚本、样式和离线页",
+      "ok": true,
+      "detail": "17 个文件"
+    },
+    {
+      "name": "manifest 保留应用 ID、显示模式、分类与快捷方式",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "manifest 提供 maskable 图标与 POST 分享",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "OpenSearch 使用当前端口的绝对搜索模板和正确 MIME",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "真实断网时未访问过的设置页仍能加载完整应用壳",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "断网时 API 和 /go 不读取缓存壳",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "未知路径离线时显示独立离线页",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "真实 multipart 导航分享在窄屏展开并预填",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "分享内容不进入后续 GET 或停留在地址栏",
+      "ok": true,
+      "detail": "GETs=1 clean=true"
+    },
+    {
+      "name": "浏览器安装提示失败可恢复并提示菜单入口",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "新版资源缺失时保留旧 worker 和完整离线壳",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "稍后关闭提示并保留真实等待中的版本",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "新页面能发现已处于 waiting 的真实版本",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "确认后新版真实接管并重新加载，旧缓存已清除",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "长列表卡片使用 content-visibility: auto",
+      "ok": true,
+      "detail": "cv=auto size=auto 140px"
+    },
+    {
+      "name": "结果卡菜单展开时移除裁剪约束",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "首屏不加载设置页与书签页的分包",
+      "ok": true,
+      "detail": "无页面分包"
+    },
+    {
+      "name": "浏览器指标回退上报耗时且不包含搜索参数",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "按需加载设置页分包",
+      "ok": true,
+      "detail": "SettingsPage-Bb6lamp0.js"
+    },
+    {
+      "name": "筛选条默认收起且控件齐全",
+      "ok": true,
+      "detail": "open=false selects=2"
+    },
+    {
+      "name": "Esc 收起筛选并归还焦点",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "点击外部收起筛选",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "时间范围写入请求与地址栏",
+      "ok": true,
+      "detail": "opts={\"safe\":true,\"literal\":false,\"time_range\":\"week\",\"language\":null,\"site\":null,\"dedupe\":\"normal\"}"
+    },
+    {
+      "name": "筛选摘要显示已选条件与数量",
+      "ok": true,
+      "detail": "已筛选：一周内"
+    },
+    {
+      "name": "仅筛选改变的历史后退也重新查询",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "历史后退后翻页不写回旧筛选",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "无效站点保留已生效的筛选且不发请求",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "站点限定写入请求与地址栏",
+      "ok": true,
+      "detail": "opts={\"safe\":true,\"literal\":false,\"time_range\":\"week\",\"language\":null,\"site\":\"example.com\",\"dedupe\":\"normal\"}"
+    },
+    {
+      "name": "去重强度写入请求与地址栏",
+      "ok": true,
+      "detail": "opts={\"safe\":true,\"literal\":false,\"time_range\":\"week\",\"language\":null,\"site\":\"example.com\",\"dedupe\":\"strict\"}"
+    },
+    {
+      "name": "刷新后筛选从地址栏还原",
+      "ok": true,
+      "detail": "badge=3 note=已筛选：一周内 · site:example.com · 严格去重"
+    },
+    {
+      "name": "重置筛选清空地址栏与请求条件",
+      "ok": true,
+      "detail": "opts={\"safe\":true,\"literal\":false,\"time_range\":null,\"language\":null,\"site\":null,\"dedupe\":\"normal\"}"
+    },
+    {
+      "name": "时间范围连改两档后回退还原上一档筛选",
+      "ok": true,
+      "detail": "day=day back=week"
+    },
+    {
+      "name": "回退清掉站点限定后输入框与请求同步",
+      "ok": true,
+      "detail": "site=\"\" badge=1 opts={\"safe\":true,\"literal\":false,\"time_range\":\"week\",\"language\":null,\"site\":null,\"dedupe\":\"normal\"}"
+    },
+    {
+      "name": "切换分类后筛选面板收起",
+      "ok": true,
+      "detail": "http://127.0.0.1:8000/?q=python&category=video&range=week"
+    },
+    {
+      "name": "提交新查询后筛选面板收起且沿用当前筛选",
+      "ok": true,
+      "detail": "http://127.0.0.1:8000/?q=python+typing+%E6%B3%9B%E5%9E%8B&range=week"
+    },
+    {
+      "name": "筛选回显和请求不符时保留链接并提示恢复",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "1280×280 筛选面板完整",
+      "ok": true,
+      "detail": "box={\"x\":430,\"y\":12,\"width\":420,\"height\":256} scrollTop=83"
+    },
+    {
+      "name": "1280×480 筛选面板完整",
+      "ok": true,
+      "detail": "box={\"x\":430,\"y\":129.453125,\"width\":420,\"height\":338.546875} scrollTop=0"
+    },
+    {
+      "name": "768×561 筛选面板完整",
+      "ok": true,
+      "detail": "box={\"x\":96,\"y\":236.1875,\"width\":420,\"height\":318.8125} scrollTop=20"
+    },
+    {
+      "name": "768×561 筛选面板完整（无原生 popover）",
+      "ok": true,
+      "detail": "box={\"x\":174,\"y\":111.21875,\"width\":420,\"height\":338.546875} scrollTop=0"
+    },
+    {
+      "name": "无原生 popover 时再次开关清除未应用草稿",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "无原生 popover 时 Esc 关闭并归还焦点",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "health 报告契约版本与能力表",
+      "ok": true,
+      "detail": "api_version=2 capabilities={\"filters\":true,\"bookmark_status\":true,\"vitals\":true,\"model_test\":true,\"opensearch\":true}"
+    },
+    {
+      "name": "OpenSearch 描述符返回 XML MIME",
+      "ok": true,
+      "detail": "application/opensearchdescription+xml"
+    },
+    {
+      "name": "新版后端不显示混版横幅且筛选可用",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "能力探测等待中禁用筛选入口",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "旧后端显示版本过旧横幅并列出缺失能力",
+      "ok": true,
+      "detail": "本机服务版本过旧，部分功能已禁用 当前服务缺少：搜索筛选、批量收藏状态、性能上报、模型连通性测试、浏览器搜索集成。 先停"
+    },
+    {
+      "name": "旧后端禁用筛选入口且点不开面板",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "探测与旧后端均无未确认的收藏状态和性能请求",
+      "ok": true,
+      "detail": "{\"health\":1,\"status\":0,\"vitals\":0}"
+    },
+    {
+      "name": "旧后端不会把分享链接的筛选标成已生效",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "旧后端可从分享链接移除不支持的筛选并恢复结果",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "旧后端禁用模型连通性测试",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px 筛选面板完整且保留分享的语言代码",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px 筛选面板完整且保留分享的语言代码",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "768px 筛选面板完整且保留分享的语言代码",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "新查询渲染 3 张骨架卡",
+      "ok": true,
+      "detail": "cards=3 ariaHidden=true"
+    },
+    {
+      "name": "骨架显示已用时间",
+      "ok": true,
+      "detail": "正在检索「python」… 0.0s"
+    },
+    {
+      "name": "骨架计时在走（>0.2s）",
+      "ok": true,
+      "detail": "正在检索「python」… 0.3s"
+    },
+    {
+      "name": "骨架撑住结果区高度（≥280px）",
+      "ok": true,
+      "detail": "h=323"
+    },
+    {
+      "name": "减少动态效果时骨架停止动画",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "骨架计时仅用于视觉，主状态区播报查询",
+      "ok": true,
+      "detail": "正在检索 python"
+    },
+    {
+      "name": "结果到达后骨架移除",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "翻页时保留旧列表并降透明",
+      "ok": true,
+      "detail": "cards=13 opacity=0.45"
+    },
+    {
+      "name": "旧列表保留原页码，新页码单独显示并播报",
+      "ok": true,
+      "detail": "第 1 页 · 本页 10 条 · 正在加载第 2 页… 0.0s"
+    },
+    {
+      "name": "翻页期间旧列表跳过键盘焦点与快捷键",
+      "ok": true,
+      "detail": "requests=1,2 focused=true inert=true parentFocused=true active=workspace-results"
+    },
+    {
+      "name": "翻页成功恢复不透明并聚焦新页码",
+      "ok": true,
+      "detail": "opacity=1 focus=第 2 页 · 本页 10 条"
+    },
+    {
+      "name": "翻页失败移除旧列表并聚焦重试",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "翻页返回空结果时显示空态和当前页码",
+      "ok": true,
+      "detail": "requests=1,2,3,3"
+    },
+    {
+      "name": "引擎菜单点外部即关闭",
+      "ok": true,
+      "detail": "open=true closed=true"
+    },
+    {
+      "name": "Google 不在「中国大陆可直连」分组",
+      "ok": true,
+      "detail": "b,sg,so,bd"
+    },
+    {
+      "name": "未分组引擎有「其他引擎」标题",
+      "ok": true,
+      "detail": "g,d,dw,br,yt"
+    },
+    {
+      "name": "引擎状态是文字标签",
+      "ok": true,
+      "detail": "可用/未知"
+    },
+    {
+      "name": "AI 对话页只保留一个主标题且更新标签页标题",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "键盘可展开和收起工具面板",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "后退至空首页清空 AI 检索结果",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "前进恢复普通结果时不重发 AI 检索",
+      "ok": true,
+      "detail": "requests=1"
+    },
+    {
+      "name": "历史一次还原查询和筛选时清除离开页面的 AI 检索",
+      "ok": true,
+      "detail": "requests=2"
+    },
+    {
+      "name": "继承默认时有说明文案",
+      "ok": true,
+      "detail": "继承 SearXNG 默认（4 个）。开启自选模式后可单独勾选引擎。"
+    },
+    {
+      "name": "继承默认时逐项开关禁用且不显示为已选",
+      "ok": true,
+      "detail": "disabled=20/20 checkedDisabled=0"
+    },
+    {
+      "name": "禁用开关视觉降透明（≠1）",
+      "ok": true,
+      "detail": "opacity=0.4"
+    },
+    {
+      "name": "禁用原因可被读屏（aria-describedby）",
+      "ok": true,
+      "detail": "described=20/20"
+    },
+    {
+      "name": "提供「恢复默认」入口",
+      "ok": true,
+      "detail": "reset=true"
+    },
+    {
+      "name": "axe serious/critical 为 0（设置页）",
+      "ok": true,
+      "detail": "violations=0"
+    },
+    {
+      "name": "书签页 header 与正文左边缘对齐",
+      "ok": true,
+      "detail": "brand=188 main=188"
+    },
+    {
+      "name": "书签页只有一个当前导航项",
+      "ok": true,
+      "detail": "current=1"
+    },
+    {
+      "name": "书签页有 h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "一键添加页 header 与正文左边缘对齐",
+      "ok": true,
+      "detail": "brand=308 main=308"
+    },
+    {
+      "name": "一键添加页只有一个当前导航项",
+      "ok": true,
+      "detail": "current=1"
+    },
+    {
+      "name": "一键添加页有 h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "单页总结页 header 与正文左边缘对齐",
+      "ok": true,
+      "detail": "brand=308 main=308"
+    },
+    {
+      "name": "单页总结页只有一个当前导航项",
+      "ok": true,
+      "detail": "current=1"
+    },
+    {
+      "name": "单页总结页有 h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "设置页 header 与正文左边缘对齐",
+      "ok": true,
+      "detail": "brand=308 main=308"
+    },
+    {
+      "name": "设置页只有一个当前导航项",
+      "ok": true,
+      "detail": "current=1"
+    },
+    {
+      "name": "设置页有 h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "令牌和含令牌的书签代码默认收起",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "工具页 320px 无横向滚动",
+      "ok": true,
+      "detail": "page=320/320 pre=244/244"
+    },
+    {
+      "name": "工具页代码块自身可换行",
+      "ok": true,
+      "detail": "pre=244/244"
+    },
+    {
+      "name": "320 首屏露出首条标题与摘要首行",
+      "ok": true,
+      "detail": "{\"titleY\":641,\"snippetY\":669,\"officialItems\":2}"
+    },
+    {
+      "name": "空首页给出示例与快捷入口",
+      "ok": true,
+      "detail": "试试这些 python asyncio 教程 本地大模型 部署 本周 AI 新闻 也可以直接 书签 单页总结 AI 对话"
+    },
+    {
+      "name": "无历史时不显示最近搜索",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "搜索后空首页出现最近搜索",
+      "ok": true,
+      "detail": "1 条"
+    },
+    {
+      "name": "最近搜索支持单条删除",
+      "ok": true,
+      "detail": "1 → 0"
+    },
+    {
+      "name": "删除最后一条历史后焦点移到示例",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "另一标签页更新后空首页同步并限制为 8 条",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "空首页重搜保留历史的字面模式",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "空首页快捷入口能打开 AI 对话",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390×844 首屏能看到第一条结果",
+      "ok": true,
+      "detail": "首条结果 y=546.796875"
+    },
+    {
+      "name": "390×844 首条结果标题在 y ≤ 700",
+      "ok": true,
+      "detail": "标题 y=615"
+    },
+    {
+      "name": "390 官方入口默认 2 条并折在强相关之后",
+      "ok": true,
+      "detail": "{\"items\":2,\"more\":\"查看全部 3 条\",\"afterCards\":true}"
+    },
+    {
+      "name": "展开后显示全部官方入口",
+      "ok": true,
+      "detail": "3 条"
+    },
+    {
+      "name": "官方入口展开和收起保留焦点并播报状态",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "再次激活官方入口开关时收回到两条",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390×844 没有常驻书签/工具区",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390×844 统计条单行且展开按钮至少 44px",
+      "ok": true,
+      "detail": "h=44 trigger=44"
+    },
+    {
+      "name": "390×844 下滚动后统计条贴在页头下方",
+      "ok": true,
+      "detail": "{\"top\":58,\"headerBottom\":59}"
+    },
+    {
+      "name": "打开工具抽屉后结果区位置不变",
+      "ok": true,
+      "detail": "before=351 after=351"
+    },
+    {
+      "name": "抽屉是底部面板",
+      "ok": true,
+      "detail": "sheet top=666.4393310546875"
+    },
+    {
+      "name": "点遮罩关闭抽屉",
+      "ok": true,
+      "detail": "closed=true"
+    },
+    {
+      "name": "关闭抽屉后焦点回到触发按钮",
+      "ok": true,
+      "detail": "activeElement=workspace-drawer-fab"
+    },
+    {
+      "name": "移动端 s 打开总结抽屉并启动请求",
+      "ok": true,
+      "detail": "requests=1"
+    },
+    {
+      "name": "移动抽屉引用关闭抽屉并聚焦结果",
+      "ok": true,
+      "detail": "focus=result-r_6"
+    },
+    {
+      "name": "移动端总结引用可展开并聚焦折叠的官方入口",
+      "ok": true,
+      "detail": "result-d_690e95b0c7d11bd5"
+    },
+    {
+      "name": "Esc 关闭抽屉并归还焦点",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "缺少 closedBy 接口时可点击遮罩关闭",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "移动端译文转搜关闭抽屉，末尾短码按字面搜索",
+      "ok": true,
+      "detail": "q=Python+ds&literal=1"
+    },
+    {
+      "name": "译文转搜一次后退回到原分类",
+      "ok": true,
+      "detail": "http://127.0.0.1:8000/?q=python&category=encyclopedia"
+    },
+    {
+      "name": "行内次要按钮 ≥24×24",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "粗指针下主要控件 ≥44×44",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "开关 ≥44×24",
+      "ok": true,
+      "detail": "46×28"
+    },
+    {
+      "name": "320px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "320/320"
+    },
+    {
+      "name": "768px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "768/768"
+    },
+    {
+      "name": "900px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "900/900"
+    },
+    {
+      "name": "1024px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "1024/1024"
+    },
+    {
+      "name": "1180px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "1180/1180"
+    },
+    {
+      "name": "1181px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "1181/1181"
+    },
+    {
+      "name": "1440px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "1440/1440"
+    },
+    {
+      "name": "1920px 工具形态正确且页面无横向溢出",
+      "ok": true,
+      "detail": "1920/1920"
+    },
+    {
+      "name": "768px 单列布局并使用抽屉入口",
+      "ok": true,
+      "detail": "{\"columns\":1,\"hasSide\":false,\"hasFab\":true,\"overflow\":0}"
+    },
+    {
+      "name": "1024px 使用抽屉且内容列 ≥560",
+      "ok": true,
+      "detail": "{\"columns\":1,\"resultsWidth\":1024,\"hasSide\":false,\"overflow\":0}"
+    },
+    {
+      "name": "1440px 恢复三栏且主列 ≥560",
+      "ok": true,
+      "detail": "{\"columns\":3,\"mainWidth\":933,\"hasFab\":false,\"overflow\":0}"
+    },
+    {
+      "name": "深色主题下 color-scheme 与页面底色一致",
+      "ok": true,
+      "detail": "{\"scheme\":\"dark\",\"bg\":\"rgb(20, 26, 24)\",\"meta\":\"#ffffff\"}"
+    },
+    {
+      "name": "axe serious/critical 为 0（深色结果页）",
+      "ok": true,
+      "detail": "violations=0"
+    },
+    {
+      "name": "320px 统计条单行且不遮挡详情按钮",
+      "ok": true,
+      "detail": "h=44"
+    },
+    {
+      "name": "? 从无焦点状态打开面板前焦点在 body",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "无焦点时关闭面板把焦点交还「全部快捷键」",
+      "ok": true,
+      "detail": "{\"tag\":\"BUTTON\",\"text\":\"? 全部快捷键\",\"isBody\":false}"
+    },
+    {
+      "name": "空首页快捷键面板关闭后焦点回到主内容",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "未提供安装入口时按钮真禁用并给菜单指引",
+      "ok": true,
+      "detail": "{\"text\":\"浏览器未提供安装入口\",\"disabled\":true,\"title\":\"浏览器未提供安装入口，可从浏览器菜单安装\"}"
+    },
+    {
+      "name": "非安全上下文提示 HTTPS 并隐藏安装入口",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "断网时页头显示连不上本机服务",
+      "ok": true,
+      "detail": "连不上本机服务 确认 FastAPI 已启动（默认 http://127.0.0"
+    },
+    {
+      "name": "断网时引擎设置用中文文案且没有可写的保存",
+      "ok": true,
+      "detail": "{\"banner\":\"连不上本机服务 确认 FastAPI 已启动（默认 http://127.0.0.1:8000），或在本机执行 .\\\\scripts\\\\serve.ps1 -Provider searxng。 重试连接\",\"engineError\":\"连不上本机服务，确认 "
+    },
+    {
+      "name": "设置页和所有能力控件共享一次 health",
+      "ok": true,
+      "detail": "health=1"
+    },
+    {
+      "name": "掉线后已加载的引擎面板只读并保留草稿",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "每次连网只探测一次 health，恢复后引擎面板可编辑",
+      "ok": true,
+      "detail": "两次 online 共 2 次 health"
+    }
+  ],
+  "screenshots": [
+    "reports\\assets\\post-merge-8000\\audit\\legacy-banner.png",
+    "reports\\assets\\post-merge-8000\\audit\\mobile-drawer.png",
+    "reports\\assets\\post-merge-8000\\audit\\laptop-1024.png",
+    "reports\\assets\\post-merge-8000\\audit\\desktop-light-search.png",
+    "reports\\assets\\post-merge-8000\\audit\\mobile-dark-search.png"
+  ],
+  "completed_at": "2026-11-14T09:44:26.114Z",
+  "passed": true
+}
