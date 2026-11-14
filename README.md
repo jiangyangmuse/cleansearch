@@ -780,6 +780,22 @@ $env:ALLOWED_HOSTS = $lanAddress
 
 局域网 HTTP 支持浏览、搜索和收藏。PWA 的 Service Worker 与系统分享需要手机信任的 HTTPS 反代证书。
 
+### 6. 分发给别的电脑（免安装包）
+
+```powershell
+.\scripts\build-portable.ps1          # 构建前端 + PyInstaller 打包 + 打 zip
+# 产物：dist-portable\CleanSearch-0.1.0-win-x64.zip（约 54 MB，Windows x64）
+```
+
+对方电脑解压后双击 `启动 CleanSearch.bat`，浏览器自动打开 `http://127.0.0.1:8000/`，关掉命令行窗口即停止。目标机器**不需要装 Python / Node / Docker**：
+
+- 默认 `fixture` 固定样本模式，离线也能看到搜索、书签、总结界面；
+- 书签库、令牌、favicon 缓存在包内 `data\`，整包拷走即可迁移；
+- 想接真实搜索：另跑 SearXNG，再在启动脚本里设 `SEARCH_PROVIDER=searxng` 与 `SEARXNG_URL`；
+- 想接本机模型：再加 `LLM_BASE_URL` / `LLM_MODEL`（OpenAI 兼容，如 Ollama）。
+
+已验证：解压到 `%TEMP%` 后运行，`/api/health` 正常、冒烟 16/16、浏览器审计 312/312。只监听 `127.0.0.1`；手机访问仍需 `ALLOWED_HOSTS`，装 PWA 需 HTTPS。
+
 ## 验收与测试
 
 ```powershell
