@@ -1,5 +1,7 @@
 # 浏览器与 UI 复查与完善方案
 
+> **状态（2026-11-14 晚）**：R-01…R-12 已修复；当前 UI 基线为 pytest 489、静态检查 35、fixture 审计 315、真实筛选 9/9。本轮新增打包分发问题 R-13…R-18，见 §8。
+>
 > 复查对象：2026-11-13 22:38 构建的 `apps/web/dist` 与当前工作区后端代码。为不触碰日常 `8000` 进程，实测在隔离实例 `127.0.0.1:18400`（真实 SearXNG + 临时数据库 + stub 模型）进行，另保留 `18401` fixture 实例做固定样本断言。
 > 方式：读实现与决策、独立 Playwright/Chromium 复跑、端点对照、离线/断点/焦点/axe 实验。未改任何产品代码、配置、数据或 `dist`。
 > 证据截图：`reports/assets/browser-ui-recheck/`。复查报告：`reports/completed/2026-11-13-2316-browser-ui-recheck.md`。
@@ -159,3 +161,58 @@
 - 版本/主机：`apps/api/app/main.py`、`apps/api/app/config.py`、`scripts/serve.ps1`
 - 焦点/安装/离线：`components/ShortcutsDialog.tsx`、`SettingsPage.tsx`、`sw.js`、`offline.html`
 - 验收：`scripts/audit-ui.cjs`、`scripts/visual-regression.cjs`、`reports/assets/browser-ui-recheck/`
+
+
+## 8 二次复查（2026-11-14 晚）：打包分发与残余
+
+> 本轮复核对象：`76c3ca7` 工作区、`apps/web/dist`（2026-11-14 19:30）、日常 `127.0.0.1:8000`（fixture，`api_version=2`，五项能力全 true）与 `dist-portable/CleanSearch-0.1.0-win-x64.zip`。未改产品代码、配置、数据或 `dist`。
+
+### 8.1 当前基线
+
+- `python -m pytest apps/api -q -o addopts=`：489 passed。
+- `node --test scripts/{extension,css-audit,engine-query,url-state}.test.cjs`：35/35。
+- 隔离 fixture 实例 `18421`：`audit-ui.cjs --test-bookmark-writes` **ALL PASS (315)**。
+- 当前真实上游实例 `18420`：`verify-filters.cjs` **ALL PASS (9)**。
+- 移动端：390×844 首条结果 y=547，官方入口默认 2 条且折在「强相关」之后；320 无横向溢出。
+- 断点：1180 及以下抽屉，1181 起三栏；1440 三栏。
+- 筛选：外部点击/Esc/路由关闭、后退恢复筛选、翻页 URL 正确；旧后端模拟显示版本横幅且筛选禁用。
+- 快捷键焦点：空首页关闭后回 `main`，结果页回「全部快捷键」按钮；安装按钮 `disabled` 且有 `title`；离线显示中文横幅。
+- 上一轮 R-01…R-12 已全部修复，当前 UI 没有新的 P0。
+
+### 8.2 新发现
+
+| ID | 严重度 | 问题 | 证据 | 影响 |
+| --- | --- | --- | --- | --- |
+| R-13 | P1（打包） | 免安装包没有按说明开放局域网 | `packaging/launcher.py` 第 65 行设置 `API_HOST`，第 91 行 `uvicorn.run(host="127.0.0.1")` 硬编码；`说明.txt` 第 20 行却写 `ALLOWED_HOSTS=192.168.1.20` 可让手机访问 | 用户按说明设置后手机仍连不上；`ALLOWED_HOSTS` 只放行 Host，不改变监听地址 |
+| R-14 | P2（打包） | 包内 SearXNG 版本与密钥不可复现 | `packaging/searxng/docker-compose.yml` 使用 `searxng/searxng:latest`，`SEARXNG_SECRET` 为固定字符串；`settings.yml` 的 `secret_key` 为占位值 | 上游镜像更新可能让分发包失效；固定密钥在多份拷贝间共享（当前只绑回环，风险有限） |
+| R-15 | P2（打包） | 包内异常提示引用仓库脚本 | `ServerBanner` 离线/过旧文案固定写 `\\scripts\\serve.ps1`；`StatePanel` 诊断同样 | 免安装包用户没有 `scripts/`，照提示操作会失败；应显示“重启 CleanSearch.exe”或按构建标记分支 |
+| R-16 | P3（文档） | 包说明超出已验证范围 | `说明.txt` 第 5 行称“路径里有中文也可以”，打包报告 §6 明确非 ASCII 路径未测；README 记录审计 312/312，当前完整口径为 315（默认 308） | 用户按说明迁移到中文/非 ASCII 目录或核对数字时对不上 |
+| R-17 | P3（UI） | 旧服务横幅没有重试入口 | `ServerBanner` 的 `outdated` 分支只有文字，没有按钮；`offline` 分支有「重试连接」 | 用户重启服务后不刷新页面就一直看到“版本过旧”；低概率但可一键修 |
+| R-18 | P3（打包） | 首屏浏览器可能早于服务就绪 | `launcher.py` 在导入 uvicorn 前起 2 秒定时开浏览器；PyInstaller 冷启动可能超过 2 秒 | 首次双击可能看到连接失败页，刷新即可；可在 health 就绪后再开或延长等待 |
+
+### 8.3 建议
+
+**P1（打包局域网契约）**
+
+- `launcher.py` 使用 `host = os.environ.get("API_HOST", "127.0.0.1")` 传给 uvicorn；新增可选「局域网启动」bat，同时设置 `API_HOST` 与 `ALLOWED_HOSTS`，并在说明中写清防火墙和 HTTPS 条件。
+- 或者明确分发包只支持同机：删除 `说明.txt`/README 里的 `ALLOWED_HOSTS` 手机说明，把局域网步骤留在仓库 `serve.ps1 -BindAddress`。
+- 验收：`API_HOST=0.0.0.0` + `ALLOWED_HOSTS=<LAN IP>` 时，手机能打开 health 与搜索；不设置时仍只监听回环。
+
+**P2（可复现与包内文案）**
+
+- 固定 SearXNG 镜像 tag/digest（保留一个已验证版本），构建脚本读取版本变量；`SEARXNG_SECRET` 改为首次启动生成或明确“仅本机”。
+- `ServerBanner`/诊断文案按构建标记切换：仓库版给 `serve.ps1`，免安装版给“重启 CleanSearch.exe / 查看说明.txt”。
+- 增加 `build-portable.ps1 -Verify`：解压到临时目录、启动、health/冒烟/审计一条龙，避免“打包完成但包不可用”。
+
+**P3（文档与细节）**
+
+- `说明.txt` 要么补测中文路径，要么删掉“路径里有中文也可以”；README 与报告统一写当前审计口径（默认 308，含真实书签写入 315）。
+- 旧服务横幅加「重试连接」；首屏浏览器等 health 就绪后再开，或把等待改成轮询 health。
+- 分发包只保留一个明确的“支持范围”表：固定样本 / 真实搜索 / 局域网 HTTP / PWA HTTPS，避免不同文档各说一套。
+
+### 8.4 保留的待验项
+
+- Android/iOS 真机安装与系统分享、NVDA/VoiceOver 朗读仍缺设备。
+- 真实上游 Google/CSE 在部分时段 503；本轮真实筛选 9/9 不覆盖该引擎。
+- 自动更新、代码签名、商店分发仍不在范围内。
+

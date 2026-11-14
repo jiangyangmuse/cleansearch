@@ -43,6 +43,18 @@ Set-Content -Path (Join-Path $app "启动 CleanSearch.bat") -Value $bat -Encodin
 
 Copy-Item -Recurse -Force (Join-Path $root "packaging/searxng") (Join-Path $app "searxng")
 
+# 让别的电脑也能一键建桌面快捷方式：随包带脚本 + 一个 bat
+New-Item -ItemType Directory -Force -Path (Join-Path $app "tools") | Out-Null
+Copy-Item -Force (Join-Path $root "scripts/create-shortcut.ps1") (Join-Path $app "tools/create-shortcut.ps1")
+
+$shortcutBat = @()
+$shortcutBat += "@echo off"
+$shortcutBat += "chcp 65001 >nul"
+$shortcutBat += 'cd /d "%~dp0"'
+$shortcutBat += 'powershell -NoProfile -ExecutionPolicy Bypass -File "tools\create-shortcut.ps1" -Target "%~dp0CleanSearch.exe" -Name "CleanSearch"'
+$shortcutBat += "pause"
+Set-Content -Path (Join-Path $app "创建桌面快捷方式.bat") -Value $shortcutBat -Encoding utf8
+
 $real = @()
 $real += '@echo off'
 $real += "chcp 65001 >nul"

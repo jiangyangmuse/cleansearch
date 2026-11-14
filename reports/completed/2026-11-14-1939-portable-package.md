@@ -111,3 +111,23 @@
 | `Get-ChildItem dist-portable/CleanSearch` | 通过 | `_internal data resources searxng web CleanSearch.exe 启动 CleanSearch.bat 启动 CleanSearch（真实搜索）.bat 停止 SearXNG.bat 说明.txt` |
 
 **边界与遗留**：包内 SearXNG 冷启动时引擎要预热，前几次查询可能 503（`launcher` 的等待只保证 HTTP 可达，不保证引擎都有结果）；引擎可用性仍取决于对方网络。未验证：目标机器没装 Docker 时脚本的提示路径。
+## 9 追加轮次 2026-11-14 20:50（桌面快捷方式）
+
+**目标**：双击桌面图标就能用；重复双击不要起第二个实例。
+
+**做了什么**
+
+1. `scripts/create-shortcut.ps1`：生成桌面 `.lnk`（目标/工作目录/图标显式写入），图标由 `web/icon-192.png` 现场包成 ICO（内嵌 PNG，无需额外工具）。
+2. 包内新增 `创建桌面快捷方式.bat` + `tools/create-shortcut.ps1`，别的电脑解压后也能一键建快捷方式。
+3. `launcher.py` 改为「已在运行就只开浏览器」：先探 `API_PORT` 的 `/api/health`，命中则开浏览器并退出；端口被占用时按 `8000 → 8001…8010` 顺序挑。首版用 `response.read(200)` 只读 200 字节，JSON 被截断导致探测永远失败（表现为又起了个 8001 实例），改为整段读取。
+4. 把日常 `data/cs.db` 用 SQLite backup API 复制进包内 `data\`，令牌一并复制，快捷方式启动的实例与日常书签一致。
+
+| 命令 | 结果 | 说明 |
+| --- | --- | --- |
+| `pwsh scripts\create-shortcut.ps1 -Target dist-portable\CleanSearch\CleanSearch.exe -Name CleanSearch` | 通过 | `C:\Users\HUAWEI\OneDrive\Desktop\CleanSearch.lnk`；target/workdir/icon 三项已回读确认，`CleanSearch.ico` 生成成功 |
+| 8000 已被日常实例占用时直接跑 exe（`CLEANSEARCH_NO_BROWSER=1`） | 通过 | 输出「检测到 http://127.0.0.1:8000/ 已在运行，直接打开浏览器」，`EXIT=0`，无残留进程 |
+| `API_PORT=18090` 跑 exe | 通过 | 正常起服务：`/api/health` → `provider=fixture`、`db_path=...\dist-portable\CleanSearch\data\cs.db`、`bookmarks=1`、`api_version=2` |
+| `.\scripts\build-portable.ps1 -SkipWebBuild` | 通过 | 包内新增 `tools/`、`创建桌面快捷方式.bat`；zip 53.5 MB |
+| 重新上传 v0.1.0 asset | 通过 | 删除旧 asset `747190483` 后上传新包，下载地址不变，size=53.5 MB |
+
+**边界**：快捷方式指向 `dist-portable\CleanSearch\`，该目录在 `.gitignore` 里、重建会清空——重建后需重新执行一次 `create-shortcut.ps1`（包内 bat 也行）。图标只有 192px 一档，高分屏字号下略糊。
