@@ -14,4 +14,8 @@
 | 分发包签名与自动更新 | 两个独立增量：① 给 `CleanSearch.exe` 加代码签名（需可用的代码签名证书），消除 SmartScreen「未知发布者」提示；② 应用内检查新版本 + 一键替换 `exe/web/resources`（保留 `data\`），或提供增量包。都不改现有接口，做完要补 Windows 10 与杀软拦截的实测。 | [免安装包报告](../completed/2026-11-14-1939-portable-package.md) §6 |
 | 桌面与扩展分发 | **免安装 zip 已交付**（`scripts/build-portable.ps1`，Windows x64，54 MB，解压即用）；Tauri 桌面壳与商店分发仍待需求确认后评估。 | [可选优化与暂缓项](../../docs/进展与欠账.md#可选优化与暂缓项) |
 
+| 日常服务开机自启补强 | ① 把 Docker Desktop 也加进「启动」文件夹（现在只自启 CleanSearch，Docker 没起时 `start-daily.ps1` 会降级 fixture）；② 重启机器实测一次自启，确认 `data/logs/start-daily.log` 有新记录且 `/api/health` 为 `provider=searxng`；③ 给隐藏窗口的服务加个托盘图标或「重启服务」入口，免得只能翻日志。 | [开机自启报告](../completed/2026-11-15-0120-daily-autostart.md) §6 |
+| health 报告实际生效模型 | `/api/health` 的 `llm_model` 来自 `.env`，设置页指派的模型存在数据库里，两者可能不一致（排查总结失败时会误判）。改成 health 读当前指派（带降级：读不到再用 env），并同步 `smoke.ps1` 的模型校验。 | [模式切换报告](../completed/2026-11-15-0112-searxng-mode-switch.md) §6 |
+| 手机局域网真机验证 | `ALLOWED_HOSTS` + `API_HOST=0.0.0.0` 的路径只改了代码与文案，**没有真机实测**（缺第二台设备）。要在同一 Wi-Fi 下用手机打开 `/api/health` 与一条筛选分享链接，记录能否访问、书签是否写成功、Windows 防火墙是否需要放行。 | [二次复查 R-13](../completed/2026-11-14-2036-portable-recheck.md) · [P0-4 报告](../completed/2026-11-14-1314-p0-4-breakpoint-lan.md) |
+
 [返回总台账](../INDEX.md)
