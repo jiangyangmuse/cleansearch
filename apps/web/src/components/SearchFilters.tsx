@@ -1,22 +1,10 @@
 import { useEffect, useId, useImperativeHandle, useRef, useState, type Ref } from "react";
-import { normalizeSite, type SearchUrlState } from "../urlState";
+import { DEFAULT_FILTERS, filtersFromUrl, normalizeSite, sameFilters, type SearchFiltersState } from "../urlState";
 /** 筛选条：时间范围 / 语言 / 站点限定 / 去重强度；状态由 URL 驱动，可分享。 */
-export interface Filters {
-  timeRange: "" | "day" | "week" | "month" | "year";
-  language: string;
-  site: string;
-  dedupe: "off" | "normal" | "strict";
-}
+export type Filters = SearchFiltersState;
 
-export const DEFAULT_FILTERS: Filters = { timeRange: "", language: "", site: "", dedupe: "normal" };
-
-export function filtersFromUrl({ range, lang, site, dedupe }: SearchUrlState): Filters {
-  return { timeRange: range, language: lang, site, dedupe };
-}
-
-export function sameFilters(left: Filters, right: Filters): boolean {
-  return left.timeRange === right.timeRange && left.language === right.language && left.site === right.site && left.dedupe === right.dedupe;
-}
+// 契约放在 urlState（URL 与请求共用），这里保持组件层导出名不变。
+export { DEFAULT_FILTERS, filtersFromUrl, sameFilters };
 
 const RANGES: { value: Filters["timeRange"]; label: string }[] = [
   { value: "", label: "全部时间" },
@@ -63,12 +51,14 @@ export function describeFilters(filters: Filters): string {
 interface Props {
   filters: Filters;
   onChange: (next: Filters) => void;
+  /** 服务端缺少筛选能力（旧后端）时禁用入口，不要让人选完发现没生效。 */
+  disabled?: boolean;
   ref?: Ref<FilterPanel>;
 }
 
 export type FilterPanel = { close: () => void; isOpen: () => boolean };
 
-export default function SearchFilters({ filters, onChange, ref }: Props) {
+export default function SearchFilters({ filters, onChange, disabled = false, ref }: Props) {
   const count = activeFilterCount(filters);
   const update = (patch: Partial<Filters>) => onChange({ ...filters, ...patch });
   const [siteDraft, setSiteDraft] = useState(filters.site);
@@ -79,6 +69,13 @@ export default function SearchFilters({ filters, onChange, ref }: Props) {
   const supported = typeof HTMLElement.prototype.showPopover === "function";
   const [fallbackOpen, setFallbackOpen] = useState(false);
 
+  const resetDraft = () => { setSiteDraft(filters.site); setSiteError(false); };
+
+  useEffect(() => {
+    if (!disabled) return;
+    panel.current?.hidePopover?.();
+    setFallbackOpen(false);
+  }, [disabled]);
   useEffect(() => { setSiteDraft(filters.site); setSiteError(false); }, [filters.site]);
 
   useImperativeHandle(ref, () => ({
@@ -114,18 +111,20 @@ export default function SearchFilters({ filters, onChange, ref }: Props) {
 
   return (
     <div className="filters">
-      <button type="button" className="filters__toggle" ref={trigger} popoverTarget={supported ? id : undefined}
+      <button type="button" className="filters__toggle" ref={trigger}
+        popoverTarget={supported && !disabled ? id : undefined}
         aria-controls={id} aria-expanded={supported ? undefined : fallbackOpen}
-        onClick={supported ? undefined : () => setFallbackOpen(open => !open)}>筛选
+        disabled={disabled}
+        onClick={supported || disabled ? undefined : () => {
+          if (fallbackOpen) resetDraft();
+          setFallbackOpen(!fallbackOpen);
+        }}>筛选
         {count > 0 ? <span className="filters__badge" aria-label={`${count} 个筛选条件`}>{count}</span> : null}
         <i className="ws-icon ws-icon--chevron" aria-hidden="true" />
       </button>
       <div id={id} ref={panel} className="filters__body" popover={supported ? "auto" : undefined}
         hidden={!supported && !fallbackOpen} onToggle={event => {
-          if (!event.currentTarget.matches(":popover-open")) {
-            setSiteDraft(filters.site);
-            setSiteError(false);
-          }
+          if (supported && !event.currentTarget.matches(":popover-open")) resetDraft();
         }}>
         <fieldset className="filters__group">
           <legend>时间范围</legend>

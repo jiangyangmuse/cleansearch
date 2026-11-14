@@ -1,6 +1,7 @@
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import UpdateToast from "./components/UpdateToast";
+import { watchServerState } from "./capabilities";
 import { initPerf } from "./perf";
 import { initInstallPrompt } from "./pwa";
 import { registerServiceWorker } from "./swRegister";
@@ -19,6 +20,7 @@ const SettingsPage = lazy(() => import("./SettingsPage"));
 watchTheme();
 initInstallPrompt();
 initPerf();
+watchServerState();
 registerServiceWorker();
 
 const container = document.getElementById("root");

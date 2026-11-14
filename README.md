@@ -750,6 +750,36 @@ Compose 将书签数据库保存到命名卷 `bookmarks`，重建 API 容器后�
 # FastAPI :8000 （--reload，被 Vite 代理），浏览器只访问 http://127.0.0.1:5173
 ```
 
+### 4. 换版：先停旧进程，再核对能力
+
+前端会核对服务版本及能力，并在页头提示缺失功能。换版按以下步骤操作。
+
+```powershell
+# 1) 在原启动窗口按 Ctrl+C 停掉 CleanSearch
+
+# 2) 用当前代码重启，Provider 沿用原模式（searxng 或 fixture）
+.\scripts\serve.ps1 -Provider searxng
+
+# 3) 在另一个窗口核对契约版本与能力（api_version ≥ 2 且 capabilities 全为 true）
+curl.exe -s http://127.0.0.1:8000/api/health
+```
+
+`/api/health` 返回 `api_version` 与 `capabilities`（`filters` / `bookmark_status` / `vitals` / `model_test` / `opensearch`）。契约版本过低或能力缺失时，页头列出不可用功能，前端停用对应入口或请求。若分享链接带有当前服务不支持的筛选，可在搜索结果区点「重置筛选」继续搜索。
+
+### 5. 手机 / 局域网访问（可选）
+
+服务默认监听 `127.0.0.1`。在可信任的 Wi-Fi 上，把示例 IP 换成电脑当前的 Wi-Fi IPv4 地址，再启动一个局域网实例。
+
+```powershell
+$lanAddress = "192.168.1.20"
+$env:ALLOWED_HOSTS = $lanAddress
+.\scripts\serve.ps1 -Provider fixture -BindAddress $lanAddress
+```
+
+在电脑或手机打开 `http://192.168.1.20:8000/api/health`，确认 `allowed_hosts` 包含该地址，再打开首页。若电脑可访问而手机连不上，检查 Wi-Fi 是否隔离客户端，以及 Windows 防火墙是否允许私人网络上的该端口。`ALLOWED_HOSTS` 填裸主机名或 IP，多个值以逗号分隔。该设置按 HTTP Host 校验，能连到监听端口的设备均可操作该实例的数据。
+
+局域网 HTTP 支持浏览、搜索和收藏。PWA 的 Service Worker 与系统分享需要手机信任的 HTTPS 反代证书。
+
 ## 验收与测试
 
 ```powershell
@@ -791,7 +821,7 @@ python scripts/verify-searxng.py --base-url http://127.0.0.1:8000 --engines g b
 
 新增 `official.entries[].origin=search|directory`、`meta.directory`、`Result.brand_warning`。`meta.official` 包含两种来源；`upstream_total` 仅统计实际搜索候选，页面总展示数可能因目录直达而大于上游条数。总结排除目录及带品牌身份警示的结果。缓存命名空间为 `official-v4`（含完整入口表摘要）与 `engine-fallback-v3`，不清空书签。
 
-其他端点：`GET /api/health`（provider / web_built / 版本）、`GET /api/engines`（后缀目录、回退链、健康状态）、`GET /api/docs`（OpenAPI）。
+其他端点：`GET /api/health`（provider / web_built / version / api_version / capabilities）、`GET /api/engines`（后缀目录、回退链、健康状态）、`GET /api/docs`（OpenAPI）。
 
 显式引擎（后缀或 bang）失败时会按目录回退，例如 `g` → `google cse` → Serper，`sc` → Serper `/scholar`；成功响应的 `meta.engines` 是实际来源，`meta.unresponsive` 保留失败尝试。任一路合法零结果立即返回 `200 + status=empty`；只有故障才继续回退，付费兜底限第 1 页且遵守提供商熔断。
 

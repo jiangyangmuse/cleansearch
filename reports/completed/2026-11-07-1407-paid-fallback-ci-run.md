@@ -41,14 +41,14 @@
 
 | 文件 | 类型 | 说明 |
 | --- | --- | --- |
-| [apps/api/app/core/paid.py](../apps/api/app/core/paid.py) | 新增 | Brave/Serper 适配器 |
-| [apps/api/app/core/aggregator.py](../apps/api/app/core/aggregator.py) | 修改 | 兜底合并与熔断接入 |
-| [apps/api/app/config.py](../apps/api/app/config.py) | 修改 | API key 与 PAID_FALLBACK |
-| [apps/api/tests/test_paid.py](../apps/api/tests/test_paid.py) | 新增 | 6 个契约测试 |
-| [.github/workflows/ci.yml](../.github/workflows/ci.yml) | 修改 | 冒烟步骤改为 bash + 两个脚本 |
-| [scripts/ci-smoke.py](../scripts/ci-smoke.py)、[scripts/ci-wait.py](../scripts/ci-wait.py) | 新增 | 跨平台冒烟与就绪等待 |
-| [README.md](../README.md)、[docs/决策与接口变更.md](../docs/决策与接口变更.md)、[docs/进展与欠账.md](../docs/进展与欠账.md) | 修改 | 兜底与 CI 说明 |
-| 本报告与 [INDEX.md](INDEX.md) | 新增/更新 | 登记 |
+| [apps/api/app/core/paid.py](../../apps/api/app/core/paid.py) | 新增 | Brave/Serper 适配器 |
+| [apps/api/app/core/aggregator.py](../../apps/api/app/core/aggregator.py) | 修改 | 兜底合并与熔断接入 |
+| [apps/api/app/config.py](../../apps/api/app/config.py) | 修改 | API key 与 PAID_FALLBACK |
+| [apps/api/tests/test_paid.py](../../apps/api/tests/test_paid.py) | 新增 | 6 个契约测试 |
+| [.github/workflows/ci.yml](../../.github/workflows/ci.yml) | 修改 | 冒烟步骤改为 bash + 两个脚本 |
+| [scripts/ci-smoke.py](../../scripts/ci-smoke.py)、[scripts/ci-wait.py](../../scripts/ci-wait.py) | 新增 | 跨平台冒烟与就绪等待 |
+| [README.md](../../README.md)、[docs/决策与接口变更.md](../../docs/决策与接口变更.md)、[docs/进展与欠账.md](../../docs/进展与欠账.md) | 修改 | 兜底与 CI 说明 |
+| 本报告与 [INDEX.md](../INDEX.md) | 新增/更新 | 登记 |
 
 ## 4 验证与证据
 
@@ -86,10 +86,10 @@
 
 **相关文件**
 
-- [README 兜底章节](../README.md)
-- [决策 M14-D1…D5](../docs/决策与接口变更.md)
-- [兜底实现](../apps/api/app/core/paid.py)
-- [CI 冒烟脚本](../scripts/ci-smoke.py)
+- [README 兜底章节](../../README.md)
+- [决策 M14-D1…D5](../../docs/决策与接口变更.md)
+- [兜底实现](../../apps/api/app/core/paid.py)
+- [CI 冒烟脚本](../../scripts/ci-smoke.py)
 
 ---
 

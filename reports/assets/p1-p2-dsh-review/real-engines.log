@@ -1,0 +1,10 @@
+PASS '日本 首都 g'  2630 ms  结果=10 来源=['google cse'] 失败引擎=['google(access denied)'] 回退=google cse
+PASS 'Python documentation g'  939 ms  结果=15 来源=['google cse'] 失败引擎=['google(Suspended: access denied)'] 回退=google cse
+PASS 'HTTP g'  955 ms  结果=10 来源=['google cse'] 失败引擎=['google(Suspended: access denied)'] 回退=google cse
+PASS '日本 首都 b'  582 ms  结果=10 来源=['bing'] 失败引擎=[]
+PASS 'Python documentation b'  389 ms  结果=8 来源=['bing'] 失败引擎=[]
+PASS 'HTTP b'  389 ms  结果=10 来源=['bing'] 失败引擎=[]
+PASS 'Python !g'  844 ms  结果=12 来源=['google cse'] 失败引擎=['google(Suspended: access denied)'] 回退=google cse
+PASS '日本 首都 jp'  2247 ms  结果=18 来源=['360search', 'bing', 'duckduckgo web', 'google cse', 'naver', 'yahoo', 'yandex'] 失败引擎=['duckduckgo(CAPTCHA)', 'sogou(unexpected crash)', 'swisscows(Suspended: access denied)']
+PASS 'C g'  2005 ms  结果=15 来源=['bing', 'duckduckgo web', 'google cse', 'naver', 'yahoo'] 失败引擎=['duckduckgo(CAPTCHA)', 'sogou(unexpected crash)', 'swisscows(Suspended: access denied)']
+真实搜索验收：9/9 (100%)

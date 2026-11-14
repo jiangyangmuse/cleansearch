@@ -1,0 +1,11 @@
+{
+  "bind": "192.168.43.71",
+  "homepage": 200,
+  "provider": "fixture",
+  "allowlisted": true,
+  "search_total": 10,
+  "time_range": "week",
+  "bookmark": 201,
+  "unknown_host": 403,
+  "loopback_listener": "000"
+}

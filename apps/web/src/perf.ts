@@ -8,12 +8,30 @@ let lastSent = "";
 let queued: AbortController | undefined;
 let timer: number | undefined;
 let schedule: () => void = () => {};
+// 旧服务没有 /api/metrics/vitals，探测到能力缺失后就不再发请求。
+let enabled = false;
+
+export function setVitalsEnabled(next: boolean): void {
+  if (enabled === next) return;
+  enabled = next;
+  if (next) {
+    schedule();
+  } else {
+    window.clearTimeout(timer);
+    if (queued) {
+      queued.abort();
+      queued = undefined;
+      lastSent = "";
+    }
+  }
+}
 
 const request = (body: string): RequestInit => ({
   method: "POST", body, headers: { "Content-Type": "application/json" },
 });
 
 function flush(allowFallback = false): void {
+  if (!enabled) return;
   const path = location.pathname.replace(/\/+$/, "") || "/";
   if (!Object.keys(state).length) return;
   const body = JSON.stringify({ path: ROUTES.has(path) ? path : "/", ...state });
@@ -46,7 +64,7 @@ function flush(allowFallback = false): void {
 export function initPerf(): void {
   schedule = () => {
     window.clearTimeout(timer);
-    if (document.visibilityState !== "hidden") timer = window.setTimeout(flush, 250);
+    if (enabled && document.visibilityState !== "hidden") timer = window.setTimeout(flush, 250);
   };
   const update = (key: "lcp" | "cls" | "inp" | "ttfb", value: number) => {
     if (!Number.isFinite(value) || value < 0 || value > (key === "cls" ? 100 : 600_000)) return;

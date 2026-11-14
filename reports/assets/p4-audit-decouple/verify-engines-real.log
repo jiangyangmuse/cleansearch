@@ -1,0 +1,10 @@
+PASS '�ձ� �׶� g'  6 ms  ���=10 ��Դ=['google cse'] ʧ������=['google(access denied)'] ����=google cse
+PASS 'Python documentation g'  6 ms  ���=14 ��Դ=['google cse'] ʧ������=['google(Suspended: access denied)'] ����=google cse
+PASS 'HTTP g'  5 ms  ���=10 ��Դ=['google cse'] ʧ������=['google(Suspended: access denied)'] ����=google cse
+PASS '�ձ� �׶� b'  5 ms  ���=10 ��Դ=['bing'] ʧ������=[]
+PASS 'Python documentation b'  5 ms  ���=8 ��Դ=['bing'] ʧ������=[]
+PASS 'HTTP b'  5 ms  ���=10 ��Դ=['bing'] ʧ������=[]
+PASS 'Python !g'  6 ms  ���=12 ��Դ=['google cse'] ʧ������=['google(Suspended: access denied)'] ����=google cse
+PASS '�ձ� �׶� jp'  6 ms  ���=19 ��Դ=['360search', 'bing', 'duckduckgo', 'duckduckgo web', 'google cse', 'naver', 'yahoo'] ʧ������=['sogou(unexpected crash)', 'swisscows(Suspended: access denied)']
+PASS 'C g'  5 ms  ���=16 ��Դ=['bing', 'duckduckgo web', 'google cse', 'naver', 'yahoo'] ʧ������=['duckduckgo(CAPTCHA)', 'sogou(unexpected crash)', 'swisscows(Suspended: access denied)']
+��ʵ�������գ�9/9 (100%)

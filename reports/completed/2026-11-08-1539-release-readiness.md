@@ -82,7 +82,7 @@ $health = Invoke-RestMethod http://127.0.0.1:8000/api/health; $health | Select-O
 
 ### 来源（工作区一手证据）
 
-- [最新部署矩阵](../2026-11-08-1447-deployed-engine-matrix.md)：11/13、Compose 端口与两套存储边界、365 项历史测试。
+- [最新部署矩阵](../incomplete/2026-11-08-1447-deployed-engine-matrix.md)：11/13、Compose 端口与两套存储边界、365 项历史测试。
 - [官方入口诊断](2026-11-08-1530-official-entry-diagnosis.md)：入口分区原因与建议；当前并发代码另行验收。
 - [收口记录](2026-11-08-1437-wrapup-push-and-ci.md)：历史发布和分支保护边界。
 - [进展与欠账](../../docs/进展与欠账.md)、[决策](../../docs/决策与接口变更.md)：正式 Chrome/Android、新站对照、事实质量等未验项。

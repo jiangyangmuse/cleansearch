@@ -69,6 +69,34 @@ async function runSearch(page, query) {
   });
 }
 
+/** 确定性搜索响应：交互类断言不依赖真实上游条数（方案 §4.7）。 */
+function makeSearchFixture(query) {
+  const results = Array.from({ length: 10 }, (_, index) => ({
+    id: `fx${index + 1}`,
+    url: `https://example${index + 1}.test/page`,
+    display_url: `example${index + 1}.test › page`,
+    title: `固定样本结果 ${index + 1}：${query}`,
+    snippet: `第 ${index + 1} 条固定样本摘要，用于把筛选交互与真实上游解耦。`,
+    engine: ["fixture"],
+    score: Number((0.9 - index * 0.05).toFixed(3)),
+    risk: 0,
+    reasons: [],
+    favicon: null,
+    published: null,
+    read_minutes: null,
+  }));
+  return {
+    parsed: { q: query, engine: "default", region: null, router: "default", expanded: [] },
+    groups: { strong: results.slice(0, 6), related: results.slice(6, 9), weak: results.slice(9) },
+    official: null,
+    meta: {
+      status: "ok", engines: ["fixture"], unresponsive: [], provider: "fixture", cached: false,
+      ms: 12, total: results.length, upstream_total: results.length,
+      filtered: { dup: 0, risk: 0 }, official: 0, directory: 0, sid: "fixture-sid",
+    },
+  };
+}
+
 async function searchWithResults(page) {
   let last = 0;
   for (const query of QUERIES) {
@@ -76,7 +104,7 @@ async function searchWithResults(page) {
     last = result.total;
     if (result.total > 0) return { query, total: result.total };
   }
-  throw new Error("四个候选查询都没拿到结果，最后一条 total=" + last);
+  throw new Error("fixture 查询未返回结果，最后一条 total=" + last + "；请核对 fixture 配置和默认引擎设置。");
 }
 
 async function boxTop(page, selector) {
@@ -360,7 +388,18 @@ async function auditCards(context, query) {
   }
 }
 
+async function checkFixtureServer() {
+  const response = await fetch(BASE + "/api/health", { signal: AbortSignal.timeout(5000) });
+  if (!response.ok) throw new Error(`/api/health 返回 HTTP ${response.status}`);
+  const health = await response.json();
+  if (health.provider !== "fixture") {
+    throw new Error(`完整浏览器审计需要 fixture，当前 provider=${health.provider}。真实 SearXNG 请运行 node scripts/verify-filters.cjs ${BASE}`);
+  }
+  if (!health.web_built) throw new Error("fixture 实例缺少前端构建，请先运行 npm --prefix apps/web run build");
+}
+
 (async () => {
+  await checkFixtureServer();
   fs.mkdirSync(OUT, { recursive: true });
   const { chromium } = loadPlaywright();
   const browser = await chromium.launch({ channel: CHANNEL });
@@ -1572,17 +1611,17 @@ async function auditCards(context, query) {
     // —— P2-7 搜索筛选 ——
     const filterPage = await desktop.newPage();
     const filterBodies = [];
-    const filterSeed = await desktop.request.post(BASE + "/api/search", { data: { q: firstQuery } });
-    if (!filterSeed.ok()) throw new Error(`筛选基准查询失败 HTTP ${filterSeed.status()}`);
-    const filterFixture = await filterSeed.json();
     await filterPage.route("**/api/search", async route => {
       const body = route.request().postDataJSON();
       filterBodies.push(body);
-      if (body.opts.site) {
-        return route.fulfill({ json: { ...filterFixture, official: null, groups: { strong: [], related: [], weak: [] },
-          meta: { ...filterFixture.meta, status: "empty", total: 0, official: 0 } } });
+      const { time_range, language, site, dedupe } = body.opts;
+      const base = makeSearchFixture(body.q);
+      const meta = { ...base.meta, filters: { time_range, language, site, dedupe } };
+      if (site) {
+        return route.fulfill({ json: { ...base, official: null, groups: { strong: [], related: [], weak: [] },
+          meta: { ...meta, status: "empty", total: 0, official: 0 } } });
       }
-      await route.fulfill({ json: filterFixture });
+      await route.fulfill({ json: { ...base, meta } });
     });
     await filterPage.goto(BASE + "/?q=" + encodeURIComponent(firstQuery), { waitUntil: "domcontentloaded" });
     await filterPage.waitForSelector(".results-body", { timeout: 60000 });
@@ -1672,8 +1711,194 @@ async function auditCards(context, query) {
     check("重置筛选清空地址栏与请求条件",
       !resetBody?.opts?.time_range && !resetBody?.opts?.site && resetBody?.opts?.dedupe === "normal",
       `opts=${JSON.stringify(resetBody?.opts ?? {})}`);
+
+    // 时间范围连改两档后回退：地址栏、界面徽标、请求体三处都要回到上一档
+    filterBodies.length = 0;
+    await filterPage.getByRole("button", { name: "一周内" }).click();
+    await filterPage.waitForFunction(() => new URLSearchParams(location.search).get("range") === "week", null, { timeout: 20000 });
+    await filterPage.waitForSelector(READY);
+    await filterPage.getByRole("button", { name: "一天内" }).click();
+    await filterPage.waitForFunction(() => new URLSearchParams(location.search).get("range") === "day", null, { timeout: 20000 });
+    await filterPage.waitForSelector(".results-body:not([aria-busy=true])");
+    const dayBody = filterBodies.at(-1);
+    await filterPage.goBack();
+    await filterPage.waitForFunction(() => new URLSearchParams(location.search).get("range") === "week", null, { timeout: 20000 });
+    await filterPage.waitForSelector(".results-body:not([aria-busy=true])");
+    const weekAgainBody = filterBodies.at(-1);
+    check("时间范围连改两档后回退还原上一档筛选", dayBody?.opts?.time_range === "day" &&
+      weekAgainBody?.opts?.time_range === "week" &&
+      (await filterPage.locator(".filters__badge").innerText()) === "1" &&
+      (await filterPage.locator(".workspace-filter-note").innerText()).includes("一周内"),
+      `day=${dayBody?.opts?.time_range} back=${weekAgainBody?.opts?.time_range}`);
+
+    // 站点限定回退：输入框草稿、徽标与请求体同步
+    await filtersTrigger.click();
+    await filterPage.fill(".filters__field input", "example.com");
+    await filterPage.press(".filters__field input", "Enter");
+    await filterPage.waitForFunction(() => new URLSearchParams(location.search).get("site") === "example.com", null, { timeout: 20000 });
+    await filterPage.waitForSelector(READY);
+    await filterPage.goBack();
+    await filterPage.waitForFunction(() => !new URLSearchParams(location.search).has("site"), null, { timeout: 20000 });
+    await filterPage.waitForSelector(READY);
+    const afterSiteBack = await filterPage.evaluate(() => ({
+      site: document.querySelector(".filters__field input")?.value ?? null,
+      badge: document.querySelector(".filters__badge")?.textContent ?? "",
+      note: document.querySelector(".workspace-filter-note")?.textContent ?? "",
+    }));
+    const siteBackBody = filterBodies.at(-1);
+    check("回退清掉站点限定后输入框与请求同步", afterSiteBack.site === "" && afterSiteBack.badge === "1" &&
+      !afterSiteBack.note.includes("site:") && siteBackBody?.opts?.site === null && siteBackBody?.opts?.time_range === "week",
+      `site=${JSON.stringify(afterSiteBack.site)} badge=${afterSiteBack.badge} opts=${JSON.stringify(siteBackBody?.opts ?? {})}`);
+
+    // 路由与查询变化时也要收起，不能只靠点外部和 Esc
+    await filtersTrigger.click();
+    await filterPage.locator(".workspace-nav__item", { hasText: "视频" }).click();
+    await filterPanel.waitFor({ state: "hidden" });
+    check("切换分类后筛选面板收起", await filterPanel.isHidden() &&
+      filterPage.url().includes("category=video"), filterPage.url());
+    await filterPage.locator(".workspace-nav__item", { hasText: "首页" }).click();
+    await filterPage.waitForSelector(READY);
+    await filtersTrigger.click();
+    await filterPage.fill('input[name="q"]', "python typing 泛型");
+    await filterPage.press('input[name="q"]', "Enter");
+    await filterPanel.waitFor({ state: "hidden" });
+    // 新查询沿用当前筛选（P0-1 契约），但面板必须收起
+    check("提交新查询后筛选面板收起且沿用当前筛选", await filterPanel.isHidden() &&
+      new URL(filterPage.url()).searchParams.get("range") === "week", filterPage.url());
+    let echoMismatch = true;
+    await filterPage.route("**/api/search", async route => {
+      if (!echoMismatch) return route.fallback();
+      const base = makeSearchFixture(firstQuery);
+      await route.fulfill({ json: { ...base, meta: { ...base.meta, filters: {
+        time_range: "day", language: null, site: null, dedupe: "normal",
+      } } } });
+    });
+    await filterPage.reload({ waitUntil: "domcontentloaded" });
+    await filterPage.waitForSelector(".state--error");
+    check("筛选回显和请求不符时保留链接并提示恢复", new URL(filterPage.url()).searchParams.get("range") === "week" &&
+      (await filterPage.locator(".workspace-filter-note").innerText()).startsWith("筛选条件："), "");
+    echoMismatch = false;
+    await filterPage.locator(".state--error").getByRole("button", { name: "重置筛选" }).click();
+    await filterPage.waitForSelector(".results-body");
     await filterPage.close();
-    for (const width of [320, 390]) {
+
+    // 矮视口：面板必须整体在视口内，超出部分靠内部滚动
+    for (const { width, height, fallback } of [
+      { width: 1280, height: 280 }, { width: 1280, height: 480 }, { width: 768, height: 561 },
+      { width: 768, height: 561, fallback: true },
+    ]) {
+      const shortPage = await browser.newPage({ viewport: { width, height }, serviceWorkers: "block" });
+      if (fallback) await shortPage.addInitScript(() => { delete HTMLElement.prototype.showPopover; });
+      await shortPage.goto(BASE + "/?q=" + encodeURIComponent(firstQuery), { waitUntil: "domcontentloaded" });
+      const trigger = shortPage.locator(".filters__toggle");
+      const panel = shortPage.locator(".filters__body");
+      await trigger.click();
+      const box = await panel.boundingBox();
+      const scroll = await panel.evaluate(node => {
+        node.scrollTop = node.scrollHeight;
+        return node.scrollTop;
+      });
+      check(`${width}×${height} 筛选面板完整${fallback ? "（无原生 popover）" : ""}`,
+        box && box.y >= 0 && box.y + box.height <= height && box.x >= 0 && box.x + box.width <= width &&
+        (height !== 280 || scroll > 0), `box=${JSON.stringify(box)} scrollTop=${scroll}`);
+      if (fallback) {
+        const site = panel.getByLabel("站点限定");
+        await site.fill("draft.example");
+        await trigger.click();
+        await trigger.click();
+        check("无原生 popover 时再次开关清除未应用草稿", (await site.inputValue()) === "", "");
+        await site.focus();
+        await shortPage.keyboard.press("Escape");
+        check("无原生 popover 时 Esc 关闭并归还焦点",
+          await panel.isHidden() && await trigger.evaluate(node => node === document.activeElement), "");
+      }
+      await shortPage.close();
+    }
+
+    // —— P0-3 契约版本与混版提示 ——
+    const health = await desktop.request.get(BASE + "/api/health").then(response => response.json());
+    const required = ["filters", "bookmark_status", "vitals", "model_test", "opensearch"];
+    check("health 报告契约版本与能力表", health.api_version >= 2 && !!health.db_path &&
+      required.every(name => health.capabilities?.[name] === true),
+      `api_version=${health.api_version} capabilities=${JSON.stringify(health.capabilities)}`);
+    const opensearch = await desktop.request.get(BASE + "/opensearch.xml");
+    check("OpenSearch 描述符返回 XML MIME",
+      (opensearch.headers()["content-type"] ?? "").includes("opensearchdescription+xml"),
+      opensearch.headers()["content-type"] ?? "");
+
+    const freshPage = await desktop.newPage();
+    await freshPage.goto(BASE + "/?q=" + encodeURIComponent(firstQuery), { waitUntil: "domcontentloaded" });
+    await freshPage.waitForSelector(".results-body", { timeout: 60000 });
+    check("新版后端不显示混版横幅且筛选可用",
+      await freshPage.locator(".server-banner").count() === 0 &&
+      !(await freshPage.locator(".filters__toggle").isDisabled()), "");
+    await freshPage.close();
+
+    // 旧后端：health 缺 api_version/capabilities，相关接口 404/405
+    const legacyPage = await desktop.newPage();
+    await legacyPage.addInitScript(() => { window.fetchLater = undefined; });
+    const legacyCalls = { health: 0, status: 0, vitals: 0 };
+    let resolveHealth;
+    const delayedHealth = new Promise(resolve => { resolveHealth = resolve; });
+    await legacyPage.route("**/api/health", async route => {
+      legacyCalls.health++;
+      await delayedHealth;
+      await route.fulfill({ json: { status: "ok", provider: "fixture", api_version: 1, capabilities: { vitals: true } } });
+    });
+    await legacyPage.route("**/api/search", route => {
+      const base = makeSearchFixture(firstQuery);
+      return route.fulfill({ json: { ...base, meta: { ...base.meta, filters: undefined } } });
+    });
+    await legacyPage.route("**/api/bookmarks/status**", route => {
+      legacyCalls.status++;
+      return route.fulfill({ status: 404, json: { error: { code: "NOT_FOUND", message: "not found", retryable: false } } });
+    });
+    await legacyPage.route("**/api/metrics/vitals", route => {
+      legacyCalls.vitals++;
+      return route.fulfill({ status: 405, body: "" });
+    });
+    await legacyPage.route("**/api/settings/models", route => route.request().method() === "GET"
+      ? route.fulfill({ json: { revision: 0, assignments: {}, models: [
+        { id: "audit-model", label: "审计模型", base_url: "http://127.0.0.1:11434/v1", model: "audit", features: [], has_key: false },
+      ] } })
+      : route.continue());
+    await legacyPage.goto(BASE + "/?q=" + encodeURIComponent(firstQuery), { waitUntil: "domcontentloaded" });
+    await legacyPage.waitForSelector(".results-body");
+    await legacyPage.evaluate(() => dispatchEvent(new PageTransitionEvent("pagehide")));
+    check("能力探测等待中禁用筛选入口", await legacyPage.locator(".filters__toggle").isDisabled(), "");
+    resolveHealth();
+    await legacyPage.waitForSelector(".server-banner", { timeout: 60000 });
+    const legacyBanner = await legacyPage.locator(".server-banner").innerText();
+    check("旧后端显示版本过旧横幅并列出缺失能力", legacyBanner.includes("版本过旧") &&
+      legacyBanner.includes("搜索筛选") && legacyBanner.includes("批量收藏状态"),
+      legacyBanner.replace(/\s+/g, " ").slice(0, 60));
+    check("旧后端禁用筛选入口且点不开面板",
+      await legacyPage.locator(".filters__toggle").isDisabled() &&
+      await legacyPage.locator(".filters__body").isHidden(), "");
+    const legacyShot = path.join(OUT, "legacy-banner.png");
+    await legacyPage.screenshot({ path: legacyShot });
+    report.screenshots.push(path.relative(ROOT, legacyShot));
+    await legacyPage.waitForSelector(".results-body", { timeout: 60000 });
+    await legacyPage.evaluate(() => dispatchEvent(new PageTransitionEvent("pagehide")));
+    await legacyPage.waitForTimeout(300);
+    check("探测与旧后端均无未确认的收藏状态和性能请求",
+      legacyCalls.health === 1 && legacyCalls.status === 0 && legacyCalls.vitals === 0, JSON.stringify(legacyCalls));
+    await legacyPage.goto(BASE + "/?range=week&q=" + encodeURIComponent(firstQuery));
+    await legacyPage.waitForSelector(".state--error");
+    check("旧后端不会把分享链接的筛选标成已生效",
+      (await legacyPage.locator(".workspace-filter-note").innerText()).startsWith("筛选条件："), "");
+    await legacyPage.locator(".state--error").getByRole("button", { name: "重置筛选" }).click();
+    await legacyPage.waitForSelector(".results-body");
+    check("旧后端可从分享链接移除不支持的筛选并恢复结果",
+      !new URL(legacyPage.url()).searchParams.has("range") && await legacyPage.locator(".workspace-filter-note").count() === 0, "");
+    await legacyPage.goto(BASE + "/settings", { waitUntil: "domcontentloaded" });
+    await legacyPage.waitForSelector(".settings-page", { timeout: 30000 });
+    await legacyPage.locator(".model-settings > summary").click();
+    const legacyTestButton = legacyPage.getByRole("button", { name: "测试连接" }).first();
+    check("旧后端禁用模型连通性测试", await legacyTestButton.isDisabled() &&
+      (await legacyPage.getByText("本机服务版本过旧，重启服务后可用连通性测试。").count()) === 1, "");
+    await legacyPage.close();
+    for (const width of [320, 390, 768]) {
       const narrow = await browser.newPage({ viewport: { width, height: 760 }, isMobile: true, hasTouch: true, serviceWorkers: "block" });
       await narrow.goto(BASE + "/?lang=pt-BR");
       await narrow.locator(".filters__toggle").click();
@@ -1857,6 +2082,18 @@ async function auditCards(context, query) {
       await historyPage.goForward();
       await historyPage.waitForSelector(READY);
       check("前进恢复普通结果时不重发 AI 检索", aiRequests === 1, `requests=${aiRequests}`);
+
+      // 一次历史导航同时跨查询和筛选，不能沿用被离开的查询的 AI 结果。
+      await historyPage.locator(".filters__toggle").click();
+      await historyPage.getByRole("button", { name: "一周内" }).click();
+      await historyPage.waitForSelector(READY);
+      await runSearch(historyPage, "python asyncio");
+      await historyPage.getByText("audit-stub", { exact: true }).waitFor();
+      await historyPage.evaluate(() => history.go(-2));
+      await historyPage.waitForURL(url => url.searchParams.get("q") === firstQuery && !url.searchParams.has("range"));
+      await historyPage.waitForSelector(READY);
+      check("历史一次还原查询和筛选时清除离开页面的 AI 检索", aiRequests === 2 &&
+        await historyPage.locator(".ai-search").count() === 0, `requests=${aiRequests}`);
     } finally {
       await historyPage.getByRole("switch", { name: "日常 AI 检索" }).uncheck();
       await historyPage.close();
@@ -1943,6 +2180,65 @@ async function auditCards(context, query) {
     check("工具页代码块自身可换行", overflow.preW <= overflow.preClientW + 1,
       `pre=${overflow.preW}/${overflow.preClientW}`);
 
+    // 320 窄屏：首条结果的标题与摘要首行都要露出来
+    const tiny = await browser.newPage({ viewport: { width: 320, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: "block" });
+    await tiny.goto(BASE + "/?q=" + encodeURIComponent(firstQuery), { waitUntil: "domcontentloaded" });
+    await tiny.waitForSelector(".results-body", { timeout: 60000 });
+    const tinyFirst = await tiny.evaluate(() => {
+      const card = document.querySelector(".group__list > .card");
+      const title = card?.querySelector(".card__title");
+      const snippet = card?.querySelector(".card__snippet");
+      return {
+        titleY: title ? Math.round(title.getBoundingClientRect().y) : null,
+        snippetY: snippet ? Math.round(snippet.getBoundingClientRect().y) : null,
+        officialItems: document.querySelectorAll(".official__item").length,
+      };
+    });
+    check("320 首屏露出首条标题与摘要首行", tinyFirst.titleY !== null && tinyFirst.titleY <= 700 &&
+      tinyFirst.snippetY !== null && tinyFirst.snippetY < 844, JSON.stringify(tinyFirst));
+    await tiny.close();
+
+    // —— 空首页：最近搜索 / 示例 / 快捷入口 ——
+    const homeContext = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: "block" });
+    const home = await homeContext.newPage();
+    await home.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await home.waitForSelector(".empty-home", { timeout: 30000 });
+    const homeText = await home.locator(".empty-home").innerText();
+    check("空首页给出示例与快捷入口", homeText.includes("试试这些") && homeText.includes("书签") &&
+      homeText.includes("单页总结") && homeText.includes("AI 对话") && homeText.includes("快捷键"),
+      homeText.replace(/\s+/g, " ").slice(0, 60));
+    check("无历史时不显示最近搜索", await home.locator(".empty-home__chip").count() === 0, "");
+    await searchWithResults(home);
+    await home.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await home.waitForSelector(".empty-home__chip", { timeout: 30000 });
+    check("搜索后空首页出现最近搜索",
+      (await home.locator(".empty-home__title", { hasText: "最近搜索" }).count()) === 1 &&
+      await home.locator(".empty-home__chip").count() >= 1, `${await home.locator(".empty-home__chip").count()} 条`);
+    const historyCount = await home.locator(".empty-home__chip").count();
+    await home.locator(".empty-home__remove").first().press("Enter");
+    check("最近搜索支持单条删除", await home.locator(".empty-home__chip").count() === historyCount - 1,
+      `${historyCount} → ${await home.locator(".empty-home__chip").count()}`);
+    check("删除最后一条历史后焦点移到示例",
+      await home.locator(".empty-home__examples button").first().evaluate(node => node === document.activeElement), "");
+    const historyWriter = await homeContext.newPage();
+    await historyWriter.goto(BASE + "/");
+    await historyWriter.evaluate(() => localStorage.setItem("cs-search-history", JSON.stringify([
+      { query: "python !g", literal: true }, ...Array.from({ length: 8 }, (_, i) => "历史 " + i),
+    ])));
+    const literalHistory = home.locator(".empty-home").getByRole("button", { name: "python !g", exact: true });
+    await literalHistory.waitFor();
+    check("另一标签页更新后空首页同步并限制为 8 条", await home.locator(".empty-home__chip").count() === 8, "");
+    const historyRequest = home.waitForRequest(request => new URL(request.url()).pathname === "/api/search");
+    await literalHistory.click();
+    const restoredHistory = (await historyRequest).postDataJSON();
+    check("空首页重搜保留历史的字面模式", restoredHistory.q === "python !g" && restoredHistory.opts.literal === true &&
+      new URL(home.url()).searchParams.get("literal") === "1", "");
+    await home.goto(BASE + "/");
+    await home.locator(".empty-home__links").getByRole("button", { name: "AI 对话" }).click();
+    await home.waitForSelector("#tool-drawer[open]", { timeout: 10000 });
+    check("空首页快捷入口能打开 AI 对话", await home.locator("#tool-drawer").count() === 1, "");
+    await homeContext.close();
+
     // —— 移动端：首屏结果与工具抽屉 ——
     const mobile = await browser.newContext({
       viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true,
@@ -1953,11 +2249,47 @@ async function auditCards(context, query) {
     await searchWithResults(phone);
     const firstCardY = await boxTop(phone, ".workspace [id^='result-']");
     check("390×844 首屏能看到第一条结果", firstCardY !== null && firstCardY < 844, `首条结果 y=${firstCardY}`);
+    const firstTitleY = await phone.evaluate(() => {
+      const title = document.querySelector(".group__list > .card .card__title");
+      return title ? Math.round(title.getBoundingClientRect().y) : null;
+    });
+    check("390×844 首条结果标题在 y ≤ 700", firstTitleY !== null && firstTitleY <= 700, `标题 y=${firstTitleY}`);
+    const officialState = await phone.evaluate(() => {
+      const official = document.querySelector(".official");
+      const firstCard = document.querySelector(".group__list > .card");
+      return {
+        items: document.querySelectorAll(".official__item").length,
+        more: document.querySelector(".official__more")?.textContent?.trim() ?? "",
+        afterCards: !!(official && firstCard &&
+          (official.compareDocumentPosition(firstCard) & Node.DOCUMENT_POSITION_PRECEDING)),
+      };
+    });
+    check("390 官方入口默认 2 条并折在强相关之后", officialState.items === 2 &&
+      officialState.more.includes("查看全部") && officialState.afterCards, JSON.stringify(officialState));
+    const officialToggle = phone.locator(".official__more");
+    await officialToggle.press("Enter");
+    check("展开后显示全部官方入口", await phone.locator(".official__item").count() >= 3,
+      `${await phone.locator(".official__item").count()} 条`);
+    check("官方入口展开和收起保留焦点并播报状态", await officialToggle.evaluate(node =>
+      node === document.activeElement && node.getAttribute("aria-expanded") === "true" &&
+      Boolean(document.getElementById(node.getAttribute("aria-controls")))), "");
+    await officialToggle.press("Enter");
+    check("再次激活官方入口开关时收回到两条", await officialToggle.getAttribute("aria-expanded") === "false" &&
+      await phone.locator(".official__item").count() === 2, "");
     check("390×844 没有常驻书签/工具区", await phone.evaluate(() => !document.querySelector(".workspace-side")), "");
     const phoneMeta = await compactStats(phone);
     check("390×844 统计条单行且展开按钮至少 44px",
       phoneMeta.height <= 44 && phoneMeta.singleLine && phoneMeta.fits && phoneMeta.toggleHeight >= 44,
       `h=${Math.round(phoneMeta.height)} trigger=${phoneMeta.toggleHeight}`);
+    const sticky = await phone.evaluate(async () => {
+      window.scrollTo({ top: 700, behavior: "instant" });
+      await new Promise(resolve => requestAnimationFrame(resolve));
+      const top = document.querySelector(".metabar").getBoundingClientRect().top;
+      const headerBottom = document.querySelector(".workspace-header").getBoundingClientRect().bottom;
+      window.scrollTo({ top: 0, behavior: "instant" });
+      return { top, headerBottom };
+    });
+    check("390×844 下滚动后统计条贴在页头下方", Math.abs(sticky.top - sticky.headerBottom) <= 2, JSON.stringify(sticky));
 
     const beforeDrawer = await boxTop(phone, ".workspace-results");
     await phone.locator(".workspace-drawer-fab").click();
@@ -2006,6 +2338,18 @@ async function auditCards(context, query) {
     check("移动抽屉引用关闭抽屉并聚焦结果",
       !(await phone.locator(".tool-drawer[open]").isVisible()) && focusResult === resultId,
       `focus=${focusResult}`);
+    // 仅为断言引用定位替换总结流，目标采用同一固定样本中第三条官方入口。
+    await officialToggle.click();
+    const thirdId = await phone.locator(".official__item").nth(2).getAttribute("id");
+    await officialToggle.click();
+    await phone.unroute("**/api/summarize?*");
+    await mockSummary(phone, thirdId.slice("result-".length));
+    await phone.locator(".workspace-results").focus();
+    await phone.keyboard.press("s");
+    await summary.locator("button.citation").first().click();
+    check("移动端总结引用可展开并聚焦折叠的官方入口",
+      await officialToggle.getAttribute("aria-expanded") === "true" &&
+      await phone.evaluate(id => document.activeElement?.id === id, thirdId), thirdId);
     if (await phone.locator(".tool-drawer[open]").isVisible()) await phone.keyboard.press("Escape");
     const fab = phone.locator(".workspace-drawer-fab");
     await fab.click();
@@ -2092,10 +2436,11 @@ async function auditCards(context, query) {
     check("开关 ≥44×24", switches.length > 0 && switches.every(item => item.w >= 44 && item.h >= 24),
       switches.map(item => `${item.w}×${item.h}`).join(" · "));
 
-    for (const width of [320, 768, 900, 901, 1024, 1920]) {
+    // 抽屉断点 1180：1180 及以下用抽屉入口，1181 起恢复右栏
+    for (const width of [320, 768, 900, 1024, 1180, 1181, 1440, 1920]) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(BASE + "/");
-      const rail = page.locator(width <= 900 ? ".workspace-drawer-fab" : ".workspace-side");
+      const rail = page.locator(width <= 1180 ? ".workspace-drawer-fab" : ".workspace-side");
       await rail.waitFor();
       const sizes = await page.evaluate(() => [document.documentElement.scrollWidth, document.documentElement.clientWidth]);
       check(`${width}px 工具形态正确且页面无横向溢出`, sizes[0] <= sizes[1] + 1, sizes.join("/"));
@@ -2113,14 +2458,45 @@ async function auditCards(context, query) {
     }));
     check("768px 单列布局并使用抽屉入口", tablet.columns === 1 && !tablet.hasSide && tablet.hasFab && tablet.overflow <= 1,
       JSON.stringify(tablet));
+    // 1024 不再固定三栏：主列在三栏里只有约 600px，换成抽屉后内容列变宽
     await page.setViewportSize({ width: 1024, height: 900 });
-    const laptop = await page.evaluate(() => ({
-      columns: getComputedStyle(document.querySelector(".workspace")).gridTemplateColumns.split(" ").filter(Boolean).length,
-      hasSide: (() => { const side = document.querySelector(".workspace-side"); return !!side && !!side.getClientRects().length; })(),
-      overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    }));
-    check("1024px 三列布局且右栏可见", laptop.columns === 3 && laptop.hasSide && laptop.overflow <= 1,
-      JSON.stringify(laptop));
+    await page.waitForFunction(() => {
+      const fab = document.querySelector(".workspace-drawer-fab");
+      return !!fab && fab.getClientRects().length > 0;
+    }, null, { timeout: 10000 });
+    const laptop = await page.evaluate(() => {
+      const results = document.querySelector(".workspace-results");
+      const side = document.querySelector(".workspace-side");
+      return {
+        columns: getComputedStyle(document.querySelector(".workspace")).gridTemplateColumns.split(" ").filter(Boolean).length,
+        resultsWidth: results ? Math.round(results.getBoundingClientRect().width) : 0,
+        hasSide: !!side && !!side.getClientRects().length,
+        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      };
+    });
+    check("1024px 使用抽屉且内容列 ≥560", laptop.columns === 1 && !laptop.hasSide &&
+      laptop.resultsWidth >= 560 && laptop.overflow <= 1, JSON.stringify(laptop));
+    const laptopShot = path.join(OUT, "laptop-1024.png");
+    await page.screenshot({ path: laptopShot });
+    report.screenshots.push(path.relative(ROOT, laptopShot));
+
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.waitForFunction(() => {
+      const side = document.querySelector(".workspace-side");
+      return !!side && side.getClientRects().length > 0;
+    }, null, { timeout: 10000 });
+    const wide = await page.evaluate(() => {
+      const main = document.querySelector(".workspace-main");
+      const fab = document.querySelector(".workspace-drawer-fab");
+      return {
+        columns: getComputedStyle(document.querySelector(".workspace")).gridTemplateColumns.split(" ").filter(Boolean).length,
+        mainWidth: main ? Math.round(main.getBoundingClientRect().width) : 0,
+        hasFab: !!fab && !!fab.getClientRects().length,
+        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      };
+    });
+    check("1440px 恢复三栏且主列 ≥560", wide.columns === 3 && !wide.hasFab &&
+      wide.mainWidth >= 560 && wide.overflow <= 1, JSON.stringify(wide));
 
     const darkPage = await desktop.newPage();
     await darkPage.goto(BASE + "/?q=" + encodeURIComponent(firstQuery), { waitUntil: "domcontentloaded" });
@@ -2164,6 +2540,119 @@ async function auditCards(context, query) {
       report.screenshots.push(path.relative(ROOT, file));
     }
     await mobile.close();
+
+    // —— P2：快捷键焦点、安装按钮不可用态、离线文案 ——
+    const focusPage = await desktop.newPage();
+    await focusPage.goto(BASE + "/?q=" + encodeURIComponent(firstQuery), { waitUntil: "domcontentloaded" });
+    await focusPage.waitForSelector(".results-body", { timeout: 60000 });
+    await focusPage.evaluate(() => { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); });
+    check("? 从无焦点状态打开面板前焦点在 body",
+      await focusPage.evaluate(() => document.activeElement === document.body), "");
+    await focusPage.keyboard.press("?");
+    await focusPage.waitForSelector(".shortcuts-dialog[open]", { timeout: 10000 });
+    await focusPage.keyboard.press("Escape");
+    await focusPage.waitForFunction(() => !document.querySelector(".shortcuts-dialog[open]"), null, { timeout: 10000 });
+    await focusPage.waitForFunction(() => document.activeElement?.matches(".shortcuts__open"));
+    const focusedAfterClose = await focusPage.evaluate(() => {
+      const active = document.activeElement;
+      return { tag: active ? active.tagName : "", text: (active?.textContent ?? "").trim().slice(0, 20),
+        isBody: !active || active === document.body };
+    });
+    check("无焦点时关闭面板把焦点交还「全部快捷键」",
+      !focusedAfterClose.isBody && focusedAfterClose.text.includes("全部快捷键"),
+      JSON.stringify(focusedAfterClose));
+    await focusPage.goto(BASE + "/");
+    await focusPage.locator(".empty-home").waitFor();
+    await focusPage.keyboard.press("?");
+    await focusPage.getByRole("dialog", { name: "键盘快捷键" }).getByRole("button", { name: "关闭" }).click();
+    check("空首页快捷键面板关闭后焦点回到主内容", await focusPage.evaluate(() => document.activeElement?.id === "main"), "");
+    await focusPage.close();
+
+    const installPage = await desktop.newPage();
+    await installPage.goto(BASE + "/settings", { waitUntil: "domcontentloaded" });
+    await installPage.getByRole("heading", { name: "安装与离线" }).waitFor();
+    const installState = await installPage.evaluate(() => {
+      const buttons = Array.from(document.querySelectorAll("section[aria-labelledby='install-settings'] button"));
+      const target = buttons.find(node => /安装|入口/.test(node.textContent ?? ""));
+      return target ? { text: target.textContent?.trim() ?? "", disabled: target.disabled,
+        title: target.getAttribute("title") ?? "" } : null;
+    });
+    check("未提供安装入口时按钮真禁用并给菜单指引", !!installState && installState.disabled &&
+      installState.title.includes("浏览器菜单"), JSON.stringify(installState));
+    await installPage.close();
+
+    const insecurePage = await desktop.newPage();
+    await insecurePage.addInitScript(() => { Object.defineProperty(window, "isSecureContext", { value: false }); });
+    await insecurePage.goto(BASE + "/settings");
+    const installCard = insecurePage.locator('[aria-labelledby="install-settings"]');
+    await installCard.getByText("局域网地址需要 HTTPS", { exact: false }).waitFor();
+    check("非安全上下文提示 HTTPS 并隐藏安装入口", await installCard.getByRole("button").count() === 0, "");
+    await insecurePage.close();
+
+    // 断网：/api 全部失败，界面要给中文产品文案而不是 Failed to fetch
+    const offlinePage = await desktop.newPage();
+    await offlinePage.route("**/api/**", route => route.abort());
+    await offlinePage.goto(BASE + "/settings", { waitUntil: "domcontentloaded" });
+    await offlinePage.waitForSelector(".server-banner", { timeout: 30000 });
+    const offlineState = await offlinePage.evaluate(() => ({
+      banner: (document.querySelector(".server-banner")?.innerText ?? "").replace(/\s+/g, " "),
+      engineError: (Array.from(document.querySelectorAll("#engine-settings [role=status]"))
+        .map(node => node.textContent ?? "").join(" ")).replace(/\s+/g, " "),
+      saveDisabled: (() => {
+        const button = Array.from(document.querySelectorAll("#engine-settings button"))
+          .find(node => /保存引擎设置/.test(node.textContent ?? ""));
+        return button ? button.disabled : null;
+      })(),
+    }));
+    check("断网时页头显示连不上本机服务", offlineState.banner.includes("连不上本机服务"), offlineState.banner.slice(0, 40));
+    check("断网时引擎设置用中文文案且没有可写的保存",
+      offlineState.engineError.includes("连不上本机服务") && !offlineState.engineError.includes("Failed to fetch") &&
+      offlineState.saveDisabled !== false, JSON.stringify(offlineState).slice(0, 140));
+    await offlinePage.close();
+
+    const reconnectPage = await desktop.newPage();
+    let healthProbes = 0;
+    let blockHealth = false;
+    let releaseHealth;
+    let pendingHealth;
+    await reconnectPage.route("**/api/health", async route => {
+      healthProbes++;
+      if (blockHealth) {
+        await new Promise(resolve => { releaseHealth = resolve; pendingHealth?.(); });
+      }
+      await route.fulfill({ json: health }).catch(() => {});
+    });
+    await reconnectPage.route("**/api/settings/engines", route => route.fulfill({ json: engineSettingsFixture }));
+    await reconnectPage.goto(BASE + "/settings");
+    const enginePanel = reconnectPage.locator("#engine-settings");
+    const engineMode = enginePanel.getByRole("switch", { name: "使用自选默认引擎" });
+    const addEngine = enginePanel.getByRole("button", { name: "添加搜索入口" });
+    await addEngine.click();
+    check("设置页和所有能力控件共享一次 health", healthProbes === 1, `health=${healthProbes}`);
+    await enginePanel.getByLabel("入口名称").fill("未保存草稿");
+    await reconnectPage.evaluate(() => window.dispatchEvent(new Event("offline")));
+    await reconnectPage.locator('.server-banner[data-state="offline"]').waitFor();
+    check("掉线后已加载的引擎面板只读并保留草稿", await engineMode.isDisabled() && await addEngine.isDisabled() &&
+      await enginePanel.getByLabel("入口名称").isDisabled() && (await enginePanel.getByLabel("入口名称").inputValue()) === "未保存草稿" &&
+      await enginePanel.getByRole("button", { name: "刷新状态" }).isEnabled(), "");
+    const beforeReconnect = healthProbes;
+    blockHealth = true;
+    const healthHeld = new Promise(resolve => { pendingHealth = resolve; });
+    await reconnectPage.evaluate(() => window.dispatchEvent(new Event("online")));
+    await healthHeld;
+    await reconnectPage.evaluate(() => window.dispatchEvent(new Event("offline")));
+    await reconnectPage.locator('.server-banner[data-state="offline"]').waitFor();
+    blockHealth = false;
+    releaseHealth();
+    const followupHealth = reconnectPage.waitForResponse(response => new URL(response.url()).pathname === "/api/health");
+    await reconnectPage.evaluate(() => window.dispatchEvent(new Event("online")));
+    await followupHealth;
+    await reconnectPage.locator(".server-banner").waitFor({ state: "hidden" });
+    check("每次连网只探测一次 health，恢复后引擎面板可编辑",
+      healthProbes - beforeReconnect === 2 && await enginePanel.getByLabel("入口名称").isEnabled(),
+      `两次 online 共 ${healthProbes - beforeReconnect} 次 health`);
+    await reconnectPage.close();
+
     await desktop.close();
   } catch (error) {
     report.error = String(error && error.stack ? error.stack : error);
@@ -2172,4 +2661,7 @@ async function auditCards(context, query) {
     await browser.close();
   }
   writeReport(OUT, "p0-ui-audit", report);
-})();
+})().catch(error => {
+  console.error(`无法启动浏览器审计：${error.message}`);
+  process.exitCode = 1;
+});

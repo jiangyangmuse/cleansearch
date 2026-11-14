@@ -40,6 +40,12 @@ export function historySearchHref({ query, literal }: HistoryEntry) {
   return `/?${params}`;
 }
 
+/** 删除单条搜索历史；查询词与字面模式都相同才算同一条。 */
+export function deleteSearchHistoryEntry(entry: HistoryEntry) {
+  return writeHistory(readSearchHistory().filter(item =>
+    !(item.query === entry.query && item.literal === entry.literal)));
+}
+
 export function clearSearchHistory() {
   return writeHistory([]);
 }

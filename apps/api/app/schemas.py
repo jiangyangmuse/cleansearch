@@ -198,6 +198,11 @@ class HealthResponse(BaseModel):
     bookmarks: int = 0
     db_path: str = ""
     version: str
+    # 前端据此判断"新 dist + 旧 API"的混版：契约版本落后就提示重启服务。
+    api_version: int = 0
+    capabilities: dict[str, bool] = Field(default_factory=dict)
+    # ALLOWED_HOSTS 允许的非回环主机；手机/局域网访问靠它放行
+    allowed_hosts: list[str] = Field(default_factory=list)
 
 
 class BookmarkCreate(BaseModel):

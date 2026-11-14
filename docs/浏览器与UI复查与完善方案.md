@@ -76,6 +76,7 @@
 - 不要因为 `sameQuery && samePage && sameView` 早退；空首页回退也要把筛选重置为 URL 值。
 - 翻页、重试、历史词点击都必须沿用“当前 URL 的筛选”，不要把上一轮 ref 又写回 URL。
 - 验收：选 week→back，badge=0、note 为空、请求不带 `time_range`、结果数回到 base；week→day→back 回到 week；选 site→back 后 site 输入框清空；翻页 URL 不再带已回退的筛选。
+- **落地状态（2026-11-14）**：已实现。筛选契约搬进 `urlState.ts`（`filtersFromUrl/sameFilters/withFilters/filterOptions`），`runSearch` 用显式 `filters` 参数同时驱动地址栏与请求体，`popstate` 比较项含四个筛选字段；新增 `scripts/url-state.test.cjs` 7 项单测与两条浏览器断言（两档回退、回退清空站点输入框）。报告：`reports/completed/2026-11-14-1247-p0-1-filters-url-state.md`。
 
 ### 4.2 P0-2：筛选浮层的关闭与定位
 
@@ -84,6 +85,7 @@
 - 桌面加 `max-height: min(70vh, 520px); overflow:auto`，避免小高度视口裁切。
 - ≤900px 改成视口对齐的固定面板：`position:fixed; inset-inline:16px; top: calc(var(--header-height) + 96px); width:auto; max-height:70vh; overflow:auto`；或直接复用底部抽屉。
 - 验收：点结果、点侧栏、按 Esc 都能关闭；390/320 面板完整在视口内；关闭后结果区可点击。
+- **落地状态（2026-11-14）**：已实现。关闭由原生 popover 承担，`runSearch`/`changeView`/`popstate` 显式 `close()`；锚定展开加 `max-height: min(70dvh, 520px)` + 内部滚动；新增 `max-height: 560px` 时退化为贴底面板。600px 以下沿用原有固定面板形态（768px 实测锚定已完整在视口内，故未按原文把断点提到 900）。审计新增 3 条断言、窄屏断言扩到 768px。报告：`reports/completed/2026-11-14-1259-p0-2-filter-panel.md`。
 
 ### 4.3 P0-3：消除混版
 
@@ -91,17 +93,20 @@
 - 前端启动时读取 health，能力缺失就显示“服务版本过旧，请重启本机服务”横幅，并禁用对应 UI（筛选、模型测试、批量收藏状态），不要静默失败。
 - 运行手册写成一条可执行步骤：停旧进程 → `serve.ps1 -Provider searxng -SkipBuild`（或明确的端口/环境变量）→ 用 `/api/health` 核对 capability；禁止“新 dist + 旧 API”长时间并存。
 - 验收：8000 health 含 `db_path` 与 capabilities；筛选在 8000 与 18400 行为一致；`/opensearch.xml` 返回 XML MIME；批量状态与 vitals 不再是 404/405。
+- **落地状态（2026-11-14）**：已实现。health 增 `api_version=2` 与 `capabilities`（按实际路由推导）；前端 `capabilities.ts` 启动核对，旧后端显示横幅并按能力禁用筛选、模型测试、批量收藏状态、性能上报；README §4 落成三步换版流程。日常 8000 已用当前代码重启并核对。报告：`reports/completed/2026-11-14-1308-p0-3-capabilities.md`。
 
 ### 4.4 P0-4：断点与手机范围二选一
 
 **断点**
 
 - 把抽屉断点从 900 提到 1180（或至少 1100），`useMediaQuery`、`workspace.css`、`audit-ui.cjs`、视觉基线同步；1024 断言改为“抽屉可用、主列 ≥560”，不再固定三栏。
+  - **落地状态（2026-11-14）**：已改到 1180；`901–1050` 的三栏压缩规则删除（该区间改走抽屉）；1024 断言改为「单列 + 抽屉入口 + 内容列 ≥560」（实测内容列 1024），并补 1180/1181 边界与 1440 三栏主列 ≥560 的断言。视觉基线 12 张 0 变化（1440 与 390 都不受断点影响）。
 - 1440 仍三栏；≥1660 保持 1920 右栏 360。
 
 **手机 PWA**
 
 - 如果手机/系统分享是产品目标：增加受控 `ALLOWED_HOSTS`（回环 + 显式局域网域名/IP）或要求 HTTPS 反代，并同步扩展 host 权限、README 和验收；不要让 `LOOPBACK_HOST` 一边写“手机可装”一边 403。
+  - **落地状态（2026-11-14）**：`ALLOWED_HOSTS` 已实现（默认空、回环恒通），`/api/health.allowed_hosts` 可核对；手机在局域网可浏览/搜索/收藏。**PWA 安装与系统分享明确降级为不支持**（HTTP 明文下没有 Service Worker），要装桌面须配 HTTPS 反代，列为待办。
 - 如果只支持同机：从 PWA 分享/Android 验收项和产品文案中降级为“同机桌面 PWA”，不要保留会失败的手机步骤。
 
 ### 4.5 P1：移动首屏与空态
@@ -110,12 +115,14 @@
 - 结果数/检索详情压成一行 sticky；目标首条结果标题在 390×844 的 y ≤ 700。
 - 空首页加“最近搜索”（历史最多 8 条，可单条删除）、3 个示例查询、“书签/单页总结/AI 对话”快捷入口；无历史时只显示示例与快捷键提示。
 - 首条结果在 320 下至少露出标题和摘要首行；必要时把官方入口默认折叠。
+- **落地状态（2026-11-14）**：已实现。手机端（≤640px）官方入口默认 2 条 + 「查看全部 N 条」，并整体折到「强相关」之后；`metabar` 吸顶单行；390×844 首条结果标题 y=615、320 为 y=641（目标 ≤700），320 下标题与摘要首行都在首屏。空首页补齐最近搜索（最多 8 条、单条可删）、3 个示例与书签/单页总结/AI 对话入口，无历史时只给示例与快捷键。审计新增 6 项断言，视觉基线已按新空首页重建。报告：`reports/completed/2026-11-14-1351-p1-mobile-home.md`。
 
 ### 4.6 P2：焦点、安装态、离线文案
 
 - 快捷键面板记录打开前的焦点，关闭后恢复到“全部快捷键”按钮或 `?` 触发器；读屏测试补一条。
 - 安装按钮在 `!installable && !standalone` 时使用 `disabled`，或改为纯说明文本 + “浏览器菜单安装”步骤。
 - 离线时在 AppShell 显示全局“本机服务未连接/离线壳”条；网络面板统一用中文产品文案，禁用重试以外的写操作。
+- **落地状态（2026-11-14）**：快捷键面板焦点已兜底（body 起手也回到「全部快捷键」）；安装按钮改真 `disabled` 并给浏览器菜单指引；`jsonRequest` 把 fetch 失败统一成中文「连不上本机服务」，断网时页头横幅 + 引擎设置只读（禁用保存，保留重试）；`online/offline` 事件会重新探测 health。报告：`reports/completed/2026-11-14-1404-p2-focus-install-offline.md`。
 - 扩展/设置页 token 轮换仍缺后端接口，继续保持待办。
 
 ### 4.7 验证补强
@@ -125,6 +132,8 @@
 - 增加 `urlState` 单元测试（node --test）：`readUrlState/searchUrl` 往返、非法 page/range/dedupe、筛选差异比较。
 - 终验报告分两列：fixture 253 项（确定性）与真实上游检查（请求体/过滤/延迟，不承诺条数）。不要把真实上游的结果数当作断言前提。
 - 文档：现有 `docs/浏览器与UI优化方案.md` 的 §0/§1 仍是 14:22 的历史审计口吻，建议在顶部加“已落地/最新复查见…”或把本文件作为新的现状入口，避免读者以为问题仍在。
+- **落地状态（2026-11-14）**：① 交互类断言已与真实上游解耦——`audit-ui.cjs` 内建 `makeSearchFixture()`，筛选/能力/离线等交互全部用 `page.route` 固定响应，上游条数不再参与断言；`searchWithResults` 零结果时直接给出可执行的下一步，而不是等 60s 超时。② `urlState` 单测 7 项（P0-1 已加）。③ 真实上游检查独立成 `scripts/verify-filters.cjs`（请求体/回显/站点过滤/缓存），不承诺条数。④ `docs/浏览器与UI优化方案.md` 顶部已标为历史审计并指向本文件。报告：`reports/completed/2026-11-14-1739-verify-decouple-docs.md`。
+- **验收口径更正（2026-11-14）**：全量 `audit-ui.cjs` 使用 fixture 实例。筛选和混版场景保留内建响应，移动首屏、结果卡与分页仍使用服务端固定样本。脚本在打开浏览器前检查 `/api/health`，遇到 `searxng` provider 会提示真实筛选命令并返回非零。真实筛选与引擎来源分别使用 `verify-filters.cjs` 和 `verify-searxng.py`。
 
 ## 5 建议顺序与估时
 

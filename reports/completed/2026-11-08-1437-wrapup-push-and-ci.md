@@ -40,9 +40,9 @@
 | 文件 | 类型 | 说明 |
 | --- | --- | --- |
 | 工作区并行改动（apps/api、apps/web、scripts、reports、searxng） | 提交 | 31764ad |
-| [README.md](../README.md) | 修改 | 收口记录、分支保护步骤、API 限制 |
-| [docs/决策与接口变更.md](../docs/决策与接口变更.md) | 修改 | M18-D1…D3 |
-| 本报告与 [INDEX.md](INDEX.md) | 新增/更新 | 登记 |
+| [README.md](../../README.md) | 修改 | 收口记录、分支保护步骤、API 限制 |
+| [docs/决策与接口变更.md](../../docs/决策与接口变更.md) | 修改 | M18-D1…D3 |
+| 本报告与 [INDEX.md](../INDEX.md) | 新增/更新 | 登记 |
 
 ## 4 验证与证据
 
@@ -82,9 +82,9 @@
 
 **相关文件**
 
-- [README 收口章节](../README.md)
-- [决策 M18-D1…D3](../docs/决策与接口变更.md)
-- [M19 报告](2026-11-08-1137-m19-engine-suffix-repair.md)
+- [README 收口章节](../../README.md)
+- [决策 M18-D1…D3](../../docs/决策与接口变更.md)
+- [M19 报告](../incomplete/2026-11-08-1137-m19-engine-suffix-repair.md)
 
 ---
 

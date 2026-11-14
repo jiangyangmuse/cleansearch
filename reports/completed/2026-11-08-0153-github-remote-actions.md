@@ -40,11 +40,11 @@
 
 | 文件 | 类型 | 说明 |
 | --- | --- | --- |
-| [README.md](../README.md) | 修改 | GitHub 远端、Actions 结果、与 act 的差异 |
-| [docs/决策与接口变更.md](../docs/决策与接口变更.md) | 修改 | M17-D1…D4 |
-| [docs/进展与欠账.md](../docs/进展与欠账.md) | 修改 | P1-1 完成、缺口 1 关闭 |
+| [README.md](../../README.md) | 修改 | GitHub 远端、Actions 结果、与 act 的差异 |
+| [docs/决策与接口变更.md](../../docs/决策与接口变更.md) | 修改 | M17-D1…D4 |
+| [docs/进展与欠账.md](../../docs/进展与欠账.md) | 修改 | P1-1 完成、缺口 1 关闭 |
 | 仓库历史 | 重写 | 4 个提交作者改为 jyms_rue |
-| 本报告与 [INDEX.md](INDEX.md) | 新增/更新 | 登记 |
+| 本报告与 [INDEX.md](../INDEX.md) | 新增/更新 | 登记 |
 
 ## 4 验证与证据
 
@@ -83,8 +83,8 @@
 
 **相关文件**
 
-- [README GitHub 章节](../README.md)
-- [决策 M17-D1…D4](../docs/决策与接口变更.md)
+- [README GitHub 章节](../../README.md)
+- [决策 M17-D1…D4](../../docs/决策与接口变更.md)
 - [Actions 运行](https://github.com/jiangyangmuse/cleansearch/actions/runs/42393430557)
 
 ---

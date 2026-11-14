@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import type { CSSProperties, ReactNode } from "react";
+import ServerBanner from "./ServerBanner";
 import WorkspaceHeader, { type ShellPage } from "./WorkspaceHeader";
 import type { HistoryEntry } from "../searchHistory";
 
@@ -28,6 +29,7 @@ export default function AppShell({ children, current, title, maxWidth, onHistory
     <div className="workspace-app" style={style}>
       <a className="skip-link" href="#main">跳到主要内容</a>
       <WorkspaceHeader current={current} onHistorySearch={onHistorySearch} />
+      <ServerBanner />
       {children}
     </div>
   );

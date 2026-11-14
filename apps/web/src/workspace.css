@@ -739,12 +739,9 @@
   .workspace { grid-template-columns: 192px minmax(0, 1fr) 360px; }
 }
 
-@media (max-width: 1050px) and (min-width: 901px) {
-  .workspace { grid-template-columns: 138px minmax(0, 1fr) 285px; }
-  .workspace-main { padding-inline: 20px; }
-}
-
-@media (max-width: 900px) {
+/* 1180 以下不再给书签与工具留常驻列：主列在三栏里挤到 600 以下时，
+   结果卡与统计条先折行，不如直接换成抽屉（方案 §4.4）。 */
+@media (max-width: 1180px) {
   /* 窄屏不再给书签与工具留常驻行：结果紧跟在搜索框后面 */
   .workspace {
     grid-template-columns: minmax(0, 1fr);
@@ -763,7 +760,10 @@
   .workspace-search { grid-area: search; padding: 18px 16px 0; min-width: 0; }
   .workspace-results { grid-area: results; padding: 0 16px 40px; }
   .conversation-view { grid-area: results; padding: 16px 16px 40px; }
+}
 
+/* 书签页没有右栏，形态切换仍按 900 */
+@media (max-width: 900px) {
   /* 书签页：搜索一行、动作一行，动作三等分；卡片操作不再和标题抢宽度 */
   .bm-toolbar { display: grid; gap: 10px; }
   .bm-search { min-width: 0; flex-wrap: nowrap; }

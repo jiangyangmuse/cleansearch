@@ -1,0 +1,10 @@
+FAIL '�ձ� �׶� g'  336 ms  HTTP 503 ENGINE_UNAVAILABLE ���� google û�п��ý�����ѳ��� google, google cse����google(Suspended: access denied)��google cse(Suspended: too many requests)
+FAIL 'Python documentation g'  332 ms  HTTP 503 ENGINE_UNAVAILABLE ���� google û�п��ý�����ѳ��� google, google cse����google(Suspended: access denied)��google cse(Suspended: too many requests)
+FAIL 'HTTP g'  332 ms  HTTP 503 ENGINE_UNAVAILABLE ���� google û�п��ý�����ѳ��� google, google cse����google(Suspended: access denied)��google cse(Suspended: too many requests)
+PASS '�ձ� �׶� b'  16 ms  ���=10 ��Դ=['bing'] ʧ������=[]
+PASS 'Python documentation b'  6 ms  ���=8 ��Դ=['bing'] ʧ������=[]
+PASS 'HTTP b'  4 ms  ���=10 ��Դ=['bing'] ʧ������=[]
+FAIL 'Python !g'  324 ms  HTTP 503 ENGINE_UNAVAILABLE ���� google û�п��ý�����ѳ��� google, google cse����google(Suspended: access denied)��google cse(Suspended: too many requests)
+PASS '�ձ� �׶� jp'  6 ms  ���=18 ��Դ=['360search', 'bing', 'duckduckgo web', 'naver', 'yahoo', 'yandex'] ʧ������=['duckduckgo(CAPTCHA)', 'google cse(Suspended: too many requests)', 'sogou(unexpected crash)', 'swisscows(Suspended: access denied)']
+PASS 'C g'  5 ms  ���=16 ��Դ=['bing', 'duckduckgo web', 'naver', 'yahoo', 'yandex'] ʧ������=['duckduckgo(CAPTCHA)', 'google cse(Suspended: too many requests)', 'sogou(unexpected crash)', 'swisscows(Suspended: access denied)']
+��ʵ�������գ�5/9 (56%)

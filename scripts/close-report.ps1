@@ -13,7 +13,7 @@ $dir = Join-Path $root "reports"
 $indexPath = Join-Path $dir "INDEX.md"
 
 if (-not $Path) {
-    $dirs = @($dir, (Join-Path $dir "completed"))
+    $dirs = @($dir, (Join-Path $dir "incomplete"), (Join-Path $dir "completed"), (Join-Path $dir "uncategorized"))
     $cand = Get-ChildItem -LiteralPath $dirs -File -Filter "*.md" -ErrorAction SilentlyContinue |
         Where-Object { $_.Name -match '^\d{4}-\d{2}-\d{2}-\d{4}-' } |
         Sort-Object Name -Descending | Select-Object -First 1
@@ -23,6 +23,11 @@ if (-not $Path) {
 if (-not (Test-Path $Path)) { Write-Host "[close] 文件不存在：$Path" -ForegroundColor Red; exit 1 }
 $Path = (Resolve-Path $Path).Path
 $fileName = [System.IO.Path]::GetFileName($Path)
+$relativePath = $fileName
+$parent = Split-Path -Parent $Path
+if ((Split-Path -Parent $parent) -eq $dir) {
+    $relativePath = "$(Split-Path -Leaf $parent)/$fileName"
+}
 
 # ---- 1. 先校验 ----
 & (Join-Path $PSScriptRoot "check-report.ps1") -Path $Path
@@ -63,16 +68,11 @@ if (-not (Test-Path $indexPath)) {
     foreach ($l in [System.IO.File]::ReadAllLines($indexPath)) { $lines.Add($l) }
 
     $found = $false
+    $reportPathPattern = '(?:[^/`]+/)?' + [regex]::Escape($fileName)
     for ($i = 0; $i -lt $lines.Count; $i++) {
-        if ($lines[$i] -match '^\| \d{8}-\d{4} \|' -and $lines[$i].Contains($fileName)) {
-            $lines[$i] = $lines[$i] -replace '\|\s*进行中\s*\|', "| $Status |"
-            if ($lines[$i] -notmatch "\|\s*$Status\s*\|") {
-                $cells = $lines[$i].Trim().Trim('|') -split '\|'
-                if ($cells.Count -ge 5) {
-                    $cells[4] = " $Status "
-                    $lines[$i] = "|" + ($cells -join "|") + "|"
-                }
-            }
+        if ($lines[$i] -match ('^\| \d{8}-\d{4} \|.*\| `' + $reportPathPattern + '` \|$')) {
+            $lines[$i] = $lines[$i] -replace ('\(' + $reportPathPattern + '\)'), "($relativePath)"
+            $lines[$i] = $lines[$i] -replace '\|[^|]*\| `[^`]+` \|$', "| $Status | ``$relativePath`` |"
             $found = $true
             break
         }
@@ -80,10 +80,6 @@ if (-not (Test-Path $indexPath)) {
     if (-not $found) {
         Write-Host "[close] 台账里没有这份报告，追加一行" -ForegroundColor Yellow
         $title = $fileName -replace '^\d{4}-\d{2}-\d{2}-\d{4}-', '' -replace '\.md$', ''
-        $relativePath = $fileName
-        if ((Split-Path -Parent $Path) -eq (Join-Path $dir "completed")) {
-            $relativePath = "completed/$fileName"
-        }
         $lines.Add("| $($now.ToString('yyyyMMdd-HHmm')) | $endStamp | [$title]($relativePath) | - | $Status | ``$relativePath`` |")
     }
     [System.IO.File]::WriteAllLines($indexPath, $lines, (New-Object System.Text.UTF8Encoding($false)))

@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import EngineSettingsPanel from "./components/EngineSettingsPanel";
 import ModelSettingsPanel from "./components/ModelSettingsPanel";
 import AppShell from "./components/AppShell";
-import { loadEngineSettings, readHealth, type HealthInfo } from "./api";
+import { loadEngineSettings } from "./api";
+import { useServerState } from "./capabilities";
 import { readDailyAI, saveDailyAI } from "./searchPreferences";
 import { clearSearchHistory, HISTORY_CHANGED, HISTORY_KEY, readSearchHistory } from "./searchHistory";
 import { applyTheme, readTheme, type ThemeChoice } from "./theme";
@@ -18,8 +19,9 @@ export default function SettingsPage() {
   const [theme, setTheme] = useState(readTheme);
   const [dailyAI, setDailyAI] = useState(readDailyAI);
   const [historyCount, setHistoryCount] = useState(() => readSearchHistory().length);
-  const [info, setInfo] = useState<HealthInfo | null>(null);
-  const [infoError, setInfoError] = useState("");
+  const server = useServerState();
+  const info = "health" in server ? server.health : null;
+  const secureContext = window.isSecureContext;
   const [notice, setNotice] = useState("");
   const [installable, setInstallable] = useState(canInstall);
   const [standalone, setStandalone] = useState(isStandalone);
@@ -35,27 +37,6 @@ export default function SettingsPage() {
       setDailyAI(readDailyAI());
       setHistoryCount(readSearchHistory().length);
     };
-    let controller: AbortController | undefined;
-    const refreshInfo = () => {
-      controller?.abort();
-      const request = new AbortController();
-      controller = request;
-      void readHealth(request.signal).then(value => {
-        if (!request.signal.aborted) {
-          setInfo(value);
-          setInfoError("");
-        }
-      }).catch(() => {
-        if (!request.signal.aborted) {
-          setInfo(null);
-          setInfoError("读取本机数据信息失败");
-        }
-      });
-    };
-    const onPageShow = (event: PageTransitionEvent) => {
-      sync();
-      if (event.persisted) refreshInfo();
-    };
     const onStorage = (event: StorageEvent) => {
       if (event.key === HISTORY_KEY || event.key === null) sync();
     };
@@ -63,19 +44,17 @@ export default function SettingsPage() {
       setInstallable(canInstall());
       setStandalone(isStandalone());
     };
-    refreshInfo();
     window.addEventListener("cs:theme", sync);
     window.addEventListener(INSTALLABLE, syncInstall);
     syncInstall();
-    window.addEventListener("pageshow", onPageShow);
+    window.addEventListener("pageshow", sync);
     window.addEventListener("storage", onStorage);
     window.addEventListener(HISTORY_CHANGED, sync);
     return () => {
-      controller?.abort();
       exportRequest.current?.abort();
       window.removeEventListener("cs:theme", sync);
       window.removeEventListener(INSTALLABLE, syncInstall);
-      window.removeEventListener("pageshow", onPageShow);
+      window.removeEventListener("pageshow", sync);
       window.removeEventListener("storage", onStorage);
       window.removeEventListener(HISTORY_CHANGED, sync);
     };
@@ -174,29 +153,32 @@ export default function SettingsPage() {
             <p className="settings-data__path">
               <strong>{standalone ? "已在独立窗口运行" : "把 CleanSearch 装到桌面 / 主屏幕"}</strong>
             </p>
-            <p className="model-settings__hint">
-              支持系统分享的浏览器可把链接送进书签页。应用外壳可离线打开，搜索、总结和保存书签需要本机服务。
-            </p>
-            <div className="settings-actions">
-              <button type="button" className="button" aria-disabled={!installable || standalone || installing}
-                onClick={async () => {
-                  if (!installable || standalone || installing) return;
-                  setInstalling(true);
-                  const outcome = await promptInstall();
-                  setInstallNotice(outcome === "accepted" ? "已确认安装"
-                    : outcome === "dismissed" ? "安装已取消"
-                    : outcome === "failed" ? "安装未完成，可从浏览器菜单重试" : "浏览器未提供安装入口");
-                  setInstalling(false);
-                  setInstallable(canInstall());
-                }}>
-                {installing ? "等待浏览器确认…" : standalone ? "已安装" : installable ? "安装到桌面" : "浏览器未提供安装入口"}
-              </button>
-            </div>
-            {!installable && !standalone ? (
+            {secureContext ? <>
               <p className="model-settings__hint">
-                也可用地址栏右侧的安装图标，或浏览器菜单里的「安装 CleanSearch」。
+                支持系统分享的浏览器可把链接送进书签页。应用外壳可离线打开，搜索、总结和保存书签需要本机服务。
               </p>
-            ) : null}
+              <div className="settings-actions">
+                <button type="button" className="button" disabled={!installable || standalone || installing}
+                  title={!installable && !standalone ? "浏览器未提供安装入口，可从浏览器菜单安装" : undefined}
+                  onClick={async () => {
+                    if (!installable || standalone || installing) return;
+                    setInstalling(true);
+                    const outcome = await promptInstall();
+                    setInstallNotice(outcome === "accepted" ? "已确认安装"
+                      : outcome === "dismissed" ? "安装已取消"
+                      : outcome === "failed" ? "安装未完成，可从浏览器菜单重试" : "浏览器未提供安装入口");
+                    setInstalling(false);
+                    setInstallable(canInstall());
+                  }}>
+                  {installing ? "等待浏览器确认…" : standalone ? "已安装" : installable ? "安装到桌面" : "浏览器未提供安装入口"}
+                </button>
+              </div>
+              {!installable && !standalone ? (
+                <p className="model-settings__hint">
+                  也可用地址栏右侧的安装图标，或浏览器菜单里的「安装 CleanSearch」。
+                </p>
+              ) : null}
+            </> : <p className="model-settings__hint">局域网地址需要 HTTPS 才能使用 PWA 安装、离线页面和系统分享。</p>}
             <p className={installNotice ? undefined : "sr-only"} role="status">{installNotice}</p>
           </div>
         </section>
@@ -204,7 +186,8 @@ export default function SettingsPage() {
           <h2 id="data-settings">数据管理</h2>
           <div className="settings-row">
             <p className="settings-data__path">
-              <strong>本机数据库</strong> <code>{info?.db_path || (info ? "路径不可用" : infoError || "读取中…")}</code>
+              <strong>本机数据库</strong>{" "}
+              <code>{info?.db_path || (server.kind === "offline" ? "读取本机数据信息失败" : info ? "路径不可用" : "读取中…")}</code>
             </p>
             <p className="model-settings__hint">
               书签 {info?.bookmarks ?? "—"} 条 · 版本 {info?.version ?? "—"} · 搜索历史 {historyCount} 条（只存在当前浏览器）

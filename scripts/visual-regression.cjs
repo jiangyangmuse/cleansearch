@@ -71,6 +71,7 @@ function samePixels(reference, candidate) {
             const quickbar = document.querySelector(".workspace-side .quick-bookmarks");
             return !quickbar || !quickbar.textContent.includes("正在读取书签");
           });
+          await page.locator(".workspace-engines > summary").waitFor();
         }
         await page.addStyleTag({ content: "*,*::before,*::after{animation:none!important;transition:none!important}" });
         await page.evaluate(() => document.fonts.ready.then(() => {}));

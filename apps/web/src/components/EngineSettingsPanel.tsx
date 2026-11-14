@@ -3,6 +3,7 @@ import { getEngines, loadEngineSettings, saveEngineSettings } from "../api";
 import type { EngineInfo } from "../types";
 import { ENGINE_SECTIONS } from "../engineQuery";
 import type { CustomSearchEntry, EnginePreferences, EngineSettings, SearchEntryKind } from "../types";
+import { useServerState } from "../capabilities";
 
 const EMPTY: CustomSearchEntry = { code: "", label: "", kind: "engine", target: "" };
 const TARGETS = {
@@ -26,6 +27,9 @@ export default function EngineSettingsPanel() {
   const [probing, setProbing] = useState(false);
   // 「刷新状态」拉一次目录，把可用/冷却/未知贴到每个引擎上
   const [probe, setProbe] = useState<Record<string, EngineInfo>>({});
+  // 连不上本机服务时只留「重新读取/刷新状态」，写操作一律禁用
+  const server = useServerState();
+  const editDisabled = busy || server.kind === "loading" || server.kind === "offline";
 
   const refreshStatus = async () => {
     setProbing(true);
@@ -69,7 +73,7 @@ export default function EngineSettingsPanel() {
   };
 
   const save = async () => {
-    if (!data) return;
+    if (!data || editDisabled) return;
     setBusy(true);
     setError("");
     setNotice("");
@@ -93,7 +97,7 @@ export default function EngineSettingsPanel() {
   };
 
   const applyEntry = () => {
-    if (!data) return;
+    if (!data || editDisabled) return;
     const entry = { ...draft, label: draft.label.trim(), code: draft.code.trim().toLowerCase(), target: draft.target.trim() };
     const { preferences, builtins } = data;
     const reserved = new Set(["zh", "cn", "jp", "us", "en", "ds", ...builtins.flatMap(row => [row.code, ...row.aliases])]);
@@ -146,7 +150,7 @@ export default function EngineSettingsPanel() {
             <small>普通搜索使用勾选的引擎。关闭后沿用 SearXNG 的默认设置。</small>
           </span>
           <input className="workspace-switch" type="checkbox" role="switch" checked={preferences.default_engines !== null}
-            aria-label="使用自选默认引擎" disabled={busy} onChange={event =>
+            aria-label="使用自选默认引擎" disabled={editDisabled} onChange={event =>
               update({ ...preferences, default_engines: event.target.checked ? defaults : null })} />
         </label>
         {sources === null && <p className="model-settings__hint">暂时无法读取 SearXNG 的引擎状态。</p>}
@@ -201,7 +205,7 @@ export default function EngineSettingsPanel() {
                           <input className="workspace-switch" type="checkbox" role="switch"
                             aria-label={`默认搜索使用 ${row.label}`} checked={checked}
                             aria-describedby={lockedByInherit ? `engine-reason-${row.code}` : undefined}
-                            disabled={busy || inheriting || (unavailable && !checked)}
+                            disabled={editDisabled || inheriting || (unavailable && !checked)}
                             onChange={event => update({
                               ...preferences, default_engines: event.target.checked
                                 ? [...active, row.code] : active.filter(code =>
@@ -213,8 +217,8 @@ export default function EngineSettingsPanel() {
                         )}
                         {customEntry && (
                           <>
-                            <button type="button" className="chip" disabled={busy} onClick={() => startEditing(customEntry)}>编辑</button>
-                            <button type="button" className="chip" disabled={busy} onClick={() => {
+                            <button type="button" className="chip" disabled={editDisabled} onClick={() => startEditing(customEntry)}>编辑</button>
+                            <button type="button" className="chip" disabled={editDisabled} onClick={() => {
                               if (editing === row.code) setFormOpen(false);
                               update({
                                 ...preferences, custom: preferences.custom.filter(entry => entry.code !== row.code),
@@ -232,26 +236,26 @@ export default function EngineSettingsPanel() {
           );
         })}
         <div className="engine-settings__footer">
-          <button type="button" className="button button--ghost" disabled={busy || preferences.custom.length >= 30}
+          <button type="button" className="button button--ghost" disabled={editDisabled || preferences.custom.length >= 30}
             onClick={() => startEditing()}>添加搜索入口</button>
-          <button type="button" className="button button--ghost" disabled={busy || (inheriting && !dirty)}
+          <button type="button" className="button button--ghost" disabled={editDisabled || (inheriting && !dirty)}
             onClick={() => update({ ...preferences, default_engines: null })}>恢复默认</button>
-          <button type="button" className="button" disabled={busy || !dirty || formOpen}
+          <button type="button" className="button" disabled={editDisabled || !dirty || formOpen}
             onClick={() => void save()}>{busy ? "保存中…" : "保存引擎设置"}</button>
         </div>
         {formOpen && (
           <form className="engine-settings__form" onSubmit={event => { event.preventDefault(); applyEntry(); }}>
-            <label>入口名称<input value={draft.label} required maxLength={48}
+            <label>入口名称<input disabled={editDisabled} value={draft.label} required maxLength={48}
               onChange={event => setDraft({ ...draft, label: event.target.value })} /></label>
-            <label>搜索后缀<input value={draft.code} required maxLength={8} pattern="[a-z][a-z0-9]{0,7}"
+            <label>搜索后缀<input disabled={editDisabled} value={draft.code} required maxLength={8} pattern="[a-z][a-z0-9]{0,7}"
               placeholder="例如 wiki2" onChange={event => setDraft({ ...draft, code: event.target.value.toLowerCase() })} /></label>
-            <label>入口类型<select value={draft.kind} onChange={event => {
+            <label>入口类型<select disabled={editDisabled} value={draft.kind} onChange={event => {
               setDraft({ ...draft, kind: event.target.value as SearchEntryKind, target: "" });
             }}>
               {Object.entries(KIND).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
             </select></label>
             <label>{TARGETS[draft.kind].title}
-              <input value={draft.target} required maxLength={draft.kind === "website" ? 1000 : 100}
+              <input disabled={editDisabled} value={draft.target} required maxLength={draft.kind === "website" ? 1000 : 100}
                 list={draft.kind === "engine" ? "loaded-search-engines" : undefined}
                 placeholder={TARGETS[draft.kind].placeholder} onChange={event => setDraft({ ...draft, target: event.target.value })} />
             </label>
@@ -259,7 +263,7 @@ export default function EngineSettingsPanel() {
               {Object.keys(sources ?? {}).map(name => <option value={name} key={name} />)}
             </datalist>
             <div className="engine-settings__footer">
-              <button type="submit" className="button">{editing ? "应用修改" : "添加到列表"}</button>
+              <button type="submit" className="button" disabled={editDisabled}>{editing ? "应用修改" : "添加到列表"}</button>
               <button type="button" className="button button--ghost" onClick={() => { setFormOpen(false); setError(""); }}>取消</button>
             </div>
           </form>

@@ -104,6 +104,8 @@ class Settings:
     api_host: str
     api_port: int
     serve_web: bool
+    # 显式允许的非回环主机名（手机/局域网访问）；回环永远允许
+    allowed_hosts: tuple[str, ...] = ()
     llm_reasoning_effort: str | None = None
     cache_max_entries: int = 512
 
@@ -181,6 +183,9 @@ def get_settings() -> Settings:
         api_host=_env("API_HOST", "127.0.0.1") or "127.0.0.1",
         api_port=_env_int("API_PORT", 8000),
         serve_web=_env_bool("SERVE_WEB", True),
+        allowed_hosts=tuple(
+            item.strip().lower() for item in (_env("ALLOWED_HOSTS", "") or "").split(",") if item.strip()
+        ),
     )
 
 
