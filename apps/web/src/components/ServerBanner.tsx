@@ -13,10 +13,10 @@ export default function ServerBanner() {
       <div className="server-banner" role="status" data-state="offline">
         <p className="server-banner__title">连不上本机服务</p>
         <p className="server-banner__detail">
-          确认 FastAPI 已启动（默认 http://127.0.0.1:8000），或在本机执行
-          {" "}<code>{".\\scripts\\serve.ps1 -Provider searxng"}</code>。
+          确认本机服务已启动（默认 http://127.0.0.1:8000）。免安装版重新双击启动程序即可；
+          从源码运行的，在仓库根目录执行 {" "}<code>{"scripts\\serve.ps1"}</code>。
         </p>
-        <button type="button" className="chip" onClick={refreshServerState}>重试连接</button>
+        <button type="button" className="chip" onClick={() => void refreshServerState()}>重试连接</button>
       </div>
     );
   }
@@ -26,9 +26,10 @@ export default function ServerBanner() {
       <p className="server-banner__title">本机服务版本过旧，部分功能已禁用</p>
       <p className="server-banner__detail">
         当前服务缺少：{state.missing.map(name => CAPABILITY_LABELS[name]).join("、")}。
-        先停掉旧进程，再执行 {" "}
-        <code>{".\\scripts\\serve.ps1 -Provider searxng -SkipBuild"}</code>，然后刷新本页。
+        先停掉旧进程，再用新版程序重启本机服务（免安装版：关掉窗口后重新双击；源码：{" "}
+        <code>{"scripts\\serve.ps1 -SkipBuild"}</code>），然后重试。
       </p>
+      <button type="button" className="chip" onClick={() => void refreshServerState()}>重试连接</button>
     </div>
   );
 }

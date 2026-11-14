@@ -106,15 +106,24 @@ def main() -> None:
     print("关闭这个窗口即停止服务。数据保存在 data/ 目录。")
 
     if os.environ.get("CLEANSEARCH_NO_BROWSER", "") != "1":
-        threading.Thread(
-            target=lambda: (time.sleep(2.0), webbrowser.open(url)), daemon=True
-        ).start()
+        # 冷启动可能超过 2 秒：等端口真的在应答再开浏览器，避免首屏就是连接失败
+        def open_when_ready() -> None:
+            for _ in range(60):
+                if _serving(port):
+                    webbrowser.open(url)
+                    return
+                time.sleep(0.5)
+
+        threading.Thread(target=open_when_ready, daemon=True).start()
 
     import uvicorn
 
     from app.main import app
 
-    uvicorn.run(app, host="127.0.0.1", port=port, log_level="info")
+    host = os.environ.get("API_HOST", "127.0.0.1")
+    if host != "127.0.0.1":
+        print(f"监听 {host}:{port}（局域网访问还需要在服务端放行 ALLOWED_HOSTS）")
+    uvicorn.run(app, host=host, port=port, log_level="info")
 
 
 if __name__ == "__main__":

@@ -131,3 +131,26 @@
 | 重新上传 v0.1.0 asset | 通过 | 删除旧 asset `747190483` 后上传新包，下载地址不变，size=53.5 MB |
 
 **边界**：快捷方式指向 `dist-portable\CleanSearch\`，该目录在 `.gitignore` 里、重建会清空——重建后需重新执行一次 `create-shortcut.ps1`（包内 bat 也行）。图标只有 192px 一档，高分屏字号下略糊。
+## 10 追加轮次 2026-11-14 20:58（二次复查 R-13…R-18 修复）
+
+来源：[二次复查报告](./2026-11-14-2036-portable-recheck.md) 与方案 §8。逐条处理：
+
+| 编号 | 级别 | 处理 | 落点 |
+| --- | --- | --- | --- |
+| R-13 | P1 | launcher 改成 `uvicorn.run(host=API_HOST)`，非回环时打印提醒；`说明.txt` 改口径：手机访问要同时设 `API_HOST=0.0.0.0` + `ALLOWED_HOSTS` 并放行防火墙 | `packaging/launcher.py`、`scripts/build-portable.ps1` 的说明文案 |
+| R-14 | P2 | compose 镜像钉 digest `sha256:c750ee1d…`，不再用 `latest` | `packaging/searxng/docker-compose.yml` |
+| R-15 | P2 | 横幅文案不再写死在仓库里才有的 `scripts\\serve.ps1` 路径，改成「免安装版重新双击 / 源码版跑 serve.ps1」 | `apps/web/src/components/ServerBanner.tsx` |
+| R-16 | P3 | `说明.txt` 去掉「中文路径也可以」的断言（改为建议纯英文、中文未测）；README 的审计数字对齐当前口径 | 构建脚本说明、README |
+| R-17 | P3 | `outdated` 分支补「重试连接」按钮（与 `offline` 一致） | `ServerBanner.tsx` |
+| R-18 | P3 | 开浏览器改成轮询端口真的应答后再开（最多 30 秒），不再固定 2 秒 | `packaging/launcher.py` |
+
+验证：
+
+| 命令 | 结果 | 说明 |
+| --- | --- | --- |
+| `npm --prefix apps/web run build` | 通过 | 含横幅文案改动 |
+| `node scripts/audit-ui.cjs --base http://127.0.0.1:18092`（打包版，新前端） | 通过 | **`ALL PASS (308)`**（默认口径省 3 项写书签）（[日志](../assets/portable-package/audit2.log)） |
+| `.\scripts\build-portable.ps1` | 通过 | 重新打包，zip 53.5 MB；随后重新播种 `data/cs.db` 与令牌、刷新桌面快捷方式 |
+| 重新上传 v0.1.0 asset | 通过 | 删除旧 asset 后上传新包，下载地址不变 |
+
+仍未处理：R-13 只改了代码与文案，**没有实测**从包里开 `API_HOST=0.0.0.0` 的手机访问（缺第二台设备）；镜像 digest 升级流程未定义。
