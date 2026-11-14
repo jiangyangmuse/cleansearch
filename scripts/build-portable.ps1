@@ -43,6 +43,18 @@ Set-Content -Path (Join-Path $app "启动 CleanSearch.bat") -Value $bat -Encodin
 
 Copy-Item -Recurse -Force (Join-Path $root "packaging/searxng") (Join-Path $app "searxng")
 
+# 让别的电脑也能一键建桌面快捷方式：随包带脚本 + 一个 bat
+New-Item -ItemType Directory -Force -Path (Join-Path $app "tools") | Out-Null
+Copy-Item -Force (Join-Path $root "scripts/create-shortcut.ps1") (Join-Path $app "tools/create-shortcut.ps1")
+
+$shortcutBat = @()
+$shortcutBat += "@echo off"
+$shortcutBat += "chcp 65001 >nul"
+$shortcutBat += 'cd /d "%~dp0"'
+$shortcutBat += 'powershell -NoProfile -ExecutionPolicy Bypass -File "tools\create-shortcut.ps1" -Target "%~dp0CleanSearch.exe" -Name "CleanSearch"'
+$shortcutBat += "pause"
+Set-Content -Path (Join-Path $app "创建桌面快捷方式.bat") -Value $shortcutBat -Encoding utf8
+
 $real = @()
 $real += '@echo off'
 $real += "chcp 65001 >nul"
@@ -80,8 +92,8 @@ $readme += "CleanSearch 免安装版（Windows x64）"
 $readme += "================================="
 $readme += ""
 $readme += "怎么用"
-$readme += "1. 解压全部文件到任意目录（路径里有中文也可以）。"
-$readme += "2. 双击「启动 CleanSearch.bat」，或直接运行 CleanSearch.exe。"
+$readme += "1. 解压全部文件到一个固定目录（建议纯英文路径；中文路径未做实测）。"
+$readme += "2. 双击「启动 CleanSearch.bat」（或桌面快捷方式），也可以直接运行 CleanSearch.exe。"
 $readme += "3. 浏览器会自动打开 http://127.0.0.1:8000/ ；没打开就手动访问。"
 $readme += "4. 关掉命令行窗口即停止服务。"
 $readme += ""
@@ -95,7 +107,7 @@ $readme += "想接本机大模型总结：再加 LLM_BASE_URL / LLM_MODEL（Open
 $readme += ""
 $readme += "常用环境变量"
 $readme += "  API_PORT=8000                 换端口（被占用会自动挑空闲端口）"
-$readme += "  ALLOWED_HOSTS=192.168.1.20    允许同一 Wi-Fi 下的手机访问（默认只允许本机）"
+$readme += "  ALLOWED_HOSTS=192.168.1.20    放行该主机名（还要同时设 API_HOST=0.0.0.0 才会监听网卡）"
 $readme += "  CLEANSEARCH_NO_BROWSER=1      启动时不自动开浏览器"
 $readme += ""
 $readme += "注意：只监听 127.0.0.1；手机装 PWA / 系统分享需要 HTTPS（明文下浏览器不注册 Service Worker）。"

@@ -3,7 +3,8 @@
 #   docker compose up -d
 services:
   searxng:
-    image: searxng/searxng:latest
+    # 钉住 digest：分发包要可复现，避免某次拉取 latest 后行为变化
+    image: searxng/searxng@sha256:c750ee1d859b26d3aeae51c07f6a48c3a0bfbaa9195d71a18b258862d88c4c3c
     container_name: cleansearch-searxng
     ports: ["127.0.0.1:8891:8080"]
     volumes: ["./settings.yml:/etc/searxng/settings.yml:ro"]

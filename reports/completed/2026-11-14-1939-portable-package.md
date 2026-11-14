@@ -111,3 +111,46 @@
 | `Get-ChildItem dist-portable/CleanSearch` | 通过 | `_internal data resources searxng web CleanSearch.exe 启动 CleanSearch.bat 启动 CleanSearch（真实搜索）.bat 停止 SearXNG.bat 说明.txt` |
 
 **边界与遗留**：包内 SearXNG 冷启动时引擎要预热，前几次查询可能 503（`launcher` 的等待只保证 HTTP 可达，不保证引擎都有结果）；引擎可用性仍取决于对方网络。未验证：目标机器没装 Docker 时脚本的提示路径。
+## 9 追加轮次 2026-11-14 20:50（桌面快捷方式）
+
+**目标**：双击桌面图标就能用；重复双击不要起第二个实例。
+
+**做了什么**
+
+1. `scripts/create-shortcut.ps1`：生成桌面 `.lnk`（目标/工作目录/图标显式写入），图标由 `web/icon-192.png` 现场包成 ICO（内嵌 PNG，无需额外工具）。
+2. 包内新增 `创建桌面快捷方式.bat` + `tools/create-shortcut.ps1`，别的电脑解压后也能一键建快捷方式。
+3. `launcher.py` 改为「已在运行就只开浏览器」：先探 `API_PORT` 的 `/api/health`，命中则开浏览器并退出；端口被占用时按 `8000 → 8001…8010` 顺序挑。首版用 `response.read(200)` 只读 200 字节，JSON 被截断导致探测永远失败（表现为又起了个 8001 实例），改为整段读取。
+4. 把日常 `data/cs.db` 用 SQLite backup API 复制进包内 `data\`，令牌一并复制，快捷方式启动的实例与日常书签一致。
+
+| 命令 | 结果 | 说明 |
+| --- | --- | --- |
+| `pwsh scripts\create-shortcut.ps1 -Target dist-portable\CleanSearch\CleanSearch.exe -Name CleanSearch` | 通过 | `C:\Users\HUAWEI\OneDrive\Desktop\CleanSearch.lnk`；target/workdir/icon 三项已回读确认，`CleanSearch.ico` 生成成功 |
+| 8000 已被日常实例占用时直接跑 exe（`CLEANSEARCH_NO_BROWSER=1`） | 通过 | 输出「检测到 http://127.0.0.1:8000/ 已在运行，直接打开浏览器」，`EXIT=0`，无残留进程 |
+| `API_PORT=18090` 跑 exe | 通过 | 正常起服务：`/api/health` → `provider=fixture`、`db_path=...\dist-portable\CleanSearch\data\cs.db`、`bookmarks=1`、`api_version=2` |
+| `.\scripts\build-portable.ps1 -SkipWebBuild` | 通过 | 包内新增 `tools/`、`创建桌面快捷方式.bat`；zip 53.5 MB |
+| 重新上传 v0.1.0 asset | 通过 | 删除旧 asset `747190483` 后上传新包，下载地址不变，size=53.5 MB |
+
+**边界**：快捷方式指向 `dist-portable\CleanSearch\`，该目录在 `.gitignore` 里、重建会清空——重建后需重新执行一次 `create-shortcut.ps1`（包内 bat 也行）。图标只有 192px 一档，高分屏字号下略糊。
+## 10 追加轮次 2026-11-14 20:58（二次复查 R-13…R-18 修复）
+
+来源：[二次复查报告](./2026-11-14-2036-portable-recheck.md) 与方案 §8。逐条处理：
+
+| 编号 | 级别 | 处理 | 落点 |
+| --- | --- | --- | --- |
+| R-13 | P1 | launcher 改成 `uvicorn.run(host=API_HOST)`，非回环时打印提醒；`说明.txt` 改口径：手机访问要同时设 `API_HOST=0.0.0.0` + `ALLOWED_HOSTS` 并放行防火墙 | `packaging/launcher.py`、`scripts/build-portable.ps1` 的说明文案 |
+| R-14 | P2 | compose 镜像钉 digest `sha256:c750ee1d…`，不再用 `latest` | `packaging/searxng/docker-compose.yml` |
+| R-15 | P2 | 横幅文案不再写死在仓库里才有的 `scripts\\serve.ps1` 路径，改成「免安装版重新双击 / 源码版跑 serve.ps1」 | `apps/web/src/components/ServerBanner.tsx` |
+| R-16 | P3 | `说明.txt` 去掉「中文路径也可以」的断言（改为建议纯英文、中文未测）；README 的审计数字对齐当前口径 | 构建脚本说明、README |
+| R-17 | P3 | `outdated` 分支补「重试连接」按钮（与 `offline` 一致） | `ServerBanner.tsx` |
+| R-18 | P3 | 开浏览器改成轮询端口真的应答后再开（最多 30 秒），不再固定 2 秒 | `packaging/launcher.py` |
+
+验证：
+
+| 命令 | 结果 | 说明 |
+| --- | --- | --- |
+| `npm --prefix apps/web run build` | 通过 | 含横幅文案改动 |
+| `node scripts/audit-ui.cjs --base http://127.0.0.1:18092`（打包版，新前端） | 通过 | **`ALL PASS (308)`**（默认口径省 3 项写书签）（[日志](../assets/portable-package/audit2.log)） |
+| `.\scripts\build-portable.ps1` | 通过 | 重新打包，zip 53.5 MB；随后重新播种 `data/cs.db` 与令牌、刷新桌面快捷方式 |
+| 重新上传 v0.1.0 asset | 通过 | 删除旧 asset 后上传新包，下载地址不变 |
+
+仍未处理：R-13 只改了代码与文案，**没有实测**从包里开 `API_HOST=0.0.0.0` 的手机访问（缺第二台设备）；镜像 digest 升级流程未定义。

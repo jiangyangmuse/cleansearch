@@ -21,13 +21,30 @@ def _base_dir() -> Path:
     return Path(__file__).resolve().parent.parent
 
 
+def _serving(port: int) -> bool:
+    """这个端口上是不是已经有一个跑着的 CleanSearch。"""
+    import json
+    import urllib.request
+
+    try:
+        with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/health", timeout=1.5) as response:
+            if response.status != 200:
+                return False
+            payload = json.loads(response.read().decode("utf-8", "replace"))
+            return payload.get("status") == "ok" and "provider" in payload
+    except Exception:  # noqa: BLE001 - 连不上就是没跑
+        return False
+
+
 def _free_port(preferred: int) -> int:
-    with socket.socket() as probe:
-        try:
-            probe.bind(("127.0.0.1", preferred))
-            return preferred
-        except OSError:
-            pass
+    """优先用首选端口，其次依次试后 10 个，最后才交给系统随机分配。"""
+    for candidate in [preferred, *range(preferred + 1, preferred + 11)]:
+        with socket.socket() as probe:
+            try:
+                probe.bind(("127.0.0.1", candidate))
+                return candidate
+            except OSError:
+                continue
     with socket.socket() as probe:
         probe.bind(("127.0.0.1", 0))
         return probe.getsockname()[1]
@@ -74,21 +91,39 @@ def main() -> None:
         else:
             print("SearXNG 150 秒内没起来，先以当前配置启动；搜索会返回上游不可用。")
 
-    port = _free_port(int(os.environ.get("API_PORT", "8000")))
+    wanted = int(os.environ.get("API_PORT", "8000"))
+    # 已经有一个在跑（比如从仓库起的日常实例）：只开浏览器，不再起第二个
+    if _serving(wanted):
+        url = f"http://127.0.0.1:{wanted}/"
+        print(f"检测到 {url} 已在运行，直接打开浏览器。")
+        if os.environ.get("CLEANSEARCH_NO_BROWSER", "") != "1":
+            webbrowser.open(url)
+        return
+
+    port = _free_port(wanted)
     url = f"http://127.0.0.1:{port}/"
     print(f"CleanSearch 正在启动：{url}")
     print("关闭这个窗口即停止服务。数据保存在 data/ 目录。")
 
     if os.environ.get("CLEANSEARCH_NO_BROWSER", "") != "1":
-        threading.Thread(
-            target=lambda: (time.sleep(2.0), webbrowser.open(url)), daemon=True
-        ).start()
+        # 冷启动可能超过 2 秒：等端口真的在应答再开浏览器，避免首屏就是连接失败
+        def open_when_ready() -> None:
+            for _ in range(60):
+                if _serving(port):
+                    webbrowser.open(url)
+                    return
+                time.sleep(0.5)
+
+        threading.Thread(target=open_when_ready, daemon=True).start()
 
     import uvicorn
 
     from app.main import app
 
-    uvicorn.run(app, host="127.0.0.1", port=port, log_level="info")
+    host = os.environ.get("API_HOST", "127.0.0.1")
+    if host != "127.0.0.1":
+        print(f"监听 {host}:{port}（局域网访问还需要在服务端放行 ALLOWED_HOSTS）")
+    uvicorn.run(app, host=host, port=port, log_level="info")
 
 
 if __name__ == "__main__":
