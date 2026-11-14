@@ -67,8 +67,15 @@ $invalidCites = @($cites | Where-Object { $_.Data.result_id -notin $resultIds })
 $text = ($tokens | ForEach-Object { $_.Data.t }) -join ""
 $references = @([regex]::Matches($text, '\[([0-9]+)\]') | ForEach-Object { $_.Groups[1].Value })
 $invalidReferences = @($references | Where-Object { $_ -notin $cites.Data.i })
+# 用了设置页指定的模型时，SSE 的 model 是那个模型的名称/标签，不再等于 health 里的默认模型；
+# 所以只要求它属于"当前配置的模型之一"，其余仍严格校验。
+$configured = @($health.llm_model)
+try {
+    $models = (Invoke-WebRequest "$BaseUrl/api/settings/models" -UseBasicParsing -TimeoutSec 10).Content | ConvertFrom-Json
+    foreach ($m in $models.models) { $configured += @($m.model, $m.label, $m.id) }
+} catch { }
 $sseOk = ($events.Count -ge 4 -and $events[0].Name -eq "meta" -and
-    $events[0].Data.model -eq $health.llm_model -and $events[-1].Name -eq "done" -and
+    ($events[0].Data.model -in $configured) -and $events[-1].Name -eq "done" -and
     $errors.Count -eq 0 -and $cites.Count -gt 0 -and $invalidCites.Count -eq 0 -and
     $references.Count -gt 0 -and $invalidReferences.Count -eq 0)
 $summaryDetail = "provider=$($health.llm_provider) model=$($health.llm_model) cites=$($cites.Count) chunks=$($tokens.Count)"

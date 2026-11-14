@@ -801,6 +801,17 @@ $env:ALLOWED_HOSTS = $lanAddress
 
 已验证：解压到 `%TEMP%` 后运行，`/api/health` 正常、冒烟 16/16、浏览器审计 312/312。只监听 `127.0.0.1`；手机访问仍需 `ALLOWED_HOSTS`，装 PWA 需 HTTPS。
 
+### 7. 日常服务与开机自启
+
+```powershell
+.\scripts\start-daily.ps1                 # 依赖自检（SearXNG/Ollama）后拉起 8000
+.\scripts\install-autostart.ps1           # 加入「启动」文件夹，登录即自动起
+.\scripts\install-autostart.ps1 -Remove   # 取消自启
+```
+
+- `start-daily.ps1` 会先看 8000 是否已在跑（在跑就直接退出），再检查 Docker / `cs-searxng` 容器和 Ollama：SearXNG 起不来会降级到固定样本模式并在日志里写明，Ollama 不通只提示（搜索不受影响）。
+- 自启用当前用户的「启动」文件夹快捷方式（隐藏窗口），**不需要管理员**；`ONLOGON` 计划任务会被普通用户权限挡掉，脚本里已注释说明。日志在 `data\logs\start-daily.log`。
+
 ## 验收与测试
 
 ```powershell

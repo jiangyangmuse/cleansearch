@@ -16,6 +16,8 @@
 
 | 编号 | 日期时间 | 任务 | 类型 | 状态 | 报告 |
 | --- | --- | --- | --- | --- | --- |
+| 20261115-0120 | 2026-11-15 01:20 | [日常服务一键启动与开机自启](completed/2026-11-15-0120-daily-autostart.md) | ops | 完成 | `completed/2026-11-15-0120-daily-autostart.md` |
+| 20261115-0112 | 2026-11-15 01:12 | [日常 8000 切回真实搜索](completed/2026-11-15-0112-searxng-mode-switch.md) | ops | 完成 | `completed/2026-11-15-0112-searxng-mode-switch.md` |
 | 20261114-2036 | 2026-11-14 20:36 | [免安装包与浏览器二次复查](completed/2026-11-14-2036-portable-recheck.md) | research | 完成 | `completed/2026-11-14-2036-portable-recheck.md` |
 | 20261114-1939 | 2026-11-14 19:39 | [免安装分发包（PyInstaller）](completed/2026-11-14-1939-portable-package.md) | feat | 完成 | `completed/2026-11-14-1939-portable-package.md` |
 | 20261114-1844 | 2026-11-14 18:44 | [建 PR、合并与日常实例部署](completed/2026-11-14-1844-pr-merge-deploy.md) | ops | 完成 | `completed/2026-11-14-1844-pr-merge-deploy.md` |
