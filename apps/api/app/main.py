@@ -11,6 +11,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse, Response
 from pydantic import BaseModel, Field
 from starlette.concurrency import run_in_threadpool
+from starlette.routing import Match
 
 from app import __version__
 from app.config import REPO_ROOT, Settings, get_settings, reload_settings
@@ -114,14 +115,50 @@ CAPABILITY_ROUTES = {
 }
 
 
-def _capabilities() -> dict[str, bool]:
-    """按实际注册的路由回答"有哪些能力"，避免声明与实现各写一套。"""
-    endpoints = {
-        (method, route.path)
-        for route in app.routes
-        for method in (getattr(route, "methods", None) or ())
+def _route_registered(method: str, path: str) -> bool:
+    """请求这个方法+路径会不会命中"精确注册"的路由。
+
+    不能直接读 `app.routes[i].path`：FastAPI 0.16x 把 include_router 收成占位对象，
+    新版也没有 `.path` 属性（CI 上就是这样挂的）。改成让路由自己匹配，
+    并排除 SPA 兜底 `/{full_path:path}`——它会把任意路径都判成命中。
+    """
+    scope = {
+        "type": "http", "method": method, "path": path, "root_path": "",
+        "headers": [], "query_string": b"",
     }
-    capabilities = {name: endpoint in endpoints for name, endpoint in CAPABILITY_ROUTES.items()}
+    for route in getattr(app.router, "routes", []):
+        try:
+            match, child = route.matches(scope)
+        except Exception:  # noqa: BLE001 - 路由实现随 FastAPI 版本变化，匹配不了就当没命中
+            match, child = getattr(route, "methods", None), None
+            if match and path == getattr(route, "path", None) and method in match:
+                return True
+            continue
+        if match != Match.FULL:
+            continue
+        inner = child.get("route") if isinstance(child, dict) else None
+        resolved = getattr(inner, "path", None) or getattr(route, "path", None)
+        if resolved == path:
+            return True
+    return False
+
+
+def _documented(method: str, path: str) -> bool:
+    """OpenAPI 里有没有这个方法+路径（`include_router` 注册的接口都在这里）。"""
+    entry = (app.openapi().get("paths") or {}).get(path) or {}
+    return method.lower() in entry
+
+
+def _capabilities() -> dict[str, bool]:
+    """按实际注册的路由回答"有哪些能力"，避免声明与实现各写一套。
+
+    两条来源合起来看：OpenAPI 覆盖 `include_router` 注册的接口；
+    `include_in_schema=False` 的（vitals、opensearch）只能靠路由匹配。
+    """
+    capabilities = {
+        name: _documented(method, path) or _route_registered(method, path)
+        for name, (method, path) in CAPABILITY_ROUTES.items()
+    }
     capabilities["filters"] = capabilities["filters"] and "filters" in SearchMeta.model_fields
     return capabilities
 

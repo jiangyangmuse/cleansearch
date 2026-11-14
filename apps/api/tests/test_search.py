@@ -136,14 +136,18 @@ def test_health_reports_api_version_and_capabilities(client: TestClient) -> None
 
 
 def test_health_capabilities_follow_registered_routes(client: TestClient, monkeypatch) -> None:
-    """路径存在但 HTTP 方法不符时，对应能力必须为 False。"""
+    """路由不在表里时对应能力必须为 False（不依赖 FastAPI 内部路由对象的结构）。"""
     from app import main as main_module
 
-    route = next(route for route in main_module.app.routes if route.path == "/api/metrics/vitals")
-    monkeypatch.setattr(route, "methods", {"GET"})
-    capabilities = client.get("/api/health").json()["capabilities"]
-    assert capabilities["vitals"] is False
-    assert capabilities["bookmark_status"] is True
+    installed = dict(main_module.CAPABILITY_ROUTES)
+    try:
+        main_module.CAPABILITY_ROUTES["vitals"] = ("POST", "/api/never-existed")
+        capabilities = client.get("/api/health").json()["capabilities"]
+        assert capabilities["vitals"] is False
+        assert capabilities["bookmark_status"] is True
+    finally:
+        main_module.CAPABILITY_ROUTES.clear()
+        main_module.CAPABILITY_ROUTES.update(installed)
 
 
 def test_same_origin_spa(client: TestClient) -> None:
