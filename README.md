@@ -782,6 +782,9 @@ $env:ALLOWED_HOSTS = $lanAddress
 
 ### 6. 分发给别的电脑（免安装包）
 
+已经发布的包：**[v0.1.0 · Windows 免安装包](https://github.com/jiangyangmuse/cleansearch/releases/tag/v0.1.0)**（`CleanSearch-0.1.0-win-x64.zip`，53.5 MB）。
+
+
 ```powershell
 .\scripts\build-portable.ps1          # 构建前端 + PyInstaller 打包 + 打 zip
 # 产物：dist-portable\CleanSearch-0.1.0-win-x64.zip（约 54 MB，Windows x64）
