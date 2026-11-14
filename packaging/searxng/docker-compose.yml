@@ -1,0 +1,13 @@
+# 随包附带的 SearXNG：只绑回环 8891，limiter 关闭（本机单用户）。
+# 启动：双击包内「启动 CleanSearch（真实搜索）.bat」，或在本目录执行
+#   docker compose up -d
+services:
+  searxng:
+    image: searxng/searxng:latest
+    container_name: cleansearch-searxng
+    ports: ["127.0.0.1:8891:8080"]
+    volumes: ["./settings.yml:/etc/searxng/settings.yml:ro"]
+    environment:
+      - SEARXNG_BASE_URL=http://127.0.0.1:8891/
+      - SEARXNG_SECRET=cleansearch-local-only-change-me
+    restart: unless-stopped

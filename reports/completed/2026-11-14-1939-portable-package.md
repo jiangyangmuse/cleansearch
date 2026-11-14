@@ -91,3 +91,23 @@
 - 打包：`packaging/launcher.py`、`scripts/build-portable.ps1`
 - 说明：`README.md` §6、`docs/决策与接口变更.md`（2026-11-14 免安装分发包）
 - 证据：`reports/assets/portable-package/`
+## 8 追加轮次 2026-11-14 19:55（内置 SearXNG 与发布）
+
+**目标**：让包开箱就能真搜索——随包带一个 SearXNG 的 compose，一键起停。
+
+**做了什么**
+
+1. `packaging/searxng/{docker-compose.yml,settings.yml}`：镜像 `searxng/searxng:latest`，容器名 `cleansearch-searxng`，只绑 `127.0.0.1:8891`（不与仓库自用的 `cs-searxng:8888` 冲突）。
+2. 包内新增 `启动 CleanSearch（真实搜索）.bat` 与 `停止 SearXNG.bat`：前者 `docker compose up -d` + 设 `SEARCH_PROVIDER=searxng`/`SEARXNG_URL`/`SEARXNG_WAIT=1` 后启动 exe；后者 `down`。
+3. 等上游就绪的逻辑放进 `launcher.py`（`SEARXNG_WAIT=1` 时轮询 `/search?q=test&format=json`，最多 150 秒），bat 里不写循环——首版在 bat 里写 PowerShell 单行把引号写坏，脚本直接解析失败（用 `Parser::ParseFile` 才定位到）。
+4. 精简版 settings 只有 `use_default_settings`，实测 `site:` 查询把可用引擎逼到 0 个、返回 503；改成仓库同源配置（bing 走 `cn.bing.com`、mojeek/swisscows 显式激活等）后恢复正常。
+
+| 命令 | 结果 | 说明 |
+| --- | --- | --- |
+| `docker compose -f searxng/docker-compose.yml up -d`（包内） | 通过 | `cleansearch-searxng` 起在 `127.0.0.1:8891`，`/search?q=python&format=json` 200 / 51 条 |
+| `CleanSearch.exe`（`SEARCH_PROVIDER=searxng`、`SEARXNG_WAIT=1`、端口 18083） | 通过 | 日志 `等待 SearXNG 就绪… SearXNG 已就绪，开始真实搜索模式`；health `provider=searxng` |
+| `node scripts/verify-filters.cjs http://127.0.0.1:18083` | 通过 | **`ALL PASS (9)`**：站点仅 `docs.python.org`、周 18 条、语言 18 条、严格去重 17 条无重复标题、关闭去重 `dup=0`、缓存命中（[日志](../assets/portable-package/verify-filters-real.log)） |
+| `.\scripts\build-portable.ps1 -SkipWebBuild` | 通过 | 重新打包：`dist-portable/CleanSearch-0.1.0-win-x64.zip`（53.5 MB），包内含 `searxng/` 与三个 bat |
+| `Get-ChildItem dist-portable/CleanSearch` | 通过 | `_internal data resources searxng web CleanSearch.exe 启动 CleanSearch.bat 启动 CleanSearch（真实搜索）.bat 停止 SearXNG.bat 说明.txt` |
+
+**边界与遗留**：包内 SearXNG 冷启动时引擎要预热，前几次查询可能 503（`launcher` 的等待只保证 HTTP 可达，不保证引擎都有结果）；引擎可用性仍取决于对方网络。未验证：目标机器没装 Docker 时脚本的提示路径。

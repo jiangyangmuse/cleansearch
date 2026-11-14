@@ -41,6 +41,40 @@ $bat += 'cd /d "%~dp0"'
 $bat += 'start "" CleanSearch.exe'
 Set-Content -Path (Join-Path $app "启动 CleanSearch.bat") -Value $bat -Encoding utf8
 
+Copy-Item -Recurse -Force (Join-Path $root "packaging/searxng") (Join-Path $app "searxng")
+
+$real = @()
+$real += '@echo off'
+$real += "chcp 65001 >nul"
+$real += 'cd /d "%~dp0"'
+$real += "where docker >nul 2>nul"
+$real += "if errorlevel 1 ("
+$real += "  echo 没找到 Docker。请先安装并启动 Docker Desktop，再运行本脚本。"
+$real += "  echo 想先用离线固定样本模式，直接双击「启动 CleanSearch.bat」即可。"
+$real += "  pause"
+$real += "  exit /b 1"
+$real += ")"
+$real += "echo 正在启动随包附带的 SearXNG（首次会拉取镜像，约 1-2 分钟）..."
+$real += "docker compose -f searxng\docker-compose.yml up -d"
+$real += "if errorlevel 1 goto failed"
+$real += "set SEARCH_PROVIDER=searxng"
+$real += "set SEARXNG_URL=http://127.0.0.1:8891"
+$real += "set SEARXNG_WAIT=1"
+$real += 'start "" CleanSearch.exe'
+$real += "exit /b 0"
+$real += ":failed"
+$real += "echo SearXNG 启动失败。看日志："
+$real += "echo   docker compose -f searxng\docker-compose.yml logs --tail 50"
+$real += "pause"
+Set-Content -Path (Join-Path $app "启动 CleanSearch（真实搜索）.bat") -Value $real -Encoding utf8
+
+$stop = @()
+$stop += "@echo off"
+$stop += 'cd /d "%~dp0"'
+$stop += "docker compose -f searxng\\docker-compose.yml down"
+$stop += "pause"
+Set-Content -Path (Join-Path $app "停止 SearXNG.bat") -Value $stop -Encoding utf8
+
 $readme = @()
 $readme += "CleanSearch 免安装版（Windows x64）"
 $readme += "================================="
@@ -54,9 +88,9 @@ $readme += ""
 $readme += "默认是固定样本模式：不联网也能看到搜索、书签、总结界面。"
 $readme += "书签库、令牌、图标缓存都在 data\ 目录，备份这个目录即可；换电脑整包拷过去就能继续用。"
 $readme += ""
-$readme += "想接真实搜索（可选）：另跑一个 SearXNG，然后在启动 bat 里加两行"
-$readme += "    set SEARCH_PROVIDER=searxng"
-$readme += "    set SEARXNG_URL=http://127.0.0.1:8888"
+$readme += "想接真实搜索：装好并启动 Docker Desktop，双击「启动 CleanSearch（真实搜索）.bat」。"
+$readme += "它会用包内 searxng\ 的 compose 起一个只绑 127.0.0.1:8891 的 SearXNG，再带 SEARCH_PROVIDER=searxng 启动。"
+$readme += "不想要了就双击「停止 SearXNG.bat」。没有 Docker 也能用，只是停留在固定样本模式。"
 $readme += "想接本机大模型总结：再加 LLM_BASE_URL / LLM_MODEL（OpenAI 兼容，如 Ollama 的 http://127.0.0.1:11434/v1）。"
 $readme += ""
 $readme += "常用环境变量"

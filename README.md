@@ -790,6 +790,7 @@ $env:ALLOWED_HOSTS = $lanAddress
 对方电脑解压后双击 `启动 CleanSearch.bat`，浏览器自动打开 `http://127.0.0.1:8000/`，关掉命令行窗口即停止。目标机器**不需要装 Python / Node / Docker**：
 
 - 默认 `fixture` 固定样本模式，离线也能看到搜索、书签、总结界面；
+- 包内附 `searxng\`（compose + settings）：装好 Docker Desktop 后双击 `启动 CleanSearch（真实搜索）.bat`，会用 `127.0.0.1:8891` 起一个只绑回环的 SearXNG 再启动应用；`停止 SearXNG.bat` 收工；
 - 书签库、令牌、favicon 缓存在包内 `data\`，整包拷走即可迁移；
 - 想接真实搜索：另跑 SearXNG，再在启动脚本里设 `SEARCH_PROVIDER=searxng` 与 `SEARXNG_URL`；
 - 想接本机模型：再加 `LLM_BASE_URL` / `LLM_MODEL`（OpenAI 兼容，如 Ollama）。

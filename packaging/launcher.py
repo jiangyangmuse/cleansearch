@@ -33,6 +33,22 @@ def _free_port(preferred: int) -> int:
         return probe.getsockname()[1]
 
 
+def _wait_upstream(base_url: str, timeout: float = 150.0) -> bool:
+    """等 SearXNG 起来：首次拉镜像可能要一两分钟，先轮询再启动服务。"""
+    import urllib.request
+
+    probe = base_url.rstrip("/") + "/search?q=test&format=json"
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        try:
+            with urllib.request.urlopen(probe, timeout=3) as response:
+                if response.status == 200:
+                    return True
+        except Exception:  # noqa: BLE001 - 未就绪时的任何异常都只表示"再等等"
+            time.sleep(2)
+    return False
+
+
 def main() -> None:
     base = _base_dir()
     data = base / "data"
@@ -49,6 +65,14 @@ def main() -> None:
     os.environ.setdefault("API_HOST", "127.0.0.1")
     # 打包版用纯 asyncio 事件循环，避免依赖 uvloop/httptools 的编译产物
     os.environ.setdefault("UVICORN_LOOP", "asyncio")
+
+    if os.environ.get("SEARXNG_WAIT") == "1":
+        upstream = os.environ.get("SEARXNG_URL", "http://127.0.0.1:8891")
+        print(f"等待 SearXNG 就绪：{upstream}（最多 150 秒）…")
+        if _wait_upstream(upstream):
+            print("SearXNG 已就绪，开始真实搜索模式。")
+        else:
+            print("SearXNG 150 秒内没起来，先以当前配置启动；搜索会返回上游不可用。")
 
     port = _free_port(int(os.environ.get("API_PORT", "8000")))
     url = f"http://127.0.0.1:{port}/"
