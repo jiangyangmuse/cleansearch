@@ -27,7 +27,7 @@ from app.routers import page as page_router
 from app.routers import search as search_router
 from app.routers import summarize as summarize_router
 from app.routers import tools as tools_router
-from app.schemas import HealthResponse
+from app.schemas import HealthResponse, SearchMeta
 
 settings: Settings = get_settings()
 
@@ -55,7 +55,23 @@ CORS_HEADERS = {
     "Access-Control-Max-Age": "600",
 }
 BOOKMARK_WRITE_PATH = "/api/bookmarks"
-LOOPBACK_HOST = re.compile(r"(?:127\.0\.0\.1|localhost|\[::1\])(?::[0-9]{1,5})?", re.I)
+LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1"}
+HOST_AUTHORITY = re.compile(r"(?:\[[0-9a-f:.]+\]|[a-z0-9.-]+)(?::[0-9]{1,5})?", re.I | re.ASCII)
+
+
+def _host_allowed(host_header: str, allowed: tuple[str, ...]) -> bool:
+    """回环永远放行；其余主机必须在 ALLOWED_HOSTS 里显式列出（手机/局域网用途）。"""
+    if not HOST_AUTHORITY.fullmatch(host_header):
+        return False
+    try:
+        authority = urlsplit(f"http://{host_header}")
+        port = authority.port
+    except ValueError:
+        return False
+    if port == 0:
+        return False
+    hostname = authority.hostname
+    return hostname in LOOPBACK_HOSTS or hostname in allowed
 
 
 def _origin_of(url) -> str:
@@ -85,6 +101,29 @@ def _cross_origin_denied(code: str, message: str, status: int, *, cors: bool = F
 
 
 app.add_middleware(RequestMetricsMiddleware)
+
+# 前端依赖的接口契约版本：新增/改变前端读取的能力时 +1，前端低于它就提示重启服务。
+API_VERSION = 2
+# 能力名 → HTTP 方法及路径。前端按名核对，缺哪项就禁用对应功能。
+CAPABILITY_ROUTES = {
+    "filters": ("POST", "/api/search"),
+    "bookmark_status": ("GET", "/api/bookmarks/status"),
+    "vitals": ("POST", "/api/metrics/vitals"),
+    "model_test": ("POST", "/api/settings/models/test"),
+    "opensearch": ("GET", "/opensearch.xml"),
+}
+
+
+def _capabilities() -> dict[str, bool]:
+    """按实际注册的路由回答"有哪些能力"，避免声明与实现各写一套。"""
+    endpoints = {
+        (method, route.path)
+        for route in app.routes
+        for method in (getattr(route, "methods", None) or ())
+    }
+    capabilities = {name: endpoint in endpoints for name, endpoint in CAPABILITY_ROUTES.items()}
+    capabilities["filters"] = capabilities["filters"] and "filters" in SearchMeta.model_fields
+    return capabilities
 
 
 class VitalsSample(BaseModel):
@@ -125,8 +164,12 @@ async def cross_origin_guard(request: Request, call_next):
     这里用 token 阻止「随便一个网页静默往你书签里塞东西」。
     """
     # 恶意域名即使重新解析到回环，也不能冒充同源页面读取 token。
-    if not LOOPBACK_HOST.fullmatch(request.headers.get("host", "")):
-        return _cross_origin_denied("HOST_FORBIDDEN", "仅接受本机回环地址访问", 403)
+    # 手机/局域网访问需在 ALLOWED_HOSTS 显式列出主机名，不做「任意 Host 都放行」。
+    hosts = request.headers.getlist("host")
+    if len(hosts) != 1 or not _host_allowed(hosts[0], get_settings().allowed_hosts):
+        return _cross_origin_denied(
+            "HOST_FORBIDDEN", "仅接受回环地址，或在 ALLOWED_HOSTS 中显式允许的主机", 403
+        )
 
     cross_origin = _is_cross_origin(request)
     supplied = request.headers.get("x-cs-token")
@@ -192,6 +235,9 @@ async def health() -> HealthResponse:
         bookmarks=_bookmark_count(current.db_path),
         db_path=str(current.db_path),
         version=__version__,
+        api_version=API_VERSION,
+        capabilities=_capabilities(),
+        allowed_hosts=list(current.allowed_hosts),
     )
 
 

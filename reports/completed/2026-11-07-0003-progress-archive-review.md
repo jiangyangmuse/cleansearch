@@ -68,4 +68,4 @@
 
 - [当前进展与优先级](../../docs/进展与欠账.md)
 - [报告台账](../INDEX.md)
-- [六阶段报告](../2026-11-06-2342-roadmap-six-phases.md)
+- [六阶段报告](../incomplete/2026-11-06-2342-roadmap-six-phases.md)

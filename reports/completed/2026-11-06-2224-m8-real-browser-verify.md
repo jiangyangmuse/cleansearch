@@ -14,7 +14,7 @@
 
 **目标**
 
-补上 [M8 验收报告](../2026-11-06-2214-m8-capture-acceptance.md) §6 留的待验项：在独立 Chromium 配置里真实加载未打包扩展，验证弹窗收藏；并用 CDP 核对 PWA 清单与安装性。
+补上 [M8 验收报告](../incomplete/2026-11-06-2214-m8-capture-acceptance.md) §6 留的待验项：在独立 Chromium 配置里真实加载未打包扩展，验证弹窗收藏；并用 CDP 核对 PWA 清单与安装性。
 
 **验收标准**
 
@@ -100,7 +100,7 @@ manifest 被解析       http://127.0.0.1:18085/manifest.webmanifest（含 share
 
 **相关文件**
 
-- [M8 验收报告](../2026-11-06-2214-m8-capture-acceptance.md)
+- [M8 验收报告](../incomplete/2026-11-06-2214-m8-capture-acceptance.md)
 - [验证脚本](../../scripts/verify-extension.cjs)、[扩展目录](../../apps/extension)
 - [M8-D7…D9](../../docs/决策与接口变更.md)
 - [真实浏览器证据](../../docs/m9-evidence)

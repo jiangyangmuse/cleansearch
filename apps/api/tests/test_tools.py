@@ -56,6 +56,31 @@ def test_non_loopback_host_cannot_read_token(client: TestClient) -> None:
     assert "token" not in response.json()
 
 
+def test_allowed_hosts_opens_lan_access_only_when_listed(client: TestClient, monkeypatch) -> None:
+    """手机/局域网访问靠 ALLOWED_HOSTS 显式放行，默认仍是只许回环。"""
+    from dataclasses import replace
+
+    from app import main as main_module
+
+    base = main_module.get_settings()
+    allowed = ("cleansearch.lan", "2001:db8::20")
+    monkeypatch.setattr(main_module, "get_settings", lambda: replace(base, allowed_hosts=allowed))
+    for host in ("CleanSearch.LAN:8000", "[2001:db8::20]:8000", "127.0.0.1:8000"):
+        assert client.get("/api/health", headers={"Host": host}).status_code == 200, host
+    for host in ("192.168.1.20:8000", "other.cleansearch.lan", "someone@cleansearch.lan",
+                 "cleansearch.lan/path", "cleansearch.lan:abc", "cleansearch.lan:99999"):
+        blocked = client.get("/api/health", headers={"Host": host})
+        assert blocked.status_code == 403 and blocked.json()["error"]["code"] == "HOST_FORBIDDEN", host
+    duplicate = client.get("/api/health", headers=[("Host", "cleansearch.lan"), ("Host", "other.test")])
+    assert duplicate.status_code == 403
+
+
+def test_allowed_hosts_defaults_to_loopback_only(client: TestClient) -> None:
+    body = client.get("/api/health").json()
+    assert body["allowed_hosts"] == []
+    assert client.get("/api/health", headers={"Host": "192.168.1.20:8000"}).status_code == 403
+
+
 def test_cross_origin_write_requires_token(client: TestClient) -> None:
     response = client.post(
         "/api/bookmarks", json={"url": "https://blocked.test/a"}, headers=EVIL

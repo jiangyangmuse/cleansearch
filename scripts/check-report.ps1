@@ -12,7 +12,7 @@ $root = Split-Path -Parent $PSScriptRoot
 $dir = Join-Path $root "reports"
 
 if (-not $Path) {
-    $dirs = @($dir, (Join-Path $dir "completed"))
+    $dirs = @($dir, (Join-Path $dir "incomplete"), (Join-Path $dir "completed"), (Join-Path $dir "uncategorized"))
     $cand = Get-ChildItem -LiteralPath $dirs -File -Filter "*.md" -ErrorAction SilentlyContinue |
         Where-Object { $_.Name -match '^\d{4}-\d{2}-\d{2}-\d{4}-' } |
         Sort-Object Name -Descending | Select-Object -First 1

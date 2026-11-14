@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
-import { ApiError, bookmarkStatus, getEngines, getSearchProvider, search, searchAI } from "./api";
+import { ApiError, bookmarkStatus, getEngines, search, searchAI } from "./api";
 import AISearchPanel, { type AISearchState } from "./components/AISearchPanel";
+import { capabilityReady, useServerState } from "./capabilities";
 import AppShell from "./components/AppShell";
 import ContentModules from "./components/ContentModules";
 import ConversationSearch, { ConversationForm, useConversationSearch } from "./components/ConversationSearch";
+import EmptyHome from "./components/EmptyHome";
 import EngineBar from "./components/EngineBar";
 import { engineQuery, hasAISuffix } from "./engineQuery";
 import MetaBar from "./components/MetaBar";
@@ -14,20 +16,22 @@ import PageBatchSummary from "./components/PageBatchSummary";
 import QuickBookmarks from "./components/QuickBookmarks";
 import ResultList from "./components/ResultList";
 import SearchBar from "./components/SearchBar";
-import SearchFilters, { activeFilterCount, describeFilters, filtersFromUrl, sameFilters, type Filters, type FilterPanel } from "./components/SearchFilters";
+import SearchFilters, { activeFilterCount, describeFilters, type Filters, type FilterPanel } from "./components/SearchFilters";
 import ShortcutsDialog from "./components/ShortcutsDialog";
 import SummaryPanel from "./components/SummaryPanel";
 import ToolDrawer from "./components/ToolDrawer";
 import TranslationPanel from "./components/TranslationPanel";
 import ResultSkeleton, { SearchProgress } from "./components/ResultSkeleton";
 import { EmptyState, ErrorState, searchErrorMessage } from "./components/StatePanel";
-import { rememberSearch } from "./searchHistory";
+import { rememberSearch, type HistoryEntry } from "./searchHistory";
 import { readDailyAI, saveDailyAI } from "./searchPreferences";
 import { markPanelOpen, markPanelReady, markSearchEnd } from "./perf";
 import type { EngineInfo, ResultCategory, SearchResponse } from "./types";
 import { safeHref } from "./url";
 import { useMediaQuery } from "./useMediaQuery";
-import { MAX_PAGE, readUrlState, writeUrl, type HistoryMode } from "./urlState";
+import {
+  DEFAULT_FILTERS, MAX_PAGE, filtersFromUrl, filterOptions, readUrlState, sameFilters, withFilters, writeUrl, type HistoryMode,
+} from "./urlState";
 
 /** 与 POST /api/search 的 page 1–10 契约一致 */
 
@@ -44,6 +48,8 @@ type SearchOptions = {
   literal?: boolean;
   /** push 压新历史，replace 改当前条，none 表示这次调用来自 popstate，别再写历史。 */
   urlMode?: HistoryMode;
+  /** 显式筛选：popstate 还原时用它，避免读上一轮 ref 里的旧筛选。 */
+  filters?: Filters;
 };
 
 const VIEWS: { id: View; label: string; icon: string }[] = [
@@ -78,6 +84,7 @@ export default function App() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [startedAt, setStartedAt] = useState(0);
   const [resultPage, setResultPage] = useState<{ response: SearchResponse; page: number } | null>(null);
+  const [expandedOfficialSid, setExpandedOfficialSid] = useState<string | null>(null);
   const data = resultPage?.response;
   const resultsRef = useRef<HTMLDivElement>(null);
   const scrollAfterPage = useRef(false);
@@ -87,7 +94,6 @@ export default function App() {
   const bookmarkRequest = useRef<AbortController | null>(null);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [error, setError] = useState<ApiError | null>(null);
-  const [showSamples, setShowSamples] = useState(false);
   // 当前页面的诊断开关在搜索与分类切换时继续生效。
   const [debugMode] = useState(() => new URLSearchParams(window.location.search).get("debug") === "1");
   const [engines, setEngines] = useState<EngineInfo[]>([]);
@@ -100,13 +106,16 @@ export default function App() {
   }, []);
   const [view, setView] = useState<View>(() => viewOf(initial.current.category));
   // 写 URL 与 popstate 还原都要读最新值，避免闭包拿到上一轮状态
-  const queryRef = useRef(initial.current.q);
-  const pageRef = useRef(initial.current.page);
-  const literalRef = useRef(initial.current.literal);
+  const queryRef = useRef(initial.current.q.trim());
+  const pageRef = useRef(queryRef.current ? initial.current.page : 1);
+  const literalRef = useRef(queryRef.current ? initial.current.literal : false);
   const viewRef = useRef<View>(view);
   const conversation = useConversationSearch();
   const [sidePanel, setSidePanel] = useState<SidePanel | null>(null);
-  const drawerMode = useMediaQuery("(max-width: 900px)");
+  // 与 workspace.css 的抽屉断点保持一致：1180 以下改抽屉
+  const drawerMode = useMediaQuery("(max-width: 1180px)");
+  // 手机首屏优先放结果：官方入口移到强相关之后（方案 §4.5）
+  const compactResults = useMediaQuery("(max-width: 640px)");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const drawerToggle = useRef<HTMLButtonElement>(null);
   const lastPanel = useRef<SidePanel>("summary");
@@ -114,6 +123,7 @@ export default function App() {
   const summaryToggle = useRef<HTMLButtonElement>(null);
   const translateToggle = useRef<HTMLButtonElement>(null);
   const conversationToggle = useRef<HTMLButtonElement>(null);
+  const shortcutsTrigger = useRef<HTMLButtonElement>(null);
   const enginesDisclosure = useRef<HTMLDetailsElement>(null);
   const controller = useRef<AbortController | null>(null);
   const aiController = useRef<AbortController | null>(null);
@@ -127,6 +137,11 @@ export default function App() {
   const summaryInBackground = summaryBusy && visibleTool !== "summary";
   const aiInBackground = aiBusy && (visibleTool !== "ai" || view === "conversation");
   const bootstrapped = useRef(false);
+  // 旧后端缺能力时禁用对应入口（横幅由 AppShell 统一显示）
+  const serverState = useServerState();
+  const bookmarkStatusReady = capabilityReady(serverState, "bookmark_status");
+  const filtersReady = capabilityReady(serverState, "filters");
+  const showSamples = "health" in serverState && serverState.health.provider === "fixture";
 
   const changeView = useCallback((next: View, mode: HistoryMode = "push") => {
     filterPanel.current?.close();
@@ -134,11 +149,9 @@ export default function App() {
     setView(next);
     select(null);
     if (enginesDisclosure.current) enginesDisclosure.current.open = false;
-    writeUrl({
+    writeUrl(withFilters({
       q: queryRef.current, literal: literalRef.current, page: pageRef.current, category: next,
-      range: filtersRef.current.timeRange, lang: filtersRef.current.language,
-      site: filtersRef.current.site, dedupe: filtersRef.current.dedupe,
-    }, mode);
+    }, filtersRef.current), mode);
   }, [select]);
 
   const runAISearch = useCallback(async (q: string, literal: boolean) => {
@@ -160,6 +173,9 @@ export default function App() {
 
   const runSearch = useCallback(async (raw: string, options: SearchOptions = {}) => {
     const { page: nextPage = 1, paging = false, scroll = false, retry = false, record = true, literal = false, urlMode = "push", filterChange = false } = options;
+    // 本次调用的筛选：地址栏、请求体、界面读数都取这一份，三者不会各写一套。
+    const active: Filters = options.filters ?? filtersRef.current;
+    if (options.filters) filtersRef.current = options.filters;
     const q = raw.trim();
     if (!q) return;
     if (!filterChange) filterPanel.current?.close();
@@ -196,28 +212,19 @@ export default function App() {
     select(null);
     if (!paging) setSidePanel(currentPanel => currentPanel === "summary" ? null : currentPanel);
     // 新查询、分类、页码都进历史；重试与 popstate 还原不重复入栈。
-    writeUrl({
-      q, literal, page: nextPage, category: viewRef.current,
-      range: filtersRef.current.timeRange, lang: filtersRef.current.language,
-      site: filtersRef.current.site, dedupe: filtersRef.current.dedupe,
-    }, urlMode);
+    writeUrl(withFilters({ q, literal, page: nextPage, category: viewRef.current }, active), urlMode);
 
+    const requested = filterOptions(active);
     try {
-      const active = filtersRef.current;
       const response = await search({
         q,
         page: nextPage,
-        opts: {
-          safe: true,
-          literal,
-          time_range: active.timeRange || null,
-          language: active.language || null,
-          site: active.site || null,
-          dedupe: active.dedupe,
-        },
+        opts: { safe: true, literal, ...requested },
       }, current.signal);
       if (current.signal.aborted) return;
-      if (activeFilterCount(active) && !response.meta.filters) {
+      const applied = response.meta.filters;
+      if (activeFilterCount(active) && (!applied || applied.time_range !== requested.time_range ||
+        applied.language !== requested.language || applied.site !== requested.site || applied.dedupe !== requested.dedupe)) {
         throw new ApiError("当前本机服务尚未支持搜索筛选，请重新加载新版后端", "FILTERS_UNAVAILABLE", 409);
       }
       markSearchEnd(searchStarted);
@@ -263,7 +270,8 @@ export default function App() {
 
   // 结果到达后批量查已收藏状态（结果卡 + 官方入口，最多 40 个）
   useEffect(() => {
-    if (!resultPage) {
+    // 旧后端没有 /api/bookmarks/status，直接跳过而不是每页刷一串 404
+    if (!resultPage || !bookmarkStatusReady) {
       setSavedUrls({});
       return;
     }
@@ -295,7 +303,7 @@ export default function App() {
       bookmarkRequest.current?.abort();
       window.removeEventListener("pageshow", onPageShow);
     };
-  }, [bookmarkRevision, resultPage]);
+  }, [bookmarkRevision, bookmarkStatusReady, resultPage]);
 
   const rememberBookmark = useCallback((url: string, id: number | null) => {
     bookmarkRequest.current?.abort();
@@ -328,10 +336,10 @@ export default function App() {
       const restored = readUrlState();
       const nextView = viewOf(restored.category);
       const q = restored.q.trim();
-      const sameQuery = q === queryRef.current && restored.literal === literalRef.current;
+      const sameQuery = q === queryRef.current && (!q || restored.literal === literalRef.current);
       const nextFilters = filtersFromUrl(restored);
       const filtersUnchanged = sameFilters(nextFilters, filtersRef.current);
-      const sameSearch = sameQuery && filtersUnchanged && restored.page === pageRef.current;
+      const sameSearch = sameQuery && filtersUnchanged && (!q || restored.page === pageRef.current);
       filterPanel.current?.close();
       if (sameSearch && nextView === viewRef.current) return; // 例如从跳转链接的 #main 返回
 
@@ -362,7 +370,7 @@ export default function App() {
       } else if (!sameSearch) {
         void runSearch(q, {
           page: restored.page, paging: sameQuery && filtersUnchanged, literal: restored.literal,
-          record: false, urlMode: "none",
+          record: false, urlMode: "none", filterChange: sameQuery && !filtersUnchanged, filters: nextFilters,
         });
       }
     };
@@ -433,14 +441,6 @@ export default function App() {
 
   useEffect(() => {
     const check = new AbortController();
-    void getSearchProvider(check.signal).then((provider) => {
-      if (!check.signal.aborted) setShowSamples(provider === "fixture");
-    }).catch(() => { /* 搜索不依赖自检入口 */ });
-    return () => check.abort();
-  }, []);
-
-  useEffect(() => {
-    const check = new AbortController();
     void getEngines(check.signal).then((payload) => {
       if (!check.signal.aborted && !controller.current) setEngines(payload.engines);
     }).catch(() => { /* 引擎目录不可用时保持纯文本后缀 */ });
@@ -471,6 +471,13 @@ export default function App() {
     [input, inputLiteral, engines, runSearch],
   );
 
+  const searchHistoryEntry = ({ query: previous, literal: previousLiteral }: HistoryEntry) => {
+    changeView("all", "none");
+    setInput(previous);
+    setInputLiteral(previousLiteral);
+    void runSearch(previous, { literal: previousLiteral, urlMode: "push" });
+  };
+
   const togglePanel = (panel: SidePanel) => {
     if (sidePanel !== panel) markPanelOpen();
     lastPanel.current = panel;
@@ -480,6 +487,16 @@ export default function App() {
   const closeDrawer = useCallback(() => {
     setDrawerOpen(false);
     setSidePanel(null);
+  }, []);
+
+  const openShortcuts = useCallback(() => {
+    const active = document.activeElement;
+    if (!active || active === document.body || active === document.documentElement) {
+      const fallback = shortcutsTrigger.current?.getClientRects().length
+        ? shortcutsTrigger.current : document.getElementById("main");
+      fallback?.focus({ preventScroll: true });
+    }
+    setShortcutsOpen(true);
   }, []);
 
   const showBackgroundTask = (panel: "ai" | "summary") => {
@@ -582,7 +599,7 @@ export default function App() {
       if (!typing && !event.repeat && !event.ctrlKey && !event.metaKey && !event.altKey
         && event.key === "?") {
         event.preventDefault();
-        setShortcutsOpen(true);
+        openShortcuts();
         return;
       }
       if (event.altKey || event.shiftKey) return;
@@ -715,21 +732,20 @@ export default function App() {
       window.removeEventListener("keydown", onKeyDown);
       window.clearTimeout(pendingTimer);
     };
-  }, [canNext, drawerMode, drawerOpen, goToPage, page, phase, select, shortcutsOpen, sidePanel, view]);
+  }, [canNext, drawerMode, drawerOpen, goToPage, openShortcuts, page, phase, select, shortcutsOpen, sidePanel, view]);
 
   const applyFilters = useCallback((next: Filters) => {
     if (sameFilters(next, filtersRef.current)) return;
     setFilters(next);
     filtersRef.current = next;
     if (!queryRef.current) {
-      writeUrl({
-        q: "", literal: literalRef.current, page: 1, category: viewRef.current,
-        range: next.timeRange, lang: next.language, site: next.site, dedupe: next.dedupe,
-      }, "replace");
+      writeUrl(withFilters({ q: "", literal: literalRef.current, page: 1, category: viewRef.current }, next), "replace");
       return;
     }
     // 换筛选条件从第 1 页重新检索，并压一条历史便于回退
-    void runSearch(queryRef.current, { literal: literalRef.current, urlMode: "push", filterChange: true, record: false });
+    void runSearch(queryRef.current, {
+      literal: literalRef.current, urlMode: "push", filterChange: true, record: false, filters: next,
+    });
   }, [runSearch]);
 
   const toolsBlock = (
@@ -780,6 +796,9 @@ export default function App() {
                   if (view === "conversation" || (view !== "all" && !document.getElementById(`result-${id}`))) {
                     changeView("all");
                   }
+                  if (summaryData.official?.entries.some(entry => entry.id === id)) {
+                    setExpandedOfficialSid(summaryData.meta.sid);
+                  }
                   if (drawerOpen) closeDrawer();
                 });
               }} />
@@ -823,12 +842,7 @@ export default function App() {
   );
 
   return (
-    <AppShell maxWidth={1560} current="search" onHistorySearch={({ query: previous, literal: previousLiteral }) => {
-      changeView("all", "none");
-      setInput(previous);
-      setInputLiteral(previousLiteral);
-      void runSearch(previous, { literal: previousLiteral, urlMode: "push" });
-    }}>
+    <AppShell maxWidth={1560} current="search" onHistorySearch={searchHistoryEntry}>
       <div className="workspace">
         <nav className="workspace-nav" aria-label="搜索分类">
           <div className="workspace-nav__items">
@@ -868,9 +882,12 @@ export default function App() {
                     canPick={engineQuery(input, "g", engines, inputLiteral) !== null} onPick={pickEngine} />
                 </details>
               )}
-              <SearchFilters ref={filterPanel} filters={filters} onChange={applyFilters} />
+              <SearchFilters ref={filterPanel} filters={filters} onChange={applyFilters}
+                disabled={!filtersReady} />
               {activeFilterCount(filters) > 0 ? (
-                <span className="workspace-filter-note">已筛选：{describeFilters(filters)}</span>
+                <span className="workspace-filter-note">
+                  {filtersReady && error?.code !== "FILTERS_UNAVAILABLE" ? "已筛选：" : "筛选条件："}{describeFilters(filters)}
+                </span>
               ) : null}
               <label className="workspace-ai-setting"
                 title={dailyAI ? "随每次搜索请求 AI 服务，可能产生 API 费用" : "输入 ds 后缀可单次启用"}>
@@ -931,11 +948,21 @@ export default function App() {
             {view !== "all" && phase === "idle" && (
               <p className="workspace-results__hint">输入关键词，查看{currentView.label}结果。</p>
             )}
+            {view === "all" && phase === "idle" && (
+              <EmptyHome
+                onSearch={searchHistoryEntry}
+                onOpenConversation={() => {
+                  lastPanel.current = "conversation";
+                  setSidePanel("conversation");
+                  if (drawerMode) setDrawerOpen(true);
+                }} />
+            )}
             {phase === "loading" && (showStale
               ? <SearchProgress key={startedAt} className="results-progress" label={pageProgress} startedAt={startedAt} />
               : <ResultSkeleton key={startedAt} query={query} startedAt={startedAt} />)}
             {phase === "error" && error && (
               <ErrorState error={error} query={query} diagnostics={showDiagnostics} onChangeKeyword={focusSearch}
+                onResetFilters={() => applyFilters(DEFAULT_FILTERS)}
                 onRetry={() => void runSearch(query, { page, paging: page > 1, retry: true, literal, record: false, urlMode: "replace" })} />
             )}
             {phase === "shortcut" && (
@@ -967,8 +994,8 @@ export default function App() {
                 {view === "all" && (
                   <>
                     <MetaBar meta={data.meta} parsed={data.parsed} />
-                    <OfficialPanel section={data.official} selectedId={selectedId} onSelect={select}
-                      saved={savedUrls} onBookmarkChange={rememberBookmark} />
+                    {!compactResults && <OfficialPanel section={data.official} selectedId={selectedId}
+                      onSelect={select} saved={savedUrls} onBookmarkChange={rememberBookmark} />}
                     {data.parsed.expanded.length > 0 && (
                       <p className="shortcuts">已扩展同义词：{data.parsed.expanded.join(" / ")}</p>
                     )}
@@ -984,6 +1011,10 @@ export default function App() {
                     <ResultList title="强相关" results={groups.strong.filter(result => !result.category)}
                       query={data.parsed.q} saved={savedUrls} onBookmarkChange={rememberBookmark}
                       selectedId={selectedId} onSelect={select} />
+                    {compactResults && <OfficialPanel section={data.official} selectedId={selectedId} compact
+                      expanded={expandedOfficialSid === data.meta.sid}
+                      onExpandedChange={open => setExpandedOfficialSid(open ? data.meta.sid : null)}
+                      onSelect={select} saved={savedUrls} onBookmarkChange={rememberBookmark} />}
                     <ResultList title="相关" results={groups.related.filter(result => !result.category)}
                       query={data.parsed.q} saved={savedUrls} onBookmarkChange={rememberBookmark}
                       selectedId={selectedId} onSelect={select} />
@@ -1014,8 +1045,8 @@ export default function App() {
                     <kbd>j</kbd>/<kbd>k</kbd> 选择 · <kbd>Enter</kbd> 打开 ·{" "}
                     <kbd>b</kbd> 收藏 · <kbd>s</kbd> 总结 · <kbd>[</kbd>/<kbd>]</kbd> 翻页 · <kbd>Esc</kbd> 取消
                   </p>
-                  <button type="button" className="shortcuts__open"
-                    aria-haspopup="dialog" onClick={() => setShortcutsOpen(true)}>
+                  <button type="button" className="shortcuts__open" ref={shortcutsTrigger}
+                    aria-haspopup="dialog" onClick={openShortcuts}>
                     <kbd>?</kbd> 全部快捷键
                   </button>
                 </div>

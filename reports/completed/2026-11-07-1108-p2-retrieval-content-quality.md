@@ -44,17 +44,17 @@
 
 | 文件 | 类型 | 说明 |
 | --- | --- | --- |
-| [apps/api/app/core/expand.py](../apps/api/app/core/expand.py) | 修改 | 新增 upstream_query 与 MODES |
-| [apps/api/app/config.py](../apps/api/app/config.py) | 修改 | EXPANSION_MODE |
-| [apps/api/app/routers/search.py](../apps/api/app/routers/search.py) | 修改 | 按模式决定别名与上游查询 |
-| [apps/api/app/routers/page.py](../apps/api/app/routers/page.py) | 修改 | key_data、anchors、单页 10s 抓取预算 |
-| [apps/api/pyproject.toml](../apps/api/pyproject.toml)、[apps/api/Dockerfile](../apps/api/Dockerfile) | 修改 | 可选依赖 [content] 与镜像安装 |
-| [apps/api/tests/test_content.py](../apps/api/tests/test_content.py) | 修改 | key_data/anchors 用例；固定 trafilatura 用例走回退 |
-| [apps/api/tests/regression/p2_labeled_queries.json](../apps/api/tests/regression/p2_labeled_queries.json) | 新增 | 18 条标注查询 |
-| [scripts/eval-expansion.py](../scripts/eval-expansion.py) | 新增 | 三种条件对比评估 |
-| [apps/web/src/PageSummaryPage.tsx](../apps/web/src/PageSummaryPage.tsx)、[api.ts](../apps/web/src/api.ts)、[styles.css](../apps/web/src/styles.css) | 修改 | 关键数据与锚点渲染 |
-| [README.md](../README.md)、[docs/决策与接口变更.md](../docs/决策与接口变更.md)、[docs/进展与欠账.md](../docs/进展与欠账.md) | 修改 | P2 数据、决策 M12、状态 |
-| 本报告与 [INDEX.md](INDEX.md) | 新增/更新 | 登记 |
+| [apps/api/app/core/expand.py](../../apps/api/app/core/expand.py) | 修改 | 新增 upstream_query 与 MODES |
+| [apps/api/app/config.py](../../apps/api/app/config.py) | 修改 | EXPANSION_MODE |
+| [apps/api/app/routers/search.py](../../apps/api/app/routers/search.py) | 修改 | 按模式决定别名与上游查询 |
+| [apps/api/app/routers/page.py](../../apps/api/app/routers/page.py) | 修改 | key_data、anchors、单页 10s 抓取预算 |
+| [apps/api/pyproject.toml](../../apps/api/pyproject.toml)、[apps/api/Dockerfile](../../apps/api/Dockerfile) | 修改 | 可选依赖 [content] 与镜像安装 |
+| [apps/api/tests/test_content.py](../../apps/api/tests/test_content.py) | 修改 | key_data/anchors 用例；固定 trafilatura 用例走回退 |
+| [apps/api/tests/regression/p2_labeled_queries.json](../../apps/api/tests/regression/p2_labeled_queries.json) | 新增 | 18 条标注查询 |
+| [scripts/eval-expansion.py](../../scripts/eval-expansion.py) | 新增 | 三种条件对比评估 |
+| [apps/web/src/PageSummaryPage.tsx](../../apps/web/src/PageSummaryPage.tsx)、[api.ts](../../apps/web/src/api.ts)、[styles.css](../../apps/web/src/styles.css) | 修改 | 关键数据与锚点渲染 |
+| [README.md](../../README.md)、[docs/决策与接口变更.md](../../docs/决策与接口变更.md)、[docs/进展与欠账.md](../../docs/进展与欠账.md) | 修改 | P2 数据、决策 M12、状态 |
+| 本报告与 [INDEX.md](../INDEX.md) | 新增/更新 | 登记 |
 
 ## 4 验证与证据
 
@@ -97,10 +97,10 @@
 
 **相关文件**
 
-- [README P2 章节](../README.md)
-- [决策 M12-D1…D6](../docs/决策与接口变更.md)
-- [评估脚本](../scripts/eval-expansion.py)、[标注集](../apps/api/tests/regression/p2_labeled_queries.json)
-- [提取器对比数据](../docs/m10-evidence/p2-extractors.json)
+- [README P2 章节](../../README.md)
+- [决策 M12-D1…D6](../../docs/决策与接口变更.md)
+- [评估脚本](../../scripts/eval-expansion.py)、[标注集](../../apps/api/tests/regression/p2_labeled_queries.json)
+- [提取器对比数据](../../docs/m10-evidence/p2-extractors.json)
 
 ---
 

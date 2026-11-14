@@ -12,6 +12,7 @@ param(
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 $dir = Join-Path $root "reports"
+$draftDir = Join-Path $dir "incomplete"
 $templatePath = Join-Path $dir "_TEMPLATE.md"
 $indexPath = Join-Path $dir "INDEX.md"
 
@@ -24,8 +25,12 @@ $now = Get-Date
 $id = $now.ToString("yyyyMMdd-HHmm")
 $stamp = $now.ToString("yyyy-MM-dd HH:mm")
 $fileName = "$($now.ToString('yyyy-MM-dd-HHmm'))-$Slug.md"
-$path = Join-Path $dir $fileName
-if (Test-Path $path) { throw "报告已存在：$path —— 同一任务请追加到原报告（## 8 追加轮次），不要新建" }
+$path = Join-Path $draftDir $fileName
+$locations = @($dir, $draftDir, (Join-Path $dir "completed"), (Join-Path $dir "uncategorized"))
+foreach ($location in $locations) {
+    $existing = Join-Path $location $fileName
+    if (Test-Path -LiteralPath $existing) { throw "报告已存在：$existing —— 同一任务请追加到原报告（## 8 追加轮次），不要新建" }
+}
 if (-not $Title) { $Title = ($Slug -replace '-', ' ') }
 
 # ---- 采集改动文件：优先 git，没有仓库就按近 6 小时修改时间 ----
@@ -58,6 +63,7 @@ if ($rows.Count -eq 0) {
 if ($rows.Count -eq 0) { $rows.Add("| — | — | 本次未产生文件改动 |") }
 
 # ---- 生成报告 ----
+[System.IO.Directory]::CreateDirectory($draftDir) | Out-Null
 $body = [System.IO.File]::ReadAllText($templatePath)
 $body = $body.Replace("{{TITLE}}", $Title).Replace("{{ID}}", $id).Replace("{{START}}", $stamp).Replace("{{AGENT}}", $Agent).Replace("{{TYPE}}", $Type).Replace("{{GOAL}}", $(if ($Goal) { $Goal } else { "〔待填〕一句话写清要达成什么" })).Replace("{{CHANGED_ROWS}}", ($rows -join "`n"))
 [System.IO.File]::WriteAllText($path, $body, (New-Object System.Text.UTF8Encoding($false)))
@@ -69,7 +75,8 @@ $insertAt = -1
 for ($i = 0; $i -lt $lines.Count; $i++) {
     if ($lines[$i].Trim() -match '^\|\s*-{3,}') { $insertAt = $i + 1; break }
 }
-$row = "| $id | $stamp | [$Title]($fileName) | $Type | 进行中 | ``$fileName`` |"
+$relativePath = "incomplete/$fileName"
+$row = "| $id | $stamp | [$Title]($relativePath) | $Type | 进行中 | ``$relativePath`` |"
 if ($insertAt -ge 0) { $lines.Insert($insertAt, $row) } else { $lines.Add($row) }
 [System.IO.File]::WriteAllLines($indexPath, $lines, (New-Object System.Text.UTF8Encoding($false)))
 

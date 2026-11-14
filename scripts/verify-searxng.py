@@ -49,6 +49,17 @@ def main() -> int:
             print(f"FAIL: 无法确认 /api/health 的检索模式：{exc}")
             return 1
 
+        # 引擎表里的 fallbacks 是公开契约：g 在 google 被拒时回退到 google cse 仍算通过，
+        # 但必须记录用了回退，避免把"上游降级成功"当成"目标引擎可用"。
+        catalog: dict[str, list[str]] = {}
+        try:
+            for entry in client.get("/api/engines").raise_for_status().json()["engines"]:
+                if entry.get("section") != "custom" and entry.get("searx_engine"):
+                    catalog[entry["searx_engine"]] = entry.get("fallbacks") or []
+        except (httpx.HTTPError, ValueError, KeyError, TypeError) as exc:
+            print(f"FAIL: 无法读取引擎表：{exc}")
+            return 1
+
         for query, cleaned, engine, region, router in cases:
             start = time.perf_counter()
             try:
@@ -67,9 +78,15 @@ def main() -> int:
                     source for group in body["groups"].values() for item in group for source in item["engine"]
                 })
                 expected_source = "google scholar" if engine == "scholar" else engine
-                if engine != "default" and expected_source not in sources:
-                    raise ValueError(f"预期来源 {expected_source}，实际 {sources}")
-                details = f"结果={meta['total']} 来源={sources} 失败引擎={meta['unresponsive']}"
+                fallback_hit = ""
+                if engine != "default":
+                    allowed = [expected_source, *catalog.get(expected_source, [])]
+                    if not sources or set(sources).difference(allowed):
+                        raise ValueError(f"预期来源仅为 {expected_source} 或回退 {allowed[1:]}，实际 {sources}")
+                    if expected_source not in sources:
+                        hit = next(source for source in allowed[1:] if source in sources)
+                        fallback_hit = f" 回退={hit}"
+                details = f"结果={meta['total']} 来源={sources} 失败引擎={meta['unresponsive']}{fallback_hit}"
                 status = "PASS"
                 passed += 1
             except (httpx.HTTPError, ValueError, KeyError, TypeError, AttributeError) as exc:

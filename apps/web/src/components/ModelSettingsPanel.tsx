@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ApiError, loadModelSettings, saveModelSettings, testModelConnection,
   type ModelEntry, type ModelFeature, type ModelSettings } from "../api";
+import { capabilityReady, useServerState } from "../capabilities";
 
 const FEATURES: { id: ModelFeature; label: string }[] = [
   { id: "search", label: "AI 检索" },
@@ -39,6 +40,9 @@ export default function ModelSettingsPanel() {
   // 每个模型的连通性测试结果：只请求 /models，不耗 token
   const [tests, setTests] = useState<Record<string, { state: "testing" | "ok" | "fail"; text: string }>>({});
   const testRequests = useRef(new Map<string, AbortController>());
+  // 旧后端没有 /api/settings/models/test，别让人点了只看到 405
+  const serverState = useServerState();
+  const canTest = capabilityReady(serverState, "model_test");
 
   const invalidateTest = (id: string) => {
     testRequests.current.get(id)?.abort();
@@ -166,13 +170,16 @@ export default function ModelSettingsPanel() {
               <fieldset className="model-entry" key={model.id}>
                 <legend>模型 {index + 1}</legend>
                 <div className="model-entry__tools">
-                  <button type="button" className="chip" disabled={needsSave || test?.state === "testing"}
+                  <button type="button" className="chip"
+                    disabled={!canTest || needsSave || test?.state === "testing"}
                     onClick={() => void testConnection(model)}>
                     {test?.state === "testing" ? "测试中…" : "测试连接"}
                   </button>
                   <button type="button" className="model-entry__remove" onClick={() => remove(model.id)}>移除</button>
                 </div>
                 {needsSave && <p className="model-settings__hint">保存模型的连接设置后可测试。</p>}
+                {!canTest && serverState.kind === "outdated" &&
+                  <p className="model-settings__hint">本机服务版本过旧，重启服务后可用连通性测试。</p>}
                 <p className={test ? `model-entry__test model-entry__test--${test.state}` : "sr-only"} role="status">
                   {test?.text}
                 </p>

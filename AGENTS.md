@@ -79,14 +79,14 @@
 .\scripts\new-report.ps1 -Slug m1-suffix-router -Type feat -Title "M1 后缀路由与 bang"
 ```
 
-自动生成 `reports/<编号>-<slug>.md`（含开始时间、执行者、近 6 小时改动文件），然后按模板把 **§1–§7 全部填满**。
+自动在 `reports/incomplete/` 生成报告（含开始时间、执行者、近 6 小时改动文件），然后按模板把 **§1–§7 全部填满**。
 
 ### F3 校验并落定
 
 ```powershell
-.\scripts\close-report.ps1 -Path reports\<文件名>.md            # 校验 → 写结束时间/耗时 → 状态置完成 → 更新台账
-.\scripts\check-report.ps1 -Path reports\<文件名>.md            # 只校验，不改状态
-.\scripts\close-report.ps1 -Path .\<文件名> -Status 部分完成     # 没做完时用
+.\scripts\check-report.ps1 -Path reports\incomplete\<文件名>.md # 先校验草稿
+.\scripts\close-report.ps1 -Path reports\completed\<文件名>.md # 验收通过并移入 completed 后落定
+.\scripts\close-report.ps1 -Path reports\incomplete\<文件名>.md -Status 部分完成
 ```
 
 校验不通过会列出缺哪一段，改完再跑。
@@ -107,8 +107,9 @@
 
 ## 3 报告规范（硬性）
 
-- 新报告路径 `reports/YYYY-MM-DD-HHmm-<slug>.md`；slug 为 kebab-case，≤5 个词
-- 归档时将已全部完成的报告移至 `reports/completed/`，同步台账与相对链接。部分完成、阻塞或正文仍有任务验收项未通过的报告留在 `reports/`；台账保留历史状态，并注明复核发现的差异。
+- 新报告路径 `reports/incomplete/YYYY-MM-DD-HHmm-<slug>.md`；slug 为 kebab-case，≤5 个词
+- 验收通过后将报告移至 `reports/completed/`，同步相对链接，用移动后的路径执行 `close-report.ps1` 更新台账。进行中、部分完成、阻塞或任务验收仍有缺口的报告放在 `reports/incomplete/`。分类历史报告时保留正文及台账原状态，有差异则在分类页追加说明。
+- 待做的新产出登记在 `reports/backlog/`。来源、范围或状态待确认的材料放在 `reports/uncategorized/`。
 - **必填段**（缺任一或为空 → `check-report.ps1` 直接失败）：
   `## 1 任务`、`## 2 做了什么`、`## 3 改动清单`、`## 4 验证与证据`、`## 6 遗留与风险`、`## 7 交接`
 - 长度 ≤ 260 行；超了说明任务该拆
@@ -148,8 +149,10 @@ reports/
 ├─ INDEX.md                 台账（脚本维护）
 ├─ _TEMPLATE.md             报告模板
 ├─ completed/               已全部完成的报告
-├─ assets/<slug>/           截图与产物
-└─ 2026-11-06-0002-xxx.md   单份报告
+├─ incomplete/              进行中、部分完成、阻塞或待补验的报告
+├─ backlog/                 待做的新产出
+├─ uncategorized/           待分类材料
+└─ assets/<slug>/           截图与产物
 ```
 
 ---

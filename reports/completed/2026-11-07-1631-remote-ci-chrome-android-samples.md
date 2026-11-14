@@ -42,12 +42,12 @@
 
 | 文件 | 类型 | 说明 |
 | --- | --- | --- |
-| [scripts/verify-android.cjs](../scripts/verify-android.cjs) | 新增 | Android 档案验收 |
-| [scripts/verify-extension.cjs](../scripts/verify-extension.cjs) | 修改 | 支持 CS_CHROME_PATH |
-| [apps/api/tests/regression/p2_labeled_queries.json](../apps/api/tests/regression/p2_labeled_queries.json) | 修改 | 18 → 40 条 |
-| [README.md](../README.md)、[docs/决策与接口变更.md](../docs/决策与接口变更.md)、[docs/进展与欠账.md](../docs/进展与欠账.md) | 修改 | 本轮结论 |
-| [docs/m10-evidence/p3-rdap-sample.json](../docs/m10-evidence/p3-rdap-sample.json)、[p2-expansion-40.json](../docs/m10-evidence/p2-expansion-40.json)、[p3-summary-quality.json](../docs/m10-evidence/p3-summary-quality.json)、[03-android-share-prefill.png](../docs/m10-evidence/03-android-share-prefill.png) | 新增 | 证据 |
-| 本报告与 [INDEX.md](INDEX.md) | 新增/更新 | 登记 |
+| [scripts/verify-android.cjs](../../scripts/verify-android.cjs) | 新增 | Android 档案验收 |
+| [scripts/verify-extension.cjs](../../scripts/verify-extension.cjs) | 修改 | 支持 CS_CHROME_PATH |
+| [apps/api/tests/regression/p2_labeled_queries.json](../../apps/api/tests/regression/p2_labeled_queries.json) | 修改 | 18 → 40 条 |
+| [README.md](../../README.md)、[docs/决策与接口变更.md](../../docs/决策与接口变更.md)、[docs/进展与欠账.md](../../docs/进展与欠账.md) | 修改 | 本轮结论 |
+| [docs/m10-evidence/p3-rdap-sample.json](../../docs/m10-evidence/p3-rdap-sample.json)、[p2-expansion-40.json](../../docs/m10-evidence/p2-expansion-40.json)、[p3-summary-quality.json](../../docs/m10-evidence/p3-summary-quality.json)、[03-android-share-prefill.png](../../docs/m10-evidence/03-android-share-prefill.png) | 新增 | 证据 |
+| 本报告与 [INDEX.md](../INDEX.md) | 新增/更新 | 登记 |
 
 ## 4 验证与证据
 
@@ -89,10 +89,10 @@
 
 **相关文件**
 
-- [README 远端/Chrome/Android 章节](../README.md)
-- [决策 M16-D1…D5](../docs/决策与接口变更.md)
-- [Android 验收脚本](../scripts/verify-android.cjs)
-- [RDAP 样本数据](../docs/m10-evidence/p3-rdap-sample.json)
+- [README 远端/Chrome/Android 章节](../../README.md)
+- [决策 M16-D1…D5](../../docs/决策与接口变更.md)
+- [Android 验收脚本](../../scripts/verify-android.cjs)
+- [RDAP 样本数据](../../docs/m10-evidence/p3-rdap-sample.json)
 
 ---
 

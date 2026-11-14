@@ -1,0 +1,10 @@
+PASS 真实 SearXNG 基准有结果 · provider=searxng total=21
+PASS 站点筛选仅返回目标域或子域（含官方区） · hosts=docs.python.org
+PASS 站外官方目录不会补回零结果
+PASS 一周筛选回显，允许真实零结果 · total=19 cached=false
+PASS 同筛选重复命中缓存
+PASS 不同筛选返回对应条件 · cached=false
+PASS 语言筛选回显 · total=19
+PASS 严格去重的普通结果无重复标题 · total=17
+PASS 关闭去重回显且合并计数为零 · total=21
+ALL PASS (9)

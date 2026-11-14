@@ -40,15 +40,15 @@
 
 | 文件 | 类型 | 说明 |
 | --- | --- | --- |
-| [apps/api/app/core/rdap.py](../apps/api/app/core/rdap.py) | 新增 | 查询、缓存、并发控制 |
-| [apps/api/app/core/fetch.py](../apps/api/app/core/fetch.py) | 修改 | 放行网段限定为 bench 段（含 IPv6） |
-| [apps/api/app/routers/search.py](../apps/api/app/routers/search.py) | 修改 | 接入年龄信号与拦截统计 |
-| [apps/api/app/config.py](../apps/api/app/config.py) | 修改 | RDAP_ENABLED / RDAP_TTL_DAYS |
-| [apps/api/tests/test_rdap.py](../apps/api/tests/test_rdap.py) | 新增 | 3 个用例 |
-| [apps/api/tests/conftest.py](../apps/api/tests/conftest.py) | 修改 | 测试默认关 RDAP |
-| [.env](../.env) | 修改（本地） | FETCH_EXTRA_CIDRS 加 IPv6 bench 段 |
-| [README.md](../README.md)、[docs/决策与接口变更.md](../docs/决策与接口变更.md)、[docs/进展与欠账.md](../docs/进展与欠账.md) | 修改 | 说明与状态 |
-| 本报告与 [INDEX.md](INDEX.md) | 新增/更新 | 登记 |
+| [apps/api/app/core/rdap.py](../../apps/api/app/core/rdap.py) | 新增 | 查询、缓存、并发控制 |
+| [apps/api/app/core/fetch.py](../../apps/api/app/core/fetch.py) | 修改 | 放行网段限定为 bench 段（含 IPv6） |
+| [apps/api/app/routers/search.py](../../apps/api/app/routers/search.py) | 修改 | 接入年龄信号与拦截统计 |
+| [apps/api/app/config.py](../../apps/api/app/config.py) | 修改 | RDAP_ENABLED / RDAP_TTL_DAYS |
+| [apps/api/tests/test_rdap.py](../../apps/api/tests/test_rdap.py) | 新增 | 3 个用例 |
+| [apps/api/tests/conftest.py](../../apps/api/tests/conftest.py) | 修改 | 测试默认关 RDAP |
+| [.env](../../.env) | 修改（本地） | FETCH_EXTRA_CIDRS 加 IPv6 bench 段 |
+| [README.md](../../README.md)、[docs/决策与接口变更.md](../../docs/决策与接口变更.md)、[docs/进展与欠账.md](../../docs/进展与欠账.md) | 修改 | 说明与状态 |
+| 本报告与 [INDEX.md](../INDEX.md) | 新增/更新 | 登记 |
 
 ## 4 验证与证据
 
@@ -87,9 +87,9 @@
 
 **相关文件**
 
-- [RDAP 实现](../apps/api/app/core/rdap.py)
-- [决策 M15-D1…D4](../docs/决策与接口变更.md)
-- [README RDAP 章节](../README.md)
+- [RDAP 实现](../../apps/api/app/core/rdap.py)
+- [决策 M15-D1…D4](../../docs/决策与接口变更.md)
+- [README RDAP 章节](../../README.md)
 
 ---
 

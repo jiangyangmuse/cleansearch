@@ -183,7 +183,14 @@ export async function streamSummary(
 }
 
 async function jsonRequest<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
-  const response = await fetch(input, init);
+  let response: Response;
+  try {
+    response = await fetch(input, init);
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") throw error;
+    // 浏览器原始 "Failed to fetch" 不是产品文案：统一成"连不上本机服务"
+    throw new ApiError("连不上本机服务，确认 FastAPI 已启动（默认 http://127.0.0.1:8000）", "NETWORK_ERROR", 0);
+  }
   if (!response.ok) {
     let message = `请求失败（HTTP ${response.status}）`;
     let code = "HTTP_" + response.status;
@@ -287,6 +294,10 @@ export interface HealthInfo {
   bookmarks: number;
   db_path: string;
   version: string;
+  /** 接口契约版本；旧服务没有这个字段，前端按 0 处理。 */
+  api_version?: number;
+  /** 能力名 → 是否支持；旧服务没有这个字段，前端按"全缺"处理。 */
+  capabilities?: Record<string, boolean>;
 }
 
 /** 设置页数据管理用：本机库路径、书签数、版本。 */
@@ -337,11 +348,6 @@ export async function moveBookmark(id: number, groupId: number | null) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ group_id: groupId }),
   });
-}
-
-export async function getSearchProvider(signal: AbortSignal): Promise<string> {
-  const health = await jsonRequest<{ provider: string }>("/api/health", { signal });
-  return health.provider;
 }
 
 export async function getEngines(signal?: AbortSignal) {

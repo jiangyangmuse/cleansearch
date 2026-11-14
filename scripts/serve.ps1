@@ -8,7 +8,8 @@ param(
     [int]$Port = 8000,
     [switch]$SkipBuild,
     [Parameter(ParameterSetName = "Ollama")][string]$OllamaModel,
-    [Parameter(Mandatory, ParameterSetName = "DeepSeek")][switch]$DeepSeek
+    [Parameter(Mandatory, ParameterSetName = "DeepSeek")][switch]$DeepSeek,
+    [string]$BindAddress = "127.0.0.1"
 )
 
 $ErrorActionPreference = "Stop"
@@ -74,9 +75,9 @@ try {
         Write-Host "[mode] 固定样本：test=有结果，__empty xxx=零结果，__fail xxx=上游不可用" -ForegroundColor Yellow
     }
 
-    Write-Host "[serve] http://127.0.0.1:$Port" -ForegroundColor Green
+    Write-Host "[serve] listening on ${BindAddress}:$Port" -ForegroundColor Green
     Set-Location "$root\apps\api"
-    python -m uvicorn app.main:app --host 127.0.0.1 --port $Port
+    python -m uvicorn app.main:app --host $BindAddress --port $Port
 }
 finally {
     foreach ($name in $previous.Keys) {

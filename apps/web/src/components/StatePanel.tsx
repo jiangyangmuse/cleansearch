@@ -35,6 +35,7 @@ interface ErrorProps {
   error: ApiError;
   query: string;
   onRetry: () => void;
+  onResetFilters?: () => void;
   onChangeKeyword: () => void;
   /** 只有 fixture / ?debug=1 才展示错误码与诊断命令 */
   diagnostics?: boolean;
@@ -62,7 +63,7 @@ export function searchErrorMessage(error: ApiError): { title: string; detail: st
   }
 }
 
-export function ErrorState({ error, query, onRetry, onChangeKeyword, diagnostics = false }: ErrorProps) {
+export function ErrorState({ error, query, onRetry, onChangeKeyword, onResetFilters, diagnostics = false }: ErrorProps) {
   const { title, detail } = searchErrorMessage(error);
   return (
     <div className="state state--error">
@@ -71,6 +72,8 @@ export function ErrorState({ error, query, onRetry, onChangeKeyword, diagnostics
       <div className="state__actions">
         {error.retryable ? <button className="button" type="button" onClick={onRetry}>重试</button>
           : <button className="button" type="button" onClick={onChangeKeyword}>换关键词</button>}
+        {error.code === "FILTERS_UNAVAILABLE" && onResetFilters &&
+          <button className="button" type="button" onClick={onResetFilters}>重置筛选</button>}
         <a className="button button--ghost" href="/settings#engine-settings">打开设置</a>
       </div>
       {diagnostics ? (

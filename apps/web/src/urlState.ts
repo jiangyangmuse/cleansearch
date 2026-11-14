@@ -19,6 +19,20 @@ export const DEDUPE_MODES = ["off", "normal", "strict"] as const;
 
 export type HistoryMode = "push" | "replace" | "none";
 
+/** 筛选条件：地址栏与请求体共用同一份结构，避免界面、URL、请求三者漂移。 */
+export interface SearchFiltersState {
+  /** 时间范围："" 表示全部时间 */
+  timeRange: "" | typeof TIME_RANGES[number];
+  /** 语言代码，"" 表示不限 */
+  language: string;
+  /** 站点限定域名，"" 表示不限 */
+  site: string;
+  /** 去重强度 */
+  dedupe: typeof DEDUPE_MODES[number];
+}
+
+export const DEFAULT_FILTERS: SearchFiltersState = { timeRange: "", language: "", site: "", dedupe: "normal" };
+
 export const MAX_PAGE = 10;
 
 export function readUrlState(search = window.location.search): SearchUrlState {
@@ -50,7 +64,7 @@ export function normalizeLanguage(raw: string): string {
 export function normalizeSite(raw: string): string | null {
   const value = raw.trim().toLowerCase();
   if (!value) return "";
-  const host = value.replace(/^https?:\/\//, "").split(/[/?#]/, 1)[0].replace(/^www\./, "").replace(/\.$/, "");
+  const host = value.replace(/^https?:\/\//, "").split(/[/?#]/, 1)[0].replace(/^(?:www\.)+/, "").replace(/\.$/, "");
   const labels = host.split(".");
   return host.length <= 253 && labels.length > 1 && labels.every(label => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label))
     ? host : null;
@@ -68,6 +82,40 @@ export function searchUrl(state: SearchUrlState): string {
   if (state.dedupe && state.dedupe !== "normal") params.set("dedupe", state.dedupe);
   const query = params.toString();
   return query ? `/?${query}` : "/";
+}
+
+/** 从 URL 状态取出筛选条件；非法值已在 readUrlState 归一化。 */
+export function filtersFromUrl(state: SearchUrlState): SearchFiltersState {
+  return { timeRange: state.range, language: state.lang, site: state.site, dedupe: state.dedupe };
+}
+
+/** 筛选差异比较：popstate 用它判断「只改了筛选」还是「同一次搜索」。 */
+export function sameFilters(left: SearchFiltersState, right: SearchFiltersState): boolean {
+  return left.timeRange === right.timeRange && left.language === right.language
+    && left.site === right.site && left.dedupe === right.dedupe;
+}
+
+/** 除筛选以外的搜索身份：查询、字面模式、页码、分类。 */
+export type SearchBaseState = Omit<SearchUrlState, "range" | "lang" | "site" | "dedupe">;
+
+/** 把筛选合进 URL 状态：写地址栏与发请求都用这一个来源。 */
+export function withFilters<T extends SearchBaseState>(state: T, filters: SearchFiltersState): SearchUrlState {
+  return { ...state, range: filters.timeRange, lang: filters.language, site: filters.site, dedupe: filters.dedupe };
+}
+
+/** 请求体 opts 里的筛选片段，与 SearchRequest.opts 契约对齐（空值发 null）。 */
+export function filterOptions(filters: SearchFiltersState): {
+  time_range: Exclude<SearchFiltersState["timeRange"], ""> | null;
+  language: string | null;
+  site: string | null;
+  dedupe: SearchFiltersState["dedupe"];
+} {
+  return {
+    time_range: filters.timeRange || null,
+    language: filters.language || null,
+    site: filters.site || null,
+    dedupe: filters.dedupe,
+  };
 }
 
 export function writeUrl(state: SearchUrlState, mode: HistoryMode): void {

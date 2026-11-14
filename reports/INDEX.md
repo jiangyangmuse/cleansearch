@@ -1,23 +1,35 @@
 # 完工报告台账
 
-每个任务登记一行，由 `scripts/new-report.ps1` 起草、`scripts/close-report.ps1` 落定。已全部完成的报告归入 `completed/`，移动时同步本表的链接和文件路径。
+每个任务登记一行，由 `scripts/new-report.ps1` 起草、`scripts/close-report.ps1` 落定。状态栏保留各报告的历史登记。
+
+[已完成](completed/) · [未完成及验收缺口](incomplete/README.md) · [待做的新产出](backlog/README.md) · [待分类](uncategorized/README.md)
 
 排序：新的在上。
 
-部署补验（2026-11-08）：[本轮在线矩阵](2026-11-08-1447-deployed-engine-matrix.md) 已执行十三后缀，首屏 11/13 有结果，mj/sp 因 Mojeek 冷却保留欠账；实际原生 API 已更新并开启缓存。镜像及隔离冒烟通过，完整 Compose 受原生端口占用限制。原报告与下方历史台账状态不改。
+部署补验（2026-11-08）：[本轮在线矩阵](incomplete/2026-11-08-1447-deployed-engine-matrix.md) 已执行十三后缀，首屏 11/13 有结果，mj/sp 因 Mojeek 冷却保留欠账；实际原生 API 已更新并开启缓存。镜像及隔离冒烟通过，完整 Compose 受原生端口占用限制。原报告与下方历史台账状态不改。
 
-复核更正（2026-11-08，M19）：原报告的历史状态保留；显式翻页误计费、空态误回退及熔断边界已在本次修复。旧直接探测矩阵 4 行为默认聚合假阳性，详见 [原报告 §8](2026-11-08-1137-m19-engine-suffix-repair.md) 与 [复核证据](completed/2026-11-08-1335-engine-fallback-review.md)。原 13 后缀在线矩阵本轮未重跑；新增本地回归与 CI 配置未发布。
+复核更正（2026-11-08，M19）：原报告的历史状态保留；显式翻页误计费、空态误回退及熔断边界已在本次修复。旧直接探测矩阵 4 行为默认聚合假阳性，详见 [原报告 §8](incomplete/2026-11-08-1137-m19-engine-suffix-repair.md) 与 [复核证据](completed/2026-11-08-1335-engine-fallback-review.md)。原 13 后缀在线矩阵本轮未重跑；新增本地回归与 CI 配置未发布。
 
-历史口径更正（2026-11-07）：六阶段报告保留在本目录，台账状态沿用原记录。该报告 §8.1 的真实多引擎验收当时为「部分达成」；后续 `gc/y` 与容器补验已有通过证据，其他指定引擎仍取决于部署和网络。当前交付范围、待验条件及可选扩展统一见 [进展与欠账](../docs/进展与欠账.md)。
+历史口径更正（2026-11-07）：六阶段报告放在未完成区，台账状态沿用原记录。该报告 §8.1 的真实多引擎验收当时为「部分达成」；后续 `gc/y` 与容器补验已有通过证据，其他指定引擎仍取决于部署和网络。当前交付范围、待验条件及可选扩展统一见 [进展与欠账](../docs/进展与欠账.md)。
 
 复核更正（2026-11-07）：16:31 的 DSH 报告保留历史状态；本地 bare/act、CfT 与 Pixel 档案、老站对照不构成托管 CI、正式 Chrome/Android 真机或新站误报率通过。最新复核记录与当前进度另列，不改原报告或历史台账行。
 
 | 编号 | 日期时间 | 任务 | 类型 | 状态 | 报告 |
 | --- | --- | --- | --- | --- | --- |
+| 20261114-1801 | 2026-11-14 18:01 | [DSH 移动首屏、离线交互与验收复核](completed/2026-11-14-1801-p1-p2-dsh-review.md) | fix | 完成 | `completed/2026-11-14-1801-p1-p2-dsh-review.md` |
+| 20261114-1739 | 2026-11-14 17:39 | [断言解耦与文档收口（§4.7）](completed/2026-11-14-1739-verify-decouple-docs.md) | test | 完成 | `completed/2026-11-14-1739-verify-decouple-docs.md` |
+| 20261114-1404 | 2026-11-14 14:04 | [焦点归还、安装态与离线文案（P2）](completed/2026-11-14-1404-p2-focus-install-offline.md) | fix | 完成 | `completed/2026-11-14-1404-p2-focus-install-offline.md` |
+| 20261114-1351 | 2026-11-14 13:51 | [移动首屏与空首页（P1）](completed/2026-11-14-1351-p1-mobile-home.md) | feat | 完成 | `completed/2026-11-14-1351-p1-mobile-home.md` |
+| 20261114-1337 | 2026-11-14 13:37 | [DSH P0-1 至 P0-4 复核与修正](completed/2026-11-14-1337-p0-dsh-review.md) | fix | 完成 | `completed/2026-11-14-1337-p0-dsh-review.md` |
+| 20261114-1314 | 2026-11-14 13:14 | [抽屉断点 1180 与局域网访问范围（P0-4）](completed/2026-11-14-1314-p0-4-breakpoint-lan.md) | fix | 完成 | `completed/2026-11-14-1314-p0-4-breakpoint-lan.md` |
+| 20261114-1308 | 2026-11-14 13:08 | [契约版本与能力表（P0-3）](completed/2026-11-14-1308-p0-3-capabilities.md) | fix | 完成 | `completed/2026-11-14-1308-p0-3-capabilities.md` |
+| 20261114-1259 | 2026-11-14 12:59 | [筛选浮层关闭与矮视口定位（P0-2）](completed/2026-11-14-1259-p0-2-filter-panel.md) | fix | 完成 | `completed/2026-11-14-1259-p0-2-filter-panel.md` |
+| 20261114-1247 | 2026-11-14 12:47 | [筛选纳入 URL 状态机（P0-1）](completed/2026-11-14-1247-p0-1-filters-url-state.md) | fix | 完成 | `completed/2026-11-14-1247-p0-1-filters-url-state.md` |
+| 20261114-0126 | 2026-11-14 01:26 | [DSH 与 Codex 报告分类整理](completed/2026-11-14-0126-classify-reports.md) | docs | 完成 | `completed/2026-11-14-0126-classify-reports.md` |
 | 20261114-0114 | 2026-11-14 01:14 | [推送分流规则落文档](completed/2026-11-14-0114-push-workflow-rule.md) | docs | 完成 | `completed/2026-11-14-0114-push-workflow-rule.md` |
 | 20261114-0105 | 2026-11-14 01:05 | [复查意见核对与推送远端](completed/2026-11-14-0105-push-review-verify.md) | ops | 完成 | `completed/2026-11-14-0105-push-review-verify.md` |
 | 20261114-0056 | 2026-11-14 00:56 | [日常 8000 后端切换与验证](completed/2026-11-14-0056-deploy-backend-8000.md) | ops | 完成 | `completed/2026-11-14-0056-deploy-backend-8000.md` |
-| 20261114-0044 | 2026-11-14 00:44 | [DSH 搜索筛选、浏览器终验与真实上游复核](2026-11-14-0044-p2-filters-final-review.md) | fix | 部分完成 | `2026-11-14-0044-p2-filters-final-review.md` |
+| 20261114-0044 | 2026-11-14 00:44 | [DSH 搜索筛选、浏览器终验与真实上游复核](incomplete/2026-11-14-0044-p2-filters-final-review.md) | fix | 部分完成 | `incomplete/2026-11-14-0044-p2-filters-final-review.md` |
 | 20261113-2316 | 2026-11-13 23:16 | [浏览器与 UI 复查与完善方案](completed/2026-11-13-2316-browser-ui-recheck.md) | research | 完成 | `completed/2026-11-13-2316-browser-ui-recheck.md` |
 | 20261113-2254 | 2026-11-13 22:54 | [真实搜索上游复核与站点兜底](completed/2026-11-13-2254-real-upstream-verification.md) | test | 完成 | `completed/2026-11-13-2254-real-upstream-verification.md` |
 | 20261113-2245 | 2026-11-13 22:45 | [浏览器与UI优化 方案终验](completed/2026-11-13-2245-browser-ui-final-acceptance.md) | test | 完成 | `completed/2026-11-13-2245-browser-ui-final-acceptance.md` |
@@ -61,14 +73,14 @@
 | 20261108-1546 | 2026-11-08 15:46 | [品牌入口表与独立官方入口区](completed/2026-11-08-1546-official-entry-panel.md) | feat | 完成 | `completed/2026-11-08-1546-official-entry-panel.md` |
 | 20261108-1539 | 2026-11-08 15:39 | [正式落地使用差距评估](completed/2026-11-08-1539-release-readiness.md) | docs | 完成 | `completed/2026-11-08-1539-release-readiness.md` |
 | 20261108-1530 | 2026-11-08 15:30 | [官方入口混杂原因与分区方案](completed/2026-11-08-1530-official-entry-diagnosis.md) | docs | 完成 | `completed/2026-11-08-1530-official-entry-diagnosis.md` |
-| 20261108-1447 | 2026-11-08 14:47 | [部署更新与十三引擎在线复验](2026-11-08-1447-deployed-engine-matrix.md) | test | 部分完成 | `2026-11-08-1447-deployed-engine-matrix.md` |
+| 20261108-1447 | 2026-11-08 14:47 | [部署更新与十三引擎在线复验](incomplete/2026-11-08-1447-deployed-engine-matrix.md) | test | 部分完成 | `incomplete/2026-11-08-1447-deployed-engine-matrix.md` |
 | 20261108-1437 | 2026-11-08 14:37 | [收口并行改动并推送](completed/2026-11-08-1437-wrapup-push-and-ci.md) | ops | 完成 | `completed/2026-11-08-1437-wrapup-push-and-ci.md` |
 | 20261108-1335 | 2026-11-08 13:35 | [M19 引擎回退复核与边界完善](completed/2026-11-08-1335-engine-fallback-review.md) | fix | 完成 | `completed/2026-11-08-1335-engine-fallback-review.md` |
 | 20261108-1138 | 2026-11-08 11:38 | [品牌导航入口误去重复现与修复](completed/2026-11-08-1138-navigation-title-dedupe.md) | fix | 完成 | `completed/2026-11-08-1138-navigation-title-dedupe.md` |
-| 20261108-1137 | 2026-11-08 11:37 | [M19 引擎后缀可用性修复](2026-11-08-1137-m19-engine-suffix-repair.md) | fix | 完成 | `2026-11-08-1137-m19-engine-suffix-repair.md` |
+| 20261108-1137 | 2026-11-08 11:37 | [M19 引擎后缀可用性修复](incomplete/2026-11-08-1137-m19-engine-suffix-repair.md) | fix | 完成 | `incomplete/2026-11-08-1137-m19-engine-suffix-repair.md` |
 | 20261108-0212 | 2026-11-08 02:12 | [托管 CI 收口与 AI 贡献署名](completed/2026-11-08-0212-hosted-ci-credits.md) | ops | 完成 | `completed/2026-11-08-0212-hosted-ci-credits.md` |
 | 20261108-0153 | 2026-11-08 01:53 | [GitHub 远端与托管 CI](completed/2026-11-08-0153-github-remote-actions.md) | ops | 完成 | `completed/2026-11-08-0153-github-remote-actions.md` |
-| 20261107-1659 | 2026-11-07 16:59 | [DSH 后续验收复核与证据补强](2026-11-07-1659-next-action-review.md) | fix | 部分完成 | `2026-11-07-1659-next-action-review.md` |
+| 20261107-1659 | 2026-11-07 16:59 | [DSH 后续验收复核与证据补强](incomplete/2026-11-07-1659-next-action-review.md) | fix | 部分完成 | `incomplete/2026-11-07-1659-next-action-review.md` |
 | 20261107-1631 | 2026-11-07 16:31 | [远端 CI、Chrome/Android 验收与样本扩大](completed/2026-11-07-1631-remote-ci-chrome-android-samples.md) | test | 完成 | `completed/2026-11-07-1631-remote-ci-chrome-android-samples.md` |
 | 20261107-1519 | 2026-11-07 15:19 | [当前交付与后续待办对齐](completed/2026-11-07-1519-progress-alignment.md) | docs | 完成 | `completed/2026-11-07-1519-progress-alignment.md` |
 | 20261107-1506 | 2026-11-07 15:06 | [RDAP 复核优化与四十域名校准](completed/2026-11-07-1506-rdap-review-calibration.md) | fix | 完成 | `completed/2026-11-07-1506-rdap-review-calibration.md` |
@@ -80,27 +92,27 @@
 | 20261107-1136 | 2026-11-07 11:36 | [DeepSeek 总结接入与当前成果复验](completed/2026-11-07-1136-deepseek-summary-acceptance.md) | feat | 完成 | `completed/2026-11-07-1136-deepseek-summary-acceptance.md` |
 | 20261107-1123 | 2026-11-07 11:23 | [P3：扩展体验与部署形态](completed/2026-11-07-1123-p3-ux-and-deploy.md) | feat | 完成 | `completed/2026-11-07-1123-p3-ux-and-deploy.md` |
 | 20261107-1108 | 2026-11-07 11:08 | [P2：检索与正文质量评估与实现](completed/2026-11-07-1108-p2-retrieval-content-quality.md) | feat | 完成 | `completed/2026-11-07-1108-p2-retrieval-content-quality.md` |
-| 20261107-1056 | 2026-11-07 10:56 | [P1 收口：CI 基线、浏览器验收与模型实测](2026-11-07-1056-p1-ci-browser-model.md) | ops | 部分完成 | `2026-11-07-1056-p1-ci-browser-model.md` |
+| 20261107-1056 | 2026-11-07 10:56 | [P1 收口：CI 基线、浏览器验收与模型实测](incomplete/2026-11-07-1056-p1-ci-browser-model.md) | ops | 部分完成 | `incomplete/2026-11-07-1056-p1-ci-browser-model.md` |
 | 20261107-1046 | 2026-11-07 10:46 | [P0-2：Docker Compose 部署与持久化验收](completed/2026-11-07-1046-p0-2-docker-verify.md) | ops | 完成 | `completed/2026-11-07-1046-p0-2-docker-verify.md` |
-| 20261107-1022 | 2026-11-07 10:22 | [P0 收口：真实引擎、缓存与持久化](2026-11-07-1022-p0-real-engines.md) | fix | 完成 | `2026-11-07-1022-p0-real-engines.md` |
+| 20261107-1022 | 2026-11-07 10:22 | [P0 收口：真实引擎、缓存与持久化](incomplete/2026-11-07-1022-p0-real-engines.md) | fix | 完成 | `incomplete/2026-11-07-1022-p0-real-engines.md` |
 | 20261107-0003 | 2026-11-07 00:03 | [当前成果复核、归档与进度对齐](completed/2026-11-07-0003-progress-archive-review.md) | fix | 完成 | `completed/2026-11-07-0003-progress-archive-review.md` |
-| 20261106-2342 | 2026-11-06 23:42 | [路线图六项：真上游、熔断、git、feed/go、扩展、标签分页](2026-11-06-2342-roadmap-six-phases.md) | feat | 完成 | `2026-11-06-2342-roadmap-six-phases.md` |
+| 20261106-2342 | 2026-11-06 23:42 | [路线图六项：真上游、熔断、git、feed/go、扩展、标签分页](incomplete/2026-11-06-2342-roadmap-six-phases.md) | feat | 完成 | `incomplete/2026-11-06-2342-roadmap-six-phases.md` |
 | 20261106-2324 | 2026-11-06 23:24 | [进展与欠账核对](completed/2026-11-06-2324-progress-gap-audit.md) | docs | 完成 | `completed/2026-11-06-2324-progress-gap-audit.md` |
 | 20261106-2224 | 2026-11-06 22:24 | [M8 真实浏览器验收：扩展与 PWA](completed/2026-11-06-2224-m8-real-browser-verify.md) | test | 完成 | `completed/2026-11-06-2224-m8-real-browser-verify.md` |
-| 20261106-2214 | 2026-11-06 22:14 | [M8 一键添加验收与加固](2026-11-06-2214-m8-capture-acceptance.md) | fix | 部分完成 | `2026-11-06-2214-m8-capture-acceptance.md` |
+| 20261106-2214 | 2026-11-06 22:14 | [M8 一键添加验收与加固](incomplete/2026-11-06-2214-m8-capture-acceptance.md) | fix | 部分完成 | `incomplete/2026-11-06-2214-m8-capture-acceptance.md` |
 | 20261106-2155 | 2026-11-06 21:55 | [一键添加：bookmarklet、扩展与 PWA 分享](completed/2026-11-06-2155-m8-one-click-add.md) | feat | 完成 | `completed/2026-11-06-2155-m8-one-click-add.md` |
 | 20261106-2148 | 2026-11-06 21:48 | [M7 缓存与交互验收优化](completed/2026-11-06-2148-m7-polish-acceptance.md) | fix | 完成 | `completed/2026-11-06-2148-m7-polish-acceptance.md` |
 | 20261106-2134 | 2026-11-06 21:34 | [打磨轮：缓存、快捷键、暗色与移动端](completed/2026-11-06-2134-m7-polish.md) | feat | 完成 | `completed/2026-11-06-2134-m7-polish.md` |
 | 20261106-2003 | 2026-11-06 20:03 | [M4 受控抓取与正文增强验收](completed/2026-11-06-2003-m4-fetch-acceptance.md) | fix | 完成 | `completed/2026-11-06-2003-m4-fetch-acceptance.md` |
 | 20261106-1946 | 2026-11-06 19:46 | [M4 正文增强与死链检测](completed/2026-11-06-1946-m4-content-fetch.md) | feat | 完成 | `completed/2026-11-06-1946-m4-content-fetch.md` |
-| 20261106-1934 | 2026-11-06 19:34 | [M0～M3 联合复核与补齐](2026-11-06-1934-m0-m3-review.md) | fix | 部分完成 | `2026-11-06-1934-m0-m3-review.md` |
+| 20261106-1934 | 2026-11-06 19:34 | [M0～M3 联合复核与补齐](incomplete/2026-11-06-1934-m0-m3-review.md) | fix | 部分完成 | `incomplete/2026-11-06-1934-m0-m3-review.md` |
 | 20261106-1917 | 2026-11-06 19:17 | [M3 书签启动台验收与优化](completed/2026-11-06-1917-m3-bookmark-acceptance.md) | fix | 完成 | `completed/2026-11-06-1917-m3-bookmark-acceptance.md` |
 | 20261106-1901 | 2026-11-06 19:01 | [M3 书签启动台](completed/2026-11-06-1901-m3-bookmarks.md) | feat | 完成 | `completed/2026-11-06-1901-m3-bookmarks.md` |
 | 20261106-1848 | 2026-11-06 18:48 | [M2 本机千问验收与优化](completed/2026-11-06-1848-m2-ollama-acceptance.md) | fix | 完成 | `completed/2026-11-06-1848-m2-ollama-acceptance.md` |
 | 20261106-1752 | 2026-11-06 17:52 | [M2 AI 侧栏：流式总结与引用](completed/2026-11-06-1752-m2-ai-sidebar.md) | feat | 完成 | `completed/2026-11-06-1752-m2-ai-sidebar.md` |
-| 20261106-1704 | 2026-11-06 17:04 | [M1 搜索体验独立验收与修复](2026-11-06-1704-m1-acceptance-fixes.md) | fix | 部分完成 | `2026-11-06-1704-m1-acceptance-fixes.md` |
+| 20261106-1704 | 2026-11-06 17:04 | [M1 搜索体验独立验收与修复](incomplete/2026-11-06-1704-m1-acceptance-fixes.md) | fix | 部分完成 | `incomplete/2026-11-06-1704-m1-acceptance-fixes.md` |
 | 20261106-0108 | 2026-11-06 01:08 | [M1 搜索体验：后缀路由与三档分组](completed/2026-11-06-0108-m1-search-experience.md) | feat | 完成 | `completed/2026-11-06-0108-m1-search-experience.md` |
 | 20261106-0051 | 2026-11-06 00:51 | [M0 验收复查与边界修复](completed/2026-11-06-0051-m0-validation-followup.md) | fix | 完成 | `completed/2026-11-06-0051-m0-validation-followup.md` |
 | 20261106-0043 | 2026-11-06 00:43 | [M0 验收后加固](completed/2026-11-06-0043-m0-hardening.md) | fix | 完成 | `completed/2026-11-06-0043-m0-hardening.md` |
-| 20261106-0014 | 2026-11-06 00:14 | [M0 搜索闭环独立验收](2026-11-06-0014-m0-acceptance.md) | test | 部分完成 | `2026-11-06-0014-m0-acceptance.md` |
+| 20261106-0014 | 2026-11-06 00:14 | [M0 搜索闭环独立验收](incomplete/2026-11-06-0014-m0-acceptance.md) | test | 部分完成 | `incomplete/2026-11-06-0014-m0-acceptance.md` |
 | 20261106-0004 | 2026-11-06 00:04 | [开工完工协议与报告自动化](completed/2026-11-06-0004-agent-report-protocol.md) | docs | 完成 | `completed/2026-11-06-0004-agent-report-protocol.md` |

@@ -124,6 +124,28 @@ def test_health(client: TestClient) -> None:
     assert body["db_path"].endswith(".db")
 
 
+def test_health_reports_api_version_and_capabilities(client: TestClient) -> None:
+    """前端靠这两项识别"新 dist + 旧 API"的混版，字段不能缺。"""
+    from app.main import API_VERSION
+
+    body = client.get("/api/health").json()
+    assert body["api_version"] == API_VERSION >= 2
+    capabilities = body["capabilities"]
+    for name in ("filters", "bookmark_status", "vitals", "model_test", "opensearch"):
+        assert capabilities[name] is True, name
+
+
+def test_health_capabilities_follow_registered_routes(client: TestClient, monkeypatch) -> None:
+    """路径存在但 HTTP 方法不符时，对应能力必须为 False。"""
+    from app import main as main_module
+
+    route = next(route for route in main_module.app.routes if route.path == "/api/metrics/vitals")
+    monkeypatch.setattr(route, "methods", {"GET"})
+    capabilities = client.get("/api/health").json()["capabilities"]
+    assert capabilities["vitals"] is False
+    assert capabilities["bookmark_status"] is True
+
+
 def test_same_origin_spa(client: TestClient) -> None:
     assert "spa-index" in client.get("/").text
     assert "spa-index" in client.get("/r").text  # 前端路由刷新不 404

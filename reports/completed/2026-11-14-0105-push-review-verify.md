@@ -14,7 +14,7 @@
 
 **目标**
 
-读 [Codex 复查报告](2026-11-14-0044-p2-filters-final-review.md)，判断是否还有需要改的代码；确认没有则把当前工作区提交并推送到 `origin/main`。
+读 [Codex 复查报告](../incomplete/2026-11-14-0044-p2-filters-final-review.md)，判断是否还有需要改的代码；确认没有则把当前工作区提交并推送到 `origin/main`。
 
 **验收标准**
 
